@@ -2,7 +2,7 @@ import Combine
 import SwiftUI
 import Swinject
 
-protocol StateModel: ObservableObject {
+@MainActor protocol StateModel: ObservableObject {
     var resolver: Resolver? { get set }
     var isInitial: Bool { get set }
     func subscribe()
@@ -11,6 +11,7 @@ protocol StateModel: ObservableObject {
     func view(for screen: Screen) -> AnyView
 }
 
+@MainActor
 class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.Provider {
     @Injected() var router: Router!
     @Injected() var settingsManager: SettingsManager!
@@ -51,6 +52,7 @@ class BaseStateModel<Provider>: StateModel, Injectable where Provider: FreeAPS.P
         settingPublisher
             .removeDuplicates()
             .map(map ?? { $0 })
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] value in
                 self?.settingsManager.settings[keyPath: keyPath] = value
                 didSet?(value)

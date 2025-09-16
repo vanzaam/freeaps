@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct CurrentGlucoseView: View {
-    @Binding var recentGlucose: BloodGlucose?
-    @Binding var delta: Int?
-    @Binding var units: GlucoseUnits
-    @Binding var alarm: GlucoseAlarm?
+    let recentGlucose: BloodGlucose?
+    let delta: Int?
+    let units: GlucoseUnits
+    let alarm: GlucoseAlarm?
 
     private var glucoseFormatter: NumberFormatter {
         let formatter = NumberFormatter()

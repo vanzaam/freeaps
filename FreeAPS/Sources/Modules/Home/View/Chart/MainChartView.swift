@@ -33,19 +33,19 @@ struct MainChartView: View {
         static let carbsScale: CGFloat = 0.3
     }
 
-    @Binding var glucose: [BloodGlucose]
-    @Binding var suggestion: Suggestion?
-    @Binding var tempBasals: [PumpHistoryEvent]
-    @Binding var boluses: [PumpHistoryEvent]
-    @Binding var suspensions: [PumpHistoryEvent]
-    @Binding var hours: Int
-    @Binding var maxBasal: Decimal
-    @Binding var autotunedBasalProfile: [BasalProfileEntry]
-    @Binding var basalProfile: [BasalProfileEntry]
-    @Binding var tempTargets: [TempTarget]
-    @Binding var carbs: [CarbsEntry]
-    @Binding var timerDate: Date
-    @Binding var units: GlucoseUnits
+    let glucose: [BloodGlucose]
+    let suggestion: Suggestion?
+    let tempBasals: [PumpHistoryEvent]
+    let boluses: [PumpHistoryEvent]
+    let suspensions: [PumpHistoryEvent]
+    let hours: Int
+    let maxBasal: Decimal
+    let autotunedBasalProfile: [BasalProfileEntry]
+    let basalProfile: [BasalProfileEntry]
+    let tempTargets: [TempTarget]
+    let carbs: [CarbsEntry]
+    let timerDate: Date
+    let units: GlucoseUnits
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -129,15 +129,6 @@ struct MainChartView: View {
 
                     mainView(fullSize: fullSize).id(Config.endID)
                         .drawingGroup()
-                        .onChange(of: glucose) { _ in
-                            scroll.scrollTo(Config.endID, anchor: .trailing)
-                        }
-                        .onChange(of: suggestion) { _ in
-                            scroll.scrollTo(Config.endID, anchor: .trailing)
-                        }
-                        .onChange(of: tempBasals) { _ in
-                            scroll.scrollTo(Config.endID, anchor: .trailing)
-                        }
                         .onAppear {
                             // add trigger to the end of main queue
                             DispatchQueue.main.async {
@@ -186,20 +177,9 @@ struct MainChartView: View {
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
         .background(Color.secondary.opacity(0.1))
-        .onChange(of: tempBasals) { _ in
-            calculateBasalPoints(fullSize: fullSize)
-        }
-        .onChange(of: suspensions) { _ in
-            calculateSuspensions(fullSize: fullSize)
-        }
-        .onChange(of: maxBasal) { _ in
-            calculateBasalPoints(fullSize: fullSize)
-        }
-        .onChange(of: autotunedBasalProfile) { _ in
-            calculateBasalPoints(fullSize: fullSize)
-        }
         .onChange(of: didAppearTrigger) { _ in
             calculateBasalPoints(fullSize: fullSize)
+            calculateSuspensions(fullSize: fullSize)
         }
     }
 
@@ -265,9 +245,6 @@ struct MainChartView: View {
             }
         }
         .fill(Color.loopGreen)
-        .onChange(of: glucose) { _ in
-            update(fullSize: fullSize)
-        }
         .onChange(of: didAppearTrigger) { _ in
             update(fullSize: fullSize)
         }
@@ -290,9 +267,6 @@ struct MainChartView: View {
                     .asAny()
             }
         }
-        .onChange(of: boluses) { _ in
-            calculateBolusDots(fullSize: fullSize)
-        }
         .onChange(of: didAppearTrigger) { _ in
             calculateBolusDots(fullSize: fullSize)
         }
@@ -312,9 +286,6 @@ struct MainChartView: View {
                     .asAny()
             }
         }
-        .onChange(of: carbs) { _ in
-            calculateCarbsDots(fullSize: fullSize)
-        }
         .onChange(of: didAppearTrigger) { _ in
             calculateCarbsDots(fullSize: fullSize)
         }
@@ -324,12 +295,6 @@ struct MainChartView: View {
         ZStack {
             tempTargetsPath
                 .fill(Color.tempBasal.opacity(0.5))
-        }
-        .onChange(of: glucose) { _ in
-            calculateTempTargetsRects(fullSize: fullSize)
-        }
-        .onChange(of: tempTargets) { _ in
-            calculateTempTargetsRects(fullSize: fullSize)
         }
         .onChange(of: didAppearTrigger) { _ in
             calculateTempTargetsRects(fullSize: fullSize)
@@ -362,7 +327,7 @@ struct MainChartView: View {
                 }
             }.fill(Color.uam)
         }
-        .onChange(of: suggestion) { _ in
+        .onChange(of: didAppearTrigger) { _ in
             update(fullSize: fullSize)
         }
     }
@@ -385,25 +350,25 @@ extension MainChartView {
     }
 
     private func calculateGlucoseDots(fullSize: CGSize) {
-        calculationQueue.async {
+        calculationQueue.async { [glucose] in
             let dots = glucose.concurrentMap { value -> CGRect in
-                let position = glucoseToCoordinate(value, fullSize: fullSize)
+                let position = self.glucoseToCoordinate(value, fullSize: fullSize)
                 return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
             }
 
             let range = self.getGlucoseYRange(fullSize: fullSize)
 
             DispatchQueue.main.async {
-                glucoseYGange = range
-                glucoseDots = dots
+                self.glucoseYGange = range
+                self.glucoseDots = dots
             }
         }
     }
 
     private func calculateBolusDots(fullSize: CGSize) {
-        calculationQueue.async {
+        calculationQueue.async { [boluses] in
             let dots = boluses.map { value -> DotInfo in
-                let center = timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, fullSize: fullSize)
+                let center = self.timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, fullSize: fullSize)
                 let size = Config.bolusSize + CGFloat(value.amount ?? 0) * Config.bolusScale
                 let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
                 return DotInfo(rect: rect, value: value.amount ?? 0)
@@ -416,16 +381,16 @@ extension MainChartView {
             }
 
             DispatchQueue.main.async {
-                bolusDots = dots
-                bolusPath = path
+                self.bolusDots = dots
+                self.bolusPath = path
             }
         }
     }
 
     private func calculateCarbsDots(fullSize: CGSize) {
-        calculationQueue.async {
+        calculationQueue.async { [carbs] in
             let dots = carbs.map { value -> DotInfo in
-                let center = timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
+                let center = self.timeToInterpolatedPoint(value.createdAt.timeIntervalSince1970, fullSize: fullSize)
                 let size = Config.carbsSize + CGFloat(value.carbs) * Config.carbsScale
                 let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
                 return DotInfo(rect: rect, value: value.carbs)
@@ -438,14 +403,14 @@ extension MainChartView {
             }
 
             DispatchQueue.main.async {
-                carbsDots = dots
-                carbsPath = path
+                self.carbsDots = dots
+                self.carbsPath = path
             }
         }
     }
 
     private func calculatePredictionDots(fullSize: CGSize, type: PredictionType) {
-        calculationQueue.async {
+        calculationQueue.async { [suggestion] in
             let values: [Int] = { () -> [Int] in
                 switch type {
                 case .iob:
@@ -461,41 +426,58 @@ extension MainChartView {
 
             var index = 0
             let dots = values.map { value -> CGRect in
-                let position = predictionToCoordinate(value, fullSize: fullSize, index: index)
+                let position = self.predictionToCoordinate(value, fullSize: fullSize, index: index, suggestion: suggestion)
                 index += 1
                 return CGRect(x: position.x - 2, y: position.y - 2, width: 4, height: 4)
             }
             DispatchQueue.main.async {
-                predictionDots[type] = dots
+                self.predictionDots[type] = dots
             }
         }
     }
 
     private func calculateBasalPoints(fullSize: CGSize) {
-        calculationQueue.async {
-            self.cachedMaxBasalRate = nil
+        calculationQueue.async { [tempBasals, autotunedBasalProfile, basalProfile, maxBasal] in
+            var cachedMaxBasalRate: Decimal?
             let dayAgoTime = Date().addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
             let firstTempTime = (tempBasals.first?.timestamp ?? Date()).timeIntervalSince1970
             var lastTimeEnd = firstTempTime
-            let firstRegularBasalPoints = findRegularBasalPoints(
+            let firstRegularBasalPoints = self.findRegularBasalPoints(
                 timeBegin: dayAgoTime,
                 timeEnd: firstTempTime,
                 fullSize: fullSize,
-                autotuned: false
+                autotuned: false,
+                basalProfile: basalProfile,
+                autotunedBasalProfile: autotunedBasalProfile,
+                tempBasals: tempBasals,
+                maxBasal: maxBasal,
+                cachedMaxBasalRate: &cachedMaxBasalRate
             )
             let tempBasalPoints = firstRegularBasalPoints + tempBasals.chunks(ofCount: 2).map { chunk -> [CGPoint] in
                 let chunk = Array(chunk)
                 guard chunk.count == 2, chunk[0].type == .tempBasal, chunk[1].type == .tempBasalDuration else { return [] }
                 let timeBegin = chunk[0].timestamp.timeIntervalSince1970
                 let timeEnd = timeBegin + (chunk[1].durationMin ?? 0).minutes.timeInterval
-                let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
-                let x0 = timeToXCoordinate(timeBegin, fullSize: fullSize)
+                let maxBasalRate = self.maxBasalRateCalculation(
+                    basalProfile: basalProfile,
+                    autotunedBasalProfile: autotunedBasalProfile,
+                    tempBasals: tempBasals,
+                    maxBasal: maxBasal,
+                    cachedMaxBasalRate: &cachedMaxBasalRate
+                )
+                let rateCost = Config.basalHeight / CGFloat(maxBasalRate)
+                let x0 = self.timeToXCoordinate(timeBegin, fullSize: fullSize)
                 let y0 = Config.basalHeight - CGFloat(chunk[0].rate ?? 0) * rateCost
-                let regularPoints = findRegularBasalPoints(
+                let regularPoints = self.findRegularBasalPoints(
                     timeBegin: lastTimeEnd,
                     timeEnd: timeBegin,
                     fullSize: fullSize,
-                    autotuned: false
+                    autotuned: false,
+                    basalProfile: basalProfile,
+                    autotunedBasalProfile: autotunedBasalProfile,
+                    tempBasals: tempBasals,
+                    maxBasal: maxBasal,
+                    cachedMaxBasalRate: &cachedMaxBasalRate
                 )
                 lastTimeEnd = timeEnd
                 return regularPoints + [CGPoint(x: x0, y: y0)]
@@ -509,18 +491,30 @@ extension MainChartView {
                     path.addLine(to: point)
                     yPoint = point.y
                 }
-                let lastPoint = lastBasalPoint(fullSize: fullSize)
+                let lastPoint = self.lastBasalPoint(
+                    fullSize: fullSize,
+                    tempBasals: tempBasals,
+                    basalProfile: basalProfile,
+                    autotunedBasalProfile: autotunedBasalProfile,
+                    maxBasal: maxBasal,
+                    cachedMaxBasalRate: &cachedMaxBasalRate
+                )
                 path.addLine(to: CGPoint(x: lastPoint.x, y: yPoint))
                 path.addLine(to: CGPoint(x: lastPoint.x, y: Config.basalHeight))
                 path.addLine(to: CGPoint(x: 0, y: Config.basalHeight))
             }
 
             let endDateTime = dayAgoTime + 1.days.timeInterval + 6.hours.timeInterval
-            let autotunedBasalPoints = findRegularBasalPoints(
+            let autotunedBasalPoints = self.findRegularBasalPoints(
                 timeBegin: dayAgoTime,
                 timeEnd: endDateTime,
                 fullSize: fullSize,
-                autotuned: true
+                autotuned: true,
+                basalProfile: basalProfile,
+                autotunedBasalProfile: autotunedBasalProfile,
+                tempBasals: tempBasals,
+                maxBasal: maxBasal,
+                cachedMaxBasalRate: &cachedMaxBasalRate
             )
 
             let autotunedBasalPath = Path { path in
@@ -532,10 +526,11 @@ extension MainChartView {
                     path.addLine(to: point)
                     yPoint = point.y
                 }
-                path.addLine(to: CGPoint(x: timeToXCoordinate(endDateTime, fullSize: fullSize), y: yPoint))
+                path.addLine(to: CGPoint(x: self.timeToXCoordinate(endDateTime, fullSize: fullSize), y: yPoint))
             }
 
             DispatchQueue.main.async {
+                self.cachedMaxBasalRate = cachedMaxBasalRate
                 self.tempBasalPath = tempBasalPath
                 self.regularBasalPath = autotunedBasalPath
             }
@@ -543,7 +538,7 @@ extension MainChartView {
     }
 
     private func calculateSuspensions(fullSize: CGSize) {
-        calculationQueue.async {
+        calculationQueue.async { [suspensions, tempBasals] in
             var rects = suspensions.windows(ofCount: 2).map { window -> CGRect? in
                 let window = Array(window)
                 guard window[0].type == .pumpSuspend, window[1].type == .pumpResume else { return nil }
@@ -552,9 +547,9 @@ extension MainChartView {
                 return CGRect(x: x0, y: 0, width: x1 - x0, height: Config.basalHeight)
             }
 
-            let firstRec = self.suspensions.first.flatMap { event -> CGRect? in
+            let firstRec = suspensions.first.flatMap { event -> CGRect? in
                 guard event.type == .pumpResume else { return nil }
-                let tbrTime = self.tempBasals.last { $0.timestamp < event.timestamp }
+                let tbrTime = tempBasals.last { $0.timestamp < event.timestamp }
                     .map { $0.timestamp.timeIntervalSince1970 + TimeInterval($0.durationMin ?? 0) * 60 } ?? Date()
                     .addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
 
@@ -568,9 +563,9 @@ extension MainChartView {
                 )
             }
 
-            let lastRec = self.suspensions.last.flatMap { event -> CGRect? in
+            let lastRec = suspensions.last.flatMap { event -> CGRect? in
                 guard event.type == .pumpSuspend else { return nil }
-                let tbrTimeX = self.tempBasals.first { $0.timestamp > event.timestamp }
+                let tbrTimeX = tempBasals.first { $0.timestamp > event.timestamp }
                     .map { self.timeToXCoordinate($0.timestamp.timeIntervalSince1970, fullSize: fullSize) }
                 let x0 = self.timeToXCoordinate(event.timestamp.timeIntervalSince1970, fullSize: fullSize)
 
@@ -587,7 +582,7 @@ extension MainChartView {
             }
 
             DispatchQueue.main.async {
-                suspensionsPath = path
+                self.suspensionsPath = path
             }
         }
     }
@@ -611,16 +606,41 @@ extension MainChartView {
         return cachedMaxBasalRate ?? maxBasal
     }
 
+    private func maxBasalRateCalculation(
+        basalProfile: [BasalProfileEntry],
+        autotunedBasalProfile: [BasalProfileEntry],
+        tempBasals: [PumpHistoryEvent],
+        maxBasal: Decimal,
+        cachedMaxBasalRate: inout Decimal?
+    ) -> Decimal {
+        if let cached = cachedMaxBasalRate {
+            return cached
+        }
+
+        let maxRegularBasalRate = max(
+            basalProfile.map(\.rate).max() ?? maxBasal,
+            autotunedBasalProfile.map(\.rate).max() ?? maxBasal
+        )
+
+        var maxTempBasalRate = tempBasals.compactMap(\.rate).max() ?? maxRegularBasalRate
+        if maxTempBasalRate == 0 {
+            maxTempBasalRate = maxRegularBasalRate
+        }
+
+        cachedMaxBasalRate = max(maxTempBasalRate, maxRegularBasalRate)
+        return cachedMaxBasalRate ?? maxBasal
+    }
+
     private func calculateTempTargetsRects(fullSize: CGSize) {
-        calculationQueue.async {
+        calculationQueue.async { [tempTargets] in
             var rects = tempTargets.map { tempTarget -> CGRect in
-                let x0 = timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970, fullSize: fullSize)
-                let y0 = glucoseToYCoordinate(Int(tempTarget.targetTop ?? 0), fullSize: fullSize)
-                let x1 = timeToXCoordinate(
+                let x0 = self.timeToXCoordinate(tempTarget.createdAt.timeIntervalSince1970, fullSize: fullSize)
+                let y0 = self.glucoseToYCoordinate(Int(tempTarget.targetTop ?? 0), fullSize: fullSize)
+                let x1 = self.timeToXCoordinate(
                     tempTarget.createdAt.timeIntervalSince1970 + Int(tempTarget.duration).minutes.timeInterval,
                     fullSize: fullSize
                 )
-                let y1 = glucoseToYCoordinate(Int(tempTarget.targetBottom ?? 0), fullSize: fullSize)
+                let y1 = self.glucoseToYCoordinate(Int(tempTarget.targetBottom ?? 0), fullSize: fullSize)
                 return CGRect(
                     x: x0,
                     y: y0 - 3,
@@ -645,7 +665,7 @@ extension MainChartView {
             }
 
             DispatchQueue.main.async {
-                tempTargetsPath = path
+                self.tempTargetsPath = path
             }
         }
     }
@@ -654,7 +674,12 @@ extension MainChartView {
         timeBegin: TimeInterval,
         timeEnd: TimeInterval,
         fullSize: CGSize,
-        autotuned: Bool
+        autotuned: Bool,
+        basalProfile: [BasalProfileEntry],
+        autotunedBasalProfile: [BasalProfileEntry],
+        tempBasals: [PumpHistoryEvent],
+        maxBasal: Decimal,
+        cachedMaxBasalRate: inout Decimal?
     ) -> [CGPoint] {
         guard timeBegin < timeEnd else {
             return []
@@ -682,6 +707,13 @@ extension MainChartView {
             )
         }
 
+        let maxBasalRate = maxBasalRateCalculation(
+            basalProfile: basalProfile,
+            autotunedBasalProfile: autotunedBasalProfile,
+            tempBasals: tempBasals,
+            maxBasal: maxBasal,
+            cachedMaxBasalRate: &cachedMaxBasalRate
+        )
         let basalTruncatedPoints = basalNormalized.windows(ofCount: 2)
             .compactMap { window -> CGPoint? in
                 let window = Array(window)
@@ -689,7 +721,7 @@ extension MainChartView {
                     return nil
                 }
 
-                let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
+                let rateCost = Config.basalHeight / CGFloat(maxBasalRate)
                 if window[0].time < timeBegin, window[1].time >= timeBegin {
                     let x = timeToXCoordinate(timeBegin, fullSize: fullSize)
                     let y = Config.basalHeight - CGFloat(window[0].rate) * rateCost
@@ -708,13 +740,27 @@ extension MainChartView {
         return basalTruncatedPoints
     }
 
-    private func lastBasalPoint(fullSize: CGSize) -> CGPoint {
+    private func lastBasalPoint(
+        fullSize: CGSize,
+        tempBasals: [PumpHistoryEvent],
+        basalProfile: [BasalProfileEntry],
+        autotunedBasalProfile: [BasalProfileEntry],
+        maxBasal: Decimal,
+        cachedMaxBasalRate: inout Decimal?
+    ) -> CGPoint {
         let lastBasal = Array(tempBasals.suffix(2))
         guard lastBasal.count == 2 else {
             return CGPoint(x: timeToXCoordinate(Date().timeIntervalSince1970, fullSize: fullSize), y: Config.basalHeight)
         }
         let endBasalTime = lastBasal[0].timestamp.timeIntervalSince1970 + (lastBasal[1].durationMin?.minutes.timeInterval ?? 0)
-        let rateCost = Config.basalHeight / CGFloat(maxBasalRate())
+        let maxBasalRate = maxBasalRateCalculation(
+            basalProfile: basalProfile,
+            autotunedBasalProfile: autotunedBasalProfile,
+            tempBasals: tempBasals,
+            maxBasal: maxBasal,
+            cachedMaxBasalRate: &cachedMaxBasalRate
+        )
+        let rateCost = Config.basalHeight / CGFloat(maxBasalRate)
         let x = timeToXCoordinate(endBasalTime, fullSize: fullSize)
         let y = Config.basalHeight - CGFloat(lastBasal[0].rate ?? 0) * rateCost
         return CGPoint(x: x, y: y)
@@ -786,7 +832,7 @@ extension MainChartView {
         return CGPoint(x: x, y: y)
     }
 
-    private func predictionToCoordinate(_ pred: Int, fullSize: CGSize, index: Int) -> CGPoint {
+    private func predictionToCoordinate(_ pred: Int, fullSize: CGSize, index: Int, suggestion: Suggestion?) -> CGPoint {
         guard let deliveredAt = suggestion?.deliverAt else {
             return .zero
         }

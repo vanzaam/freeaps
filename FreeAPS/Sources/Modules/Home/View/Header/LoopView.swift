@@ -7,12 +7,12 @@ struct LoopView: View {
         static let lag: TimeInterval = 30
     }
 
-    @Binding var suggestion: Suggestion?
-    @Binding var enactedSuggestion: Suggestion?
-    @Binding var closedLoop: Bool
-    @Binding var timerDate: Date
-    @Binding var isLooping: Bool
-    @Binding var lastLoopDate: Date
+    let suggestion: Suggestion?
+    let enactedSuggestion: Suggestion?
+    let closedLoop: Bool
+    let timerDate: Date
+    let isLooping: Bool
+    let lastLoopDate: Date
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()

@@ -50,7 +50,7 @@ extension Settings {
 }
 
 extension Settings.StateModel: SettingsObserver {
-    func settingsDidChange(_ settings: FreeAPSSettings) {
+    @MainActor func settingsDidChange(_ settings: FreeAPSSettings) {
         closedLoop = settings.closedLoop
         debugOptions = settings.debugOptions
     }

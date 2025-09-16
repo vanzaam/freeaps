@@ -336,17 +336,17 @@ extension Home.StateModel:
     PumpBatteryObserver,
     PumpReservoirObserver
 {
-    func glucoseDidUpdate(_: [BloodGlucose]) {
+    @MainActor func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
     }
 
-    func suggestionDidUpdate(_ suggestion: Suggestion) {
+    @MainActor func suggestionDidUpdate(_ suggestion: Suggestion) {
         self.suggestion = suggestion
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
     }
 
-    func settingsDidChange(_ settings: FreeAPSSettings) {
+    @MainActor func settingsDidChange(_ settings: FreeAPSSettings) {
         allowManualTemp = !settings.closedLoop
         closedLoop = settingsManager.settings.closedLoop
         units = settingsManager.settings.units
@@ -354,44 +354,44 @@ extension Home.StateModel:
         setupGlucose()
     }
 
-    func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
+    @MainActor func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
         setupBasals()
         setupBoluses()
         setupSuspensions()
     }
 
-    func pumpSettingsDidChange(_: PumpSettings) {
+    @MainActor func pumpSettingsDidChange(_: PumpSettings) {
         setupPumpSettings()
     }
 
-    func basalProfileDidChange(_: [BasalProfileEntry]) {
+    @MainActor func basalProfileDidChange(_: [BasalProfileEntry]) {
         setupBasalProfile()
     }
 
-    func tempTargetsDidUpdate(_: [TempTarget]) {
+    @MainActor func tempTargetsDidUpdate(_: [TempTarget]) {
         setupTempTargets()
     }
 
-    func carbsDidUpdate(_: [CarbsEntry]) {
+    @MainActor func carbsDidUpdate(_: [CarbsEntry]) {
         setupCarbs()
     }
 
-    func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
+    @MainActor func enactedSuggestionDidUpdate(_ suggestion: Suggestion) {
         enactedSuggestion = suggestion
         setStatusTitle()
     }
 
-    func pumpBatteryDidChange(_: Battery) {
+    @MainActor func pumpBatteryDidChange(_: Battery) {
         setupBattery()
     }
 
-    func pumpReservoirDidChange(_: Decimal) {
+    @MainActor func pumpReservoirDidChange(_: Decimal) {
         setupReservoir()
     }
 }
 
 extension Home.StateModel: CompletionDelegate {
-    func completionNotifyingDidComplete(_: CompletionNotifying) {
+    @MainActor func completionNotifyingDidComplete(_: CompletionNotifying) {
         setupPump = false
     }
 }

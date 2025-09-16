@@ -16,10 +16,12 @@ extension BaseView {
 
 extension BaseView {
     func configureView() {
-        configureView(nil)
+        Task { @MainActor in
+            configureView(nil)
+        }
     }
 
-    func configureView(_ configure: (() -> Void)?) {
+    @MainActor func configureView(_ configure: (() -> Void)?) {
         if state.isInitial {
             configure?()
             state.resolver = resolver

@@ -83,10 +83,8 @@ extension Bolus {
 }
 
 extension Bolus.StateModel: SuggestionObserver {
-    func suggestionDidUpdate(_: Suggestion) {
-        DispatchQueue.main.async {
-            self.waitForSuggestion = false
-        }
+    @MainActor func suggestionDidUpdate(_: Suggestion) {
+        waitForSuggestion = false
         setupInsulinRequired()
     }
 }

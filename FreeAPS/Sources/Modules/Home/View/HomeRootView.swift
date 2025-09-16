@@ -78,10 +78,10 @@ extension Home {
 
         var glucoseView: some View {
             CurrentGlucoseView(
-                recentGlucose: $state.recentGlucose,
-                delta: $state.glucoseDelta,
-                units: $state.units,
-                alarm: $state.alarm
+                recentGlucose: state.recentGlucose,
+                delta: state.glucoseDelta,
+                units: state.units,
+                alarm: state.alarm
             )
             .onTapGesture {
                 if state.alarm == nil {
@@ -103,11 +103,11 @@ extension Home {
 
         var pumpView: some View {
             PumpView(
-                reservoir: $state.reservoir,
-                battery: $state.battery,
-                name: $state.pumpName,
-                expiresAtDate: $state.pumpExpiresAtDate,
-                timerDate: $state.timerDate
+                reservoir: state.reservoir,
+                battery: state.battery,
+                name: state.pumpName,
+                expiresAtDate: state.pumpExpiresAtDate,
+                timerDate: state.timerDate
             )
             .onTapGesture {
                 if state.pumpDisplayState != nil {
@@ -118,12 +118,12 @@ extension Home {
 
         var loopView: some View {
             LoopView(
-                suggestion: $state.suggestion,
-                enactedSuggestion: $state.enactedSuggestion,
-                closedLoop: $state.closedLoop,
-                timerDate: $state.timerDate,
-                isLooping: $state.isLooping,
-                lastLoopDate: $state.lastLoopDate
+                suggestion: state.suggestion,
+                enactedSuggestion: state.enactedSuggestion,
+                closedLoop: state.closedLoop,
+                timerDate: state.timerDate,
+                isLooping: state.isLooping,
+                lastLoopDate: state.lastLoopDate
             ).onTapGesture {
                 isStatusPopupPresented = true
             }.onLongPressGesture {
@@ -259,19 +259,19 @@ extension Home {
                 }
 
                 MainChartView(
-                    glucose: $state.glucose,
-                    suggestion: $state.suggestion,
-                    tempBasals: $state.tempBasals,
-                    boluses: $state.boluses,
-                    suspensions: $state.suspensions,
-                    hours: .constant(state.filteredHours),
-                    maxBasal: $state.maxBasal,
-                    autotunedBasalProfile: $state.autotunedBasalProfile,
-                    basalProfile: $state.basalProfile,
-                    tempTargets: $state.tempTargets,
-                    carbs: $state.carbs,
-                    timerDate: $state.timerDate,
-                    units: $state.units
+                    glucose: state.glucose,
+                    suggestion: state.suggestion,
+                    tempBasals: state.tempBasals,
+                    boluses: state.boluses,
+                    suspensions: state.suspensions,
+                    hours: state.filteredHours,
+                    maxBasal: state.maxBasal,
+                    autotunedBasalProfile: state.autotunedBasalProfile,
+                    basalProfile: state.basalProfile,
+                    tempTargets: state.tempTargets,
+                    carbs: state.carbs,
+                    timerDate: state.timerDate,
+                    units: state.units
                 )
             }
             .padding(.bottom)

@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct PumpView: View {
-    @Binding var reservoir: Decimal?
-    @Binding var battery: Battery?
-    @Binding var name: String
-    @Binding var expiresAtDate: Date?
-    @Binding var timerDate: Date
+    let reservoir: Decimal?
+    let battery: Battery?
+    let name: String
+    let expiresAtDate: Date?
+    let timerDate: Date
 
     private var reservoirFormatter: NumberFormatter {
         let formatter = NumberFormatter()

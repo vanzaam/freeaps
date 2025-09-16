@@ -74,18 +74,17 @@ extension DataTable {
                         Treatment(units: units, type: .resume, date: $0.timestamp)
                     }
 
+                let finalTreatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
+                    .flatMap { $0 }
+                    .sorted { $0.date > $1.date }
                 DispatchQueue.main.async {
-                    self.treatments = [carbs, boluses, tempBasals, tempTargets, suspend, resume]
-                        .flatMap { $0 }
-                        .sorted { $0.date > $1.date }
+                    self.treatments = finalTreatments
                 }
             }
         }
 
         func setupGlucose() {
-            DispatchQueue.main.async {
-                self.glucose = self.provider.glucose().map(Glucose.init)
-            }
+            glucose = provider.glucose().map(Glucose.init)
         }
 
         func deleteCarbs(at date: Date) {
@@ -106,23 +105,23 @@ extension DataTable.StateModel:
     CarbsObserver,
     GlucoseObserver
 {
-    func settingsDidChange(_: FreeAPSSettings) {
+    @MainActor func settingsDidChange(_: FreeAPSSettings) {
         setupTreatments()
     }
 
-    func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
+    @MainActor func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
         setupTreatments()
     }
 
-    func tempTargetsDidUpdate(_: [TempTarget]) {
+    @MainActor func tempTargetsDidUpdate(_: [TempTarget]) {
         setupTreatments()
     }
 
-    func carbsDidUpdate(_: [CarbsEntry]) {
+    @MainActor func carbsDidUpdate(_: [CarbsEntry]) {
         setupTreatments()
     }
 
-    func glucoseDidUpdate(_: [BloodGlucose]) {
+    @MainActor func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
     }
 }

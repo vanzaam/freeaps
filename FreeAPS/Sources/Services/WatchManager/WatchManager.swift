@@ -289,47 +289,59 @@ extension BaseWatchManager:
     PumpBatteryObserver,
     PumpReservoirObserver
 {
-    func glucoseDidUpdate(_: [BloodGlucose]) {
-        configureState()
+    @MainActor func glucoseDidUpdate(_: [BloodGlucose]) {
+        processQueue.async {
+            self.configureState()
+        }
     }
 
-    func suggestionDidUpdate(_: Suggestion) {
-        configureState()
+    @MainActor func suggestionDidUpdate(_: Suggestion) {
+        processQueue.async {
+            self.configureState()
+        }
     }
 
-    func settingsDidChange(_: FreeAPSSettings) {
-        configureState()
+    @MainActor func settingsDidChange(_: FreeAPSSettings) {
+        processQueue.async {
+            self.configureState()
+        }
     }
 
-    func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
+    @MainActor func pumpHistoryDidUpdate(_: [PumpHistoryEvent]) {
         // TODO:
     }
 
-    func pumpSettingsDidChange(_: PumpSettings) {
-        configureState()
+    @MainActor func pumpSettingsDidChange(_: PumpSettings) {
+        processQueue.async {
+            self.configureState()
+        }
     }
 
-    func basalProfileDidChange(_: [BasalProfileEntry]) {
+    @MainActor func basalProfileDidChange(_: [BasalProfileEntry]) {
         // TODO:
     }
 
-    func tempTargetsDidUpdate(_: [TempTarget]) {
-        configureState()
+    @MainActor func tempTargetsDidUpdate(_: [TempTarget]) {
+        processQueue.async {
+            self.configureState()
+        }
     }
 
-    func carbsDidUpdate(_: [CarbsEntry]) {
+    @MainActor func carbsDidUpdate(_: [CarbsEntry]) {
         // TODO:
     }
 
-    func enactedSuggestionDidUpdate(_: Suggestion) {
-        configureState()
+    @MainActor func enactedSuggestionDidUpdate(_: Suggestion) {
+        processQueue.async {
+            self.configureState()
+        }
     }
 
-    func pumpBatteryDidChange(_: Battery) {
+    @MainActor func pumpBatteryDidChange(_: Battery) {
         // TODO:
     }
 
-    func pumpReservoirDidChange(_: Decimal) {
+    @MainActor func pumpReservoirDidChange(_: Decimal) {
         // TODO:
     }
 }
