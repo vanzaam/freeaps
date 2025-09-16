@@ -1,0 +1,50 @@
+# Cursor ignore file
+# Files and directories to hide from Cursor file explorer
+
+# Build directories
+build/
+DerivedData/
+*.build/
+
+# Xcode generated files
+*.xcuserstate
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.cache
+
+# Node modules
+node_modules/
+
+# Swift Package Manager
+.build/
+Packages/
+Package.resolved
+
+# CocoaPods
+Pods/
+
+# Carthage
+Carthage/Build/
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+
+# System files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+
+# Logs
+*.log

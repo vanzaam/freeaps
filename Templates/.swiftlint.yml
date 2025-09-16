@@ -1,0 +1,13 @@
+# SwiftLint configuration for Templates directory
+# These are template files with placeholders, not actual Swift code
+
+disabled_rules:
+  - all
+
+included:
+  - "*.swift"
+
+excluded:
+  - "*.swift"  # Exclude all Swift files in this directory
+
+# This effectively disables SwiftLint for all files in Templates/
