@@ -1,0 +1,36 @@
+---
+description: FreeAPS X testing guidelines
+globs: ["**/*.swift", "**/*.xcodeproj/**"]
+alwaysApply: true
+---
+# FreeAPS X Testing Guidelines
+
+## Performance Testing (Critical for FreeAPS X)
+- **Test on real device**: 00008130-001C601E0E8A001C - iPhone 15 Pro Max
+- **Focus on eliminating freezes and lags** from iAPS implementation
+- **Monitor memory usage** during testing to prevent crashes
+- **Test UI responsiveness** under different load conditions
+
+## Build Commands
+```bash
+# Build for real device
+xcodebuild -workspace FreeAPS.xcworkspace -scheme "FreeAPS X" -destination 'platform=iOS,id=00008130-001C601E0E8A001C' build
+
+# Build for simulator (iPhone 16)
+xcodebuild -workspace FreeAPS.xcworkspace -scheme "FreeAPS X" -destination 'platform=iOS Simulator,name=iPhone 16' build
+```
+
+## Performance Testing Checklist
+- ✅ **UI Freezes**: Test for any UI blocking operations
+- ✅ **Memory Leaks**: Monitor memory usage over time
+- ✅ **Lag Reduction**: Ensure smooth animations and transitions
+- ✅ **Background Processing**: Test heavy operations don't block UI
+- ✅ **Data Processing**: Test with large datasets for performance
+- ✅ **Network Operations**: Test async operations don't freeze UI
+
+## FreeAPS X Specific Testing
+- **Glucose Data Processing**: Test with high-frequency CGM data
+- **Chart Rendering**: Test SwiftUI graphics performance
+- **Nightscout Integration**: Test network operations
+- **Settings Management**: Test configuration changes
+- **Background Tasks**: Test app behavior when backgrounded

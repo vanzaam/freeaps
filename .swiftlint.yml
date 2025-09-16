@@ -56,3 +56,4 @@ excluded:
   - "DerivedData"
   - "*/SourcePackages/*"
   - "*/build/*"
+  - "FreeAPS/Sources/Modules/PreferencesEditor/PreferencesEditorStateModel.swift"

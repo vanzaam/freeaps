@@ -1,0 +1,63 @@
+---
+description: FreeAPS X testing guidelines
+globs: ["**/*.swift", "**/*Test*.swift"]
+alwaysApply: true
+---
+
+# FreeAPS X Testing Guidelines
+
+## Testing Environment
+- Test only in Xcode real device/simulator
+- Test on iPhone 16 simulator (not iPhone 15)
+- Use proper build destinations for iOS Simulator
+- Test on multiple device types when possible
+
+## Build and Compilation
+- Monitor console logs for debugging
+- Use proper build configurations (Debug/Release)
+- Test edge cases and error conditions
+- Verify all dependencies are properly resolved
+
+## Testing Strategy
+- Test core functionality thoroughly
+- Test error handling and edge cases
+- Test network connectivity and offline scenarios
+- Test data persistence and retrieval
+- Test user interface interactions
+
+## Debugging
+- Use Xcode debugger for step-by-step debugging
+- Monitor console output for errors and warnings
+- Use breakpoints strategically
+- Test with different data sets and scenarios
+
+## Performance Testing
+- Monitor memory usage during testing
+- Test with large data sets
+- Verify app performance under different conditions
+- Test battery usage and optimization
+
+## FreeAPS X Performance Testing (Critical)
+- **Eliminate UI freezes**: Test all operations for UI blocking
+- **Reduce lag**: Test animations and transitions for smoothness
+- **Memory optimization**: Monitor memory usage during long sessions
+- **Background processing**: Test heavy operations don't freeze UI
+- **Data processing**: Test with large glucose datasets
+- **Network operations**: Test async operations for responsiveness
+
+## FreeAPS X Specific Testing
+- **Glucose Data Processing**: Test with high-frequency CGM data
+- **Chart Rendering**: Test SwiftUI graphics performance with Path API
+- **Nightscout Integration**: Test network operations and error handling
+- **Settings Management**: Test configuration changes and persistence
+- **Background Tasks**: Test app behavior when backgrounded
+- **Memory Management**: Test for memory leaks in long-running sessions
+
+## Best Practices
+- Test early and test often
+- Use automated testing where possible
+- Document test cases and results
+- Test on different iOS versions
+- Verify accessibility features
+- Test with different user scenarios
+- **Focus on performance improvements** over iAPS

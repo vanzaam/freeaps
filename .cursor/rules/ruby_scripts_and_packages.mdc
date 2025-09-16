@@ -1,0 +1,125 @@
+---
+description: Ruby Scripts and Swift Package Manager Rules
+globs: ["**/*.rb", "**/Package.swift", "**/Gemfile", "**/fix_package_dependencies.sh"]
+alwaysApply: true
+---
+
+# Ruby Scripts and Swift Package Manager Rules
+
+## ✅ SUCCESS: Ruby Scripts Work Perfectly!
+**IMPORTANT:** Ruby scripts successfully add files to Xcode projects without breaking anything when used correctly!
+
+**Recent Success:** Successfully added `EnhancedCrashAnalyzer.swift` and `EnhancedCrashAnalysisView.swift` to the project using `add_enhanced_crash_analyzer.rb` without any issues.
+
+## Workflow for Adding Files
+1. **Create Ruby script** following the pattern in `add_enhanced_crash_analyzer.rb`
+2. **Run the script:** `ruby your_script.rb`
+3. **Fix dependencies:** `./fix_package_dependencies.sh`
+4. **Build in Xcode** - everything works perfectly!
+
+## Problem with Ruby Scripts (Rare Cases)
+In rare cases after using Ruby scripts to add files to Xcode project, Swift Package Manager dependencies might break with errors like:
+- Missing package product 'SwiftCharts'
+- Missing package product 'Swinject' 
+- Missing package product 'SwiftDate'
+- Missing package product 'SlideButton'
+- Missing package product 'SwiftMessages'
+- Missing package product 'Algorithms'
+- Missing package product 'CryptoSwift'
+
+## Automatic Solution
+Always run the fix script after using Ruby scripts:
+
+```bash
+./fix_package_dependencies.sh
+```
+
+This script:
+1. Resolves Swift Package Manager dependencies
+2. Cleans FreeAPS derived data
+3. Prepares project for clean build
+
+## Manual Solution
+If automatic script doesn't work:
+
+```bash
+# 1. Resolve package dependencies
+xcodebuild -resolvePackageDependencies
+
+# 2. Clean derived data
+rm -rf ~/Library/Developer/Xcode/DerivedData/FreeAPS*
+
+# 3. In Xcode: Product -> Clean Build Folder (Cmd+Shift+K)
+```
+
+## Prevention
+- Use `ruby_script_template.rb` for new Ruby scripts - it automatically fixes dependencies
+- Always run `./fix_package_dependencies.sh` after any Ruby script that modifies Xcode project
+- Never modify Xcode project files directly without using proper Ruby scripts
+
+## File Management Rules
+- ✅ **Use Ruby scripts for adding files to Xcode project** - they work perfectly!
+- ✅ **Always use existing Ruby scripts** in project root for file management
+- ✅ **Follow established patterns** in add_*.rb scripts (like `add_enhanced_crash_analyzer.rb`)
+- ✅ **Never use Python scripts** for Xcode project modifications
+- ✅ **Ruby scripts are safe and reliable** when following the proper workflow
+
+## When to Use Fix Script
+Run `./fix_package_dependencies.sh` after:
+- Adding new files via Ruby scripts
+- Modifying Xcode project structure
+- Getting "Missing package product" errors
+- Any Swift Package Manager related build failures
+
+## Emergency Recovery
+If all else fails:
+1. Close Xcode completely
+2. Run `./fix_package_dependencies.sh`
+3. Reopen Xcode
+4. Clean Build Folder (Cmd+Shift+K)
+5. Rebuild project
+
+## Best Practices
+- ✅ **Ruby scripts are the preferred method** for adding files to Xcode projects
+- ✅ **Always backup project** before major changes
+- ✅ **Test builds after any project file changes**
+- ✅ **Use version control** for all project modifications
+- ✅ **Document any additional setup** required for new files
+- ✅ **Follow the proven workflow:** Ruby script → fix dependencies → build
+
+## Success Examples
+- ✅ `add_enhanced_crash_analyzer.rb` - successfully added crash analysis system
+- ✅ `add_telegram_auth_files.rb` - successfully added authentication files
+- ✅ `add_simple_command_system.rb` - successfully added command system
+
+**Conclusion:** Ruby scripts are reliable, safe, and the recommended way to manage Xcode project files!
+
+пример успеха, который не ломает файлы проекта xcode и не требует фикса зависимостей - 
+
+#!/usr/bin/env ruby
+
+require 'xcodeproj'
+
+# Путь к проекту
+project_path = 'FreeAPS.xcodeproj'
+project = Xcodeproj::Project.open(project_path)
+
+# Группы для новых файлов
+logger_group = project.main_group.find_subpath('FreeAPS/Sources/Logger', true)
+views_group = project.main_group.find_subpath('FreeAPS/Sources/Views', true)
+
+# Добавляем EnhancedCrashAnalyzer.swift
+crash_analyzer_file = logger_group.new_file('EnhancedCrashAnalyzer.swift')
+crash_analyzer_target = project.targets.find { |target| target.name == 'FreeAPS' }
+crash_analyzer_target.add_file_references([crash_analyzer_file])
+
+# Добавляем EnhancedCrashAnalysisView.swift
+crash_analysis_view_file = views_group.new_file('EnhancedCrashAnalysisView.swift')
+crash_analysis_view_target = project.targets.find { |target| target.name == 'FreeAPS' }
+crash_analysis_view_target.add_file_references([crash_analysis_view_file])
+
+# Сохраняем проект
+project.save
+
+puts "✅ Успешно добавлены файлы EnhancedCrashAnalyzer.swift и EnhancedCrashAnalysisView.swift в проект"
+puts "📝 Не забудьте запустить ./fix_package_dependencies.sh после этого"

@@ -1,0 +1,69 @@
+---
+description: Logging and notifications
+globs: ["**/*.swift"]
+alwaysApply: true
+---
+
+# Logging and Notifications
+
+## Advanced Logging System
+- **CRITICAL**: Use ControlledLogging system instead of direct os_log/print calls
+- All logging is controlled through LoggingConfiguration.shared
+- Log files are written to Documents/logs/ directory:
+  - Main log: Documents/logs/log.txt (via SimpleLogReporter)
+  - Previous day: Documents/logs/log_prev.txt
+  - Nightscout logs: Documents/logs/nightscout.txt
+  - Notification logs: Documents/logs/notifications.txt
+
+## Controlled Logging Functions
+- Use controlled_print_debug() instead of print()
+- Use controlled_os_log_info() instead of os_log()
+- Use controlled_nightscout_log() for Nightscout operations
+- Use controlled_glucose_log() for database operations
+- Use controlled_network_log() for network operations
+- Use controlled_bluetooth_log() for Bluetooth operations
+
+## Log Categories
+- debug: Detailed debugging information
+- info: General application information
+- network: HTTP requests, responses, network errors
+- nightscout: Nightscout upload operations
+- database: Database operations (GlucoseStorage, FetchGlucoseManager)
+- bluetooth: Bluetooth device connections and commands
+- performance: Performance metrics and timing
+- deviceManager: Pump and sensor management
+- businessLogic: Core application logic
+
+## Logging Configuration
+- Settings accessible via Settings → Extra Features → "Настройки логирования"
+- Quick buttons: "Включить все логи", "Отключить все логи", "Включить все", "Выключить все"
+- Can control console logging, file logging, and individual categories
+- Log rotation and compression settings available
+
+## Notification Management
+- Write notifications ONLY to notifications.txt, not to log files
+- Maintain maximum of 1000 entries in notifications.txt by removing older entries
+- Event names should include timestamps (without seconds) in format: "EventName 2024-01-15 14:30"
+- Use consistent timestamp format across all notifications
+
+## Anti-Spam Measures
+- All direct os_log and print calls have been replaced with controlled functions
+- Log spam has been eliminated through category-based filtering
+- Users can disable specific log categories to reduce noise
+- Performance logging can be disabled to improve app performance
+
+## File Management
+- Keep notifications.txt size manageable (max 1000 entries)
+- Implement automatic cleanup of old notification entries
+- Use efficient file I/O operations for notification writing
+- Handle file system errors gracefully
+- Log files are automatically rotated daily
+
+## Best Practices
+- Use structured logging with consistent message formats
+- Include relevant identifiers (user ID, session ID, etc.) in logs
+- Log important state changes and user actions
+- Provide clear, actionable log messages
+- Use appropriate log levels for different types of events
+- Always use controlled logging functions to respect user preferences
+- Categorize logs appropriately for better filtering

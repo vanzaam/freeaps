@@ -1,0 +1,140 @@
+# Nightscout API Integration
+
+## API Endpoints and Methods
+
+### Core API Endpoints
+- **Base URL**: `https://your-nightscout-site.herokuapp.com`
+- **API Version**: v1
+- **Authentication**: SHA1 hashed API secret in `api-secret` header
+
+### Data Upload Endpoints
+
+#### 1. Glucose Data (CGM Entries)
+- **Endpoint**: `/api/v1/entries.json`
+- **Method**: POST
+- **Content-Type**: `application/json`
+- **Headers**: 
+  - `api-secret`: SHA1 hash of your API secret
+  - `Content-Type`: `application/json`
+- **Data Format**: Array of glucose entries
+- **Required Fields**: `dateString`, `sgv` (glucose value), `direction`
+
+#### 2. Treatments (Insulin, Carbs, etc.)
+- **Endpoint**: `/api/v1/treatments.json`
+- **Method**: POST
+- **Content-Type**: `application/json`
+- **Headers**: 
+  - `api-secret`: SHA1 hash of your API secret
+  - `Content-Type`: `application/json`
+- **Data Format**: Array of treatment objects
+- **Required Fields**: `created_at`, `eventType`, `enteredBy`
+
+#### 3. Device Status
+- **Endpoint**: `/api/v1/devicestatus.json`
+- **Method**: POST
+- **Content-Type**: `application/json`
+- **Headers**: 
+  - `api-secret`: SHA1 hash of your API secret
+  - `Content-Type`: `application/json`
+- **Data Format**: Device status object
+- **Required Fields**: `created_at`, `device`
+
+#### 4. Profiles
+- **Endpoint**: `/api/v1/profile.json`
+- **Method**: POST
+- **Content-Type**: `application/json`
+- **Headers**: 
+  - `api-secret`: SHA1 hash of your API secret
+  - `Content-Type`: `application/json`
+- **Data Format**: Profile object
+- **Required Fields**: `created_at`, `profile`
+
+### Data Retrieval Endpoints
+
+#### 1. Read Glucose Data
+- **Endpoint**: `/api/v1/entries/sgv.json`
+- **Method**: GET
+- **Parameters**: `count`, `find[dateString][$gte]`, `find[dateString][$lte]`
+- **Headers**: `api-secret`: SHA1 hash of your API secret
+
+#### 2. Read Treatments
+- **Endpoint**: `/api/v1/treatments.json`
+- **Method**: GET
+- **Parameters**: `count`, `find[created_at][$gte]`, `find[created_at][$lte]`
+- **Headers**: `api-secret`: SHA1 hash of your API secret
+
+#### 3. Read Profiles
+- **Endpoint**: `/api/v1/profile.json`
+- **Method**: GET
+- **Parameters**: `count`
+- **Headers**: `api-secret`: SHA1 hash of your API secret
+
+#### 4. Read Device Status
+- **Endpoint**: `/api/v1/devicestatus.json`
+- **Method**: GET
+- **Parameters**: `count`, `find[created_at][$gte]`
+- **Headers**: `api-secret`: SHA1 hash of your API secret
+
+### Connection and Status Endpoints
+
+#### 1. Version Check
+- **Endpoint**: `/vcheck.php`
+- **Method**: GET
+- **Purpose**: Check Nightscout version and connectivity
+
+#### 2. Status Check
+- **Endpoint**: `/api/v1/status.json`
+- **Method**: GET
+- **Headers**: `api-secret`: SHA1 hash of your API secret
+- **Purpose**: Get server status and settings
+
+## Implementation Guidelines
+
+### Authentication
+- Always hash API secret using SHA1 before sending
+- Include hashed secret in `api-secret` header
+- Never send plain text API secret
+
+### Error Handling
+- Handle HTTP status codes: 200 (success), 400 (bad request), 401 (unauthorized), 500 (server error)
+- Implement retry logic with exponential backoff
+- Log detailed error information for debugging
+
+### Data Validation
+- Validate all required fields before sending
+- Ensure timestamps are in correct format (ISO 8601)
+- Check data types and ranges
+
+### Rate Limiting
+- Implement proper queuing for uploads
+- Respect server rate limits
+- Use background processing for large data sets
+
+### Best Practices
+- Use HTTPS for all communications
+- Implement proper timeout handling (60 seconds default)
+- Log all API interactions for debugging
+- Handle network connectivity issues gracefully
+- Implement proper data deduplication
+- Use appropriate Content-Type headers
+- Validate server responses
+
+## Common Issues and Solutions
+
+### Upload Failures
+- Check API secret configuration
+- Verify Nightscout URL is correct
+- Ensure required Nightscout features are enabled
+- Check network connectivity
+- Validate data format and required fields
+
+### Authentication Errors
+- Verify API secret is correct
+- Ensure SHA1 hashing is applied
+- Check header format (`api-secret`, not `API-SECRET`)
+
+### Data Format Issues
+- Ensure timestamps are in ISO 8601 format
+- Validate glucose values are within expected range
+- Check required fields are present
+- Verify JSON structure is correct

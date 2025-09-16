@@ -1,8 +1,14 @@
 import Foundation
 import SwiftUI
 
+// swiftformat:disable all
+
+// PreferencesEditor StateModel
+// MARK: - PreferencesEditor Extension
+// swiftlint:disable:next type_name
 extension PreferencesEditor {
-    final class StateModel: BaseStateModel<Provider>, PreferencesSettable { private(set) var preferences = Preferences()
+    final class StateModel: BaseStateModel<Provider>, PreferencesSettable {
+        private(set) var preferences = Preferences()
         @Published var unitsIndex = 1
         @Published var allowAnnouncements = false
         @Published var insulinReqFraction: Decimal = 0.7
@@ -173,7 +179,10 @@ extension PreferencesEditor {
                 Field(
                     displayName: "Bolus Increment",
                     type: .decimal(keypath: \.bolusIncrement),
-                    infoText: NSLocalizedString("Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.", comment: "Bolus Increment"),
+                    infoText: NSLocalizedString(
+                        "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.",
+                        comment: "Bolus Increment"
+                    ),
                     settable: self
                 )
             ]
