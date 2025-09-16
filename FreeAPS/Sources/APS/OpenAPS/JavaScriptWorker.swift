@@ -40,7 +40,12 @@ final class JavaScriptWorker {
     }
 
     private func json(for string: String) -> RawJSON {
-        evaluate(string: "JSON.stringify(\(string), null, 4);")!.toString()!
+        let result = evaluate(string: "JSON.stringify(\(string), null, 4);")
+        guard let jsonString = result?.toString(), !jsonString.isEmpty else {
+            warning(.openAPS, "JavaScript returned empty or null JSON for: \(string)")
+            return "{}"
+        }
+        return jsonString
     }
 
     func call(function: String, with arguments: [JSON]) -> RawJSON {

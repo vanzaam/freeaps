@@ -73,6 +73,7 @@ final class OpenAPS {
                     self.storage.save(suggestion, as: Enact.suggested)
                     promise(.success(suggestion))
                 } else {
+                    warning(.openAPS, "Failed to parse suggestion from JavaScript result: \(suggested.prefix(200))...")
                     promise(.success(nil))
                 }
             }
@@ -104,6 +105,7 @@ final class OpenAPS {
                     self.storage.save(autosens, as: Settings.autosense)
                     promise(.success(autosens))
                 } else {
+                    warning(.openAPS, "Failed to parse autosens from JavaScript result: \(autosensResult.prefix(200))...")
                     promise(.success(nil))
                 }
             }
@@ -145,6 +147,7 @@ final class OpenAPS {
                     self.storage.save(autotuneResult, as: Settings.autotune)
                     promise(.success(autotune))
                 } else {
+                    warning(.openAPS, "Failed to parse autotune from JavaScript result: \(autotuneResult.prefix(200))...")
                     promise(.success(nil))
                 }
             }
@@ -200,6 +203,7 @@ final class OpenAPS {
                     return
                 }
 
+                warning(.openAPS, "Failed to parse profile from JavaScript result: \(profile.prefix(200))...")
                 promise(.success(nil))
             }
         }

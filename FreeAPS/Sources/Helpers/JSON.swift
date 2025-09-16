@@ -11,7 +11,32 @@ extension JSON {
     }
 
     init?(from: String) {
-        guard let data = from.data(using: .utf8) else {
+        // Handle empty or null strings
+        guard !from.isEmpty && from != "null" && from != "undefined" else {
+            debug(.service, "JSON init from empty/null/undefined string")
+            return nil
+        }
+        
+        // Trim whitespace and check for valid JSON structure
+        let trimmed = from.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else {
+            debug(.service, "JSON init from whitespace-only string")
+            return nil
+        }
+        
+        // Check for common malformed JSON patterns
+        if trimmed.hasPrefix("{") && !trimmed.hasSuffix("}") {
+            debug(.service, "JSON init from incomplete object: \(trimmed.prefix(100))...")
+            return nil
+        }
+        
+        if trimmed.hasPrefix("[") && !trimmed.hasSuffix("]") {
+            debug(.service, "JSON init from incomplete array: \(trimmed.prefix(100))...")
+            return nil
+        }
+        
+        guard let data = trimmed.data(using: .utf8) else {
+            debug(.service, "JSON init failed to convert string to data")
             return nil
         }
 
@@ -19,7 +44,9 @@ extension JSON {
             let object = try JSONCoding.decoder.decode(Self.self, from: data)
             self = object
         } catch {
-            warning(.service, "Cannot decode JSON", error: error)
+            // Log the actual JSON content for debugging (truncated)
+            let preview = trimmed.count > 200 ? String(trimmed.prefix(200)) + "..." : trimmed
+            warning(.service, "Cannot decode JSON (preview: \(preview))", error: error)
             return nil
         }
     }
