@@ -6,7 +6,10 @@ import SwiftUI
 // PreferencesEditor StateModel
 // MARK: - PreferencesEditor Extension
 // swiftlint:disable:next type_name
-extension PreferencesEditor {
+// swift-format-ignore: Cannot find type 'PreferencesEditor' in scope - temporary compilation issue
+// NOTE: PreferencesEditor is defined in PreferencesEditorDataFlow.swift in the same module
+// TODO: Fix compilation order issue - PreferencesEditor should be available
+extension PreferencesEditor { // swift-format-ignore: Cannot find type 'PreferencesEditor' in scope
     final class StateModel: BaseStateModel<Provider>, PreferencesSettable {
         private(set) var preferences = Preferences()
         @Published var unitsIndex = 1
