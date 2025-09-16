@@ -1,6 +1,6 @@
 ---
 description: FreeAPS X server deployment (if needed)
-globs:
+globs: ["**/*.swift", "**/*.sh", "**/*.yml", "**/*.yaml"]
 alwaysApply: true
 ---
 

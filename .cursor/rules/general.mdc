@@ -1,3 +1,9 @@
+---
+description: FreeAPS X project rules and guidelines
+globs: ["**/*.swift", "**/*.xcconfig", "**/*.md", "**/*.rb"]
+alwaysApply: true
+---
+
 # FreeAPS X Project Rules and Guidelines
 
 ## Core Project Information

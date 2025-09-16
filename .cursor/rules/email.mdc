@@ -1,6 +1,6 @@
 ---
 description: Email configuration for iAPS mail service
-globs:
+globs: ["**/*.swift", "**/*.sh", "**/*.conf"]
 alwaysApply: true
 ---
 

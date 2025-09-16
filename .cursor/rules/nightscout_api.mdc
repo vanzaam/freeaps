@@ -1,3 +1,9 @@
+---
+description: Nightscout API integration patterns
+globs: ["**/Nightscout*.swift", "**/Network*.swift", "**/API*.swift"]
+alwaysApply: true
+---
+
 # Nightscout API Integration
 
 ## API Endpoints and Methods
