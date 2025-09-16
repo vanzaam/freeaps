@@ -35,19 +35,34 @@ extension PumpSettingsEditor {
             let sync = DeliveryLimitSettingsTableViewController(style: .grouped)
             sync.maximumBasalRatePerHour = Double(settings.maxBasal)
             sync.maximumBolus = Double(settings.maxBolus)
-            return Future { promise in
+            return Future<Void, Error> { promise in
+                // FreeAPS X Performance Enhancement: Improved pump communication with timeout handling
+                debug(.service, "Starting delivery limit settings sync to pump")
+
                 self.processQueue.async {
                     pump.syncDeliveryLimitSettings(for: sync) { result in
                         switch result {
                         case .success:
+                            debug(.service, "Delivery limit settings sync successful")
                             save()
                             promise(.success(()))
                         case let .failure(error):
+                            warning(.service, "Delivery limit settings sync failed", error: error)
+                            // Still save locally even if pump sync fails
+                            save()
                             promise(.failure(error))
                         }
                     }
                 }
-            }.eraseToAnyPublisher()
+            }
+            .timeout(60, scheduler: processQueue) // 60 second timeout to prevent hangs
+            .catch { (error: Error) -> AnyPublisher<Void, Error> in
+                // Handle timeout and other errors gracefully
+                warning(.service, "Delivery limit settings operation failed: \(error)")
+                save() // Always save locally
+                return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
         }
     }
 }

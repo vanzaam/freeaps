@@ -12,29 +12,29 @@ extension JSON {
 
     init?(from: String) {
         // Handle empty or null strings
-        guard !from.isEmpty && from != "null" && from != "undefined" else {
+        guard !from.isEmpty, from != "null", from != "undefined" else {
             debug(.service, "JSON init from empty/null/undefined string")
             return nil
         }
-        
+
         // Trim whitespace and check for valid JSON structure
         let trimmed = from.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else {
             debug(.service, "JSON init from whitespace-only string")
             return nil
         }
-        
+
         // Check for common malformed JSON patterns
-        if trimmed.hasPrefix("{") && !trimmed.hasSuffix("}") {
+        if trimmed.hasPrefix("{"), !trimmed.hasSuffix("}") {
             debug(.service, "JSON init from incomplete object: \(trimmed.prefix(100))...")
             return nil
         }
-        
-        if trimmed.hasPrefix("[") && !trimmed.hasSuffix("]") {
+
+        if trimmed.hasPrefix("["), !trimmed.hasSuffix("]") {
             debug(.service, "JSON init from incomplete array: \(trimmed.prefix(100))...")
             return nil
         }
-        
+
         guard let data = trimmed.data(using: .utf8) else {
             debug(.service, "JSON init failed to convert string to data")
             return nil

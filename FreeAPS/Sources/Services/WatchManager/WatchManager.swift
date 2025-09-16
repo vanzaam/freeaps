@@ -87,13 +87,48 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
     private func sendState() {
         dispatchPrecondition(condition: .onQueue(processQueue))
+
+        // FreeAPS X Performance Enhancement: Improved WatchKit state management
+        guard session.activationState == .activated else {
+            debug(.service, "WCSession not activated, skipping sendState")
+            return
+        }
+
+        guard session.isPaired else {
+            debug(.service, "Watch not paired, skipping sendState")
+            return
+        }
+
+        guard session.isWatchAppInstalled else {
+            debug(.service, "Watch app not installed, skipping sendState")
+            return
+        }
+
         guard let data = try? JSONEncoder().encode(state) else {
             warning(.service, "Cannot encode watch state")
             return
         }
-        guard session.isReachable else { return }
-        session.sendMessageData(data, replyHandler: nil) { error in
-            warning(.service, "Cannot send message to watch", error: error)
+
+        // Validate that we have valid data to send
+        guard !data.isEmpty else {
+            warning(.service, "Watch state data is empty")
+            return
+        }
+
+        if session.isReachable {
+            // Use message data for immediate delivery
+            session.sendMessageData(data, replyHandler: nil) { error in
+                warning(.service, "Cannot send message to watch", error: error)
+            }
+        } else {
+            // Use application context for background delivery
+            do {
+                let context = try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? [:]
+                try session.updateApplicationContext(context)
+                debug(.service, "Updated application context for watch")
+            } catch {
+                warning(.service, "Cannot update application context", error: error)
+            }
         }
     }
 
@@ -198,8 +233,34 @@ extension BaseWatchManager: WCSessionDelegate {
 
     func sessionDidDeactivate(_: WCSession) {}
 
-    func session(_: WCSession, activationDidCompleteWith state: WCSessionActivationState, error _: Error?) {
+    func session(_: WCSession, activationDidCompleteWith state: WCSessionActivationState, error: Error?) {
         debug(.service, "WCSession is activated: \(state == .activated)")
+
+        // FreeAPS X Performance Enhancement: Improve WatchKit error handling
+        if let error = error {
+            warning(.service, "WCSession activation error: \(error.localizedDescription)")
+        }
+
+        // Check if watch app is installed and reachable
+        if state == .activated {
+            debug(.service, "WCSession activated successfully")
+            if session.isPaired {
+                debug(.service, "Watch is paired")
+                if session.isWatchAppInstalled {
+                    debug(.service, "Watch app is installed")
+                    // Send initial state if watch is ready
+                    processQueue.async {
+                        self.sendState()
+                    }
+                } else {
+                    debug(.service, "Watch app is not installed")
+                }
+            } else {
+                debug(.service, "Watch is not paired")
+            }
+        } else {
+            warning(.service, "WCSession activation failed with state: \(state)")
+        }
     }
 
     func session(_: WCSession, didReceiveMessage message: [String: Any]) {

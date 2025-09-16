@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 extension DispatchQueue {
@@ -21,6 +22,49 @@ extension DispatchQueue {
 
     static func safeMainAsync(_ block: @escaping () -> Void) {
         RunLoop.main.perform(inModes: [.default], block: block)
+    }
+
+    /// FreeAPS X Performance Enhancement: Non-blocking main queue operations
+    static func performOnMainIfNeeded<T>(_ block: @escaping () -> T) -> Future<T, Never> {
+        Future { promise in
+            if isMain {
+                // Already on main thread, execute immediately
+                promise(.success(block()))
+            } else {
+                // Schedule on main thread without blocking
+                DispatchQueue.main.async {
+                    promise(.success(block()))
+                }
+            }
+        }
+    }
+
+    /// FreeAPS X Performance Enhancement: Safe sync with timeout to prevent hangs
+    func safeSync<T>(timeout: DispatchTime = .now() + .seconds(5), execute block: @escaping () throws -> T) -> T? {
+        var result: T?
+        var thrownError: Error?
+        let semaphore = DispatchSemaphore(value: 0)
+
+        async {
+            do {
+                result = try block()
+            } catch {
+                thrownError = error
+            }
+            semaphore.signal()
+        }
+
+        if semaphore.wait(timeout: timeout) == .timedOut {
+            debug(.service, "DispatchQueue.safeSync timed out - preventing hang")
+            return nil
+        }
+
+        if let error = thrownError {
+            debug(.service, "DispatchQueue.safeSync error: \(error)")
+            return nil
+        }
+
+        return result
     }
 }
 

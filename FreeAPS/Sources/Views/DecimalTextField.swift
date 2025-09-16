@@ -30,12 +30,11 @@ struct DecimalTextField: UIViewRepresentable {
         textfield.text = cleanInput ? "" : formatter.string(for: value) ?? placeholder
         textfield.textAlignment = .right
 
-        let toolBar = UIToolbar(frame: CGRect(
-            x: 0,
-            y: 0,
-            width: textfield.frame.size.width,
-            height: 44
-        ))
+        // FreeAPS X Performance Enhancement: Fix AutoLayout constraint conflicts in toolbar
+        let toolBar = UIToolbar()
+        toolBar.translatesAutoresizingMaskIntoConstraints = false
+        toolBar.sizeToFit()
+
         let clearButton = UIBarButtonItem(
             title: NSLocalizedString("Clear", comment: "Clear button"),
             style: .plain,
@@ -53,7 +52,7 @@ struct DecimalTextField: UIViewRepresentable {
             target: nil,
             action: nil
         )
-        toolBar.setItems([clearButton, space, doneButton], animated: true)
+        toolBar.setItems([clearButton, space, doneButton], animated: false)
         textfield.inputAccessoryView = toolBar
         if autofocus {
             DispatchQueue.main.async {
