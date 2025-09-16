@@ -44,7 +44,7 @@ alwaysApply: true
 - Keep project file clean and organized
 
 ## Swift Package Manager Issues
-- After using Ruby scripts, ALWAYS run `./fix_package_dependencies.sh`
+
 - See `ruby_scripts_and_packages.mdc` for detailed Swift Package Manager troubleshooting
 - Common errors: Missing package product 'SwiftCharts', 'Swinject', 'SwiftDate', etc.
 - Use `xcodebuild -resolvePackageDependencies` to fix package resolution issues

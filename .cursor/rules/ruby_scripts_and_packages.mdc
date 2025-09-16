@@ -1,6 +1,6 @@
 ---
 description: Ruby Scripts and Swift Package Manager Rules
-globs: ["**/*.rb", "**/Package.swift", "**/Gemfile", "**/fix_package_dependencies.sh"]
+globs: ["**/*.rb", "**/Package.swift", "**/Gemfile"]
 alwaysApply: true
 ---
 
@@ -14,7 +14,7 @@ alwaysApply: true
 ## Workflow for Adding Files
 1. **Create Ruby script** following the pattern in `add_enhanced_crash_analyzer.rb`
 2. **Run the script:** `ruby your_script.rb`
-3. **Fix dependencies:** `./fix_package_dependencies.sh`
+
 4. **Build in Xcode** - everything works perfectly!
 
 ## Problem with Ruby Scripts (Rare Cases)
@@ -27,12 +27,7 @@ In rare cases after using Ruby scripts to add files to Xcode project, Swift Pack
 - Missing package product 'Algorithms'
 - Missing package product 'CryptoSwift'
 
-## Automatic Solution
-Always run the fix script after using Ruby scripts:
 
-```bash
-./fix_package_dependencies.sh
-```
 
 This script:
 1. Resolves Swift Package Manager dependencies
@@ -54,7 +49,6 @@ rm -rf ~/Library/Developer/Xcode/DerivedData/FreeAPS*
 
 ## Prevention
 - Use `ruby_script_template.rb` for new Ruby scripts - it automatically fixes dependencies
-- Always run `./fix_package_dependencies.sh` after any Ruby script that modifies Xcode project
 - Never modify Xcode project files directly without using proper Ruby scripts
 
 ## File Management Rules
@@ -64,17 +58,12 @@ rm -rf ~/Library/Developer/Xcode/DerivedData/FreeAPS*
 - ✅ **Never use Python scripts** for Xcode project modifications
 - ✅ **Ruby scripts are safe and reliable** when following the proper workflow
 
-## When to Use Fix Script
-Run `./fix_package_dependencies.sh` after:
-- Adding new files via Ruby scripts
-- Modifying Xcode project structure
-- Getting "Missing package product" errors
-- Any Swift Package Manager related build failures
+
 
 ## Emergency Recovery
 If all else fails:
 1. Close Xcode completely
-2. Run `./fix_package_dependencies.sh`
+
 3. Reopen Xcode
 4. Clean Build Folder (Cmd+Shift+K)
 5. Rebuild project
@@ -122,4 +111,3 @@ crash_analysis_view_target.add_file_references([crash_analysis_view_file])
 project.save
 
 puts "✅ Успешно добавлены файлы EnhancedCrashAnalyzer.swift и EnhancedCrashAnalysisView.swift в проект"
-puts "📝 Не забудьте запустить ./fix_package_dependencies.sh после этого"

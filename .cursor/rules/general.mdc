@@ -207,7 +207,6 @@ alwaysApply: true
 - **User feedback integration**
 
 ## Swift Package Manager Issues
-- **After using Ruby scripts, ALWAYS run**: `./fix_package_dependencies.sh`
 - **Common errors**: Missing package product 'SwiftCharts', 'Swinject', 'SwiftDate', 'SlideButton', 'SwiftMessages', 'Algorithms', 'CryptoSwift'
 - **Manual fix**: `xcodebuild -resolvePackageDependencies` then clean derived data
 - **Prevention**: Use `ruby_script_template.rb` for new Ruby scripts
