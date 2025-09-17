@@ -107,3 +107,4 @@ puts "Next steps:"
 puts "1. Clean Build Folder in Xcode (Cmd+Shift+K)"
 puts "2. Build and run the project on device"
 puts "3. RileyLinkKitUI dyld loading error should be resolved"
+
