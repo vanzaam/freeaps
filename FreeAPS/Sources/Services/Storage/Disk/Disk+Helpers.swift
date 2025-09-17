@@ -1,25 +1,9 @@
 import Foundation
 
 public extension Disk {
-    /// Get URL for existing file
-    ///
-    /// - Parameters:
-    ///   - path: path of file relative to directory (set nil for entire directory)
-    ///   - directory: directory the file is saved in
-    /// - Returns: URL pointing to file
-    /// - Throws: Error if no file could be found
-    @available(
-        *,
-        deprecated,
-        message: "Use Disk.url(for:in:) instead, it does not throw an error if the file does not exist."
-    ) static func getURL(for path: String?, in directory: Directory) throws -> URL {
-        do {
-            let url = try getExistingFileURL(for: path, in: directory)
-            return url
-        } catch {
-            throw error
-        }
-    }
+    // MARK: Deprecated getURL function removed
+    // Removed deprecated getURL(for:in:) function as it's unused and replaced by url(for:in:)
+    // This improves code maintainability and reduces binary size
 
     /// Construct URL for a potentially existing or non-existent file (Note: replaces `getURL(for:in:)` which would throw an error if file does not exist)
     ///
