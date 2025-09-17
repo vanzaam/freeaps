@@ -97,7 +97,11 @@ extension Calibrations {
             }
             .onAppear(perform: configureView)
             .navigationTitle("Calibrations")
-            .navigationBarItems(trailing: EditButton().disabled(state.calibrations.isEmpty))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton().disabled(state.calibrations.isEmpty)
+                }
+            }
             .navigationBarTitleDisplayMode(.automatic)
         }
 

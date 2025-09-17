@@ -107,7 +107,11 @@ extension Bolus {
             }
             .navigationTitle("Enact Bolus")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Close", action: state.hideModal)
+                }
+            }
         }
     }
 }

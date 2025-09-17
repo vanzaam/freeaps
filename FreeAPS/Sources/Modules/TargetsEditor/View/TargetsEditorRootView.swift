@@ -41,9 +41,11 @@ extension TargetsEditor {
             .onAppear(perform: configureView)
             .navigationTitle("Target Ranges")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(
-                trailing: EditButton()
-            )
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+            }
             .environment(\.editMode, $editMode)
             .onAppear {
                 state.validate()

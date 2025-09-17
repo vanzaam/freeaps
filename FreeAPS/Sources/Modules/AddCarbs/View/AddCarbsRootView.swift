@@ -43,7 +43,11 @@ extension AddCarbs {
             .onAppear(perform: configureView)
             .navigationTitle("Add Carbs")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Close", action: state.hideModal)
+                }
+            }
         }
     }
 }

@@ -42,9 +42,11 @@ extension BasalProfileEditor {
             .onAppear(perform: configureView)
             .navigationTitle("Basal Profile")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(
-                trailing: EditButton()
-            )
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+            }
             .environment(\.editMode, $editMode)
             .onAppear {
                 state.validate()

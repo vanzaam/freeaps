@@ -23,7 +23,7 @@ extension ConfigEditor {
                             Image(systemName: "square.and.arrow.up")
                         }
                     }
-                    
+
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("Save", action: state.save)
                     }

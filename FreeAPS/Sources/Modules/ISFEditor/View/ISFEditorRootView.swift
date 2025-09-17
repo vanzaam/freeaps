@@ -71,9 +71,11 @@ extension ISFEditor {
             .onAppear(perform: configureView)
             .navigationTitle("Insulin Sensitivities")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(
-                trailing: EditButton()
-            )
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+            }
             .environment(\.editMode, $editMode)
             .onAppear {
                 state.validate()

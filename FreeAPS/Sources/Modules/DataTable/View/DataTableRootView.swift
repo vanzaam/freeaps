@@ -50,7 +50,7 @@ extension DataTable {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Close", action: state.hideModal)
                 }
-                
+
                 if state.mode == .glucose {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         EditButton()

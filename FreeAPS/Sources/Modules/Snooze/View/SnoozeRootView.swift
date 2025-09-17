@@ -116,7 +116,11 @@ extension Snooze {
             }
             .navigationBarTitle("Snooze Alerts")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Close", action: state.hideModal)
+                }
+            }
             .onAppear {
                 configureView()
                 snoozeDescription = getSnoozeDescription()

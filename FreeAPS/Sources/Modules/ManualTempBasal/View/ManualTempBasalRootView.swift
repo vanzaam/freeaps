@@ -45,7 +45,11 @@ extension ManualTempBasal {
             .onAppear(perform: configureView)
             .navigationTitle("Manual Temp Basal")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(leading: Button("Close", action: state.hideModal))
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Close", action: state.hideModal)
+                }
+            }
         }
     }
 }
