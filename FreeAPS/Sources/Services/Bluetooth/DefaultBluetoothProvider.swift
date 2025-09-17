@@ -1,16 +1,26 @@
 import CoreBluetooth
 import Foundation
 import LoopKit
+import MinimedKit
+import RileyLinkBLEKit
 
 final class DefaultBluetoothProvider: NSObject, BluetoothProvider {
     static let shared = DefaultBluetoothProvider()
     private let central: CBCentralManager
     private var observers: [(observer: BluetoothObserver, queue: DispatchQueue)] = []
 
+    // Access to the same RileyLink device provider used by pump managers
+    weak var rileyLinkDeviceProvider: RileyLinkDeviceProvider?
+
     override init() {
         central = CBCentralManager(delegate: nil, queue: nil)
         super.init()
         central.delegate = self
+    }
+
+    /// Set the RileyLink device provider to use the same instance as pump managers
+    func setRileyLinkDeviceProvider(_ provider: RileyLinkDeviceProvider) {
+        rileyLinkDeviceProvider = provider
     }
 
     var bluetoothAuthorization: BluetoothAuthorization {

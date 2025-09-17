@@ -86,3 +86,4 @@ branch.txt
 package-lock.json
 node_modules
 oref0
+log/*

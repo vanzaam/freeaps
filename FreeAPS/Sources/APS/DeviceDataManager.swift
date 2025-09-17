@@ -8,6 +8,7 @@ import MockKit
 import OmniKit
 import SwiftDate
 import Swinject
+import UIKit
 import UserNotifications
 
 protocol DeviceDataManager: GlucoseSource {
@@ -63,6 +64,13 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             if let pumpManager = pumpManager {
                 pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
                 pumpName.send(pumpManager.localizedTitle)
+
+                // Connect DefaultBluetoothProvider to the same RileyLink device provider
+                // This ensures pump settings UI sees the same devices as the pump manager
+                if let minimed = pumpManager as? MinimedPumpManager {
+                    DefaultBluetoothProvider.shared.setRileyLinkDeviceProvider(minimed.rileyLinkDeviceProvider)
+                    debug(.deviceManager, "Connected DefaultBluetoothProvider to MinimedPumpManager device provider")
+                }
 
                 if let omnipod = pumpManager as? OmnipodPumpManager {
                     guard let endTime = omnipod.state.podState?.expiresAt else {
@@ -258,12 +266,25 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat: checking for suspend state changes")
         if let minimed = pumpManager as? MinimedPumpManager {
-            // Use lightweight suspend state refresh on heartbeat
-            // This provides rapid response to manual pump suspend/resume actions
-            // while minimizing radio traffic through built-in throttling
-            minimed.refreshSuspendState {
-                // Completion handler - heartbeat processed
-                debug(.deviceManager, "Heartbeat suspend state check completed")
+            // Check app state on main thread, then continue on background queue
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                let isActive = UIApplication.shared.applicationState == .active
+                self.processQueue.async {
+                    // Set adaptive refresh priority based on app state
+                    // Active app (user viewing) = faster refresh (30s)
+                    // Background app = slower refresh (60s) to save battery
+                    let priority = isActive ? MinimedPumpManager.SuspendRefreshPriority.high : MinimedPumpManager.SuspendRefreshPriority.normal
+                    minimed.setSuspendRefreshPriority(priority)
+                    
+                    // Use lightweight suspend state refresh on heartbeat
+                    // This provides rapid response to manual pump suspend/resume actions
+                    // while minimizing radio traffic through built-in throttling
+                    minimed.refreshSuspendState {
+                        // Completion handler - heartbeat processed
+                        debug(.deviceManager, "Heartbeat suspend state check completed")
+                    }
+                }
             }
         }
     }
