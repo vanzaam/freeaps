@@ -150,6 +150,14 @@ public class MinimedPumpManager: RileyLinkPumpManager {
     private var lastSuspendRefresh: Date = .distantPast
     private let minSuspendRefreshInterval: TimeInterval = 15 // seconds
     private var isRefreshingSuspendState: Bool = false
+    private var currentSuspendRefreshInterval: TimeInterval = 15 // seconds
+    private let maxSuspendRefreshInterval: TimeInterval = 120 // seconds
+    private var consecutiveSuspendRefreshFailures: Int = 0
+    public enum SuspendRefreshPriority {
+        case normal
+        case high
+    }
+    private var targetMinSuspendRefreshInterval: TimeInterval = 15 // seconds
 
     private func notifyStatusObservers(oldStatus: PumpManagerStatus) {
         let status = self.status
@@ -937,12 +945,25 @@ extension MinimedPumpManager: PumpManager {
         statusObservers.removeElement(observer)
     }
 
+    /// Adjusts the aggressiveness of lightweight suspend-state refreshes.
+    /// Use `.high` when user actively views pump status screens; `.normal` otherwise.
+    public func setSuspendRefreshPriority(_ priority: SuspendRefreshPriority) {
+        switch priority {
+        case .normal:
+            targetMinSuspendRefreshInterval = 15
+        case .high:
+            targetMinSuspendRefreshInterval = 5
+        }
+        // Gradually converge toward the new target, but never lower than target immediately here.
+        currentSuspendRefreshInterval = max(targetMinSuspendRefreshInterval, currentSuspendRefreshInterval)
+    }
+
     /// Force a quick refresh of suspend/resume state, even if pump data isn't considered stale.
     /// Useful for detecting manual suspend/resume performed on the pump (e.g., 522/722 models without MySentry).
     /// Uses lightweight status read to minimize radio traffic and prevents concurrent refreshes.
     public func refreshSuspendState(completion: (() -> Void)? = nil) {
         // Throttle to avoid excess radio traffic
-        if Date().timeIntervalSince(lastSuspendRefresh) < minSuspendRefreshInterval || isRefreshingSuspendState {
+        if Date().timeIntervalSince(lastSuspendRefresh) < currentSuspendRefreshInterval || isRefreshingSuspendState {
             completion?()
             return
         }
@@ -991,9 +1012,23 @@ extension MinimedPumpManager: PumpManager {
                         self.log.default("Basal delivery state changed: \(oldBasalDeliveryState) → \(newBasalDeliveryState)")
                         self.notifyStatusObservers(oldStatus: oldStatus)
                     }
+                    // Success: reduce interval toward target; reset failure counter
+                    self.consecutiveSuspendRefreshFailures = 0
+                    // Move 25% toward target minimum to avoid oscillations
+                    let reduced = max(self.targetMinSuspendRefreshInterval, self.currentSuspendRefreshInterval * 0.75)
+                    self.currentSuspendRefreshInterval = reduced
+
+                    // Optionally trigger a soft data refresh if state changed and data is stale
+                    if stateChanged && self.isPumpDataStale {
+                        self.ensureCurrentPumpData(completion: nil)
+                    }
                 } catch {
                     // Log error but don't propagate to avoid disrupting heartbeat flow
                     self.log.error("Lightweight suspend check failed: %{public}@", String(describing: error))
+                    // Failure backoff: exponentially back off up to a max
+                    self.consecutiveSuspendRefreshFailures += 1
+                    let next = min(self.maxSuspendRefreshInterval, max(self.currentSuspendRefreshInterval * 2, self.currentSuspendRefreshInterval + 5))
+                    self.currentSuspendRefreshInterval = next
                 }
                 self.isRefreshingSuspendState = false
                 completion?()

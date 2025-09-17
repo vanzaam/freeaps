@@ -257,11 +257,14 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat: checking for suspend state changes")
         if let minimed = pumpManager as? MinimedPumpManager {
+            // Set higher priority when app is active
+            let isActive = UIApplication.shared.applicationState == .active
+            minimed.setSuspendRefreshPriority(isActive ? .high : .normal)
+
             // Use lightweight suspend state refresh on heartbeat
             // This provides rapid response to manual pump suspend/resume actions
-            // while minimizing radio traffic through built-in throttling
+            // while minimizing radio traffic through built-in throttling and backoff
             minimed.refreshSuspendState {
-                // Completion handler - heartbeat processed
                 debug(.deviceManager, "Heartbeat suspend state check completed")
             }
         }
