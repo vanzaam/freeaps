@@ -117,6 +117,7 @@ struct DecimalTextField: UIViewRepresentable {
 }
 
 // MARK: UITextField extensions removed since inputAccessoryView disabled
+
 // This eliminates unused code and improves FreeAPS X performance
 
 // MARK: extension for keyboard to dismiss
