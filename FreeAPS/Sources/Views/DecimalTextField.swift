@@ -32,7 +32,8 @@ struct DecimalTextField: UIViewRepresentable {
 
         // FreeAPS X Performance Enhancement: Fix AutoLayout constraint conflicts in toolbar
         let toolBar = UIToolbar()
-        toolBar.translatesAutoresizingMaskIntoConstraints = false
+        // CRITICAL: For inputAccessoryView, keep autoresizing masks enabled to prevent constraint conflicts
+        toolBar.translatesAutoresizingMaskIntoConstraints = true
         toolBar.sizeToFit()
 
         let clearButton = UIBarButtonItem(

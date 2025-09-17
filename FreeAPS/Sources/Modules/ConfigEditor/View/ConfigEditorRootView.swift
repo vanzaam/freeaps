@@ -23,10 +23,11 @@ extension ConfigEditor {
                             Image(systemName: "square.and.arrow.up")
                         }
                     }
+                    
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button("Save", action: state.save)
+                    }
                 }
-                .navigationBarItems(
-                    trailing: Button("Save", action: state.save)
-                )
                 .sheet(isPresented: $showShareSheet) {
                     ShareSheet(activityItems: [state.provider.urlFor(file: state.file)!])
                 }

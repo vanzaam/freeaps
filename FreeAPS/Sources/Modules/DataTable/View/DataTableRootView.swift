@@ -46,10 +46,17 @@ extension DataTable {
             .onAppear(perform: configureView)
             .navigationTitle("History")
             .navigationBarTitleDisplayMode(.automatic)
-            .navigationBarItems(
-                leading: Button("Close", action: state.hideModal),
-                trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
-            )
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Close", action: state.hideModal)
+                }
+                
+                if state.mode == .glucose {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        EditButton()
+                    }
+                }
+            }
         }
 
         private var treatmentsList: some View {
