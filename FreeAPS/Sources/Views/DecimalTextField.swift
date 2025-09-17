@@ -30,31 +30,10 @@ struct DecimalTextField: UIViewRepresentable {
         textfield.text = cleanInput ? "" : formatter.string(for: value) ?? placeholder
         textfield.textAlignment = .right
 
-        // FreeAPS X Performance Enhancement: Fix AutoLayout constraint conflicts in toolbar
-        let toolBar = UIToolbar()
-        // CRITICAL: For inputAccessoryView, keep autoresizing masks enabled to prevent constraint conflicts
-        toolBar.translatesAutoresizingMaskIntoConstraints = true
-        toolBar.sizeToFit()
-
-        let clearButton = UIBarButtonItem(
-            title: NSLocalizedString("Clear", comment: "Clear button"),
-            style: .plain,
-            target: self,
-            action: #selector(textfield.clearButtonTapped(button:))
-        )
-        let doneButton = UIBarButtonItem(
-            title: NSLocalizedString("Done", comment: "Done button"),
-            style: .done,
-            target: self,
-            action: #selector(textfield.doneButtonTapped(button:))
-        )
-        let space = UIBarButtonItem(
-            barButtonSystemItem: UIBarButtonItem.SystemItem.flexibleSpace,
-            target: nil,
-            action: nil
-        )
-        toolBar.setItems([clearButton, space, doneButton], animated: false)
-        textfield.inputAccessoryView = toolBar
+        // FreeAPS X Performance Enhancement: Remove inputAccessoryView to eliminate constraint conflicts
+        // Users can tap outside or use system keyboard dismiss gestures
+        // This completely eliminates UIToolbar constraint conflicts
+        textfield.inputAccessoryView = nil
         if autofocus {
             DispatchQueue.main.async {
                 textfield.becomeFirstResponder()
