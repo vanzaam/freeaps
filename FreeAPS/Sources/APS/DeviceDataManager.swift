@@ -271,18 +271,17 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 guard let self = self else { return }
                 let isActive = UIApplication.shared.applicationState == .active
                 self.processQueue.async {
-                    // Set adaptive refresh priority based on app state
-                    // Active app (user viewing) = faster refresh (30s)
-                    // Background app = slower refresh (60s) to save battery
-                    let priority = isActive ? MinimedPumpManager.SuspendRefreshPriority.high : MinimedPumpManager.SuspendRefreshPriority.normal
-                    minimed.setSuspendRefreshPriority(priority)
-                    
-                    // Use lightweight suspend state refresh on heartbeat
-                    // This provides rapid response to manual pump suspend/resume actions
-                    // while minimizing radio traffic through built-in throttling
-                    minimed.refreshSuspendState {
-                        // Completion handler - heartbeat processed
-                        debug(.deviceManager, "Heartbeat suspend state check completed")
+                    // Ensure current pump data for active app state
+                    // Active app gets more frequent updates for better responsiveness
+                    // Background app relies on existing data to save battery
+                    if isActive {
+                        minimed.ensureCurrentPumpData { _ in
+                            // Completion handler - heartbeat processed
+                            debug(.deviceManager, "Heartbeat suspend state check completed")
+                        }
+                    } else {
+                        // Background state - just log that heartbeat was received
+                        debug(.deviceManager, "Heartbeat received in background - no refresh needed")
                     }
                 }
             }
