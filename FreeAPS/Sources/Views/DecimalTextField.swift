@@ -116,17 +116,8 @@ struct DecimalTextField: UIViewRepresentable {
     }
 }
 
-// MARK: extension for done button
-
-extension UITextField {
-    @objc func doneButtonTapped(button _: UIBarButtonItem) {
-        resignFirstResponder()
-    }
-
-    @objc func clearButtonTapped(button _: UIBarButtonItem) {
-        text = ""
-    }
-}
+// MARK: UITextField extensions removed since inputAccessoryView disabled
+// This eliminates unused code and improves FreeAPS X performance
 
 // MARK: extension for keyboard to dismiss
 
