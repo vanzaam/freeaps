@@ -19,6 +19,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     private lazy var dexcomSource = DexcomSource()
+    private lazy var g7Source = DexcomSourceG7()
     private lazy var simulatorSource = GlucoseSimulatorSource()
 
     init(resolver: Resolver) {
@@ -36,6 +37,8 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
         case .dexcomG5,
              .dexcomG6:
             glucoseSource = dexcomSource
+        case .dexcomG7:
+            glucoseSource = g7Source
         case .nightscout:
             glucoseSource = nightscoutManager
         case .simulator:
