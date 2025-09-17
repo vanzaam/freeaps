@@ -15,23 +15,36 @@ import MockKit
 
 
 extension MockCGMManager: CGMManagerUI {
-    public var smallImage: UIImage? { return UIImage(named: "CGM Simulator", in: Bundle(for: MockCGMManagerSettingsViewController.self), compatibleWith: nil) }
+
+    fileprivate var appName: String {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+    }
     
-    public static func setupViewController(glucoseTintColor: Color, guidanceColors: GuidanceColors) -> (UIViewController & CGMManagerSetupViewController & CompletionNotifying)? {
-        return nil
+    public static var onboardingImage: UIImage? { return UIImage(named: "CGM Simulator", in: Bundle(for: MockCGMManagerSettingsViewController.self), compatibleWith: nil) }
+
+    public var smallImage: UIImage? { return UIImage(named: "CGM Simulator", in: Bundle(for: MockCGMManagerSettingsViewController.self), compatibleWith: nil) }
+
+    public static func setupViewController(bluetoothProvider: BluetoothProvider, displayGlucosePreference: DisplayGlucosePreference, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool, prefersToSkipUserInteraction: Bool) -> SetupUIResult<CGMManagerViewController, CGMManagerUI> {
+        return .createdAndOnboarded(MockCGMManager())
     }
 
-    public func settingsViewController(for glucoseUnit: HKUnit, glucoseTintColor: Color, guidanceColors: GuidanceColors) -> (UIViewController & CompletionNotifying) {
-        let settings = MockCGMManagerSettingsViewController(cgmManager: self, glucoseUnit: glucoseUnit)
-        let nav = SettingsNavigationViewController(rootViewController: settings)
+    public func settingsViewController(bluetoothProvider: BluetoothProvider, displayGlucosePreference: DisplayGlucosePreference, colorPalette: LoopUIColorPalette, allowDebugFeatures: Bool) -> CGMManagerViewController {
+        let settings = MockCGMManagerSettingsView(cgmManager: self, displayGlucosePreference: displayGlucosePreference, appName: appName, allowDebugFeatures: allowDebugFeatures)
+        let hostingController = DismissibleHostingController(content: settings, isModalInPresentation: false, colorPalette: colorPalette)
+        hostingController.navigationItem.backButtonDisplayMode = .generic
+        let nav = CGMManagerSettingsNavigationViewController(rootViewController: hostingController)
+        nav.navigationBar.prefersLargeTitles = true
         return nav
+    }
+
+    public var cgmStatusBadge: DeviceStatusBadge? {
+        return self.mockSensorState.cgmStatusBadge
     }
     
     public var cgmStatusHighlight: DeviceStatusHighlight? {
         return self.mockSensorState.cgmStatusHighlight
     }
-    
-    // TODO Placeholder. This functionality will come with LOOP-1293
+
     public var cgmLifecycleProgress: DeviceLifecycleProgress? {
         return self.mockSensorState.cgmLifecycleProgress
     }

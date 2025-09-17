@@ -25,15 +25,22 @@ class PumpEventEncodableTests: PersistenceControllerTestCase {
             pumpEvent.mutable = true
             pumpEvent.raw = Data(base64Encoded: "MTIzNDU2Nzg5MA==")!
             pumpEvent.title = "This is the title"
+            pumpEvent.insulinType = .fiasp
+            pumpEvent.automatic = false
+            pumpEvent.alarmType = .other("An Alarm")
             pumpEvent.modificationCounter = 123
-            try! assertPumpEventEncodable(pumpEvent, encodesJSON: """
+            pumpEvent.wasProgrammedByPumpUI = true
+            let data = try! encoder.encode(pumpEvent)
+            XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
+  "alarmType" : "An Alarm",
+  "automatic" : false,
   "createdAt" : "2020-05-14T22:33:48Z",
   "date" : "2020-05-14T22:38:14Z",
-  "deliveredUnits" : 0.56000000000000005,
+  "deliveredUnits" : 0.56,
   "doseType" : "tempBasal",
   "duration" : 1800,
-  "insulinType" : 0,
+  "insulinType" : 3,
   "modificationCounter" : 123,
   "mutable" : true,
   "raw" : "MTIzNDU2Nzg5MA==",
@@ -41,7 +48,8 @@ class PumpEventEncodableTests: PersistenceControllerTestCase {
   "type" : "TempBasal",
   "unit" : "U/hour",
   "uploaded" : false,
-  "value" : 1.23
+  "value" : 1.23,
+  "wasProgrammedByPumpUI" : true
 }
 """
             )
@@ -57,7 +65,10 @@ class PumpEventEncodableTests: PersistenceControllerTestCase {
             pumpEvent.uploaded = true
             pumpEvent.mutable = false
             pumpEvent.modificationCounter = 234
-            try! assertPumpEventEncodable(pumpEvent, encodesJSON: """
+            pumpEvent.wasProgrammedByPumpUI = true
+
+            let data = try! encoder.encode(pumpEvent)
+            XCTAssertEqual(String(data: data, encoding: .utf8), """
 {
   "createdAt" : "2020-05-13T22:33:48Z",
   "date" : "2020-05-13T22:38:14Z",
@@ -65,16 +76,12 @@ class PumpEventEncodableTests: PersistenceControllerTestCase {
   "insulinType" : 0,
   "modificationCounter" : 234,
   "mutable" : false,
-  "uploaded" : true
+  "uploaded" : true,
+  "wasProgrammedByPumpUI" : true
 }
 """
             )
         }
-    }
-
-    private func assertPumpEventEncodable(_ original: PumpEvent, encodesJSON string: String) throws {
-        let data = try encoder.encode(original)
-        XCTAssertEqual(String(data: data, encoding: .utf8), string)
     }
 
     private let dateFormatter = ISO8601DateFormatter()

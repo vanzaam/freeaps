@@ -23,7 +23,7 @@ class ServiceTests: XCTestCase {
     }
 
     func testServiceIdentifier() {
-        XCTAssertEqual(testService.serviceIdentifier, "TestService")
+        XCTAssertEqual(testService.pluginIdentifier, "TestService")
     }
 
     func testLocalizedTitle() {
@@ -36,16 +36,20 @@ fileprivate class TestError: Error {}
 
 fileprivate class TestService: Service {
 
-    static var serviceIdentifier: String { return "TestService" }
+    static var pluginIdentifier: String { return "TestService" }
 
     static var localizedTitle: String { return "Test Service" }
 
     public weak var serviceDelegate: ServiceDelegate?
+    
+    public weak var stateDelegate: StatefulPluggableDelegate?
 
     init() {}
 
     required init?(rawState: RawStateValue) { return nil }
 
     var rawState: RawStateValue { return [:] }
+
+    var isOnboarded = true
 
 }

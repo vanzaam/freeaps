@@ -50,16 +50,23 @@ public class PersistentDeviceLog {
     }
     
     public func log(managerIdentifier: String, deviceIdentifier: String?, type: DeviceLogEntryType, message: String, completion: ((Error?) -> Void)? = nil) {
+        // Grab timestamp at time of log, in case managedObjectContext is busy
+        let timestamp = Date()
+
         managedObjectContext.perform {
             let entry = DeviceLogEntry(context: self.managedObjectContext)
             entry.managerIdentifier = managerIdentifier
             entry.deviceIdentifier = deviceIdentifier
             entry.type = type
             entry.message = message
-            entry.timestamp = Date()
+            entry.timestamp = timestamp
             do {
                 try self.managedObjectContext.save()
-                self.log.default("Logged: %{public}@ (%{public}@) %{public}@", String(describing: type), deviceIdentifier ?? "", message)
+                if type == .error {
+                    self.log.error("%{public}@ (%{public}@) %{public}@", String(describing: type), deviceIdentifier ?? "", message)
+                } else {
+                    self.log.default("%{public}@ (%{public}@) %{public}@", String(describing: type), deviceIdentifier ?? "", message)
+                }
                 completion?(nil)
             } catch let error {
                 self.log.error("Could not store device log entry %{public}@", String(describing: error))
@@ -148,7 +155,7 @@ extension PersistentDeviceLog: CriticalEventLog {
         return result!
     }
 
-    public func export(startDate: Date, endDate: Date, to stream: OutputStream, progress: Progress) -> Error? {
+    public func export(startDate: Date, endDate: Date, to stream: DataOutputStream, progress: Progress) -> Error? {
         let encoder = JSONStreamEncoder(stream: stream)
         var modificationCounter: Int64 = 0
         var fetching = true

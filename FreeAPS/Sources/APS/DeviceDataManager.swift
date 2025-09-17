@@ -30,7 +30,7 @@ private let staticPumpManagers: [PumpManagerUI.Type] = [
 ]
 
 private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = staticPumpManagers.reduce(into: [:]) { map, Type in
-    map[Type.managerIdentifier] = Type
+    map[Type.pluginIdentifier] = Type
 }
 
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
@@ -132,7 +132,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             pumpUpdatePromise = promise
             debug(.deviceManager, "Waiting for pump update and loop recommendation")
             processQueue.safeSync {
-                pumpManager.ensureCurrentPumpData {
+                pumpManager.ensureCurrentPumpData { _ in
                     debug(.deviceManager, "Pump data updated.")
                 }
             }
@@ -167,11 +167,11 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
     }
 
     private func pumpManagerTypeFromRawValue(_ rawValue: [String: Any]) -> PumpManager.Type? {
-        guard let managerIdentifier = rawValue["managerIdentifier"] as? String else {
-            return nil
-        }
-
-        return staticPumpManagersByIdentifier[managerIdentifier]
+        // Prefer new key, fall back to legacy for backward compatibility
+        let identifier = (rawValue["pluginIdentifier"] as? String)
+            ?? (rawValue["managerIdentifier"] as? String)
+        guard let key = identifier else { return nil }
+        return staticPumpManagersByIdentifier[key]
     }
 
     // MARK: - GlucoseSource
@@ -194,7 +194,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
             self.processQueue.async {
                 medtronic.fetchNewDataIfNeeded { result in
                     switch result {
-                    case .noData:
+                    case .noData,
+                         .unreliableData:
                         debug(.deviceManager, "Minilink glucose is empty")
                         promise(.success([]))
                     case let .newData(glucose):
@@ -269,12 +270,8 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                             return
                         }
 
-                        minimed.setSuspendRefreshPriority(isActive ? .high : .normal)
-
-                        // Use lightweight suspend state refresh on heartbeat
-                        // This provides rapid response to manual pump suspend/resume actions
-                        // while minimizing radio traffic through built-in throttling and backoff
-                        minimed.refreshSuspendState {
+                        // Refresh current pump data on heartbeat to pick up suspend/resume changes
+                        minimed.ensureCurrentPumpData { _ in
                             debug(.deviceManager, "Heartbeat suspend state check completed")
                         }
                     }
@@ -343,6 +340,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         _: PumpManager,
         hasNewPumpEvents events: [NewPumpEvent],
         lastReconciliation _: Date?,
+        replacePendingEvents _: Bool,
         completion: @escaping (_ error: Error?) -> Void
     ) {
         dispatchPrecondition(condition: .onQueue(processQueue))
@@ -395,6 +393,24 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func startDateToFilterNewPumpEvents(for _: PumpManager) -> Date {
         lastEventDate?.addingTimeInterval(-15.minutes.timeInterval) ?? Date().addingTimeInterval(-2.hours.timeInterval)
     }
+
+    func pumpManagerPumpWasReplaced(_ _: PumpManager) {
+        debug(.deviceManager, "Pump hardware was replaced")
+        // Reset any cached state we rely on; keep it simple for now
+        lastEventDate = nil
+    }
+
+    func pumpManager(
+        _ _: PumpManager,
+        didRequestBasalRateScheduleChange _: BasalRateSchedule,
+        completion: @escaping (Error?) -> Void
+    ) {
+        // This app does not push a new schedule proactively here; acknowledge without error
+        completion(nil)
+    }
+
+    var detectedSystemTimeOffset: TimeInterval { 0 }
+    var automaticDosingEnabled: Bool { true }
 }
 
 // MARK: - DeviceManagerDelegate
@@ -454,13 +470,45 @@ extension BaseDeviceDataManager: CGMManagerDelegate {
     func credentialStoragePrefix(for _: CGMManager) -> String { "BaseDeviceDataManager" }
 
     func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {}
+
+    func cgmManager(_: CGMManager, hasNew _: [PersistedCgmEvent]) {}
 }
 
-// MARK: - AlertPresenter
+// MARK: - Alerts
 
-extension BaseDeviceDataManager: AlertPresenter {
+extension BaseDeviceDataManager: AlertIssuer {
     func issueAlert(_: Alert) {}
     func retractAlert(identifier _: Alert.Identifier) {}
+}
+
+extension BaseDeviceDataManager: PersistedAlertStore {
+    private static var inMemoryAlerts: [Alert.Identifier: PersistedAlert] = [:]
+
+    func doesIssuedAlertExist(identifier: Alert.Identifier, completion: @escaping (Result<Bool, Error>) -> Void) {
+        let existing = Self.inMemoryAlerts[identifier]
+        completion(.success(existing != nil && existing?.retractedDate == nil))
+    }
+
+    func lookupAllUnretracted(managerIdentifier: String, completion: @escaping (Result<[PersistedAlert], Error>) -> Void) {
+        let results = Self.inMemoryAlerts.values
+            .filter { $0.retractedDate == nil && $0.alert.identifier.managerIdentifier == managerIdentifier }
+        completion(.success(results))
+    }
+
+    func lookupAllUnacknowledgedUnretracted(
+        managerIdentifier: String,
+        completion: @escaping (Result<[PersistedAlert], Error>) -> Void
+    ) {
+        let results = Self.inMemoryAlerts.values.filter {
+            $0.retractedDate == nil && $0.acknowledgedDate == nil && $0.alert.identifier.managerIdentifier == managerIdentifier
+        }
+        completion(.success(results))
+    }
+
+    func recordRetractedAlert(_ alert: Alert, at date: Date) {
+        let persisted = PersistedAlert(alert: alert, issuedDate: date, retractedDate: date, acknowledgedDate: nil)
+        Self.inMemoryAlerts[alert.identifier] = persisted
+    }
 }
 
 // MARK: Others

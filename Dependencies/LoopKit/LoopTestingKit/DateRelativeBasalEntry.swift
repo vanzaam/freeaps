@@ -6,6 +6,7 @@
 //  Copyright © 2019 LoopKit Authors. All rights reserved.
 //
 
+import Foundation
 import LoopKit
 
 
@@ -22,6 +23,6 @@ struct DateRelativeBasalEntry: DateRelativeQuantity, Codable {
 
     func newPumpEvent(relativeTo referenceDate: Date) -> NewPumpEvent {
         let dose = doseEntry(relativeTo: referenceDate)
-        return NewPumpEvent(date: dose.startDate, dose: dose, isMutable: false, raw: .newPumpEventIdentifier(), title: "Basal", type: .tempBasal)
+        return NewPumpEvent(date: dose.startDate, dose: dose, raw: .newPumpEventIdentifier(), title: "Temp Basal", type: .tempBasal)
     }
 }

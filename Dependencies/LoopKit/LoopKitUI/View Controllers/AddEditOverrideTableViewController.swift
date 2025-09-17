@@ -232,8 +232,7 @@ public final class AddEditOverrideTableViewController: UITableViewController {
     }
 
     private lazy var quantityFormatter: QuantityFormatter = {
-        let formatter = QuantityFormatter()
-        formatter.setPreferredNumberFormatter(for: glucoseUnit)
+        let formatter = QuantityFormatter(for: glucoseUnit)
         return formatter
     }()
 
@@ -273,18 +272,14 @@ public final class AddEditOverrideTableViewController: UITableViewController {
                 cell.numberFormatter = quantityFormatter.numberFormatter
                 cell.titleLabel.text = LocalizedString("Target Range", comment: "The text for the custom preset target range setting")
                 cell.range = targetRange
-                cell.unitLabel.text = quantityFormatter.string(from: glucoseUnit)
+                cell.unitLabel.text = quantityFormatter.localizedUnitStringWithPlurality()
                 cell.delegate = self
                 return cell
             case .startDate:
                 let cell = tableView.dequeueReusableCell(withIdentifier: DateAndDurationTableViewCell.className, for: indexPath) as! DateAndDurationTableViewCell
                 cell.titleLabel.text = LocalizedString("Start Time", comment: "The text for the custom preset start time")
                 cell.datePicker.datePickerMode = .dateAndTime
-                #if swift(>=5.2)
-                    if #available(iOS 14.0, *) {
-                        cell.datePicker.preferredDatePickerStyle = .wheels
-                    }
-                #endif
+                cell.datePicker.preferredDatePickerStyle = .wheels
                 cell.datePicker.minimumDate = min(startDate, Date())
                 cell.date = startDate
                 cell.delegate = self

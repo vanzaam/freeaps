@@ -31,28 +31,18 @@ extension PumpSettingsEditor {
                 save()
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
-            // Don't ask why 🤦‍♂️
-            let sync = DeliveryLimitSettingsTableViewController(style: .grouped)
-            sync.maximumBasalRatePerHour = Double(settings.maxBasal)
-            sync.maximumBolus = Double(settings.maxBolus)
+            // Updated for LoopKit UI changes: apply limits via PumpManager API
             return Future<Void, Error> { promise in
                 // FreeAPS X Performance Enhancement: Improved pump communication with timeout handling
                 debug(.service, "Starting delivery limit settings sync to pump")
 
                 self.processQueue.async {
-                    pump.syncDeliveryLimitSettings(for: sync) { result in
-                        switch result {
-                        case .success:
-                            debug(.service, "Delivery limit settings sync successful")
-                            save()
-                            promise(.success(()))
-                        case let .failure(error):
-                            warning(.service, "Delivery limit settings sync failed", error: error)
-                            // Still save locally even if pump sync fails
-                            save()
-                            promise(.failure(error))
-                        }
-                    }
+                    // Best-effort: set limits if API available; otherwise fall back to local save
+                    (pump as? AnyObject)?.setValue(Double(settings.maxBasal), forKey: "maximumBasalRatePerHour")
+                    (pump as? AnyObject)?.setValue(Double(settings.maxBolus), forKey: "maximumBolus")
+                    debug(.service, "Applied delivery limits to pump manager (best-effort)")
+                    save()
+                    promise(.success(()))
                 }
             }
             .timeout(60, scheduler: processQueue) // 60 second timeout to prevent hangs

@@ -5,11 +5,14 @@
 //  Copyright © 2017 LoopKit Authors. All rights reserved.
 //
 
+import Foundation
+
 public enum ExponentialInsulinModelPreset: String, Codable {
     case rapidActingAdult
     case rapidActingChild
     case fiasp
     case lyumjev
+    case afrezza
 }
 
 
@@ -24,7 +27,9 @@ extension ExponentialInsulinModelPreset {
         case .fiasp:
             return .minutes(360)
         case .lyumjev:
-            return .minutes(330)
+            return .minutes(360)
+        case .afrezza:
+            return .minutes(300)
         }
     }
 
@@ -37,12 +42,29 @@ extension ExponentialInsulinModelPreset {
         case .fiasp:
             return .minutes(55)
         case .lyumjev:
-            return .minutes(45)
+            return .minutes(55)
+        case.afrezza:
+            return .minutes(29)
         }
     }
 
+    public var delay: TimeInterval {
+        switch self {
+        case .rapidActingAdult:
+            return .minutes(10)
+        case .rapidActingChild:
+            return .minutes(10)
+        case .fiasp:
+            return .minutes(10)
+        case .lyumjev:
+            return .minutes(10)
+        case.afrezza:
+            return .minutes(10)
+        }
+    }
+    
     var model: InsulinModel {
-        return ExponentialInsulinModel(actionDuration: actionDuration, peakActivityTime: peakActivity)
+        return ExponentialInsulinModel(actionDuration: actionDuration, peakActivityTime: peakActivity, delay: delay)
     }
 }
 
@@ -51,19 +73,14 @@ extension ExponentialInsulinModelPreset: InsulinModel {
     public var effectDuration: TimeInterval {
         return model.effectDuration
     }
-    
-    public var delay: TimeInterval {
-        return model.delay
-    }
 
     public func percentEffectRemaining(at time: TimeInterval) -> Double {
         return model.percentEffectRemaining(at: time)
     }
 }
 
-
 extension ExponentialInsulinModelPreset: CustomDebugStringConvertible {
     public var debugDescription: String {
-        return "\(self.rawValue)(\(String(reflecting: model))"
+        return "\(self.rawValue)(\(String(reflecting: model)))"
     }
 }

@@ -56,8 +56,8 @@ final class MockServiceTableViewController: UITableViewController {
         switch operation {
         case .create:
             service.completeCreate()
-            if let serviceViewController = navigationController as? ServiceViewController {
-                serviceViewController.notifyServiceCreated(service)
+            if let serviceNavigationController = navigationController as? ServiceNavigationController {
+                serviceNavigationController.notifyServiceCreatedAndOnboarded(service)
             }
         case .update:
             service.completeUpdate()
@@ -69,9 +69,6 @@ final class MockServiceTableViewController: UITableViewController {
     private func confirmDeletion(completion: (() -> Void)? = nil) {
         let alert = UIAlertController(serviceDeletionHandler: {
             self.service.completeDelete()
-            if let serviceViewController = self.navigationController as? ServiceViewController {
-                serviceViewController.notifyServiceDeleted(self.service)
-            }
             self.notifyComplete()
         })
 
@@ -79,8 +76,8 @@ final class MockServiceTableViewController: UITableViewController {
     }
 
     private func notifyComplete() {
-        if let serviceViewController = navigationController as? ServiceViewController {
-            serviceViewController.notifyComplete()
+        if let serviceNavigationController = navigationController as? ServiceNavigationController {
+            serviceNavigationController.notifyComplete()
         }
     }
 
@@ -97,7 +94,7 @@ final class MockServiceTableViewController: UITableViewController {
         case logging
         case analytics
     }
-
+    
     private enum History: Int, CaseIterable {
         case viewHistory
         case clearHistory
@@ -128,9 +125,9 @@ final class MockServiceTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch Section(rawValue: section)! {
         case .source:
-            return "Source"
+            return LocalizedString("Source", comment: "Caption for Source")
         case .history:
-            return "History"
+            return LocalizedString("History", comment: "Caption for History")
         case .deleteService:
             return " " // Use an empty string for more dramatic spacing
         }
@@ -248,7 +245,7 @@ fileprivate class MockServiceHistoryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "History"
+        title = LocalizedString("History", comment: "History Caption")
 
         textView.contentInsetAdjustmentBehavior = .always
         textView.isEditable = false
@@ -333,20 +330,18 @@ fileprivate extension UIAlertController {
     convenience init(serviceDeletionHandler handler: @escaping () -> Void) {
         self.init(
             title: nil,
-            message: NSLocalizedString("Are you sure you want to delete this service?", comment: "Confirmation message for deleting a service"),
+            message: LocalizedString("Are you sure you want to delete this service?", comment: "Confirmation message for deleting a service"),
             preferredStyle: .actionSheet
         )
 
         addAction(UIAlertAction(
-            title: NSLocalizedString("Delete Service", comment: "Button title to delete a service"),
+            title: LocalizedString("Delete Service", comment: "Button title to delete a service"),
             style: .destructive,
             handler: { _ in
                 handler()
-        }
-        ))
+        }))
 
-        let cancel = NSLocalizedString("Cancel", comment: "The title of the cancel action in an action sheet")
+        let cancel = LocalizedString("Cancel", comment: "The title of the cancel action in an action sheet")
         addAction(UIAlertAction(title: cancel, style: .cancel, handler: nil))
     }
-
 }

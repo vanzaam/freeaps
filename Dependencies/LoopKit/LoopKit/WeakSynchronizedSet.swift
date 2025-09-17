@@ -13,9 +13,9 @@ import Foundation
 /// Mutations and iterations are thread-safe
 public class WeakSynchronizedSet<Element> {
     private typealias Identifier = ObjectIdentifier
-    private typealias ElementContainer = ElementDispatchContainer<Element>
+    private typealias ElementContainer = ElementDispatchContainer
 
-    private class ElementDispatchContainer<Element> {
+    private class ElementDispatchContainer {
         private weak var _element: AnyObject?
         weak var queue: DispatchQueue?
 
@@ -62,9 +62,7 @@ public class WeakSynchronizedSet<Element> {
     /// - Returns: A reference to the instance for easy chaining
     @discardableResult public func cleanupDeallocatedElements() -> Self {
         elements.mutate { (storage) in
-            for (id, element) in storage where element.element == nil {
-                storage.removeValue(forKey: id)
-            }
+            storage = storage.compactMapValues { $0.element == nil ? nil : $0 }
         }
         return self
     }

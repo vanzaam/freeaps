@@ -6,9 +6,7 @@
 //  Copyright © 2020 LoopKit Authors. All rights reserved.
 //
 
-import UIKit
-
-public protocol DeviceStatusHighlight {
+public protocol DeviceStatusHighlight: Codable {
     /// a localized message from the device
     var localizedMessage: String { get }
 
@@ -19,10 +17,22 @@ public protocol DeviceStatusHighlight {
     var state: DeviceStatusHighlightState { get }
 }
 
-public enum DeviceStatusHighlightState: String, Codable {
+public typealias DeviceStatusHighlightState = DeviceStatusElementState
+
+public enum DeviceStatusElementState: String, Codable {
     case critical
     case normalCGM
     case normalPump
     case warning
-}
 
+    public var localizedDescription: String {
+        switch self {
+        case .critical:
+            return LocalizedString("Device Status Critical", comment: "Accessibility label for device status critical state")
+        case .normalCGM, .normalPump:
+            return LocalizedString("Device Status Normal", comment: "Accessibility label for device status normal state")
+        case .warning:
+            return LocalizedString("Device Status Warning", comment: "Accessibility label for device status warning state")
+        }
+    }
+}

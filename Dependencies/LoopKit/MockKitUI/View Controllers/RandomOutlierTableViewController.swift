@@ -59,10 +59,11 @@ final class RandomOutlierTableViewController: UITableViewController {
         return formatter
     }()
 
-    private lazy var glucoseFormatter = QuantityFormatter()
+    private var glucoseFormatter: QuantityFormatter
 
     init(glucoseUnit: HKUnit) {
         self.glucoseUnit = glucoseUnit
+        self.glucoseFormatter = QuantityFormatter(for: glucoseUnit)
         super.init(style: .grouped)
     }
 
@@ -106,7 +107,7 @@ final class RandomOutlierTableViewController: UITableViewController {
         case .delta:
             cell.textLabel?.text = "Delta"
             if let delta = delta {
-                cell.detailTextLabel?.text = glucoseFormatter.string(from: delta, for: glucoseUnit)
+                cell.detailTextLabel?.text = glucoseFormatter.string(from: delta)
             } else {
                 cell.detailTextLabel?.text = SettingsTableViewCell.NoValueString
             }
@@ -146,7 +147,7 @@ final class RandomOutlierTableViewController: UITableViewController {
 
 extension RandomOutlierTableViewController: PercentageTextFieldTableViewControllerDelegate {
     func percentageTextFieldTableViewControllerDidChangePercentage(_ controller: PercentageTextFieldTableViewController) {
-        chance = controller.percentage?.clamped(to: 0...100)
+        chance = controller.percentage?.clamped(to: 0...1)
         tableView.reloadRows(at: [[0, Row.chance.rawValue]], with: .automatic)
     }
 }
@@ -157,3 +158,4 @@ extension RandomOutlierTableViewController: GlucoseEntryTableViewControllerDeleg
         tableView.reloadRows(at: [[0, Row.delta.rawValue]], with: .automatic)
     }
 }
+

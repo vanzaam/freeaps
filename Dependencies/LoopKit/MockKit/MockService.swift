@@ -7,13 +7,15 @@
 //
 
 import os.log
+import Foundation
 import LoopKit
 
 public final class MockService: Service {
-    
-    public static let serviceIdentifier = "MockService"
+    public static let pluginIdentifier = "MockService"
     
     public static let localizedTitle = "Simulator"
+    
+    public weak var stateDelegate: StatefulPluggableDelegate?
     
     public weak var serviceDelegate: ServiceDelegate?
     
@@ -22,7 +24,7 @@ public final class MockService: Service {
     public var logging: Bool
     
     public var analytics: Bool
-    
+        
     public let maxHistoryItems = 1000
     
     private var lockedHistory = Locked<[String]>([])
@@ -46,20 +48,24 @@ public final class MockService: Service {
     }
     
     public var rawState: RawStateValue {
-        return [
-            "remoteData": remoteData,
-            "logging": logging,
-            "analytics": analytics
-        ]
+        var rawValue: RawStateValue = [:]
+        rawValue["remoteData"] = remoteData
+        rawValue["logging"] = logging
+        rawValue["analytics"] = analytics
+        return rawValue
     }
+    
+    public let isOnboarded = true   // No distinction between created and onboarded
     
     public func completeCreate() {}
     
     public func completeUpdate() {
-        serviceDelegate?.serviceDidUpdateState(self)
+        stateDelegate?.pluginDidUpdateState(self)
     }
     
-    public func completeDelete() {}
+    public func completeDelete() {
+        stateDelegate?.pluginWantsDeletion(self)
+    }
     
     public func clearHistory() {
         lockedHistory.value = []
@@ -78,13 +84,19 @@ public final class MockService: Service {
 }
 
 extension MockService: AnalyticsService {
-    
+    public func recordIdentify(_ property: String, array: [String]) {
+        record("[AnalyticsService] Identify: \(property) \(array)")
+    }
+
     public func recordAnalyticsEvent(_ name: String, withProperties properties: [AnyHashable: Any]?, outOfSession: Bool) {
         if analytics {
             record("[AnalyticsService] \(name) \(String(describing: properties)) \(outOfSession)")
         }
     }
-    
+
+    public func recordIdentify(_ property: String, value: String) {
+        record("[AnalyticsService] Identify: \(property) \(value)")
+    }
 }
 
 extension MockService: LoggingService {
@@ -102,7 +114,20 @@ extension MockService: LoggingService {
 }
 
 extension MockService: RemoteDataService {
+    public func uploadTemporaryOverrideData(updated: [TemporaryScheduleOverride], deleted: [TemporaryScheduleOverride], completion: @escaping (Result<Bool, Error>) -> Void) {
+        if remoteData {
+            record("[RemoteDataService] Upload temporary override data (updated: \(updated.count), deleted: \(deleted.count))")
+        }
+        completion(.success(false))
+    }
     
+    public func uploadAlertData(_ stored: [SyncAlertObject], completion: @escaping (Result<Bool, Error>) -> Void) {
+        if remoteData {
+            record("[RemoteDataService] Upload alert data (stored: \(stored.count))")
+        }
+        completion(.success(false))
+    }
+
     public func uploadCarbData(created: [SyncCarbObject], updated: [SyncCarbObject], deleted: [SyncCarbObject], completion: @escaping (Result<Bool, Error>) -> Void) {
         if remoteData {
             record("[RemoteDataService] Upload carb data (created: \(created.count), updated: \(updated.count), deleted: \(deleted.count))")
@@ -110,21 +135,22 @@ extension MockService: RemoteDataService {
         completion(.success(false))
     }
     
-    public func uploadDoseData(_ stored: [DoseEntry], completion: @escaping (Result<Bool, Error>) -> Void) {
+    public func uploadDoseData(created: [DoseEntry], deleted: [DoseEntry], completion: @escaping (_ result: Result<Bool, Error>) -> Void) {
         if remoteData {
-            record("[RemoteDataService] Upload dose data (stored: \(stored.count))")
+            record("[RemoteDataService] Upload dose data (created: \(created.count), deleted: \(deleted.count))")
         }
         completion(.success(false))
     }
 
     public func uploadDosingDecisionData(_ stored: [StoredDosingDecision], completion: @escaping (Result<Bool, Error>) -> Void) {
         if remoteData {
-            let errored = stored.filter { $0.errors?.isEmpty == false }
-            record("[RemoteDataService] Upload dosing decision data (stored: \(stored.count), errored: \(errored.count))")
+            let warned = stored.filter { !$0.warnings.isEmpty }
+            let errored = stored.filter { !$0.errors.isEmpty }
+            record("[RemoteDataService] Upload dosing decision data (stored: \(stored.count), warned: \(warned.count), errored: \(errored.count))")
         }
         completion(.success(false))
     }
-
+    
     public func uploadGlucoseData(_ stored: [StoredGlucoseSample], completion: @escaping (Result<Bool, Error>) -> Void) {
         if remoteData {
             record("[RemoteDataService] Upload glucose data (stored: \(stored.count))")
@@ -145,5 +171,14 @@ extension MockService: RemoteDataService {
         }
         completion(.success(false))
     }
+
+    public func uploadCgmEventData(_ stored: [LoopKit.PersistedCgmEvent], completion: @escaping (Result<Bool, Error>) -> Void) {
+        if remoteData {
+            record("[RemoteDataService] Upload cgm event data (stored: \(stored.count))")
+        }
+        completion(.success(false))
+    }
     
+    public func remoteNotificationWasReceived(_ notification: [String: AnyObject]) async throws {
+    }
 }

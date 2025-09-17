@@ -9,12 +9,14 @@
 import Foundation
 import UserNotifications
 
-public struct NotificationSettings: Codable, Equatable {
+
+public struct NotificationSettings: Equatable {
     public enum AuthorizationStatus: String, Codable {
         case notDetermined
         case denied
         case authorized
         case provisional
+        case ephemeral
         case unknown
 
         public init(_ authorizationStatus: UNAuthorizationStatus) {
@@ -28,7 +30,7 @@ public struct NotificationSettings: Codable, Equatable {
             case .provisional:
                 self = .provisional
             case .ephemeral:
-                self = .unknown
+                self = .ephemeral
             @unknown default:
                 self = .unknown
             }
@@ -60,7 +62,8 @@ public struct NotificationSettings: Codable, Equatable {
         case banner
         case alert
         case unknown
-
+        
+#if os(iOS)
         public init(_ alertStyle: UNAlertStyle) {
             switch alertStyle {
             case .none:
@@ -73,6 +76,7 @@ public struct NotificationSettings: Codable, Equatable {
                 self = .unknown
             }
         }
+#endif
     }
 
     public enum ShowPreviewsSetting: String, Codable {
@@ -80,7 +84,8 @@ public struct NotificationSettings: Codable, Equatable {
         case whenAuthenticated
         case never
         case unknown
-
+        
+#if os(iOS)
         public init(_ showPreviewsSetting: UNShowPreviewsSetting) {
             switch showPreviewsSetting {
             case .always:
@@ -92,6 +97,16 @@ public struct NotificationSettings: Codable, Equatable {
             @unknown default:
                 self = .unknown
             }
+        }
+#endif
+    }
+
+    public enum TemporaryMuteAlertSetting: Codable, Equatable {
+        case disabled
+        case enabled(TimeInterval)
+
+        public init(enabled: Bool, duration: TimeInterval) {
+            self = enabled ? .enabled(duration) : .disabled
         }
     }
 
@@ -107,6 +122,9 @@ public struct NotificationSettings: Codable, Equatable {
     public let criticalAlertSetting: NotificationSetting
     public let providesAppNotificationSettings: Bool
     public let announcementSetting: NotificationSetting
+    public let timeSensitiveSetting: NotificationSetting
+    public let scheduledDeliverySetting: NotificationSetting
+    public var temporaryMuteAlertsSetting: TemporaryMuteAlertSetting
 
     public init(authorizationStatus: AuthorizationStatus,
                 soundSetting: NotificationSetting,
@@ -119,7 +137,11 @@ public struct NotificationSettings: Codable, Equatable {
                 showPreviewsSetting: ShowPreviewsSetting,
                 criticalAlertSetting: NotificationSetting,
                 providesAppNotificationSettings: Bool,
-                announcementSetting: NotificationSetting) {
+                announcementSetting: NotificationSetting,
+                timeSensitiveSetting: NotificationSetting,
+                scheduledDeliverySetting: NotificationSetting,
+                temporaryMuteAlertsSetting: TemporaryMuteAlertSetting)
+    {
         self.authorizationStatus = authorizationStatus
         self.soundSetting = soundSetting
         self.badgeSetting = badgeSetting
@@ -132,6 +154,50 @@ public struct NotificationSettings: Codable, Equatable {
         self.criticalAlertSetting = criticalAlertSetting
         self.providesAppNotificationSettings = providesAppNotificationSettings
         self.announcementSetting = announcementSetting
+        self.timeSensitiveSetting = timeSensitiveSetting
+        self.scheduledDeliverySetting = scheduledDeliverySetting
+        self.temporaryMuteAlertsSetting = temporaryMuteAlertsSetting
     }
 }
 
+
+extension NotificationSettings: Codable {
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.init(
+            authorizationStatus: try container.decode(AuthorizationStatus.self, forKey: .authorizationStatus),
+            soundSetting: try container.decode(NotificationSetting.self, forKey: .soundSetting),
+            badgeSetting: try container.decode(NotificationSetting.self, forKey: .badgeSetting),
+            alertSetting: try container.decode(NotificationSetting.self, forKey: .alertSetting),
+            notificationCenterSetting: try container.decode(NotificationSetting.self, forKey: .notificationCenterSetting),
+            lockScreenSetting: try container.decode(NotificationSetting.self, forKey: .lockScreenSetting),
+            carPlaySetting: try container.decode(NotificationSetting.self, forKey: .carPlaySetting),
+            alertStyle: try container.decode(AlertStyle.self, forKey: .alertStyle),
+            showPreviewsSetting: try container.decode(ShowPreviewsSetting.self, forKey: .showPreviewsSetting),
+            criticalAlertSetting: try container.decode(NotificationSetting.self, forKey: .criticalAlertSetting),
+            providesAppNotificationSettings: try container.decode(Bool.self, forKey: .providesAppNotificationSettings),
+            announcementSetting: try container.decode(NotificationSetting.self, forKey: .announcementSetting),
+            timeSensitiveSetting: try container.decodeIfPresent(NotificationSetting.self, forKey: .timeSensitiveSetting) ?? .unknown,
+            scheduledDeliverySetting: try container.decodeIfPresent(NotificationSetting.self, forKey: .scheduledDeliverySetting) ?? .unknown,
+            temporaryMuteAlertsSetting: try container.decodeIfPresent(TemporaryMuteAlertSetting.self, forKey: .temporaryMuteAlertsSetting) ?? .disabled)
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case authorizationStatus
+        case soundSetting
+        case badgeSetting
+        case alertSetting
+        case notificationCenterSetting
+        case lockScreenSetting
+        case carPlaySetting
+        case alertStyle
+        case showPreviewsSetting
+        case criticalAlertSetting
+        case providesAppNotificationSettings
+        case announcementSetting
+        case timeSensitiveSetting
+        case scheduledDeliverySetting
+        case temporaryMuteAlertsSetting
+    }
+}

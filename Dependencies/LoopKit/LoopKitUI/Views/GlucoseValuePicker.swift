@@ -51,23 +51,8 @@ public struct GlucoseValuePicker: View {
                        guidanceColors: guidanceColors)
     }
 
-    private var selectableValues: [Double] {
-        Array(Swift.stride(
-            from: bounds.lowerBound.doubleValue(for: unit),
-            through: bounds.upperBound.doubleValue(for: unit),
-            by: stride.doubleValue(for: unit)
-        ))
-    }
-
-    private var stride: HKQuantity {
-        switch unit {
-        case .milligramsPerDeciliter:
-            return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 1)
-        case .millimolesPerLiter:
-            return HKQuantity(unit: .millimolesPerLiter, doubleValue: 0.1)
-        default:
-            fatalError("Unsupported glucose unit \(unit)")
-        }
+    var selectableValues: [Double] {
+        return bounds.roundedDisplayValues(for: unit)
     }
 }
 

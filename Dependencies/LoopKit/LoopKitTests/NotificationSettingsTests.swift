@@ -8,7 +8,7 @@
 
 import XCTest
 import Foundation
-import LoopKit
+@testable import LoopKit
 
 class NotificationSettingsCodableTests: XCTestCase {
     func testCodable() throws {
@@ -24,11 +24,38 @@ class NotificationSettingsCodableTests: XCTestCase {
   "lockScreenSetting" : "disabled",
   "notificationCenterSetting" : "notSupported",
   "providesAppNotificationSettings" : true,
+  "scheduledDeliverySetting" : "disabled",
+  "showPreviewsSetting" : "whenAuthenticated",
+  "soundSetting" : "enabled",
+  "temporaryMuteAlertsSetting" : {
+    "enabled" : {
+      "_0" : 1800
+    }
+  },
+  "timeSensitiveSetting" : "enabled"
+}
+"""
+        )
+    }
+
+    func testMigration() throws {
+        let oldSettingsString = """
+{
+  "alertSetting" : "disabled",
+  "alertStyle" : "banner",
+  "announcementSetting" : "enabled",
+  "authorizationStatus" : "authorized",
+  "badgeSetting" : "enabled",
+  "carPlaySetting" : "notSupported",
+  "criticalAlertSetting" : "enabled",
+  "lockScreenSetting" : "disabled",
+  "notificationCenterSetting" : "notSupported",
+  "providesAppNotificationSettings" : true,
   "showPreviewsSetting" : "whenAuthenticated",
   "soundSetting" : "enabled"
 }
 """
-        )
+        let _ = try decoder.decode(NotificationSettings.self, from: oldSettingsString.data(using: .utf8)!)
     }
     
     private func assertNotificationSettingsCodable(_ original: NotificationSettings, encodesJSON string: String) throws {
@@ -65,6 +92,9 @@ fileprivate extension NotificationSettings {
                                     showPreviewsSetting: .whenAuthenticated,
                                     criticalAlertSetting: .enabled,
                                     providesAppNotificationSettings: true,
-                                    announcementSetting: .enabled)
+                                    announcementSetting: .enabled,
+                                    timeSensitiveSetting: .enabled,
+                                    scheduledDeliverySetting: .disabled,
+                                    temporaryMuteAlertsSetting: .enabled(.minutes(30)))
     }
 }

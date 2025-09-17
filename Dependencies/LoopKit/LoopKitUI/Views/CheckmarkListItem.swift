@@ -43,6 +43,8 @@ public struct CheckmarkListItem: View {
                 description
                     .font(.footnote)
                     .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .multilineTextAlignment(.leading)
             }
 
             Spacer(minLength: 12)
@@ -50,7 +52,6 @@ public struct CheckmarkListItem: View {
             selectionIndicator
                 .accessibility(label: Text(isSelected ? "Selected" : "Unselected"))
         }
-        .animation(nil)
     }
 
     @ViewBuilder
@@ -73,8 +74,8 @@ public struct CheckmarkListItem: View {
                 .foregroundColor(.accentColor)
         } else {
             Circle()
-                .stroke()
-                .foregroundColor(Color(.systemGray4))
+                .stroke(lineWidth: 2)
+                .foregroundColor(Color(.systemGray))
         }
     }
     

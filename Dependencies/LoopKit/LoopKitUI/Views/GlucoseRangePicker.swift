@@ -65,8 +65,7 @@ public struct GlucoseRangePicker: View {
         self.maxValue = maxValue
         self.guardrail = guardrail
         self.formatter = {
-            let quantityFormatter = QuantityFormatter()
-            quantityFormatter.setPreferredNumberFormatter(for: unit)
+            let quantityFormatter = QuantityFormatter(for: unit)
             return quantityFormatter.numberFormatter
         }()
         self.usageContext = usageContext
@@ -75,18 +74,16 @@ public struct GlucoseRangePicker: View {
     public var body: some View {
         switch usageContext {
         case .component(availableWidth: let availableWidth):
-            return AnyView(body(availableWidth: availableWidth))
+            body(availableWidth: availableWidth)
         case .independent:
-            return AnyView(
-                GeometryReader { geometry in
-                    HStack(spacing: 0) {
-                        Spacer()
-                        self.body(availableWidth: geometry.size.width)
-                        Spacer()
-                    }
+            GeometryReader { geometry in
+                HStack(spacing: 0) {
+                    Spacer()
+                    self.body(availableWidth: geometry.size.width)
+                    Spacer()
                 }
-                .frame(height: 216)
-            )
+            }
+            .frame(height: 216)
         }
     }
 
@@ -99,9 +96,7 @@ public struct GlucoseRangePicker: View {
                 bounds: lowerBoundRange,
                 isUnitLabelVisible: false
             )
-            // Ensure the selectable picker values update when either bound changes
-            .id(lowerBound...upperBound)
-            .frame(width: availableWidth / 3.5)
+            .frame(width: availableWidth / 3)
             .overlay(
                 Text(separator)
                     .foregroundColor(Color(.secondaryLabel))
@@ -111,6 +106,7 @@ public struct GlucoseRangePicker: View {
             .padding(.leading, usageContext == .independent ? unitLabelWidth : 0)
             .padding(.trailing, spacing + separatorWidth + spacing)
             .clipped()
+            .compositingGroup()
             .accessibility(identifier: "min_glucose_picker")
 
             GlucoseValuePicker(
@@ -119,11 +115,10 @@ public struct GlucoseRangePicker: View {
                 guardrail: guardrail,
                 bounds: upperBoundRange
             )
-            // Ensure the selectable picker values update when either bound changes
-            .id(lowerBound...upperBound)
-            .frame(width: availableWidth / 3.5)
+            .frame(width: availableWidth / 3)
             .padding(.trailing, unitLabelWidth)
             .clipped()
+            .compositingGroup()
             .accessibility(identifier: "max_glucose_picker")
         }
     }
@@ -139,7 +134,7 @@ public struct GlucoseRangePicker: View {
         return attributedSeparator.size().width
     }
 
-    var spacing: CGFloat { 8 }
+    var spacing: CGFloat { 4 }
 
     var unitLabelWidth: CGFloat {
         let attributedUnitString = NSAttributedString(

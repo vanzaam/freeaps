@@ -6,6 +6,7 @@
 //  Copyright © 2016 Nathan Racklyeft. All rights reserved.
 //
 
+import Foundation
 
 extension Double: RawRepresentable {
     public typealias RawValue = Double
@@ -18,3 +19,11 @@ extension Double: RawRepresentable {
         return self
     }
 }
+
+infix operator =~ : ComparisonPrecedence
+
+ extension Double {
+     static func =~ (lhs: Double, rhs: Double) -> Bool {
+         return fabs(lhs - rhs) < Double.ulpOfOne
+     }
+ }

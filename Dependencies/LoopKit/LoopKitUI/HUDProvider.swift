@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public enum HUDTapAction {
     case presentViewController(UIViewController & CompletionNotifying)
@@ -22,10 +23,10 @@ public protocol HUDProvider: AnyObject  {
     typealias HUDViewRawState = [String: Any]
 
     // Creates the initial view (typically reservoir volume) to be shown in Loop HUD.
-    func createHUDView() -> LevelHUDView?
+    func createHUDView() -> BaseHUDView?
 
     // Returns the action that should be taken when the view is tapped
-    func didTapOnHUDView(_ view: BaseHUDView) -> HUDTapAction?
+    func didTapOnHUDView(_ view: BaseHUDView, allowDebugFeatures: Bool) -> HUDTapAction?
 
     // The current, serializable state of the HUD views
     var hudViewRawState: HUDViewRawState { get }

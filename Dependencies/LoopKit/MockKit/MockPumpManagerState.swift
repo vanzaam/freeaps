@@ -9,7 +9,7 @@
 import Foundation
 import LoopKit
 
-public struct MockPumpManagerState {
+public struct MockPumpManagerState: Equatable {
     public enum DeliverableIncrements: String, CaseIterable {
         case omnipod
         case medtronicX22
@@ -20,10 +20,10 @@ public struct MockPumpManagerState {
             switch self {
             case .omnipod:
                 // 0.05 units for volumes between 0.05-30U
-                return (1...600).map { Double($0) * 0.05 }
+                return (1...600).map { Double($0) / Double(20) }
             case .medtronicX22:
                 // 0.1 units for volumes between 0.1-25U
-                return (1...250).map { Double($0) * 0.1 }
+                return (1...250).map { Double($0) / Double(10) }
             case .medtronicX23:
                 let breakpoints = [0, 1, 10, 25]
                 let scales = [40, 20, 10]
@@ -142,7 +142,10 @@ public struct MockPumpManagerState {
     public var bolusCancelShouldError: Bool
     public var deliverySuspensionShouldError: Bool
     public var deliveryResumptionShouldError: Bool
+    public var bolusShouldCrash: Bool
+    public var tempBasalShouldCrash: Bool
     public var deliveryCommandsShouldTriggerUncertainDelivery: Bool
+    public var replacePumpComponent: Bool
     public var maximumBolus: Double
     public var maximumBasalRatePerHour: Double
     public var suspendState: SuspendState
@@ -155,15 +158,69 @@ public struct MockPumpManagerState {
     public var unfinalizedTempBasal: UnfinalizedDose?
     
     var finalizedDoses: [UnfinalizedDose]
+    var additionalPumpEvents: [NewPumpEvent]
 
     public var progressPercentComplete: Double?
     public var progressWarningThresholdPercentValue: Double?
     public var progressCriticalThresholdPercentValue: Double?
     
-    public var insulinType: InsulinType
+    public var insulinType: InsulinType?
+    public var timeZone: TimeZone
     
     public var dosesToStore: [UnfinalizedDose] {
         return finalizedDoses + [unfinalizedTempBasal, unfinalizedBolus].compactMap {$0}
+    }
+
+    public var pumpEventsToStore: [NewPumpEvent] {
+        return dosesToStore.map { NewPumpEvent($0) } + additionalPumpEvents
+    }
+
+    public init(deliverableIncrements: DeliverableIncrements = .medtronicX22,
+                reservoirUnitsRemaining: Double = 200.0,
+                tempBasalEnactmentShouldError: Bool = false,
+                bolusEnactmentShouldError: Bool = false,
+                bolusCancelShouldError: Bool = false,
+                deliverySuspensionShouldError: Bool = false,
+                deliveryResumptionShouldError: Bool = false,
+                bolusShouldCrash: Bool = false,
+                tempBasalShouldCrash: Bool = false,
+                deliveryCommandsShouldTriggerUncertainDelivery: Bool = false,
+                replacePumpComponent: Bool = false,
+                maximumBolus: Double = 25.0,
+                maximumBasalRatePerHour: Double = 5.0,
+                suspendState: SuspendState = .resumed(Date()),
+                pumpBatteryChargeRemaining: Double? = 1,
+                unfinalizedBolus: UnfinalizedDose? = nil,
+                unfinalizedTempBasal: UnfinalizedDose? = nil,
+                finalizedDoses: [UnfinalizedDose] = [],
+                additionalPumpEvents: [NewPumpEvent] = [],
+                progressWarningThresholdPercentValue: Double? = 0.75,
+                progressCriticalThresholdPercentValue: Double? = 0.9,
+                insulinType: InsulinType = .novolog)
+    {
+        self.deliverableIncrements = deliverableIncrements
+        self.supportedBolusVolumes = deliverableIncrements.supportedBolusVolumes ?? []
+        self.supportedBasalRates = deliverableIncrements.supportedBasalRates ?? []
+        self.reservoirUnitsRemaining = reservoirUnitsRemaining
+        self.tempBasalEnactmentShouldError = tempBasalEnactmentShouldError
+        self.bolusEnactmentShouldError = bolusEnactmentShouldError
+        self.bolusCancelShouldError = bolusCancelShouldError
+        self.deliverySuspensionShouldError = deliverySuspensionShouldError
+        self.deliveryResumptionShouldError = deliveryResumptionShouldError
+        self.bolusShouldCrash = bolusShouldCrash
+        self.tempBasalShouldCrash = tempBasalShouldCrash
+        self.deliveryCommandsShouldTriggerUncertainDelivery = deliveryCommandsShouldTriggerUncertainDelivery
+        self.replacePumpComponent = replacePumpComponent
+        self.maximumBolus = maximumBolus
+        self.maximumBasalRatePerHour = maximumBasalRatePerHour
+        self.suspendState = suspendState
+        self.pumpBatteryChargeRemaining = pumpBatteryChargeRemaining
+        self.finalizedDoses = finalizedDoses
+        self.additionalPumpEvents = additionalPumpEvents
+        self.progressWarningThresholdPercentValue = progressWarningThresholdPercentValue
+        self.progressCriticalThresholdPercentValue = progressCriticalThresholdPercentValue
+        self.insulinType = insulinType
+        self.timeZone = .currentFixed
     }
 
     public mutating func finalizeFinishedDoses() {
@@ -198,7 +255,10 @@ extension MockPumpManagerState: RawRepresentable {
         self.bolusCancelShouldError = rawValue["bolusCancelShouldError"] as? Bool ?? false
         self.deliverySuspensionShouldError = rawValue["deliverySuspensionShouldError"] as? Bool ?? false
         self.deliveryResumptionShouldError = rawValue["deliveryResumptionShouldError"] as? Bool ?? false
+        self.bolusShouldCrash = rawValue["bolusShouldCrash"] as? Bool ?? false
+        self.tempBasalShouldCrash = rawValue["tempBasalShouldCrash"] as? Bool ?? false
         self.deliveryCommandsShouldTriggerUncertainDelivery = rawValue["deliveryCommandsShouldTriggerUncertainDelivery"] as? Bool ?? false
+        self.replacePumpComponent = rawValue["replacePumpComponent"] as? Bool ?? false
         self.maximumBolus = rawValue["maximumBolus"] as? Double ?? 25.0
         self.maximumBasalRatePerHour = rawValue["maximumBasalRatePerHour"] as? Double ?? 5.0
         self.pumpBatteryChargeRemaining = rawValue["pumpBatteryChargeRemaining"] as? Double ?? nil
@@ -228,6 +288,12 @@ extension MockPumpManagerState: RawRepresentable {
             self.finalizedDoses = []
         }
 
+        if let rawAdditionalPumpEvents = rawValue["additionalPumpEvents"] as? [NewPumpEvent.RawValue] {
+            self.additionalPumpEvents = rawAdditionalPumpEvents.compactMap( { NewPumpEvent(rawValue: $0) } )
+        } else {
+            self.additionalPumpEvents = []
+        }
+
         if let rawSuspendState = rawValue["suspendState"] as? SuspendState.RawValue, let suspendState = SuspendState(rawValue: rawSuspendState) {
             self.suspendState = suspendState
         } else {
@@ -239,6 +305,12 @@ extension MockPumpManagerState: RawRepresentable {
         } else {
             self.insulinType = .novolog
         }
+
+        if let timeZoneOffset = rawValue["timeZone"] as? Int {
+            self.timeZone = TimeZone(secondsFromGMT: timeZoneOffset) ?? .currentFixed
+        } else {
+            self.timeZone = .currentFixed
+        }
     }
 
     public var rawValue: RawValue {
@@ -248,7 +320,9 @@ extension MockPumpManagerState: RawRepresentable {
             "supportedBolusVolumes": supportedBolusVolumes,
             "supportedBasalRates": supportedBasalRates,
             "reservoirUnitsRemaining": reservoirUnitsRemaining,
-            "insulinType": insulinType.rawValue
+            "bolusShouldCrash": bolusShouldCrash,
+            "tempBasalShouldCrash": tempBasalShouldCrash,
+            "timeZone": timeZone.secondsFromGMT()
         ]
 
         raw["basalRateSchedule"] = basalRateSchedule?.rawValue
@@ -277,12 +351,17 @@ extension MockPumpManagerState: RawRepresentable {
         if deliveryCommandsShouldTriggerUncertainDelivery {
             raw["deliveryCommandsShouldTriggerUncertainDelivery"] = true
         }
+        
+        if replacePumpComponent {
+            raw["replacePumpComponent"] = true
+        }
 
         if deliveryIsUncertain {
             raw["deliveryIsUncertain"] = true
         }
 
-        raw["finalizedDoses"] = finalizedDoses.map( { $0.rawValue })
+        raw["finalizedDoses"] = finalizedDoses.map({ $0.rawValue })
+        raw["additionalPumpEvents"] = additionalPumpEvents.map({ $0.rawValue })
 
         raw["maximumBolus"] = maximumBolus
         raw["maximumBasalRatePerHour"] = maximumBasalRatePerHour
@@ -298,6 +377,8 @@ extension MockPumpManagerState: RawRepresentable {
         raw["progressPercentComplete"] = progressPercentComplete
         raw["progressWarningThresholdPercentValue"] = progressWarningThresholdPercentValue
         raw["progressCriticalThresholdPercentValue"] = progressCriticalThresholdPercentValue
+        
+        raw["insulinType"] = insulinType?.rawValue
         
         return raw
     }
@@ -322,11 +403,13 @@ extension MockPumpManagerState: CustomDebugStringConvertible {
         * unfinalizedBolus: \(String(describing: unfinalizedBolus))
         * unfinalizedTempBasal: \(String(describing: unfinalizedTempBasal))
         * finalizedDoses: \(finalizedDoses)
+        * additionalPumpEvents: \(additionalPumpEvents)
         * occlusionDetected: \(occlusionDetected)
         * pumpErrorDetected: \(pumpErrorDetected)
         * progressPercentComplete: \(progressPercentComplete as Any)
         * progressWarningThresholdPercentValue: \(progressWarningThresholdPercentValue as Any)
         * progressCriticalThresholdPercentValue: \(progressCriticalThresholdPercentValue as Any)
+        * insulinType: \(insulinType as Any)
         """
     }
 }

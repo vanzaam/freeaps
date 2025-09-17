@@ -4,30 +4,50 @@ import LoopKitUI
 extension PumpManager {
     var rawValue: [String: Any] {
         [
-            "managerIdentifier": type(of: self).managerIdentifier,
+            "pluginIdentifier": pluginIdentifier,
             "state": rawState
         ]
     }
 }
 
 extension PumpManagerUI {
-    static func setupViewController() -> PumpManagerSetupViewController & UIViewController & CompletionNotifying {
+    static func setupUI(
+        initialSettings settings: PumpManagerSetupSettings,
+        bluetoothProvider: BluetoothProvider,
+        colorPalette: LoopUIColorPalette,
+        allowDebugFeatures: Bool,
+        allowedInsulinTypes: [InsulinType]
+    ) -> SetupUIResult<PumpManagerViewController, PumpManagerUI> {
         setupViewController(
-            insulinTintColor: .accentColor,
-            guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
-            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
+            initialSettings: settings,
+            bluetoothProvider: bluetoothProvider,
+            colorPalette: colorPalette,
+            allowDebugFeatures: allowDebugFeatures,
+            prefersToSkipUserInteraction: false,
+            allowedInsulinTypes: allowedInsulinTypes
         )
     }
 
-    func settingsViewController() -> UIViewController & CompletionNotifying {
+    func settingsViewController(
+        bluetoothProvider: BluetoothProvider,
+        colorPalette: LoopUIColorPalette,
+        allowDebugFeatures: Bool,
+        allowedInsulinTypes: [InsulinType]
+    ) -> UIViewController & CompletionNotifying {
         settingsViewController(
-            insulinTintColor: .accentColor,
-            guidanceColors: GuidanceColors(acceptable: .green, warning: .orange, critical: .red),
-            allowedInsulinTypes: [.apidra, .humalog, .novolog, .fiasp, .lyumjev]
+            bluetoothProvider: bluetoothProvider,
+            colorPalette: colorPalette,
+            allowDebugFeatures: allowDebugFeatures,
+            allowedInsulinTypes: allowedInsulinTypes
         )
     }
 }
 
 protocol PumpSettingsBuilder {
-    func settingsViewController() -> UIViewController & CompletionNotifying
+    func settingsViewController(
+        bluetoothProvider: BluetoothProvider,
+        colorPalette: LoopUIColorPalette,
+        allowDebugFeatures: Bool,
+        allowedInsulinTypes: [InsulinType]
+    ) -> UIViewController & CompletionNotifying
 }

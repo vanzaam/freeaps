@@ -32,6 +32,7 @@ public struct G7BackfillMessage: Equatable {
             return nil
         }
 
+        
         timestamp = data[0..<3].toInt()
 
         let glucoseBytes = data[4..<6].to(UInt16.self)
@@ -78,7 +79,19 @@ public struct G7BackfillMessage: Equatable {
         }
     }
 
-    // GlucoseCondition is not available in this LoopKit version; use range checks when needed at call site
+    public var condition: GlucoseCondition? {
+        guard let glucose = glucose else {
+            return nil
+        }
+
+        if glucose < GlucoseLimits.minimum {
+            return .belowRange
+        } else if glucose > GlucoseLimits.maximum {
+            return .aboveRange
+        } else {
+            return nil
+        }
+    }
 }
 
 extension G7BackfillMessage: CustomDebugStringConvertible {

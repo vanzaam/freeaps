@@ -9,12 +9,12 @@
 import LoopKit
 import LoopKitUI
 import MockKit
-
+import Foundation
 
 final class MockHUDProvider: NSObject, HUDProvider {
 
     var managerIdentifier: String {
-        return MockPumpManager.managerIdentifier
+        return MockPumpManager.pluginIdentifier
     }
 
     private var pumpManager: MockPumpManager
@@ -48,14 +48,14 @@ final class MockHUDProvider: NSObject, HUDProvider {
         return rawValue
     }
 
-    func createHUDView() -> LevelHUDView? {
+    func createHUDView() -> BaseHUDView? {
         reservoirView = ReservoirVolumeHUDView.instantiate()
         updateReservoirView()
     
         return reservoirView
     }
 
-    static func createHUDView(rawValue: HUDViewRawState) -> LevelHUDView? {
+    static func createHUDView(rawValue: HUDViewRawState) -> BaseHUDView? {
         guard let pumpReservoirCapacity = rawValue["pumpReservoirCapacity"] as? Double else {
             return nil
         }
@@ -70,7 +70,7 @@ final class MockHUDProvider: NSObject, HUDProvider {
         return reservoirVolumeHUDView
     }
 
-    func didTapOnHUDView(_ view: BaseHUDView) -> HUDTapAction? {
+    func didTapOnHUDView(_ view: BaseHUDView, allowDebugFeatures: Bool) -> HUDTapAction? {
         return nil
     }
 

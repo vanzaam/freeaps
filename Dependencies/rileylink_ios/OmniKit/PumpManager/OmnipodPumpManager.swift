@@ -287,18 +287,18 @@ extension OmnipodPumpManager {
         })
     }
     
-    private func lifecycleProgress(for state: OmnipodPumpManagerState) -> PumpManagerStatus.PumpLifecycleProgress? {
+    private func lifecycleProgress(for state: OmnipodPumpManagerState) -> PumpLifecycleProgress? {
         guard let podState = state.podState, let expiresAt = podState.expiresAt else {
             return nil
         }
         
         switch expiresAt.timeIntervalSinceNow {
         case let remaining where remaining <= 0:
-            return PumpManagerStatus.PumpLifecycleProgress(
+            return PumpLifecycleProgress(
                 percentComplete: 1,
                 progressState: .critical)
         case let remaining where remaining < .hours(24):
-            return PumpManagerStatus.PumpLifecycleProgress(
+            return PumpLifecycleProgress(
                 percentComplete: 1 - remaining / Pod.nominalPodLife,
                 progressState: .warning)
         default:
@@ -314,9 +314,7 @@ extension OmnipodPumpManager {
             pumpBatteryChargeRemaining: nil,
             basalDeliveryState: basalDeliveryState(for: state),
             bolusState: bolusState(for: state),
-            insulinType: state.insulinType,
-            pumpStatusHighlight: pumpStatusHighlight(for: state),
-            pumpLifecycleProgress: lifecycleProgress(for: state)
+            insulinType: state.insulinType
         )
     }
 
@@ -396,16 +394,16 @@ extension OmnipodPumpManager {
         return .noBolus
     }
     
-    private func pumpStatusHighlight(for state: OmnipodPumpManagerState) -> PumpManagerStatus.PumpStatusHighlight? {
+    private func pumpStatusHighlight(for state: OmnipodPumpManagerState) -> PumpStatusHighlight? {
         guard let podState = state.podState else {
-            return PumpManagerStatus.PumpStatusHighlight(
+            return PumpStatusHighlight(
                 localizedMessage: LocalizedString("No Pod", comment: "Status highlight that when no pod is paired."),
                 imageName: "exclamationmark.circle.fill",
                 state: .warning)
         }
         
         if let fault = podState.fault {
-            return PumpManagerStatus.PumpStatusHighlight(
+            return PumpStatusHighlight(
                 localizedMessage: fault.highlightText,
                 imageName: "exclamationmark.circle.fill",
                 state: .critical)
@@ -413,7 +411,7 @@ extension OmnipodPumpManager {
         
         if let reservoir = podState.lastInsulinMeasurements, let level = reservoir.reservoirLevel {
             if level <= 0 {
-                return PumpManagerStatus.PumpStatusHighlight(
+                return PumpStatusHighlight(
                     localizedMessage: LocalizedString("No Insulin", comment: "Status highlight that a pump is out of insulin."),
                     imageName: "exclamationmark.circle.fill",
                     state: .critical)
@@ -421,7 +419,7 @@ extension OmnipodPumpManager {
         }
         
         if case .suspended = podState.suspendState {
-            return PumpManagerStatus.PumpStatusHighlight(
+            return PumpStatusHighlight(
                 localizedMessage: LocalizedString("Insulin Suspended", comment: "Status highlight that insulin delivery was suspended."),
                 imageName: "pause.circle.fill",
                 state: .warning)

@@ -21,19 +21,12 @@ class PumpManagerStatusCodableTests: XCTestCase {
                               softwareVersion: "2.3.4",
                               localIdentifier: "Locally Identified",
                               udiDeviceIdentifier: "U0D1I2")
-        let pumpStatusHighlight = PumpManagerStatus.PumpStatusHighlight(localizedMessage: "Test message",
-                                                                        imageName: "test.image",
-                                                                        state: .normalPump)
-        let pumpLifecycleProgress = PumpManagerStatus.PumpLifecycleProgress(percentComplete: 0.5,
-                                                                            progressState: .warning)
         try assertPumpManagerStatusCodable(PumpManagerStatus(timeZone: TimeZone(identifier: "America/Los_Angeles")!,
                                                              device: device,
                                                              pumpBatteryChargeRemaining: 0.75,
                                                              basalDeliveryState: .active(dateFormatter.date(from: "2020-05-14T15:56:09Z")!),
                                                              bolusState: .noBolus,
                                                              insulinType: .novolog,
-                                                             pumpStatusHighlight: pumpStatusHighlight,
-                                                             pumpLifecycleProgress: pumpLifecycleProgress,
                                                              deliveryIsUncertain: true),
                                            encodesJSON: """
 {
@@ -54,16 +47,38 @@ class PumpManagerStatusCodableTests: XCTestCase {
     "softwareVersion" : "2.3.4",
     "udiDeviceIdentifier" : "U0D1I2"
   },
-  "insulinType\" : 0,
+  "insulinType" : 0,
   "pumpBatteryChargeRemaining" : 0.75,
-  "pumpLifecycleProgress" : {
-    "percentComplete" : 0.5,
-    "progressState" : "warning"
-  },
-  "pumpStatusHighlight" : {
-    "imageName" : "test.image",
-    "localizedMessage" : "Test message",
-    "state" : "normalPump"
+  "timeZone" : {
+    "identifier" : "America/Los_Angeles"
+  }
+}
+"""
+        )
+    }
+
+    func testCodableRequiredOnly() throws {
+        let device = HKDevice(name: nil,
+                              manufacturer: nil,
+                              model: nil,
+                              hardwareVersion: nil,
+                              firmwareVersion: nil,
+                              softwareVersion: nil,
+                              localIdentifier: nil,
+                              udiDeviceIdentifier: "U0D1I2")
+        try assertPumpManagerStatusCodable(PumpManagerStatus(timeZone: TimeZone(identifier: "America/Los_Angeles")!,
+                                                             device: device,
+                                                             pumpBatteryChargeRemaining: nil,
+                                                             basalDeliveryState: nil,
+                                                             bolusState: .noBolus,
+                                                             insulinType: nil,
+                                                             deliveryIsUncertain: true),
+                                           encodesJSON: """
+{
+  "bolusState" : "noBolus",
+  "deliveryIsUncertain" : true,
+  "device" : {
+    "udiDeviceIdentifier" : "U0D1I2"
   },
   "timeZone" : {
     "identifier" : "America/Los_Angeles"
@@ -134,7 +149,6 @@ class PumpManagerStatusBasalDeliveryStateCodableTests: XCTestCase {
   "basalDeliveryState" : {
     "tempBasal" : {
       "dose" : {
-        "automatic" : null,
         "deliveredUnits" : 0.5,
         "description" : "Temporary Basal",
         "endDate" : "2020-05-14T13:43:14Z",
@@ -246,16 +260,17 @@ class PumpManagerStatusBolusStateCodableTests: XCTestCase {
                              unit: .units,
                              deliveredUnits: 1.0,
                              description: "Bolus",
-                             syncIdentifier: "2A67A303-5203-4CB8-8123-79498265368E")
+                             syncIdentifier: "2A67A303-5203-4CB8-8123-79498265368E",
+                             isMutable: true)
         try assertPumpManagerStatusBolusStateCodable(.inProgress(dose), encodesJSON: """
 {
   "bolusState" : {
     "inProgress" : {
       "dose" : {
-        "automatic" : null,
         "deliveredUnits" : 1,
         "description" : "Bolus",
         "endDate" : "2020-05-14T22:38:16Z",
+        "isMutable" : true,
         "startDate" : "2020-05-14T22:38:16Z",
         "syncIdentifier" : "2A67A303-5203-4CB8-8123-79498265368E",
         "type" : "bolus",

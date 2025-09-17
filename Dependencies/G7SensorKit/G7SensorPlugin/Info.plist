@@ -17,13 +17,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>1</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright © 2019 LoopKit Authors. All rights reserved.</string>
 	<key>NSPrincipalClass</key>
 	<string>G7SensorPlugin</string>
 	<key>com.loopkit.Loop.CGMManagerDisplayName</key>
-	<string>Dexcom G7</string>
+	<string>Dexcom G7 / ONE+</string>
 	<key>com.loopkit.Loop.CGMManagerIdentifier</key>
 	<string>G7CGMManager</string>
 </dict>

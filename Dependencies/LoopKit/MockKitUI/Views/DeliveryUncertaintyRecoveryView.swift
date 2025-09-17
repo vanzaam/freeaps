@@ -10,7 +10,7 @@ import SwiftUI
 import LoopKitUI
 
 struct DeliveryUncertaintyRecoveryView: View, HorizontalSizeClassOverride {
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismissAction) private var dismiss
 
     let appName: String
     let uncertaintyStartedAt: Date
@@ -32,7 +32,11 @@ struct DeliveryUncertaintyRecoveryView: View, HorizontalSizeClassOverride {
             }
             .environment(\.horizontalSizeClass, horizontalOverride)
             .navigationBarTitle(Text("Comms Recovery"), displayMode: .large)
-            .navigationBarItems(leading: backButton)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    backButton
+                }
+            }
         }
     }
     
@@ -55,25 +59,42 @@ struct DeliveryUncertaintyRecoveryView_Previews: PreviewProvider {
     }
 }
 
-
-// Wrapper to provide a CompletionNotifying ViewController
-class DeliveryUncertaintyRecoveryViewController: UIHostingController<AnyView>, CompletionNotifying {
+struct _DeliveryUncertaintyRecoveryView: View {
     
-    var completionDelegate: CompletionDelegate?
+    let appName: String
+    let uncertaintyStartedAt: Date
+    let recoverCommsTapped: () -> Void
     
-    init(appName: String, uncertaintyStartedAt: Date, recoverCommsTapped: @escaping () -> Void) {
-        
-        var dismiss = {}
-        
-        let view = DeliveryUncertaintyRecoveryView(appName: appName, uncertaintyStartedAt: uncertaintyStartedAt) {
+    var dismiss: () -> Void = {}
+    
+    var body: some View {
+        DeliveryUncertaintyRecoveryView(
+            appName: appName,
+            uncertaintyStartedAt: uncertaintyStartedAt
+        ) {
             recoverCommsTapped()
             dismiss()
         }
-        .environment(\.dismiss, { dismiss() })
+        .environment(\.dismissAction, { dismiss() })
+    }
+}
+
+// Wrapper to provide a CompletionNotifying ViewController
+class DeliveryUncertaintyRecoveryViewController: UIHostingController<_DeliveryUncertaintyRecoveryView>, CompletionNotifying {
+    
+    public weak var completionDelegate: CompletionDelegate?
+    
+    init(appName: String, uncertaintyStartedAt: Date, recoverCommsTapped: @escaping () -> Void) {
         
-        super.init(rootView: AnyView(view))
+        var view = _DeliveryUncertaintyRecoveryView(
+            appName: appName,
+            uncertaintyStartedAt: uncertaintyStartedAt,
+            recoverCommsTapped: recoverCommsTapped
+        )
         
-        dismiss = {
+        super.init(rootView: view)
+        
+        view.dismiss = {
             self.completionDelegate?.completionNotifyingDidComplete(self)
         }
     }

@@ -8,7 +8,7 @@
 
 import HealthKit
 import LoopKit
-
+import LoopTestingKit
 
 public struct MockCGMDataSource {
     public enum Model {
@@ -16,8 +16,10 @@ public struct MockCGMDataSource {
 
         case constant(_ glucose: HKQuantity)
         case sineCurve(parameters: SineCurveParameters)
+        case scenario(pastSamples: [NewGlucoseSample], futureSamples: [NewGlucoseSample])
         case noData
         case signalLoss
+        case unreliableData
         
         public var isValidSession: Bool {
             switch self {
@@ -51,12 +53,12 @@ public struct MockCGMDataSource {
     }
 
     static let device = HKDevice(
-        name: MockCGMManager.managerIdentifier,
-        manufacturer: nil,
-        model: nil,
+        name: "MockCGMManager",
+        manufacturer: "LoopKit",
+        model: "MockCGMManager",
         hardwareVersion: nil,
         firmwareVersion: nil,
-        softwareVersion: String(LoopKitVersionNumber),
+        softwareVersion: "1.0",
         localIdentifier: nil,
         udiDeviceIdentifier: nil
     )
@@ -142,10 +144,12 @@ extension MockCGMDataSource.Model: RawRepresentable {
     public typealias RawValue = [String: Any]
 
     private enum Kind: String {
-        case constant = "constant"
-        case sineCurve = "sineCurve"
-        case noData = "noData"
-        case signalLoss = "signalLoss"
+        case constant
+        case sineCurve
+        case scenario
+        case noData
+        case signalLoss
+        case unreliableData
     }
 
     private static let unit = HKUnit.milligramsPerDeciliter
@@ -184,10 +188,17 @@ extension MockCGMDataSource.Model: RawRepresentable {
 
             let referenceDate = Date(timeIntervalSince1970: referenceDateSeconds)
             self = .sineCurve(parameters: (baseGlucose: baseGlucose, amplitude: amplitude, period: period, referenceDate: referenceDate))
+        case .scenario:
+            let pastGlucoseValues = (rawValue["pastGlucoseValues"] as? [NewGlucoseSample.RawValue])?.compactMap({ NewGlucoseSample(rawValue: $0) }) ?? []
+            let futureGlucoseValues = (rawValue["futureGlucoseValues"] as? [NewGlucoseSample.RawValue])?.compactMap({ NewGlucoseSample(rawValue: $0) }) ?? []
+            
+            self = .scenario(pastSamples: pastGlucoseValues, futureSamples: futureGlucoseValues)
         case .noData:
             self = .noData
         case .signalLoss:
             self = .signalLoss
+        case .unreliableData:
+            self = .unreliableData
         }
     }
 
@@ -203,7 +214,10 @@ extension MockCGMDataSource.Model: RawRepresentable {
             rawValue["amplitude"] = amplitude.doubleValue(for: unit)
             rawValue["period"] = period
             rawValue["referenceDate"] = referenceDate.timeIntervalSince1970
-        case .noData, .signalLoss:
+        case .scenario(let pastGlucoseValues, let futureGlucoseValues):
+            rawValue["pastGlucoseValues"] = pastGlucoseValues.map(\.rawValue)
+            rawValue["futureGlucoseValues"] = futureGlucoseValues.map(\.rawValue)
+        case .noData, .signalLoss, .unreliableData:
             break
         }
 
@@ -216,10 +230,14 @@ extension MockCGMDataSource.Model: RawRepresentable {
             return .constant
         case .sineCurve:
             return .sineCurve
+        case .scenario:
+            return .scenario
         case .noData:
             return .noData
         case .signalLoss:
             return .signalLoss
+        case .unreliableData:
+            return .unreliableData
         }
     }
 }
@@ -296,23 +314,28 @@ extension MockCGMDataSource: CustomDebugStringConvertible {
 }
 
 public enum MeasurementFrequency: Int, CaseIterable {
-    case fast
     case normal
-    
+    case fast
+    case faster
+
     public var frequency: TimeInterval {
         switch self {
-        case .fast:
-            return TimeInterval(5)
         case .normal:
             return TimeInterval(5*60)
+        case .fast:
+            return TimeInterval(60)
+        case .faster:
+            return TimeInterval(5)
         }
     }
     public var localizedDescription: String {
         switch self {
-        case .fast:
-            return "5 seconds"
         case .normal:
             return "5 minutes"
+        case .fast:
+            return "1 minute"
+        case .faster:
+            return "5 seconds"
         }
     }
 }

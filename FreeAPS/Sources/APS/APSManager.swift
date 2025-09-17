@@ -336,7 +336,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
         debug(.apsManager, "Enact bolus \(roundedAmout), manual \(!isSMB)")
 
-        pump.enactBolus(units: roundedAmout, automatic: isSMB).sink { completion in
+        pump.enactBolus(units: roundedAmout, activationType: isSMB ? .automatic : .manualNoRecommendation).sink { completion in
             if case let .failure(error) = completion {
                 warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
                 self.processError(APSError.pumpError(error))
@@ -386,18 +386,17 @@ final class BaseAPSManager: APSManager, Injectable {
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
         let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
-        pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { result in
-            switch result {
-            case .success:
+        pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { error in
+            if let error = error {
+                debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
+                self.processError(APSError.pumpError(error))
+            } else {
                 debug(.apsManager, "Temp Basal succeeded")
                 let temp = TempBasal(duration: Int(duration / 60), rate: Decimal(rate), temp: .absolute, timestamp: Date())
                 self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
                 if rate == 0, duration == 0 {
                     self.pumpHistoryStorage.saveCancelTempEvents()
                 }
-            case let .failure(error):
-                debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
-                self.processError(APSError.pumpError(error))
             }
         }
     }
@@ -441,14 +440,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 return
             }
             let roundedAmount = pump.roundToSupportedBolusVolume(units: Double(amount))
-            pump.enactBolus(units: roundedAmount, automatic: false) { result in
-                switch result {
-                case .success:
+            pump.enactBolus(units: roundedAmount, activationType: .manualNoRecommendation) { error in
+                if let error = error {
+                    warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
+                } else {
                     debug(.apsManager, "Announcement Bolus succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
                     self.bolusProgress.send(0)
-                case let .failure(error):
-                    warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
                 }
             }
         case let .pump(pumpAction):
@@ -494,13 +492,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 return
             }
             let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: Double(rate))
-            pump.enactTempBasal(unitsPerHour: roundedRate, for: TimeInterval(duration) * 60) { result in
-                switch result {
-                case .success:
+            pump.enactTempBasal(unitsPerHour: roundedRate, for: TimeInterval(duration) * 60) { error in
+                if let error = error {
+                    warning(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
+                } else {
                     debug(.apsManager, "Announcement TempBasal succeeded")
                     self.announcementsStorage.storeAnnouncements([announcement], enacted: true)
-                case let .failure(error):
-                    warning(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
                 }
             }
         }
@@ -553,12 +550,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60)).map { _ in
-                let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, timestamp: Date())
-                self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
-                return ()
-            }
-            .eraseToAnyPublisher()
+            return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60))
+                .map { _ in
+                    let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, timestamp: Date())
+                    self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
+                    return ()
+                }
+                .eraseToAnyPublisher()
         }.eraseToAnyPublisher()
 
         let bolusPublisher: AnyPublisher<Void, Error> = Deferred { () -> AnyPublisher<Void, Error> in
@@ -571,11 +569,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            return pump.enactBolus(units: Double(units), automatic: true).map { _ in
-                self.bolusProgress.send(0)
-                return ()
-            }
-            .eraseToAnyPublisher()
+            return pump.enactBolus(units: Double(units), activationType: .automatic)
+                .map { _ in
+                    self.bolusProgress.send(0)
+                    return ()
+                }
+                .eraseToAnyPublisher()
         }.eraseToAnyPublisher()
 
         return basalPublisher.flatMap { bolusPublisher }.eraseToAnyPublisher()
@@ -617,16 +616,15 @@ final class BaseAPSManager: APSManager, Injectable {
 }
 
 private extension PumpManager {
-    func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval) -> AnyPublisher<DoseEntry, Error> {
+    func enactTempBasal(unitsPerHour: Double, for duration: TimeInterval) -> AnyPublisher<Void, Error> {
         Future { promise in
-            self.enactTempBasal(unitsPerHour: unitsPerHour, for: duration) { result in
-                switch result {
-                case let .success(dose):
-                    debug(.apsManager, "Temp basal succeded: \(unitsPerHour) for: \(duration)")
-                    promise(.success(dose))
-                case let .failure(error):
+            self.enactTempBasal(unitsPerHour: unitsPerHour, for: duration) { error in
+                if let error = error {
                     debug(.apsManager, "Temp basal failed: \(unitsPerHour) for: \(duration)")
                     promise(.failure(error))
+                } else {
+                    debug(.apsManager, "Temp basal succeeded: \(unitsPerHour) for: \(duration)")
+                    promise(.success(()))
                 }
             }
         }
@@ -634,16 +632,15 @@ private extension PumpManager {
         .eraseToAnyPublisher()
     }
 
-    func enactBolus(units: Double, automatic: Bool) -> AnyPublisher<DoseEntry, Error> {
+    func enactBolus(units: Double, activationType: BolusActivationType) -> AnyPublisher<Void, Error> {
         Future { promise in
-            self.enactBolus(units: units, automatic: automatic) { result in
-                switch result {
-                case let .success(dose):
-                    debug(.apsManager, "Bolus succeded: \(units)")
-                    promise(.success(dose))
-                case let .failure(error):
+            self.enactBolus(units: units, activationType: activationType) { error in
+                if let error = error {
                     debug(.apsManager, "Bolus failed: \(units)")
                     promise(.failure(error))
+                } else {
+                    debug(.apsManager, "Bolus succeeded: \(units)")
+                    promise(.success(()))
                 }
             }
         }

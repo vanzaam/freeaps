@@ -23,14 +23,15 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
         self.pumpManager = pumpManager
         self.supportedInsulinTypes = supportedInsulinTypes
         super.init(style: .grouped)
-        title = NSLocalizedString("Pump Settings", comment: "Title for Pump simulator settings")
+        title = pumpManager.localizedTitle
     }
 
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private let quantityFormatter = QuantityFormatter()
+    private let reservoirFormatter = QuantityFormatter(for: .internationalUnit())
+    private let rateFormatter = QuantityFormatter(for: .internationalUnit().unitDivided(by: .hour()))
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,9 +63,6 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
         if let nav = navigationController as? SettingsNavigationViewController {
             nav.notifyComplete()
         }
-        if let nav = navigationController as? MockPumpManagerSetupViewController {
-            nav.finishedSettingsDisplay()
-        }
     }
 
     // MARK: - Data Source
@@ -81,6 +79,7 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
         case suspendResume = 0
         case occlusion
         case pumpError
+        case pumpComponentReplacement
     }
 
     private enum SettingsRow: Int, CaseIterable {
@@ -95,6 +94,8 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
         case bolusCancelErrorToggle
         case suspendErrorToggle
         case resumeErrorToggle
+        case crashOnBolus
+        case crashOnTempBasal
         case uncertainDeliveryErrorToggle
         case lastReconciliationDate
     }
@@ -147,7 +148,7 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
             cell.textLabel?.text = "Current Basal Rate"
             if let currentBasalRate = pumpManager.currentBasalRate {
-                cell.detailTextLabel?.text = quantityFormatter.string(from: currentBasalRate, for: HKUnit.internationalUnit().unitDivided(by: .hour()))
+                cell.detailTextLabel?.text = rateFormatter.string(from: currentBasalRate)
             } else {
                 cell.detailTextLabel?.text = "—"
             }
@@ -173,6 +174,14 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
                     cell.textLabel?.text = "Resolve Pump Error"
                 } else {
                     cell.textLabel?.text = "Cause Pump Error"
+                }
+                return cell
+            case .pumpComponentReplacement:
+                let cell = tableView.dequeueReusableCell(withIdentifier: TextButtonTableViewCell.className, for: indexPath) as! TextButtonTableViewCell
+                if pumpManager.state.replacePumpComponent {
+                    cell.textLabel?.text = "Resume Therapy"
+                } else {
+                    cell.textLabel?.text = "Replace Pump Component"
                 }
                 return cell
             }
@@ -220,13 +229,13 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
                 let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
                 cell.prepareForReuse()
                 cell.textLabel?.text = "Insulin Type"
-                cell.detailTextLabel?.text = pumpManager.state.insulinType.brandName
+                cell.detailTextLabel?.text = pumpManager.state.insulinType?.brandName ?? "Unset"
                 cell.accessoryType = .disclosureIndicator
                 return cell
             case .reservoirRemaining:
                 let cell = tableView.dequeueReusableCell(withIdentifier: SettingsTableViewCell.className, for: indexPath)
                 cell.textLabel?.text = "Reservoir Remaining"
-                cell.detailTextLabel?.text = quantityFormatter.string(from: HKQuantity(unit: .internationalUnit(), doubleValue: pumpManager.state.reservoirUnitsRemaining), for: .internationalUnit())
+                cell.detailTextLabel?.text = reservoirFormatter.string(from: HKQuantity(unit: .internationalUnit(), doubleValue: pumpManager.state.reservoirUnitsRemaining))
                 cell.accessoryType = .disclosureIndicator
                 return cell
             case .batteryRemaining:
@@ -249,12 +258,16 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
                 return switchTableViewCell(for: indexPath, titled: "Error on Suspend", boundTo: \.deliverySuspensionShouldError)
             case .resumeErrorToggle:
                 return switchTableViewCell(for: indexPath, titled: "Error on Resume", boundTo: \.deliveryResumptionShouldError)
+            case .crashOnBolus:
+                return switchTableViewCell(for: indexPath, titled: "Crash on Bolus", boundTo: \.bolusShouldCrash)
+            case .crashOnTempBasal:
+                return switchTableViewCell(for: indexPath, titled: "Crash on Temp Basal", boundTo: \.tempBasalShouldCrash)
             case .uncertainDeliveryErrorToggle:
                 return switchTableViewCell(for: indexPath, titled: "Next Delivery Command Uncertain", boundTo: \.deliveryCommandsShouldTriggerUncertainDelivery)
             case .lastReconciliationDate:
                 let cell = tableView.dequeueReusableCell(withIdentifier: DateAndDurationTableViewCell.className, for: indexPath) as! DateAndDurationTableViewCell
                 cell.titleLabel.text = "Last Reconciliation Date"
-                cell.date = pumpManager.lastReconciliation ?? Date()
+                cell.date = pumpManager.lastSync ?? Date()
                 cell.datePicker.maximumDate = Date()
                 cell.datePicker.minimumDate = Date() - .hours(48)
                 cell.datePicker.datePickerMode = .dateAndTime
@@ -326,11 +339,18 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
                 }
                 tableView.deselectRow(at: indexPath, animated: true)
             case .occlusion:
+                pumpManager.injectPumpEvents(pumpManager.state.occlusionDetected ? [NewPumpEvent(alarmClearAt: Date())] : [NewPumpEvent(alarmAt: Date(), alarmType: .occlusion)])
                 pumpManager.state.occlusionDetected = !pumpManager.state.occlusionDetected
                 tableView.deselectRow(at: indexPath, animated: true)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
             case .pumpError:
+                pumpManager.injectPumpEvents(pumpManager.state.pumpErrorDetected ? [NewPumpEvent(alarmClearAt: Date())] : [NewPumpEvent(alarmAt: Date(), alarmType: .other("Mock Pump Error"))])
                 pumpManager.state.pumpErrorDetected = !pumpManager.state.pumpErrorDetected
+                tableView.deselectRow(at: indexPath, animated: true)
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            case .pumpComponentReplacement:
+                pumpManager.injectPumpEvents(pumpManager.state.replacePumpComponent ? [NewPumpEvent(type: .replaceComponent(componentType: .pump))] : [NewPumpEvent(type: .replaceComponent(componentType: .pump))])
+                pumpManager.state.replacePumpComponent = !pumpManager.state.replacePumpComponent
                 tableView.deselectRow(at: indexPath, animated: true)
                 tableView.reloadRows(at: [indexPath], with: .automatic)
             }
@@ -360,10 +380,10 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
                 }
                 break
             case .insulinType:
-                let view = InsulinTypeSetting(initialValue: pumpManager.state.insulinType, supportedInsulinTypes: InsulinType.allCases) { (newType) in
+                let view = InsulinTypeSetting(initialValue: pumpManager.state.insulinType, supportedInsulinTypes: InsulinType.allCases, allowUnsetInsulinType: true) { (newType) in
                     self.pumpManager.state.insulinType = newType
                 }
-                let vc = DismissibleHostingController(rootView: view) {
+                let vc = DismissibleHostingController(content: view) {
                     tableView.reloadRows(at: [indexPath], with: .automatic)
                 }
                 vc.title = LocalizedString("Insulin Type", comment: "Controller title for insulin type selection screen")
@@ -382,12 +402,12 @@ final class MockPumpManagerSettingsViewController: UITableViewController {
                 vc.indexPath = indexPath
                 vc.percentageDelegate = self
                 show(vc, sender: sender)
-            case .tempBasalErrorToggle, .bolusErrorToggle, .bolusCancelErrorToggle, .suspendErrorToggle, .resumeErrorToggle, .uncertainDeliveryErrorToggle:
-                break
             case .lastReconciliationDate:
                 tableView.deselectRow(at: indexPath, animated: true)
                 tableView.beginUpdates()
                 tableView.endUpdates()
+            default:
+                break
             }
         case .statusProgress:
             let vc = PercentageTextFieldTableViewController()
@@ -560,7 +580,7 @@ private extension UIAlertController {
         let message: String
 
         if let localizedError = error as? LocalizedError {
-            let sentenceFormat = NSLocalizedString("%@.", comment: "Appends a full-stop to a statement")
+            let sentenceFormat = LocalizedString("%@.", comment: "Appends a full-stop to a statement")
             message = [localizedError.failureReason, localizedError.recoverySuggestion].compactMap({ $0 }).map({
                 String(format: sentenceFormat, $0)
             }).joined(separator: "\n")
@@ -575,7 +595,7 @@ private extension UIAlertController {
         )
 
         addAction(UIAlertAction(
-            title: NSLocalizedString("OK", comment: "Button title to acknowledge error"),
+            title: LocalizedString("OK", comment: "Button title to acknowledge error"),
             style: .default,
             handler: nil
         ))
@@ -604,5 +624,32 @@ extension MockPumpManagerSettingsViewController: SupportedRangeTableViewControll
         default:
             assertionFailure()
         }
+    }
+}
+
+fileprivate extension NewPumpEvent {
+    init(alarmAt date: Date, alarmType: PumpAlarmType? = nil) {
+        self.init(date: date,
+                  dose: nil,
+                  raw: Data(UUID().uuidString.utf8),
+                  title: "alarm[\(alarmType?.rawValue ?? "")]",
+                  type: .alarm,
+                  alarmType: alarmType)
+    }
+
+    init(alarmClearAt date: Date) {
+        self.init(date: date,
+                  dose: nil,
+                  raw: Data(UUID().uuidString.utf8),
+                  title: "alarmClear",
+                  type: .alarmClear)
+    }
+    
+    init(type: PumpEventType) {
+        self.init(date: Date(),
+                  dose: nil,
+                  raw: Data(UUID().uuidString.utf8),
+                  title: "type[\(type.rawValue)]",
+                  type: type)
     }
 }

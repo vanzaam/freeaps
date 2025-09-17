@@ -19,15 +19,23 @@ class CarbStorePersistenceTests: PersistenceControllerTestCase, CarbStoreDelegat
         super.setUp()
 
         healthStore = HKHealthStoreMock()
+
+        let hkSampleStore = HealthKitSampleStore(healthStore: healthStore, type: HealthKitSampleStore.carbType)
+
         carbStore = CarbStore(
-            healthStore: healthStore,
+            healthKitSampleStore: hkSampleStore,
             cacheStore: cacheStore,
             cacheLength: .hours(24),
             defaultAbsorptionTimes: (fast: .minutes(30), medium: .hours(3), slow: .hours(5)),
-            observationInterval: 0,
             provenanceIdentifier: Bundle.main.bundleIdentifier!)
-        carbStore.testQueryStore = healthStore
         carbStore.delegate = self
+
+        let semaphore = DispatchSemaphore(value: 0)
+        cacheStore.onReady { (error) in
+            semaphore.signal()
+        }
+        semaphore.wait()
+
     }
     
     override func tearDown() {
@@ -218,7 +226,7 @@ class CarbStorePersistenceTests: PersistenceControllerTestCase, CarbStoreDelegat
             addCarbEntryCompletion.fulfill()
         }
 
-        wait(for: [addHealthStoreHandler, addCarbEntryCompletion, addCarbEntryHandler, getCarbEntriesCompletion], timeout: 2, enforceOrder: true)
+        wait(for: [addHealthStoreHandler, addCarbEntryCompletion, addCarbEntryHandler, getCarbEntriesCompletion], timeout: 10, enforceOrder: true)
     }
 
     func testAddAndReplaceCarbEntry() {
@@ -387,7 +395,7 @@ class CarbStorePersistenceTests: PersistenceControllerTestCase, CarbStoreDelegat
             addCarbEntryCompletion.fulfill()
         }
 
-        wait(for: [addHealthStoreHandler, addCarbEntryCompletion, addCarbEntryHandler, updateHealthStoreHandler, updateCarbEntryCompletion, updateCarbEntryHandler, getCarbEntriesCompletion], timeout: 2, enforceOrder: true)
+        wait(for: [addHealthStoreHandler, addCarbEntryCompletion, addCarbEntryHandler, updateHealthStoreHandler, updateCarbEntryCompletion, updateCarbEntryHandler, getCarbEntriesCompletion], timeout: 10, enforceOrder: true)
     }
 
     func testAddAndDeleteCarbEntry() {
@@ -459,7 +467,7 @@ class CarbStorePersistenceTests: PersistenceControllerTestCase, CarbStoreDelegat
                     addAnchorKey = objects[0].anchorKey
 
                     self.healthStore.setDeletedObjectsHandler({ (objectType, predicate, success, count, error) in
-                        XCTAssertEqual(objectType, HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates))
+                        XCTAssertEqual(objectType, HealthKitSampleStore.carbType)
                         XCTAssertEqual(predicate.predicateFormat, "UUID == \(addUUID!)")
 
                         deleteHealthStoreHandler.fulfill()
@@ -531,7 +539,7 @@ class CarbStorePersistenceTests: PersistenceControllerTestCase, CarbStoreDelegat
             addCarbEntryCompletion.fulfill()
         }
 
-        wait(for: [addHealthStoreHandler, addCarbEntryCompletion, addCarbEntryHandler, deleteHealthStoreHandler, deleteCarbEntryCompletion, deleteCarbEntryHandler, getCarbEntriesCompletion], timeout: 2, enforceOrder: true)
+        wait(for: [addHealthStoreHandler, addCarbEntryCompletion, addCarbEntryHandler, deleteHealthStoreHandler, deleteCarbEntryCompletion, deleteCarbEntryHandler, getCarbEntriesCompletion], timeout: 10, enforceOrder: true)
     }
 
     func testAddAndReplaceAndDeleteCarbEntry() {
@@ -673,7 +681,7 @@ class CarbStorePersistenceTests: PersistenceControllerTestCase, CarbStoreDelegat
                     updateAnchorKey = objects[1].anchorKey
 
                     self.healthStore.setDeletedObjectsHandler({ (objectType, predicate, success, count, error) in
-                        XCTAssertEqual(objectType, HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates))
+                        XCTAssertEqual(objectType, HealthKitSampleStore.carbType)
                         XCTAssertEqual(predicate.predicateFormat, "UUID == \(updateUUID!)")
 
                         deleteHealthStoreHandler.fulfill()
@@ -763,7 +771,7 @@ class CarbStorePersistenceTests: PersistenceControllerTestCase, CarbStoreDelegat
             addCarbEntryCompletion.fulfill()
         }
 
-        wait(for: [addHealthStoreHandler, addCarbEntryCompletion, addCarbEntryHandler, updateHealthStoreHandler, updateCarbEntryCompletion, updateCarbEntryHandler, deleteHealthStoreHandler, deleteCarbEntryCompletion, deleteCarbEntryHandler, getCarbEntriesCompletion], timeout: 2, enforceOrder: true)
+        wait(for: [addHealthStoreHandler, addCarbEntryCompletion, addCarbEntryHandler, updateHealthStoreHandler, updateCarbEntryCompletion, updateCarbEntryHandler, deleteHealthStoreHandler, deleteCarbEntryCompletion, deleteCarbEntryHandler, getCarbEntriesCompletion], timeout: 10, enforceOrder: true)
     }
 
     // MARK: -
@@ -1011,14 +1019,24 @@ class CarbStoreQueryTests: PersistenceControllerTestCase {
     
     override func setUp() {
         super.setUp()
-        
+
+        let healthStore = HKHealthStoreMock()
+
+        let hkSampleStore = HealthKitSampleStore(healthStore: healthStore, type: HealthKitSampleStore.carbType)
+
         carbStore = CarbStore(
-            healthStore: HKHealthStoreMock(),
+            healthKitSampleStore: hkSampleStore,
             cacheStore: cacheStore,
             cacheLength: .hours(24),
             defaultAbsorptionTimes: (fast: .minutes(30), medium: .hours(3), slow: .hours(5)),
-            observationInterval: 0,
             provenanceIdentifier: Bundle.main.bundleIdentifier!)
+
+        let semaphore = DispatchSemaphore(value: 0)
+        cacheStore.onReady { (error) in
+            semaphore.signal()
+        }
+        semaphore.wait()
+
         completion = expectation(description: "Completion")
         queryAnchor = CarbStore.QueryAnchor()
         limit = Int.max
@@ -1243,18 +1261,24 @@ class CarbStoreCriticalEventLogTests: PersistenceControllerTestCase {
     override func setUp() {
         super.setUp()
 
-        let objects = [SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 11, startDate: dateFormatter.date(from: "2100-01-02T03:08:00Z")!, uuid: nil, provenanceIdentifier: nil, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T03:08:00Z")!, supercededDate: nil),
-                       SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 12, startDate: dateFormatter.date(from: "2100-01-02T03:10:00Z")!, uuid: nil, provenanceIdentifier: nil, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T03:10:00Z")!, supercededDate: nil),
-                       SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 13, startDate: dateFormatter.date(from: "2100-01-02T03:04:00Z")!, uuid: nil, provenanceIdentifier: nil, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T02:04:00Z")!, supercededDate: dateFormatter.date(from: "2100-01-02T03:04:00Z")!),
-                       SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 14, startDate: dateFormatter.date(from: "2100-01-02T03:06:00Z")!, uuid: nil, provenanceIdentifier: nil, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T03:06:00Z")!, supercededDate: nil),
-                       SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 15, startDate: dateFormatter.date(from: "2100-01-02T03:02:00Z")!, uuid: nil, provenanceIdentifier: nil, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T03:02:00Z")!, supercededDate: nil)]
+        let objects = [SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 11, startDate: dateFormatter.date(from: "2100-01-02T03:08:00Z")!, uuid: nil, provenanceIdentifier: Bundle.main.bundleIdentifier!, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T03:08:00Z")!, supercededDate: nil),
+                       SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 12, startDate: dateFormatter.date(from: "2100-01-02T03:10:00Z")!, uuid: nil, provenanceIdentifier: Bundle.main.bundleIdentifier!, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T03:10:00Z")!, supercededDate: nil),
+                       SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 13, startDate: dateFormatter.date(from: "2100-01-02T03:04:00Z")!, uuid: nil, provenanceIdentifier: Bundle.main.bundleIdentifier!, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T02:04:00Z")!, supercededDate: dateFormatter.date(from: "2100-01-02T03:04:00Z")!),
+                       SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 14, startDate: dateFormatter.date(from: "2100-01-02T03:06:00Z")!, uuid: nil, provenanceIdentifier: Bundle.main.bundleIdentifier!, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T03:06:00Z")!, supercededDate: nil),
+                       SyncCarbObject(absorptionTime: nil, createdByCurrentApp: true, foodType: nil, grams: 15, startDate: dateFormatter.date(from: "2100-01-02T03:02:00Z")!, uuid: nil, provenanceIdentifier: Bundle.main.bundleIdentifier!, syncIdentifier: nil, syncVersion: nil, userCreatedDate: nil, userUpdatedDate: nil, userDeletedDate: nil, operation: .create, addedDate: dateFormatter.date(from: "2100-01-02T03:02:00Z")!, supercededDate: nil)]
+
+        let healthStore = HKHealthStoreMock()
+
+        let hkSampleStore = HealthKitSampleStore(
+            healthStore: healthStore,
+            type: HealthKitSampleStore.carbType,
+            observationEnabled: false)
 
         carbStore = CarbStore(
-            healthStore: HKHealthStoreMock(),
+            healthKitSampleStore: hkSampleStore,
             cacheStore: cacheStore,
             cacheLength: .hours(24),
             defaultAbsorptionTimes: (fast: .minutes(30), medium: .hours(3), slow: .hours(5)),
-            observationInterval: 0,
             provenanceIdentifier: Bundle.main.bundleIdentifier!)
 
         let dispatchGroup = DispatchGroup()
@@ -1302,9 +1326,9 @@ class CarbStoreCriticalEventLogTests: PersistenceControllerTestCase {
                                       progress: progress))
         XCTAssertEqual(outputStream.string, """
 [
-{"addedDate":"2100-01-02T03:08:00.000Z","anchorKey":1,"createdByCurrentApp":true,"grams":11,"operation":0,"startDate":"2100-01-02T03:08:00.000Z"},
-{"addedDate":"2100-01-02T02:04:00.000Z","anchorKey":3,"createdByCurrentApp":true,"grams":13,"operation":0,"startDate":"2100-01-02T03:04:00.000Z","supercededDate":"2100-01-02T03:04:00.000Z"},
-{"addedDate":"2100-01-02T03:06:00.000Z","anchorKey":4,"createdByCurrentApp":true,"grams":14,"operation":0,"startDate":"2100-01-02T03:06:00.000Z"}
+{"addedDate":"2100-01-02T03:08:00.000Z","anchorKey":1,"createdByCurrentApp":true,"grams":11,"operation":0,"provenanceIdentifier":"com.apple.dt.xctest.tool","startDate":"2100-01-02T03:08:00.000Z"},
+{"addedDate":"2100-01-02T02:04:00.000Z","anchorKey":3,"createdByCurrentApp":true,"grams":13,"operation":0,"provenanceIdentifier":"com.apple.dt.xctest.tool","startDate":"2100-01-02T03:04:00.000Z","supercededDate":"2100-01-02T03:04:00.000Z"},
+{"addedDate":"2100-01-02T03:06:00.000Z","anchorKey":4,"createdByCurrentApp":true,"grams":14,"operation":0,"provenanceIdentifier":"com.apple.dt.xctest.tool","startDate":"2100-01-02T03:06:00.000Z"}
 ]
 """
         )

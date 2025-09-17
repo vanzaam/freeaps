@@ -71,6 +71,9 @@ final class DexcomSourceG7: GlucoseSource, Injectable {
             promise?(.success(glucose))
         case .noData:
             break
+        case .unreliableData:
+            // Treat as no actionable data
+            break
         case let .error(error):
             promise?(.failure(error))
         }
@@ -128,6 +131,7 @@ extension DexcomSourceG7: CGMManagerDelegate {
     func issueAlert(_: Alert) {}
     func retractAlert(identifier _: Alert.Identifier) {}
     func cgmManager(_: CGMManager, didUpdate _: CGMManagerStatus) {}
+    func cgmManager(_: CGMManager, hasNew _: [PersistedCgmEvent]) {}
 
     // DeviceManagerDelegate (notifications)
     func scheduleNotification(
@@ -140,6 +144,27 @@ extension DexcomSourceG7: CGMManagerDelegate {
     func clearNotification(for _: DeviceManager, identifier _: String) {}
 
     func removeNotificationRequests(for _: DeviceManager, identifiers _: [String]) {}
+}
+
+// MARK: - Alerts
+
+extension DexcomSourceG7: PersistedAlertStore {
+    func doesIssuedAlertExist(identifier _: Alert.Identifier, completion: @escaping (Result<Bool, Error>) -> Void) {
+        completion(.success(false))
+    }
+
+    func lookupAllUnretracted(managerIdentifier _: String, completion: @escaping (Result<[PersistedAlert], Error>) -> Void) {
+        completion(.success([]))
+    }
+
+    func lookupAllUnacknowledgedUnretracted(
+        managerIdentifier _: String,
+        completion: @escaping (Result<[PersistedAlert], Error>) -> Void
+    ) {
+        completion(.success([]))
+    }
+
+    func recordRetractedAlert(_ _: Alert, at _: Date) {}
 }
 
 // MARK: - G7 Trend Conversion

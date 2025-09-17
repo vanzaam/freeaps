@@ -53,7 +53,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     let delivered = dose.deliveredUnits
                     let date = event.date
 
-                    let isCancel = !event.isMutable && delivered != nil
+                    // Treat finalized temp basals with delivered units as cancel markers in our storage model
+                    let isCancel = (event.dose?.isMutable == false) && delivered != nil
                     guard !isCancel else { return [] }
 
                     return [

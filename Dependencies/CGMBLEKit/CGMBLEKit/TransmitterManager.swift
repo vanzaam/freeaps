@@ -64,7 +64,7 @@ public class TransmitterManager: TransmitterDelegate {
     }
     
     public var cgmManagerStatus: CGMManagerStatus {
-        return CGMManagerStatus(hasValidSensorSession: hasValidSensorSession)
+        return CGMManagerStatus(hasValidSensorSession: hasValidSensorSession, device: device)
     }
 
     public required init(state: TransmitterManagerState) {
@@ -127,7 +127,7 @@ public class TransmitterManager: TransmitterDelegate {
 
         let quantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: glucoseValue)
         let trendRate = HKQuantity(unit: .milligramsPerDeciliterPerMinute, doubleValue: trendRateValue)
-        let sample = NewGlucoseSample(date: timestamp, quantity: quantity, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: syncIdentifier)
+        let sample = NewGlucoseSample(date: timestamp, quantity: quantity, condition: nil, trend: trend, trendRate: trendRate, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: syncIdentifier)
         self.updateDelegate(with: .newData([sample]))
     }
     #endif
@@ -308,50 +308,48 @@ public class TransmitterManager: TransmitterDelegate {
             return
         }
 
-        // TODO: Implement CGM event tracking when PersistedCgmEvent becomes available
-        // var events: [PersistedCgmEvent] = []
+        var events: [PersistedCgmEvent] = []
 
         if state.transmitterStartDate == nil {
             mutateState { state in
                 state.transmitterStartDate = glucose.activationDate
             }
-            // events.append(PersistedCgmEvent(
-            //     date: glucose.activationDate,
-            //     type: .transmitterStart,
-            //     deviceIdentifier: transmitter.ID,
-            //     expectedLifetime: .hours(24 * 90)
-            // ))
+            events.append(PersistedCgmEvent(
+                date: glucose.activationDate,
+                type: .transmitterStart,
+                deviceIdentifier: transmitter.ID,
+                expectedLifetime: .hours(24 * 90)
+            ))
         }
 
         if state.sensorStartOffset != glucose.timeMessage.sessionStartTime {
             mutateState { state in
                 state.sensorStartOffset = glucose.timeMessage.sessionStartTime
             }
-            // events.append(PersistedCgmEvent(
-            //     date: glucose.sessionStartDate,
-            //     type: .sensorStart,
-            //     deviceIdentifier: transmitter.ID,
-            //     expectedLifetime: .hours(24 * 10),
-            //     warmupPeriod: .hours(2)
-            // ))
+            events.append(PersistedCgmEvent(
+                date: glucose.sessionStartDate,
+                type: .sensorStart,
+                deviceIdentifier: transmitter.ID,
+                expectedLifetime: .hours(24 * 10),
+                warmupPeriod: .hours(2)
+            ))
         }
 
-        // TODO: Re-enable event filtering when PersistedCgmEvent becomes available
         // Filter out future-dated events
         // Stopgap measure for the issue described in https://github.com/LoopKit/Loop/issues/2087
-        // events = events.filter { event in
-        //     if event.date > Date() {
-        //         log.error("Future-dated event detected: %{public}@", String(describing: event))
-        //         return false
-        //     }
-        //     return true
-        // }
+        events = events.filter { event in
+            if event.date > Date() {
+                log.error("Future-dated event detected: %{public}@", String(describing: event))
+                return false
+            }
+            return true
+        }
 
-        // if !events.isEmpty {
-        //     shareManager.delegate.notify { delegate in
-        //         delegate?.cgmManager(self.shareManager, hasNew: events)
-        //     }
-        // }
+        if !events.isEmpty {
+            shareManager.delegate.notify { delegate in
+                delegate?.cgmManager(self.shareManager, hasNew: events)
+            }
+        }
 
         latestReading = glucose
 
@@ -374,6 +372,9 @@ public class TransmitterManager: TransmitterDelegate {
             NewGlucoseSample(
                 date: glucose.readDate,
                 quantity: quantity,
+                condition: glucose.condition,
+                trend: glucose.trendType,
+                trendRate: glucose.trendRate,
                 isDisplayOnly: glucose.isDisplayOnly,
                 wasUserEntered: glucose.isDisplayOnly,
                 syncIdentifier: glucose.syncIdentifier,
@@ -391,6 +392,9 @@ public class TransmitterManager: TransmitterDelegate {
             return NewGlucoseSample(
                 date: glucose.readDate,
                 quantity: quantity,
+                condition: glucose.condition,
+                trend: glucose.trendType,
+                trendRate: glucose.trendRate,
                 isDisplayOnly: glucose.isDisplayOnly,
                 wasUserEntered: glucose.isDisplayOnly,
                 syncIdentifier: glucose.syncIdentifier,
@@ -436,22 +440,13 @@ extension TransmitterManager {
 
 public class G5CGMManager: TransmitterManager, CGMManager {
     public static let pluginIdentifier: String = "DexG5Transmitter"
-    public static let managerIdentifier: String = "DexG5Transmitter"
 
-    public static let localizedTitle = LocalizedString("Dexcom G5", comment: "CGM display title")
+    public let localizedTitle = LocalizedString("Dexcom G5", comment: "CGM display title")
 
     public let isOnboarded = true   // No distinction between created and onboarded
 
     public var appURL: URL? {
         return URL(string: "dexcomcgm://")
-    }
-    
-    public var cgmStatus: CGMManagerStatus {
-        return cgmManagerStatus
-    }
-    
-    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier) {
-        // G5 doesn't have alerts to acknowledge
     }
 
     public override var device: HKDevice? {
@@ -482,22 +477,13 @@ public class G5CGMManager: TransmitterManager, CGMManager {
 
 public class G6CGMManager: TransmitterManager, CGMManager {
     public static let pluginIdentifier: String = "DexG6Transmitter"
-    public static let managerIdentifier: String = "DexG6Transmitter"
 
-    public static let localizedTitle = LocalizedString("Dexcom G6", comment: "CGM display title")
+    public let localizedTitle = LocalizedString("Dexcom G6", comment: "CGM display title")
 
     public let isOnboarded = true   // No distinction between created and onboarded
 
     public var appURL: URL? {
         return URL(string: "dexcomg6://")
-    }
-    
-    public var cgmStatus: CGMManagerStatus {
-        return cgmManagerStatus
-    }
-    
-    public func acknowledgeAlert(alertIdentifier: Alert.AlertIdentifier) {
-        // G6 doesn't have alerts to acknowledge
     }
 
     public override var device: HKDevice? {

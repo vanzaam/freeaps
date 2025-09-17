@@ -48,7 +48,7 @@ public class G7CGMManager: CGMManager {
         if oldValue != newValue {
             delegate.notify { delegate in
                 delegate?.cgmManagerDidUpdateState(self)
-                delegate?.cgmManager(self, didUpdate: self.cgmStatus)
+                delegate?.cgmManager(self, didUpdate: self.cgmManagerStatus)
             }
 
             g7StateObservers.forEach { (observer) in
@@ -159,9 +159,8 @@ public class G7CGMManager: CGMManager {
 
     public let sensor: G7Sensor
 
-    // LoopKit CGMManager requires cgmStatus in this version
-    public var cgmStatus: LoopKit.CGMManagerStatus {
-        return CGMManagerStatus(hasValidSensorSession: true)
+    public var cgmManagerStatus: LoopKit.CGMManagerStatus {
+        return CGMManagerStatus(hasValidSensorSession: true, device: device)
     }
 
     public var lifecycleState: G7SensorLifecycleState {
@@ -221,17 +220,16 @@ public class G7CGMManager: CGMManager {
         return lines.joined(separator: "\n")
     }
 
-    // AlertResponder (LoopKit version) requires this signature without completion
-    public func acknowledgeAlert(alertIdentifier: LoopKit.Alert.AlertIdentifier) {
-        // No-op: G7SensorKit does not queue alerts in this implementation
+    public func acknowledgeAlert(alertIdentifier: LoopKit.Alert.AlertIdentifier, completion: @escaping (Error?) -> Void) {
+        completion(nil)
     }
 
     public func getSoundBaseURL() -> URL? { return nil }
     public func getSounds() -> [Alert.Sound] { return [] }
 
-    public static let managerIdentifier: String = "G7CGMManager"
+    public static let pluginIdentifier: String = "G7CGMManager"
 
-    public static let localizedTitle = LocalizedString("Dexcom G7", comment: "CGM display title")
+    public let localizedTitle = LocalizedString("Dexcom G7", comment: "CGM display title")
 
     public let isOnboarded = true   // No distinction between created and onboarded
 
@@ -249,14 +247,14 @@ public class G7CGMManager: CGMManager {
         sensor.scanForNewSensor()
     }
 
-    public var device: HKDevice? {
+    private var device: HKDevice? {
         return HKDevice(
-            name: "CGMBLEKit",
+            name: state.sensorID ?? "Unknown",
             manufacturer: "Dexcom",
             model: "G7",
             hardwareVersion: nil,
             firmwareVersion: nil,
-            softwareVersion: String(G7SensorKitVersionNumber),
+            softwareVersion: "CGMBLEKit" + String(G7SensorKitVersionNumber),
             localIdentifier: nil,
             udiDeviceIdentifier: "00386270001863"
         )
@@ -296,6 +294,16 @@ extension G7CGMManager: G7SensorDelegate {
                 state.sensorID = name
                 state.activatedAt = activatedAt
             }
+            let event = PersistedCgmEvent(
+                date: activatedAt,
+                type: .sensorStart,
+                deviceIdentifier: name,
+                expectedLifetime: .hours(24 * 10 + 12),
+                warmupPeriod: .hours(2)
+            )
+            delegate.notify { delegate in
+                delegate?.cgmManager(self, hasNew: [event])
+            }
         }
 
         return shouldSwitchToNewSensor
@@ -315,6 +323,11 @@ extension G7CGMManager: G7SensorDelegate {
         }
     }
 
+    public func sensor(_ sensor: G7Sensor, logComms comms: String) {
+        logDeviceCommunication("Sensor comms \(comms)", type: .receive)
+    }
+
+
     public func sensor(_ sensor: G7Sensor, didError error: Error) {
         logDeviceCommunication("Sensor error \(error)", type: .error)
     }
@@ -326,6 +339,17 @@ extension G7CGMManager: G7SensorDelegate {
             updateDelegate(with: .noData)
             return
         }
+
+        if message.algorithmState.sensorFailed {
+            logDeviceCommunication("Detected failed sensor... scanning for new sensor.", type: .receive)
+            scanForNewSensor()
+        }
+
+        if message.algorithmState == .known(.sessionEnded) {
+            logDeviceCommunication("Detected session ended... scanning for new sensor.", type: .receive)
+            scanForNewSensor()
+        }
+
 
         guard let activationDate = sensor.activationDate else {
             logDeviceCommunication("Unable to process sensor reading without activation date.", type: .error)
@@ -358,6 +382,9 @@ extension G7CGMManager: G7SensorDelegate {
             NewGlucoseSample(
                 date: latestReadingTimestamp,
                 quantity: quantity,
+                condition: message.condition,
+                trend: message.trendType,
+                trendRate: message.trendRate,
                 isDisplayOnly: message.glucoseIsDisplayOnly,
                 wasUserEntered: message.glucoseIsDisplayOnly,
                 syncIdentifier: generateSyncIdentifier(timestamp: message.glucoseTimestamp),
@@ -401,6 +428,9 @@ extension G7CGMManager: G7SensorDelegate {
             return NewGlucoseSample(
                 date: activationDate.addingTimeInterval(TimeInterval(entry.timestamp)),
                 quantity: quantity,
+                condition: entry.condition,
+                trend: entry.trendType,
+                trendRate: entry.trendRate,
                 isDisplayOnly: entry.glucoseIsDisplayOnly,
                 wasUserEntered: entry.glucoseIsDisplayOnly,
                 syncIdentifier: generateSyncIdentifier(timestamp: entry.timestamp),
