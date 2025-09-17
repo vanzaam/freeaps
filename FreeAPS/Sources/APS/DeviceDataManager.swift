@@ -257,15 +257,28 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat: checking for suspend state changes")
         if let minimed = pumpManager as? MinimedPumpManager {
-            // Set higher priority when app is active
-            let isActive = UIApplication.shared.applicationState == .active
-            minimed.setSuspendRefreshPriority(isActive ? .high : .normal)
+            // Check app state on main thread, then continue on background queue
+            DispatchQueue.main.async {
+                let isActive = UIApplication.shared.applicationState == .active
+                self.processQueue.async {
+                    // Additional safety: verify RileyLink device manager is ready
+                    let rileyLinkProvider = minimed.rileyLinkDeviceProvider
+                    rileyLinkProvider.getDevices { devices in
+                        guard !devices.isEmpty else {
+                            debug(.deviceManager, "No RileyLink devices available, skipping heartbeat")
+                            return
+                        }
 
-            // Use lightweight suspend state refresh on heartbeat
-            // This provides rapid response to manual pump suspend/resume actions
-            // while minimizing radio traffic through built-in throttling and backoff
-            minimed.refreshSuspendState {
-                debug(.deviceManager, "Heartbeat suspend state check completed")
+                        minimed.setSuspendRefreshPriority(isActive ? .high : .normal)
+
+                        // Use lightweight suspend state refresh on heartbeat
+                        // This provides rapid response to manual pump suspend/resume actions
+                        // while minimizing radio traffic through built-in throttling and backoff
+                        minimed.refreshSuspendState {
+                            debug(.deviceManager, "Heartbeat suspend state check completed")
+                        }
+                    }
+                }
             }
         }
     }

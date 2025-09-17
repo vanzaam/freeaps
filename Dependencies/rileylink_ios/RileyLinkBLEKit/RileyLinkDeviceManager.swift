@@ -109,6 +109,12 @@ extension RileyLinkDeviceManager {
                 return
             }
 
+            // Safety check: only connect if Bluetooth is powered on
+            guard case .poweredOn = self.central.state else {
+                self.log.info("CBCentralManager not powered on (state: %@), deferring connection to %@", self.central.state.description, device.name ?? "Unknown")
+                return
+            }
+
             self.central.connectIfNecessary(peripheral)
         }
     }
@@ -118,6 +124,12 @@ extension RileyLinkDeviceManager {
             self.autoConnectIDs.remove(device.manager.peripheral.identifier.uuidString)
 
             guard let peripheral = self.reloadPeripheral(for: device) else {
+                return
+            }
+
+            // Safety check: only disconnect if Bluetooth is powered on
+            guard case .poweredOn = self.central.state else {
+                self.log.info("CBCentralManager not powered on (state: %@), skipping disconnection from %@", self.central.state.description, device.name ?? "Unknown")
                 return
             }
 
@@ -149,6 +161,12 @@ extension RileyLinkDeviceManager {
 
     private func autoConnectDevices() {
         dispatchPrecondition(condition: .onQueue(centralQueue))
+
+        // Safety check: only auto-connect if Bluetooth is powered on
+        guard case .poweredOn = central.state else {
+            log.info("CBCentralManager not powered on (state: %@), skipping auto-connect", central.state.description)
+            return
+        }
 
         for device in devices where autoConnectIDs.contains(device.manager.peripheral.identifier.uuidString) {
             log.info("Attempting reconnect to %@", device.manager.peripheral)
