@@ -1009,7 +1009,7 @@ extension MinimedPumpManager: PumpManager {
                     let newBasalDeliveryState = newStatus.basalDeliveryState
                     
                     if stateChanged && oldBasalDeliveryState != newBasalDeliveryState {
-                        self.log.default("Basal delivery state changed: \(oldBasalDeliveryState) → \(newBasalDeliveryState)")
+                        self.log.default("Basal delivery state changed: %{public}@ → %{public}@", String(describing: oldBasalDeliveryState), String(describing: newBasalDeliveryState))
                         self.notifyStatusObservers(oldStatus: oldStatus)
                     }
                     // Success: reduce interval toward target; reset failure counter
