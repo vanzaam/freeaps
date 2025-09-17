@@ -258,24 +258,12 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
     func pumpManagerBLEHeartbeatDidFire(_: PumpManager) {
         debug(.deviceManager, "Pump Heartbeat: checking for suspend state changes")
         if let minimed = pumpManager as? MinimedPumpManager {
-            // Check app state on main thread, then continue on background queue
-            DispatchQueue.main.async {
-                let isActive = UIApplication.shared.applicationState == .active
-                self.processQueue.async {
-                    // Additional safety: verify RileyLink device manager is ready
-                    let rileyLinkProvider = minimed.rileyLinkDeviceProvider
-                    rileyLinkProvider.getDevices { devices in
-                        guard !devices.isEmpty else {
-                            debug(.deviceManager, "No RileyLink devices available, skipping heartbeat")
-                            return
-                        }
-
-                        // Refresh current pump data on heartbeat to pick up suspend/resume changes
-                        minimed.ensureCurrentPumpData { _ in
-                            debug(.deviceManager, "Heartbeat suspend state check completed")
-                        }
-                    }
-                }
+            // Use lightweight suspend state refresh on heartbeat
+            // This provides rapid response to manual pump suspend/resume actions
+            // while minimizing radio traffic through built-in throttling
+            minimed.refreshSuspendState {
+                // Completion handler - heartbeat processed
+                debug(.deviceManager, "Heartbeat suspend state check completed")
             }
         }
     }
