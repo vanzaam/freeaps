@@ -150,14 +150,14 @@ public class MinimedPumpManager: RileyLinkPumpManager {
     private var lastSuspendRefresh: Date = .distantPast
     private let minSuspendRefreshInterval: TimeInterval = 15 // seconds
     private var isRefreshingSuspendState: Bool = false
-    private var currentSuspendRefreshInterval: TimeInterval = 30 // seconds
+    private var currentSuspendRefreshInterval: TimeInterval = 60 // seconds
     private let maxSuspendRefreshInterval: TimeInterval = 120 // seconds
     private var consecutiveSuspendRefreshFailures: Int = 0
     public enum SuspendRefreshPriority {
         case normal
         case high
     }
-    private var targetMinSuspendRefreshInterval: TimeInterval = 30 // seconds
+    private var targetMinSuspendRefreshInterval: TimeInterval = 60 // seconds
 
     private func notifyStatusObservers(oldStatus: PumpManagerStatus) {
         let status = self.status
@@ -950,9 +950,9 @@ extension MinimedPumpManager: PumpManager {
     public func setSuspendRefreshPriority(_ priority: SuspendRefreshPriority) {
         switch priority {
         case .normal:
-            targetMinSuspendRefreshInterval = 30
+            targetMinSuspendRefreshInterval = 60
         case .high:
-            targetMinSuspendRefreshInterval = 10
+            targetMinSuspendRefreshInterval = 30
         }
         // Gradually converge toward the new target, but never lower than target immediately here.
         currentSuspendRefreshInterval = max(targetMinSuspendRefreshInterval, currentSuspendRefreshInterval)
