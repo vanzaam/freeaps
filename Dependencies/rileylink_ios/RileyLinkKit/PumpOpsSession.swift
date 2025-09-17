@@ -384,6 +384,13 @@ extension PumpOpsSession {
             pumpID: settings.pumpID
         )
     }
+
+    /// Lightweight read: only suspended/bolusing flags without clock/reservoir/battery.
+    /// Reduces radio traffic for quick state checks.
+    public func getSuspendBolusFlags() throws -> (suspended: Bool, bolusing: Bool) {
+        let status = try getPumpStatus()
+        return (suspended: status.suspended, bolusing: status.bolusing)
+    }
 }
 
 

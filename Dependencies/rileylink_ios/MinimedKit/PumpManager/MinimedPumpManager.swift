@@ -147,6 +147,9 @@ public class MinimedPumpManager: RileyLinkPumpManager {
     private let lockedRecents = Locked(MinimedPumpManagerRecents())
 
     private let statusObservers = WeakSynchronizedSet<PumpManagerStatusObserver>()
+    private var lastSuspendRefresh: Date = .distantPast
+    private let minSuspendRefreshInterval: TimeInterval = 15 // seconds
+    private var isRefreshingSuspendState: Bool = false
 
     private func notifyStatusObservers(oldStatus: PumpManagerStatus) {
         let status = self.status
@@ -932,6 +935,70 @@ extension MinimedPumpManager: PumpManager {
 
     public func removeStatusObserver(_ observer: PumpManagerStatusObserver) {
         statusObservers.removeElement(observer)
+    }
+
+    /// Force a quick refresh of suspend/resume state, even if pump data isn't considered stale.
+    /// Useful for detecting manual suspend/resume performed on the pump (e.g., 522/722 models without MySentry).
+    /// Uses lightweight status read to minimize radio traffic and prevents concurrent refreshes.
+    public func refreshSuspendState(completion: (() -> Void)? = nil) {
+        // Throttle to avoid excess radio traffic
+        if Date().timeIntervalSince(lastSuspendRefresh) < minSuspendRefreshInterval || isRefreshingSuspendState {
+            completion?()
+            return
+        }
+        lastSuspendRefresh = Date()
+        isRefreshingSuspendState = true
+        
+        rileyLinkDeviceProvider.getDevices { devices in
+            guard let device = devices.firstConnected else {
+                completion?()
+                return
+            }
+
+            self.pumpOps.runSession(withName: "Lightweight Suspend Check", using: device) { session in
+                do {
+                    // Read only suspend/bolus flags to reduce radio traffic
+                    let flags = try session.getSuspendBolusFlags()
+                    
+                    // Capture old status before any changes
+                    let oldStatus = self.status
+                    let oldBasalDeliveryState = oldStatus.basalDeliveryState
+                    
+                    // Track if we actually made any state changes
+                    var stateChanged = false
+
+                    self.setState { state in
+                        switch state.suspendState {
+                        case .resumed where flags.suspended:
+                            state.suspendState = .suspended(Date())
+                            stateChanged = true
+                            self.log.default("Pump suspend detected via heartbeat")
+                        case .suspended where !flags.suspended:
+                            state.suspendState = .resumed(Date())
+                            stateChanged = true
+                            self.log.default("Pump resume detected via heartbeat")
+                        default:
+                            break
+                        }
+                    }
+
+                    // Only notify observers if the basal delivery state actually changed
+                    // This prevents unnecessary UI updates and improves performance
+                    let newStatus = self.status
+                    let newBasalDeliveryState = newStatus.basalDeliveryState
+                    
+                    if stateChanged && oldBasalDeliveryState != newBasalDeliveryState {
+                        self.log.default("Basal delivery state changed: \(oldBasalDeliveryState) → \(newBasalDeliveryState)")
+                        self.notifyStatusObservers(oldStatus: oldStatus)
+                    }
+                } catch {
+                    // Log error but don't propagate to avoid disrupting heartbeat flow
+                    self.log.error("Lightweight suspend check failed: %{public}@", String(describing: error))
+                }
+                self.isRefreshingSuspendState = false
+                completion?()
+            }
+        }
     }
 
     public func setMustProvideBLEHeartbeat(_ mustProvideBLEHeartbeat: Bool) {
