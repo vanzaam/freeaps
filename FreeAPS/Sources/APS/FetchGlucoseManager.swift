@@ -19,7 +19,7 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
     private let timer = DispatchTimer(timeInterval: 1.minutes.timeInterval)
 
     private lazy var dexcomSource = DexcomSource()
-    private lazy var g7Source = DexcomSourceG7()
+    private lazy var g7Source = DexcomSourceG7(resolver: FreeAPSApp.resolver)
     private lazy var simulatorSource = GlucoseSimulatorSource()
 
     init(resolver: Resolver) {
@@ -105,6 +105,16 @@ final class BaseFetchGlucoseManager: FetchGlucoseManager, Injectable {
                 }
             }
             .store(in: &lifetime)
+    }
+
+    // MARK: - Control
+
+    func startDexcomG7Scan() {
+        guard settingsManager.settings.cgm == .dexcomG7 else { return }
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            self.g7Source.startScan()
+        }
     }
 
     func sourceInfo() -> [String: Any]? {

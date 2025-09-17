@@ -38,6 +38,30 @@ extension CGM {
                     }
                 }
 
+                if state.cgm == .dexcomG7 {
+                    Section(header: Text("Dexcom G7")) {
+                        Button("Scan for sensor") {
+                            if let manager = resolver.resolve(FetchGlucoseManager.self) as? BaseFetchGlucoseManager {
+                                manager.startDexcomG7Scan()
+                            }
+                        }
+                        if state.g7SensorFound {
+                            HStack {
+                                Text("Sensor found")
+                                    .foregroundColor(.green)
+                                if state.g7SensorId.isNotEmpty {
+                                    Text(state.g7SensorId)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        } else {
+                            Text("Searching...")
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+
                 if state.cgm == .libreTransmitter {
                     Button("Configure Libre Transmitter") {
                         state.showModal(for: .libreConfig)
