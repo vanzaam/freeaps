@@ -21,6 +21,7 @@ alwaysApply: true
 - **Clean FreeAPS derived data only**: `rm -rf ~/Library/Developer/Xcode/DerivedData/FreeAPS*`
 - **Notify user** when new source files are added so they can manually integrate them
 - **Compile after each code modification** until successful compilation
+- **Use workspace project references** for adding dependencies (see xcode_workspace_management.mdc)
 
 ### 1.1. File Location Rules
 - **Authentication services**: MUST be located in `/FreeAPS/Sources/Services/Authentication/`
