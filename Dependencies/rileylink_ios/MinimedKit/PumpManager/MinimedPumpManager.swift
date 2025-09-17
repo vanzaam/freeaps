@@ -148,7 +148,6 @@ public class MinimedPumpManager: RileyLinkPumpManager {
 
     private let statusObservers = WeakSynchronizedSet<PumpManagerStatusObserver>()
     private var lastSuspendRefresh: Date = .distantPast
-    private let minSuspendRefreshInterval: TimeInterval = 15 // seconds
     private var isRefreshingSuspendState: Bool = false
     private var currentSuspendRefreshInterval: TimeInterval = 60 // seconds
     private let maxSuspendRefreshInterval: TimeInterval = 120 // seconds
