@@ -237,6 +237,7 @@
 		394366AF3FBAA6B757056BBE /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = B60DC0142E7B664C0040A1E1 /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		44190F0BBA464D74B857D1FB /* PreferencesEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A965332F237348B119FB858 /* PreferencesEditorRootView.swift */; };
 		448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */; };
+		44D38FE03D5EF6B73FEB99D4 /* MedtrumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D6266B97D19D44D75423C8 /* MedtrumKit.framework */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
 		5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */; };
@@ -277,8 +278,10 @@
 		A228DF96647338139F152B15 /* PreferencesEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */; };
 		A33352ED40476125EBAC6EE0 /* CREditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E22146D3DF4853786C78132 /* CREditorDataFlow.swift */; };
 		A6F097A14CAAE0CE0D11BE1B /* AddCarbsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 618E62C9757B2F95431B5DC0 /* AddCarbsProvider.swift */; };
+		A761BD504C33091D033C02C5 /* MedtrumKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A0D6266B97D19D44D75423C8 /* MedtrumKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A83AB1127B3F934F444DE824 /* DefaultBluetoothProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9FCB70C053D36081A677EC /* DefaultBluetoothProvider.swift */; };
 		AD3D2CD42CD01B9EB8F26522 /* PumpConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF65DA88F972B56090AD6AC3 /* PumpConfigDataFlow.swift */; };
+		B54D8CDD500B653012282DC1 /* MedtrumKitPlugin.loopplugin in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = CD9F0DB34802CD288F8D9EB1 /* MedtrumKitPlugin.loopplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		B60DC0152E7B664C0040A1E1 /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = B60DC0142E7B664C0040A1E1 /* SwiftCharts */; settings = {ATTRIBUTES = (Required, ); }; };
 		B788E19F3799816EDF684B06 /* ShareClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5303829B0BD7C74096552A4E /* ShareClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA241FB1663EC96FDBE64C8A /* CalibrationsDataFlow.swift */; };
@@ -373,6 +376,7 @@
 				09270B8987CE0FD56BC7E0EB /* LoopOnboardingKitUI.framework in Embed Frameworks */,
 				394366AF3FBAA6B757056BBE /* SwiftCharts in Embed Frameworks */,
 				1F01EC1BCB55D280D9321C00 /* RileyLinkKitUI.framework in Embed Frameworks */,
+				A761BD504C33091D033C02C5 /* MedtrumKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -399,12 +403,23 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DD44FFB8A86CC12FE07AC42C /* Embed PlugIns */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B54D8CDD500B653012282DC1 /* MedtrumKitPlugin.loopplugin in Embed PlugIns */,
+			);
+			name = "Embed PlugIns";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorDataFlow.swift; sourceTree = "<group>"; };
 		0CA3E609094E064C99A4752C /* PreferencesEditorStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorStateModel.swift; sourceTree = "<group>"; };
-		0D7755AFE5C5A2B66F4F8ECE /* RileyLinkKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = RileyLinkKitUI.framework; path = RileyLinkKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0D7755AFE5C5A2B66F4F8ECE /* RileyLinkKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RileyLinkKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		10A0C32B0DAB52726EF9B6D9 /* BolusRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusRootView.swift; sourceTree = "<group>"; };
 		12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorDataFlow.swift; sourceTree = "<group>"; };
 		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -692,6 +707,7 @@
 		9C8D5F457B5AFF763F8CF3DF /* CREditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorProvider.swift; sourceTree = "<group>"; };
 		9F9F137F126D9F8DEB799F26 /* ISFEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorProvider.swift; sourceTree = "<group>"; };
 		A0A48AE3AC813A49A517846A /* NightscoutConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigStateModel.swift; sourceTree = "<group>"; };
+		A0D6266B97D19D44D75423C8 /* MedtrumKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MedtrumKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A401509D21F7F35D4E109EDA /* DataTableDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DataTableDataFlow.swift; sourceTree = "<group>"; };
 		A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigProvider.swift; sourceTree = "<group>"; };
 		AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BasalProfileEditorStateModel.swift; sourceTree = "<group>"; };
@@ -709,6 +725,7 @@
 		C377490C77661D75E8C50649 /* ManualTempBasalRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalRootView.swift; sourceTree = "<group>"; };
 		C742ED62FCFB1824C4374774 /* G7SensorKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = G7SensorKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C8D1A7CA8C10C4403D4BBFA7 /* BolusDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusDataFlow.swift; sourceTree = "<group>"; };
+		CD9F0DB34802CD288F8D9EB1 /* MedtrumKitPlugin.loopplugin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = MedtrumKitPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ManualTempBasalStateModel.swift; sourceTree = "<group>"; };
 		D0BDC6993C1087310EDFC428 /* CREditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorRootView.swift; sourceTree = "<group>"; };
 		D295A3F870E826BE371C0BB5 /* AutotuneConfigStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AutotuneConfigStateModel.swift; sourceTree = "<group>"; };
@@ -769,6 +786,7 @@
 				8555276F8890F1E163DEC9A8 /* LoopOnboardingKit.framework in Frameworks */,
 				83B03D87C3B38C60898B3AF5 /* LoopOnboardingKitUI.framework in Frameworks */,
 				190B3E6BC749531D0FC5D505 /* RileyLinkKitUI.framework in Frameworks */,
+				44D38FE03D5EF6B73FEB99D4 /* MedtrumKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1234,6 +1252,8 @@
 				C742ED62FCFB1824C4374774 /* G7SensorKit.framework */,
 				BA89EE5826F6859471DE1BE9 /* LoopOnboardingKit.framework */,
 				65DFD4DB403C15DA9A9EFBBF /* LoopOnboardingKitUI.framework */,
+				A0D6266B97D19D44D75423C8 /* MedtrumKit.framework */,
+				CD9F0DB34802CD288F8D9EB1 /* MedtrumKitPlugin.loopplugin */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1888,6 +1908,7 @@
 				388E595625AD948C0019842D /* Resources */,
 				3821ECD025DC703C00BC42AD /* Embed Frameworks */,
 				38E8753D27554D5900975559 /* Embed Watch Content */,
+				DD44FFB8A86CC12FE07AC42C /* Embed PlugIns */,
 			);
 			buildRules = (
 			);
@@ -2511,7 +2532,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2569,7 +2590,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -2594,7 +2615,7 @@
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2630,7 +2651,7 @@
 				DEVELOPMENT_TEAM = "${DEVELOPER_TEAM}";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = FreeAPS/Resources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2790,7 +2811,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -2811,7 +2832,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = "$(DEVELOPER_TEAM)";
 				INFOPLIST_FILE = FreeAPSTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -3,6 +3,7 @@ import Combine
 import Foundation
 import LoopKit
 import LoopKitUI
+import MedtrumKit
 import MinimedKit
 import MockKit
 import OmniKit
@@ -26,6 +27,7 @@ protocol DeviceDataManager: GlucoseSource {
 
 private let staticPumpManagers: [PumpManagerUI.Type] = [
     MinimedPumpManager.self,
+    MedtrumPumpManager.self,
     OmnipodPumpManager.self,
     MockPumpManager.self
 ]
@@ -46,6 +48,8 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     @Persisted(key: "BaseDeviceDataManager.lastEventDate") var lastEventDate: Date? = nil
     @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastHeartBeatTime") var lastHeartBeatTime: Date =
+        .distantPast
+    @SyncAccess(lock: accessLock) @Persisted(key: "BaseDeviceDataManager.lastSuspendStateCheckTime") var lastSuspendStateCheckTime: Date =
         .distantPast
 
     let recommendsLoop = PassthroughSubject<Void, Never>()
@@ -78,6 +82,11 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
                         return
                     }
                     pumpExpiresAtDate.send(endTime)
+                }
+
+                if pumpManager is MedtrumPumpManager {
+                    // Medtrum is a patch pump; expose expiration if available later
+                    pumpExpiresAtDate.send(nil)
                 }
             } else {
                 pumpDisplayState.value = nil
@@ -271,6 +280,12 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 guard let self = self else { return }
                 let isActive = UIApplication.shared.applicationState == .active
                 self.processQueue.async {
+                    // Cooldown to avoid command collisions with ongoing pump sessions
+                    let now = Date()
+                    if self.lastSuspendStateCheckTime.addingTimeInterval(120) > now {
+                        debug(.deviceManager, "Skip suspend state refresh (cooldown)")
+                        return
+                    }
                     // Additional safety: verify RileyLink device manager is ready
                     let rileyLinkProvider = minimed.rileyLinkDeviceProvider
                     rileyLinkProvider.getDevices { devices in
@@ -285,6 +300,7 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                         // This provides rapid response to manual pump suspend/resume actions
                         // while minimizing radio traffic through built-in throttling and backoff
                         minimed.refreshSuspendState {
+                            self.lastSuspendStateCheckTime = now
                             debug(.deviceManager, "Heartbeat suspend state check completed")
                         }
                     }
