@@ -18,6 +18,12 @@ extension PumpConfig {
                                 Text(pumpState.name)
                             }
                         }
+                        Button(role: .destructive) {
+                            // Remove current pump to allow choosing another
+                            state.provider.apsManager.pumpManager = nil
+                        } label: {
+                            Text("Remove pump")
+                        }
                     } else {
                         Button("Add Medtrum") { state.addPump(.medtrum) }
                         Button("Add Medtronic") { state.addPump(.minimed) }
