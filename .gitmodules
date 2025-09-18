@@ -6,3 +6,7 @@
 	path = Dependencies/OmniBLE
 	url = https://github.com/LoopKit/OmniBLE.git
 	branch = dev
+[submodule "Dependencies/LoopOnboarding"]
+	path = Dependencies/LoopOnboarding
+	url = https://github.com/LoopKit/LoopOnboarding.git
+	branch = main
