@@ -6,6 +6,7 @@ import LoopKitUI
 import MedtrumKit
 import MinimedKit
 import MockKit
+import OmniBLE
 import OmniKit
 import SwiftDate
 import Swinject
@@ -28,6 +29,7 @@ protocol DeviceDataManager: GlucoseSource {
 private let staticPumpManagers: [PumpManagerUI.Type] = [
     MinimedPumpManager.self,
     MedtrumPumpManager.self,
+    OmniBLEPumpManager.self,
     OmnipodPumpManager.self,
     MockPumpManager.self
 ]

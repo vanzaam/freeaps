@@ -2,3 +2,7 @@
 	path = Dependencies/MedtrumKit
 	url = https://github.com/loopandlearn/MedtrumKit.git
 	branch = dev
+[submodule "Dependencies/OmniBLE"]
+	path = Dependencies/OmniBLE
+	url = https://github.com/LoopKit/OmniBLE.git
+	branch = dev

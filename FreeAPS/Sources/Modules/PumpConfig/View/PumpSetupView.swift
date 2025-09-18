@@ -5,6 +5,7 @@ import MinimedKit
 import MinimedKitUI
 import MockKit
 import MockKitUI
+import OmniBLE
 import OmniKit
 import OmniKitUI
 import SwiftUI
@@ -69,6 +70,15 @@ extension PumpConfig {
                 )
             case .omnipod:
                 result = OmnipodPumpManager.setupViewController(
+                    initialSettings: settings,
+                    bluetoothProvider: bluetoothProvider,
+                    colorPalette: palette,
+                    allowDebugFeatures: true,
+                    prefersToSkipUserInteraction: false,
+                    allowedInsulinTypes: InsulinType.allCases
+                )
+            case .omnipodDash:
+                result = OmniBLEPumpManager.setupViewController(
                     initialSettings: settings,
                     bluetoothProvider: bluetoothProvider,
                     colorPalette: palette,
