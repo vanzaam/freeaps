@@ -1,5 +1,6 @@
 import LoopKit
 import LoopKitUI
+import MedtrumKit
 import MinimedKit
 import MinimedKitUI
 import MockKit
@@ -50,6 +51,15 @@ extension PumpConfig {
             switch pumpType {
             case .minimed:
                 result = MinimedPumpManager.setupViewController(
+                    initialSettings: settings,
+                    bluetoothProvider: bluetoothProvider,
+                    colorPalette: palette,
+                    allowDebugFeatures: true,
+                    prefersToSkipUserInteraction: false,
+                    allowedInsulinTypes: InsulinType.allCases
+                )
+            case .medtrum:
+                result = MedtrumPumpManager.setupViewController(
                     initialSettings: settings,
                     bluetoothProvider: bluetoothProvider,
                     colorPalette: palette,
