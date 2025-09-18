@@ -1,0 +1,4 @@
+[submodule "Dependencies/MedtrumKit"]
+	path = Dependencies/MedtrumKit
+	url = https://github.com/loopandlearn/MedtrumKit.git
+	branch = dev
