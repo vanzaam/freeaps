@@ -271,17 +271,22 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
                 guard let self = self else { return }
                 let isActive = UIApplication.shared.applicationState == .active
                 self.processQueue.async {
-                    // Ensure current pump data for active app state
-                    // Active app gets more frequent updates for better responsiveness
-                    // Background app relies on existing data to save battery
-                    if isActive {
-                        minimed.ensureCurrentPumpData { _ in
-                            // Completion handler - heartbeat processed
+                    // Additional safety: verify RileyLink device manager is ready
+                    let rileyLinkProvider = minimed.rileyLinkDeviceProvider
+                    rileyLinkProvider.getDevices { devices in
+                        guard !devices.isEmpty else {
+                            debug(.deviceManager, "No RileyLink devices available, skipping heartbeat")
+                            return
+                        }
+
+                        minimed.setSuspendRefreshPriority(isActive ? .high : .normal)
+
+                        // Use lightweight suspend state refresh on heartbeat
+                        // This provides rapid response to manual pump suspend/resume actions
+                        // while minimizing radio traffic through built-in throttling and backoff
+                        minimed.refreshSuspendState {
                             debug(.deviceManager, "Heartbeat suspend state check completed")
                         }
-                    } else {
-                        // Background state - just log that heartbeat was received
-                        debug(.deviceManager, "Heartbeat received in background - no refresh needed")
                     }
                 }
             }
@@ -292,10 +297,31 @@ extension BaseDeviceDataManager: PumpManagerDelegate {
         true
     }
 
-    func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus _: PumpManagerStatus) {
+    func pumpManager(_ pumpManager: PumpManager, didUpdate status: PumpManagerStatus, oldStatus: PumpManagerStatus) {
         dispatchPrecondition(condition: .onQueue(processQueue))
         debug(.deviceManager, "New pump status Bolus: \(status.bolusState)")
         debug(.deviceManager, "New pump status Basal: \(String(describing: status.basalDeliveryState))")
+
+        // Check for suspend/resume state changes and log them
+        switch (oldStatus.basalDeliveryState, status.basalDeliveryState) {
+        case let (_, .suspended(date)):
+            debug(.deviceManager, "🛑 PUMP SUSPENDED at \(date)")
+        case let (.suspended, .active(date)):
+            debug(.deviceManager, "▶️ PUMP RESUMED at \(date)")
+        case let (.suspended, .tempBasal(dose)):
+            debug(.deviceManager, "▶️ PUMP RESUMED with temp basal: \(dose.unitsPerHour) U/hr")
+        default:
+            break
+        }
+
+        // If we detect suspend/resume changes, ensure we have the most current data
+        if case .suspended = status.basalDeliveryState {
+            if let minimed = pumpManager as? MinimedPumpManager {
+                minimed.ensureCurrentPumpData { _ in
+                    debug(.deviceManager, "Pump data refreshed after suspend detection")
+                }
+            }
+        }
 
         if case .inProgress = status.bolusState {
             bolusTrigger.send(true)

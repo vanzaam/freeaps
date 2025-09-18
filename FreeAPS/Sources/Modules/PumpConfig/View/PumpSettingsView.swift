@@ -10,12 +10,10 @@ extension PumpConfig {
         weak var completionDelegate: CompletionDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<PumpSettingsView>) -> UIViewController {
-            // Ensure current pump data when user opens pump settings
-            // This provides up-to-date information for the user interface
+            // Set high priority refresh when user opens pump settings
+            // This ensures faster response to manual pump state changes (30s vs 60s)
             if let minimed = pumpManager as? MinimedPumpManager {
-                minimed.ensureCurrentPumpData { _ in
-                    // Pump data refreshed for settings view
-                }
+                minimed.setSuspendRefreshPriority(.high)
             }
 
             let palette = LoopUIColorPalette(
