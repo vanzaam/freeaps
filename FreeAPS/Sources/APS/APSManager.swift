@@ -495,7 +495,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 return
             }
             // Clamp announcement rate by app-level maxBasal
-            let appMaxBasal = Double(self.settingsManager.pumpSettings.maxBasal)
+            let appMaxBasal = Double(settingsManager.pumpSettings.maxBasal)
             let clampedRate = min(Double(truncating: rate as NSNumber), appMaxBasal)
             let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: clampedRate)
             pump.enactTempBasal(unitsPerHour: roundedRate, for: TimeInterval(duration) * 60) { error in

@@ -1,7 +1,7 @@
 import Combine
+import HealthKit
 import LoopKit
 import LoopKitUI
-import HealthKit
 
 protocol PumpSettingsObserver {
     func pumpSettingsDidChange(_ pumpSettings: PumpSettings)
@@ -37,8 +37,14 @@ extension PumpSettingsEditor {
                 debug(.service, "Starting delivery limit settings sync to pump")
                 self.processQueue.async {
                     let limits = DeliveryLimits(
-                        maximumBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: Double(truncating: settings.maxBasal as NSNumber)),
-                        maximumBolus: HKQuantity(unit: .internationalUnit(), doubleValue: Double(truncating: settings.maxBolus as NSNumber))
+                        maximumBasalRate: HKQuantity(
+                            unit: .internationalUnitsPerHour,
+                            doubleValue: Double(truncating: settings.maxBasal as NSNumber)
+                        ),
+                        maximumBolus: HKQuantity(
+                            unit: .internationalUnit(),
+                            doubleValue: Double(truncating: settings.maxBolus as NSNumber)
+                        )
                     )
                     pump.syncDeliveryLimits(limits: limits) { result in
                         switch result {

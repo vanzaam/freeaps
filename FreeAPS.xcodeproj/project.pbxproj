@@ -239,7 +239,7 @@
 		44D38FE03D5EF6B73FEB99D4 /* MedtrumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D6266B97D19D44D75423C8 /* MedtrumKit.framework */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
-		4D2C8351A6975A74F315D2ED /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4D2C8351A6975A74F315D2ED /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */; };
 		53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */; };
 		5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE53A13D26F101B332EFFC8 /* AddTempTargetProvider.swift */; };
@@ -249,7 +249,7 @@
 		63E890B4D951EAA91C071D5C /* BasalProfileEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorStateModel.swift */; };
 		642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */; };
 		646150D9E02599F5BE17CB5E /* LoopOnboardingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA89EE5826F6859471DE1BE9 /* LoopOnboardingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		659A5FD144CC870CAECB1A76 /* BuildFile in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		659A5FD144CC870CAECB1A76 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		6632A0DC746872439A858B44 /* ISFEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDA519C9B890FD9A5DFCF3 /* ISFEditorDataFlow.swift */; };
 		69A31254F2451C20361D172F /* BolusStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EC0494F55A91E3EA69EF4 /* BolusStateModel.swift */; };
 		69B9A368029F7EB39F525422 /* CREditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AA5E04A2761F6EEA6568E1 /* CREditorStateModel.swift */; };
@@ -288,6 +288,10 @@
 		B61438A22E7BBD77001E0993 /* SlideButton in Frameworks */ = {isa = PBXBuildFile; productRef = B61438A12E7BBD77001E0993 /* SlideButton */; settings = {ATTRIBUTES = (Required, ); }; };
 		B66124F62E7BC815006EBC31 /* LoopSupportKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B66124F52E7BC815006EBC31 /* LoopSupportKitUI.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B66124F72E7BC847006EBC31 /* LoopSupportKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B66124F52E7BC815006EBC31 /* LoopSupportKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B66F44F12E7CFA5500840503 /* AddGlucoseRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F44F02E7CFA5500840503 /* AddGlucoseRootView.swift */; };
+		B66F44F52E7CFA6700840503 /* AddGlucoseDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F44F22E7CFA6700840503 /* AddGlucoseDataFlow.swift */; };
+		B66F44F62E7CFA6700840503 /* AddGlucoseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F44F32E7CFA6700840503 /* AddGlucoseProvider.swift */; };
+		B66F44F72E7CFA6700840503 /* AddGlucoseStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F44F42E7CFA6700840503 /* AddGlucoseStateModel.swift */; };
 		B788E19F3799816EDF684B06 /* ShareClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5303829B0BD7C74096552A4E /* ShareClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA241FB1663EC96FDBE64C8A /* CalibrationsDataFlow.swift */; };
 		BA00D96F7B2FF169A06FB530 /* CGMStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C018D1680307A31C9ED7120 /* CGMStateModel.swift */; };
@@ -385,7 +389,7 @@
 				1F01EC1BCB55D280D9321C00 /* RileyLinkKitUI.framework in Embed Frameworks */,
 				A761BD504C33091D033C02C5 /* MedtrumKit.framework in Embed Frameworks */,
 				F98FAE9A18F516433BA3E1C0 /* OmniBLE.framework in Embed Frameworks */,
-				659A5FD144CC870CAECB1A76 /* BuildFile in Embed Frameworks */,
+				659A5FD144CC870CAECB1A76 /* (null) in Embed Frameworks */,
 				646150D9E02599F5BE17CB5E /* LoopOnboardingKit.framework in Embed Frameworks */,
 				8F2608796EA3DDF365640100 /* LoopOnboardingKitUI.framework in Embed Frameworks */,
 			);
@@ -735,6 +739,10 @@
 		B5822B15939E719628E9FF7C /* SnoozeRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = SnoozeRootView.swift; sourceTree = "<group>"; };
 		B5EF98E22A39CD656A230704 /* AutotuneConfigProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AutotuneConfigProvider.swift; sourceTree = "<group>"; };
 		B66124F52E7BC815006EBC31 /* LoopSupportKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopSupportKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B66F44F02E7CFA5500840503 /* AddGlucoseRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGlucoseRootView.swift; path = AddGlucose/View/AddGlucoseRootView.swift; sourceTree = "<group>"; };
+		B66F44F22E7CFA6700840503 /* AddGlucoseDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGlucoseDataFlow.swift; path = AddGlucose/AddGlucoseDataFlow.swift; sourceTree = "<group>"; };
+		B66F44F32E7CFA6700840503 /* AddGlucoseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGlucoseProvider.swift; path = AddGlucose/AddGlucoseProvider.swift; sourceTree = "<group>"; };
+		B66F44F42E7CFA6700840503 /* AddGlucoseStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGlucoseStateModel.swift; path = AddGlucose/AddGlucoseStateModel.swift; sourceTree = "<group>"; };
 		B8C7F882606FF83A21BE00D8 /* PumpSettingsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorRootView.swift; sourceTree = "<group>"; };
 		B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CGMDataFlow.swift; sourceTree = "<group>"; };
 		BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorDataFlow.swift; sourceTree = "<group>"; };
@@ -808,7 +816,7 @@
 				190B3E6BC749531D0FC5D505 /* RileyLinkKitUI.framework in Frameworks */,
 				44D38FE03D5EF6B73FEB99D4 /* MedtrumKit.framework in Frameworks */,
 				F8D3FC83AEED92594B9C2526 /* OmniBLE.framework in Frameworks */,
-				4D2C8351A6975A74F315D2ED /* BuildFile in Frameworks */,
+				4D2C8351A6975A74F315D2ED /* (null) in Frameworks */,
 				603CC79D7A4E626463A592BD /* LoopOnboardingKit.framework in Frameworks */,
 				9F62CF33A1D7064D134FC174 /* LoopOnboardingKitUI.framework in Frameworks */,
 			);
@@ -898,6 +906,14 @@
 			path = Main;
 			sourceTree = "<group>";
 		};
+		1F76DD3D4880B52AC0B48C0C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B66F44F02E7CFA5500840503 /* AddGlucoseRootView.swift */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		29B478DF61BF8D270F7D8954 /* Snooze */ = {
 			isa = PBXGroup;
 			children = (
@@ -945,6 +961,7 @@
 				3811DE3825C9D4A100A708ED /* Settings */,
 				29B478DF61BF8D270F7D8954 /* Snooze */,
 				6517011F19F244F64E1FF14B /* TargetsEditor */,
+				4945505A6A1B3BA81217E509 /* AddGlucose */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -1593,6 +1610,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		4945505A6A1B3BA81217E509 /* AddGlucose */ = {
+			isa = PBXGroup;
+			children = (
+				B66F44F22E7CFA6700840503 /* AddGlucoseDataFlow.swift */,
+				B66F44F32E7CFA6700840503 /* AddGlucoseProvider.swift */,
+				B66F44F42E7CFA6700840503 /* AddGlucoseStateModel.swift */,
+				1F76DD3D4880B52AC0B48C0C /* View */,
+			);
+			name = AddGlucose;
+			sourceTree = "<group>";
+		};
 		4E8C7B59F8065047ECE20965 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -2191,6 +2219,7 @@
 				3895E4C625B9E00D00214B37 /* Preferences.swift in Sources */,
 				386A124F271707F000DDC61C /* DexcomSource.swift in Sources */,
 				38DF1786276A73D400B3528F /* TagCloudView.swift in Sources */,
+				B66F44F12E7CFA5500840503 /* AddGlucoseRootView.swift in Sources */,
 				38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */,
 				383420D925FFEB3F002D46C1 /* Popup.swift in Sources */,
 				3811DE3025C9D49500A708ED /* HomeStateModel.swift in Sources */,
@@ -2225,6 +2254,9 @@
 				389A572026079BAA00BC102F /* Interpolation.swift in Sources */,
 				38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */,
 				38E44528274E401C00EC9A94 /* Protected.swift in Sources */,
+				B66F44F52E7CFA6700840503 /* AddGlucoseDataFlow.swift in Sources */,
+				B66F44F62E7CFA6700840503 /* AddGlucoseProvider.swift in Sources */,
+				B66F44F72E7CFA6700840503 /* AddGlucoseStateModel.swift in Sources */,
 				3811DEB625C9D88300A708ED /* UnlockManager.swift in Sources */,
 				E00EEC0827368630002FF094 /* NetworkAssembly.swift in Sources */,
 				38A13D3225E28B4B00EAA382 /* PumpHistoryEvent.swift in Sources */,

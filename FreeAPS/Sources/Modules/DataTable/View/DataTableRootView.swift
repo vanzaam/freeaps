@@ -48,7 +48,14 @@ extension DataTable {
             .navigationBarTitleDisplayMode(.automatic)
             .navigationBarItems(
                 leading: Button("Close", action: state.hideModal),
-                trailing: state.mode == .glucose ? EditButton().asAny() : EmptyView().asAny()
+                trailing: HStack {
+                    if state.mode == .glucose {
+                        Button(action: { state.showModal(for: .addGlucose) }) {
+                            Image(systemName: "plus")
+                        }
+                        EditButton()
+                    }
+                }
             )
         }
 

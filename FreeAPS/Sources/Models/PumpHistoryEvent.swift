@@ -29,6 +29,7 @@ enum EventType: String, JSON {
     case nsTempBasal = "Temp Basal"
     case nsCarbCorrection = "Carb Correction"
     case nsTempTarget = "Temporary Target"
+    case note = "Note"
 }
 
 enum TempType: String, JSON {

@@ -16,6 +16,7 @@ enum Screen: Identifiable, Hashable {
     case preferencesEditor
     case addCarbs
     case addTempTarget
+    case addGlucose
     case bolus(waitForSuggestion: Bool)
     case manualTempBasal
     case autotuneConfig
@@ -61,6 +62,8 @@ extension Screen {
             AddCarbs.RootView(resolver: resolver)
         case .addTempTarget:
             AddTempTarget.RootView(resolver: resolver)
+        case .addGlucose:
+            AddGlucose.RootView(resolver: resolver)
         case let .bolus(waitForSuggestion):
             Bolus.RootView(resolver: resolver, waitForSuggestion: waitForSuggestion)
         case .manualTempBasal:

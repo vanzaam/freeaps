@@ -12,6 +12,7 @@ protocol NightscoutManager: GlucoseSource {
     func uploadStatus()
     func uploadGlucose()
     func uploadProfile()
+    func uploadManualGlucose(entry: BloodGlucose, note: String)
     var cgmURL: URL? { get }
 }
 
@@ -353,6 +354,41 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
+    }
+
+    func uploadManualGlucose(entry: BloodGlucose, note: String) {
+        // If Nightscout is not configured or upload disabled, just skip quietly
+        guard let _ = nightscoutAPI, isUploadEnabled, isUploadGlucoseEnabled else {
+            debug(
+                .nightscout,
+                "uploadManualGlucose: Nightscout not configured or uploads disabled — skipping network upload",
+                printToConsole: true
+            )
+            return
+        }
+
+        // 1) Upload glucose entry as normal
+        uploadGlucose([entry], fileToSave: OpenAPS.Nightscout.uploadedGlucose)
+
+        // 2) Also upload a Note treatment to mark the source
+        let noteTreatment = NigtscoutTreatment(
+            duration: nil,
+            rawDuration: nil,
+            rawRate: nil,
+            absolute: nil,
+            rate: nil,
+            eventType: .note,
+            createdAt: entry.dateString,
+            enteredBy: NigtscoutTreatment.local,
+            bolus: nil,
+            insulin: nil,
+            notes: note,
+            carbs: nil,
+            targetTop: nil,
+            targetBottom: nil
+        )
+
+        uploadTreatments([noteTreatment], fileToSave: OpenAPS.Nightscout.uploadedPumphistory)
     }
 
     func uploadGlucose() {
