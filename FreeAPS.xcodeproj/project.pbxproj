@@ -239,7 +239,7 @@
 		44D38FE03D5EF6B73FEB99D4 /* MedtrumKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D6266B97D19D44D75423C8 /* MedtrumKit.framework */; };
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
-		4D2C8351A6975A74F315D2ED /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		4D2C8351A6975A74F315D2ED /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */; };
 		53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */; };
 		5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE53A13D26F101B332EFFC8 /* AddTempTargetProvider.swift */; };
@@ -249,7 +249,7 @@
 		63E890B4D951EAA91C071D5C /* BasalProfileEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorStateModel.swift */; };
 		642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */; };
 		646150D9E02599F5BE17CB5E /* LoopOnboardingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA89EE5826F6859471DE1BE9 /* LoopOnboardingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		659A5FD144CC870CAECB1A76 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		659A5FD144CC870CAECB1A76 /* BuildFile in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		6632A0DC746872439A858B44 /* ISFEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDA519C9B890FD9A5DFCF3 /* ISFEditorDataFlow.swift */; };
 		69A31254F2451C20361D172F /* BolusStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EC0494F55A91E3EA69EF4 /* BolusStateModel.swift */; };
 		69B9A368029F7EB39F525422 /* CREditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AA5E04A2761F6EEA6568E1 /* CREditorStateModel.swift */; };
@@ -389,7 +389,7 @@
 				1F01EC1BCB55D280D9321C00 /* RileyLinkKitUI.framework in Embed Frameworks */,
 				A761BD504C33091D033C02C5 /* MedtrumKit.framework in Embed Frameworks */,
 				F98FAE9A18F516433BA3E1C0 /* OmniBLE.framework in Embed Frameworks */,
-				659A5FD144CC870CAECB1A76 /* (null) in Embed Frameworks */,
+				659A5FD144CC870CAECB1A76 /* BuildFile in Embed Frameworks */,
 				646150D9E02599F5BE17CB5E /* LoopOnboardingKit.framework in Embed Frameworks */,
 				8F2608796EA3DDF365640100 /* LoopOnboardingKitUI.framework in Embed Frameworks */,
 			);
@@ -528,7 +528,6 @@
 		3811DF0125CA9FEA00A708ED /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		3811DF0F25CAAAE200A708ED /* APSManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APSManager.swift; sourceTree = "<group>"; };
 		3818AA42274BBC1100843DB3 /* ConfigOverride.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = ConfigOverride.xcconfig; sourceTree = "<group>"; };
-		3818AA45274C229000843DB3 /* LibreTransmitter */ = {isa = PBXFileReference; lastKnownFileType = folder; name = LibreTransmitter; path = Dependencies/LibreTransmitter; sourceTree = "<group>"; };
 		3818AA49274C267000843DB3 /* CGMBLEKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = CGMBLEKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3818AA4C274C26A300843DB3 /* LoopKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3818AA4D274C26A300843DB3 /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -816,7 +815,7 @@
 				190B3E6BC749531D0FC5D505 /* RileyLinkKitUI.framework in Frameworks */,
 				44D38FE03D5EF6B73FEB99D4 /* MedtrumKit.framework in Frameworks */,
 				F8D3FC83AEED92594B9C2526 /* OmniBLE.framework in Frameworks */,
-				4D2C8351A6975A74F315D2ED /* (null) in Frameworks */,
+				4D2C8351A6975A74F315D2ED /* BuildFile in Frameworks */,
 				603CC79D7A4E626463A592BD /* LoopOnboardingKit.framework in Frameworks */,
 				9F62CF33A1D7064D134FC174 /* LoopOnboardingKitUI.framework in Frameworks */,
 			);
@@ -1194,7 +1193,6 @@
 		3818AA44274C229000843DB3 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				3818AA45274C229000843DB3 /* LibreTransmitter */,
 			);
 			name = Packages;
 			sourceTree = "<group>";

@@ -37,4 +37,8 @@
    <FileRef
       location = "group:Dependencies/LoopSupport/LoopSupport.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:Dependencies/LibreTransmitter/LibreTransmitter.xcodeproj">
+   </FileRef>
+
 </Workspace>
