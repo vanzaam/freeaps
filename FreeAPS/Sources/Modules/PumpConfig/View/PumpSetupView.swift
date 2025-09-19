@@ -1,3 +1,4 @@
+import HealthKit
 import LoopKit
 import LoopKitUI
 import MedtrumKit
@@ -5,6 +6,7 @@ import MinimedKit
 import MinimedKitUI
 import MockKit
 import MockKitUI
+import OmniBLE
 import OmniKit
 import OmniKitUI
 import SwiftUI
@@ -47,11 +49,18 @@ extension PumpConfig {
                 basalSchedule: pumpInitialSettings.basalSchedule
             )
 
+            // FreeAPS X: use conservative defaults; actual pump limits are preserved (no forcing)
+            let minimedSettings = PumpManagerSetupSettings(
+                maxBasalRateUnitsPerHour: 2,
+                maxBolusUnits: 10,
+                basalSchedule: pumpInitialSettings.basalSchedule
+            )
+
             let result: SetupUIResult<PumpManagerViewController, PumpManagerUI>
             switch pumpType {
             case .minimed:
                 result = MinimedPumpManager.setupViewController(
-                    initialSettings: settings,
+                    initialSettings: minimedSettings,
                     bluetoothProvider: bluetoothProvider,
                     colorPalette: palette,
                     allowDebugFeatures: true,
@@ -76,6 +85,15 @@ extension PumpConfig {
                     prefersToSkipUserInteraction: false,
                     allowedInsulinTypes: InsulinType.allCases
                 )
+            case .omnipodDash:
+                result = OmniBLEPumpManager.setupViewController(
+                    initialSettings: settings,
+                    bluetoothProvider: bluetoothProvider,
+                    colorPalette: palette,
+                    allowDebugFeatures: true,
+                    prefersToSkipUserInteraction: false,
+                    allowedInsulinTypes: InsulinType.allCases
+                )
             case .simulator:
                 result = MockPumpManager.setupViewController(
                     initialSettings: settings,
@@ -93,15 +111,19 @@ extension PumpConfig {
                 vc.completionDelegate = completionDelegate
                 return vc
             case let .createdAndOnboarded(manager):
-                setupDelegate?.pumpManagerOnboarding(didCreatePumpManager: manager)
-                setupDelegate?.pumpManagerOnboarding(didOnboardPumpManager: manager)
-                // No actual VC to notify; wrap in a dummy notifier to satisfy delegate
-                final class DummyNotifier: CompletionNotifying {
-                    weak var completionDelegate: CompletionDelegate?
+                // Defer delegate notifications to the next runloop to avoid publishing changes during view updates
+                DispatchQueue.main.async {
+                    // Preserve pump limits; do not force changes here
+                    setupDelegate?.pumpManagerOnboarding(didCreatePumpManager: manager)
+                    setupDelegate?.pumpManagerOnboarding(didOnboardPumpManager: manager)
+                    // No actual VC to notify; wrap in a dummy notifier to satisfy delegate
+                    final class DummyNotifier: CompletionNotifying {
+                        weak var completionDelegate: CompletionDelegate?
+                    }
+                    let dummy = DummyNotifier()
+                    dummy.completionDelegate = completionDelegate
+                    completionDelegate?.completionNotifyingDidComplete(dummy)
                 }
-                let dummy = DummyNotifier()
-                dummy.completionDelegate = completionDelegate
-                completionDelegate?.completionNotifyingDidComplete(dummy)
                 return UIViewController()
             }
         }

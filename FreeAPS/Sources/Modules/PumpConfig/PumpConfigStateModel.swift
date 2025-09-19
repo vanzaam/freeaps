@@ -1,3 +1,4 @@
+import Foundation
 import LoopKit
 import LoopKitUI
 import SwiftDate
@@ -9,6 +10,7 @@ extension PumpConfig {
         private(set) var setupPumpType: PumpType = .minimed
         @Published var pumpState: PumpDisplayState?
         private(set) var initialSettings: PumpInitialSettings = .default
+        private var basalObserver: NSObjectProtocol?
 
         override func subscribe() {
             provider.pumpDisplayState
@@ -29,6 +31,33 @@ extension PumpConfig {
                 maxBasalRateUnitsPerHour: Double(pumpSettings.maxBasal),
                 basalSchedule: basalSchedule!
             )
+
+            // Refresh initial settings if a clamped basal profile is imported during onboarding
+            basalObserver = Foundation.NotificationCenter.default.addObserver(
+                forName: Notification.Name("FreeAPS.MinimedClampedBasal"),
+                object: nil,
+                queue: OperationQueue.main,
+                using: { [weak self] _ in
+                    guard let self = self else { return }
+                    let updated = BasalRateSchedule(
+                        dailyItems: self.provider.basalProfile().map {
+                            RepeatingScheduleValue(startTime: $0.minutes.minutes.timeInterval, value: Double($0.rate))
+                        }
+                    )
+                    let settings = self.provider.pumpSettings()
+                    self.initialSettings = PumpInitialSettings(
+                        maxBolusUnits: Double(settings.maxBolus),
+                        maxBasalRateUnitsPerHour: Double(settings.maxBasal),
+                        basalSchedule: updated!
+                    )
+                }
+            )
+        }
+
+        deinit {
+            if let obs = basalObserver {
+                Foundation.NotificationCenter.default.removeObserver(obs)
+            }
         }
 
         func addPump(_ type: PumpType) {

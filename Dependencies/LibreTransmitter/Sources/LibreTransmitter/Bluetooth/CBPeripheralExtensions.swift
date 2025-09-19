@@ -57,7 +57,7 @@ extension SomePeripheral: PeripheralProtocol, Identifiable, Hashable, Equatable 
     }
 }
 
-extension CBPeripheral: PeripheralProtocol, Identifiable {
+extension CBPeripheral: PeripheralProtocol /*, Identifiable*/ {
     public var name2: String {
         self.name ?? ""
     }

@@ -33,7 +33,8 @@ public struct InsulinTypeChooser: View {
                             .renderingMode(.template)
                             .resizable()
                             .scaledToFit()
-                            .foregroundColor(Color(frameworkColor: insulinType.brandName))
+                            // Use non-localized asset color key; Afrezza forced purple, others fallback to default insulin tint
+                            .foregroundColor(insulinType == .afrezza ? Color(red: 149/255.0, green: 99/255.0, blue: 198/255.0) : (Color(frameworkColor: insulinType.assetColorKey) ?? Color.orange))
                         Image(frameworkImage: "vial")
                             .resizable()
                             .scaledToFit()
@@ -88,5 +89,25 @@ struct InsulinTypeChooser_Previews: PreviewProvider {
 extension InsulinType {
     var image: UIImage? {
         return UIImage(frameworkImage: "vial")?.withTintColor(.red)
+    }
+}
+
+// FreeAPS X: provide stable, non-localized color asset keys for insulin types
+extension InsulinType {
+    var assetColorKey: String {
+        switch self {
+        case .novolog:
+            return "Novolog"
+        case .humalog:
+            return "Humalog"
+        case .apidra:
+            return "Apidra"
+        case .fiasp:
+            return "Fiasp"
+        case .lyumjev:
+            return "Lyumjev"
+        case .afrezza:
+            return "Afrezza"
+        }
     }
 }

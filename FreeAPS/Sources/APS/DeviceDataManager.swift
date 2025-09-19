@@ -6,6 +6,7 @@ import LoopKitUI
 import MedtrumKit
 import MinimedKit
 import MockKit
+import OmniBLE
 import OmniKit
 import SwiftDate
 import Swinject
@@ -28,6 +29,7 @@ protocol DeviceDataManager: GlucoseSource {
 private let staticPumpManagers: [PumpManagerUI.Type] = [
     MinimedPumpManager.self,
     MedtrumPumpManager.self,
+    OmniBLEPumpManager.self,
     OmnipodPumpManager.self,
     MockPumpManager.self
 ]
@@ -108,6 +110,71 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
         injectServices(resolver)
         setupPumpManager()
         UIDevice.current.isBatteryMonitoringEnabled = true
+
+        // Listen for Minimed imported limits and persist them
+        Foundation.NotificationCenter.default.addObserver(
+            forName: Notification.Name("FreeAPS.MinimedImportedLimits"),
+            object: nil,
+            queue: OperationQueue.main,
+            using: { [weak self] (note: Notification) in
+                guard let self = self else { return }
+                let maxBasal = (note.userInfo?["maxBasal"] as? Double) ?? (note.userInfo?["maxBasal"] as? NSNumber)?
+                    .doubleValue ?? 0
+                let maxBolus = (note.userInfo?["maxBolus"] as? Double) ?? (note.userInfo?["maxBolus"] as? NSNumber)?
+                    .doubleValue ?? 0
+                guard maxBasal > 0 || maxBolus > 0 else { return }
+                // Persist into app PumpSettings
+                var ps = self.settingsManager.pumpSettings
+                let newMaxBasal = maxBasal > 0 ? Decimal(maxBasal) : ps.maxBasal
+                let newMaxBolus = maxBolus > 0 ? Decimal(maxBolus) : ps.maxBolus
+                if newMaxBasal != ps.maxBasal || newMaxBolus != ps.maxBolus {
+                    let updated = PumpSettings(
+                        insulinActionCurve: ps.insulinActionCurve,
+                        maxBolus: newMaxBolus,
+                        maxBasal: newMaxBasal
+                    )
+                    self.storage.save(updated, as: OpenAPS.Settings.settings)
+                    debug(.deviceManager, "Imported pump limits: maxBasal=\(newMaxBasal) maxBolus=\(newMaxBolus)")
+                    // Optionally clamp local basal profile persisted elsewhere; main UI will pick up limits for editors
+                }
+            }
+        )
+
+        // Persist clamped basal schedule from pump onboarding
+        Foundation.NotificationCenter.default.addObserver(
+            forName: Notification.Name("FreeAPS.MinimedClampedBasal"),
+            object: nil,
+            queue: OperationQueue.main,
+            using: { [weak self] (note: Notification) in
+                guard let self = self else { return }
+                guard let items = note.userInfo?["items"] as? [[String: Any]] else { return }
+                // Convert to Autotune.basalProfile format [BasalProfileEntry]
+                let profile: [BasalProfileEntry] = items.compactMap { dict in
+                    guard let start = dict["start"] as? TimeInterval,
+                          let rate = dict["rate"] as? Double else { return nil }
+                    let minutes = Int(start / 60)
+                    return BasalProfileEntry(
+                        start: String(format: "%02d:%02d", minutes / 60, minutes % 60),
+                        minutes: minutes,
+                        rate: Decimal(rate)
+                    )
+                }.sorted(by: { $0.minutes < $1.minutes })
+                if !profile.isEmpty {
+                    var autotune = self.storage.retrieve(OpenAPS.Settings.pumpProfile, as: Autotune.self)
+                        ?? Autotune(createdAt: Date(), basalProfile: profile, sensitivity: 1, carbRatio: 10)
+                    autotune = Autotune(
+                        createdAt: Date(),
+                        basalProfile: profile,
+                        sensitivity: autotune.sensitivity,
+                        carbRatio: autotune.carbRatio
+                    )
+                    self.storage.save(autotune, as: OpenAPS.Settings.pumpProfile)
+                    // Also persist as current basal profile used by editor/UI
+                    self.storage.save(profile, as: OpenAPS.Settings.basalProfile)
+                    debug(.deviceManager, "Imported clamped basal profile from pump (\(profile.count) entries)")
+                }
+            }
+        )
     }
 
     func setupPumpManager() {

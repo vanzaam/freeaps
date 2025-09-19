@@ -16,6 +16,12 @@ extension BasalProfileEditor {
             deviceManager.pumpManager?.supportedBasalRates.map { Decimal($0) }
         }
 
+        func pumpSettings() -> PumpSettings {
+            storage.retrieve(OpenAPS.Settings.settings, as: PumpSettings.self)
+                ?? PumpSettings(from: OpenAPS.defaults(for: OpenAPS.Settings.settings))
+                ?? PumpSettings(insulinActionCurve: 5, maxBolus: 10, maxBasal: 2)
+        }
+
         func saveProfile(_ profile: [BasalProfileEntry]) -> AnyPublisher<Void, Error> {
             guard let pump = deviceManager?.pumpManager else {
                 storage.save(profile, as: OpenAPS.Settings.basalProfile)

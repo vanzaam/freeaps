@@ -15,11 +15,22 @@ extension BasalProfileEditor {
         }
 
         override func subscribe() {
-            rateValues = provider.supportedBasalRates ?? stride(from: 5.0, to: 1001.0, by: 5.0)
-                .map { ($0.decimal ?? .zero) / 100 }
+            // Build selectable rates, clamped to app's maxBasal and device-supported steps if available
+            let appMaxBasal = provider.pumpSettings().maxBasal
+            let maxDouble = Double(truncating: appMaxBasal as NSNumber)
+            if let supported = provider.supportedBasalRates {
+                rateValues = supported.filter { $0 <= appMaxBasal }
+            } else {
+                // 0.00 ... up to appMaxBasal with 0.01 steps (rounded from 5/100)
+                let upper = max(0.0, maxDouble)
+                rateValues = stride(from: 0.0, through: upper * 100.0, by: 5.0)
+                    .map { ($0.decimal ?? .zero) / 100 }
+            }
             items = provider.profile.map { value in
                 let timeIndex = timeValues.firstIndex(of: Double(value.minutes * 60)) ?? 0
-                let rateIndex = rateValues.firstIndex(of: value.rate) ?? 0
+                // Clamp each profile entry to allowed rates list
+                let rateClamped = rateValues.last(where: { $0 <= value.rate }) ?? (rateValues.first ?? 0)
+                let rateIndex = rateValues.firstIndex(of: rateClamped) ?? 0
                 return Item(rateIndex: rateIndex, timeIndex: timeIndex)
             }
         }
