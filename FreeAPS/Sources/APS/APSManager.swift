@@ -333,6 +333,10 @@ final class BaseAPSManager: APSManager, Injectable {
         guard let pump = pumpManager else { return }
 
         let roundedAmout = pump.roundToSupportedBolusVolume(units: amount)
+        guard roundedAmout > 0 else {
+            warning(.apsManager, "Skip bolus: rounded amount is 0")
+            return
+        }
 
         debug(.apsManager, "Enact bolus \(roundedAmout), manual \(!isSMB)")
 
@@ -443,6 +447,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 return
             }
             let roundedAmount = pump.roundToSupportedBolusVolume(units: Double(amount))
+            guard roundedAmount > 0 else {
+                warning(.apsManager, "Skip announcement bolus: rounded amount is 0")
+                return
+            }
             pump.enactBolus(units: roundedAmount, activationType: .manualNoRecommendation) { error in
                 if let error = error {
                     warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
@@ -573,13 +581,18 @@ final class BaseAPSManager: APSManager, Injectable {
             if let error = self.verifyStatus() {
                 return Fail(error: error).eraseToAnyPublisher()
             }
-            guard let units = suggested.units else {
+            guard let units = suggested.units, units > 0 else {
                 // It is OK, no bolus required
                 debug(.apsManager, "No bolus required")
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            return pump.enactBolus(units: Double(units), activationType: .automatic)
+            let rounded = pump.roundToSupportedBolusVolume(units: Double(units))
+            guard rounded > 0 else {
+                debug(.apsManager, "Rounded suggested bolus to 0; skipping")
+                return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
+            }
+            return pump.enactBolus(units: rounded, activationType: .automatic)
                 .map { _ in
                     self.bolusProgress.send(0)
                     return ()
