@@ -7,6 +7,7 @@ extension DataTable {
         @StateObject var state = StateModel()
         @State private var isRemoveCarbsAlertPresented = false
         @State private var removeCarbsAlert: Alert?
+        @State private var selectedTreatmentId: UUID? = nil
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -20,7 +21,13 @@ extension DataTable {
             return formatter
         }
 
-        private var dateFormatter: DateFormatter {
+        private var timeFormatterShort: DateFormatter {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            return formatter
+        }
+
+        private var timeFormatterFull: DateFormatter {
             let formatter = DateFormatter()
             formatter.dateFormat = "HH:mm:ss"
             return formatter
@@ -78,8 +85,11 @@ extension DataTable {
         @ViewBuilder private func treatmentView(_ item: Treatment) -> some View {
             HStack {
                 Image(systemName: "circle.fill").foregroundColor(item.color)
-                Text(dateFormatter.string(from: item.date))
-                    .moveDisabled(true)
+                Text(
+                    (selectedTreatmentId == item.id ? timeFormatterFull : timeFormatterShort)
+                        .string(from: item.date)
+                )
+                .moveDisabled(true)
                 Text(item.displayTypeName)
                 Text(item.amountText).foregroundColor(.secondary)
                 if let duration = item.durationText {
@@ -108,12 +118,16 @@ extension DataTable {
                         }
                 }
             }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                selectedTreatmentId = (selectedTreatmentId == item.id) ? nil : item.id
+            }
         }
 
         @ViewBuilder private func gluciseView(_ item: Glucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(dateFormatter.string(from: item.glucose.dateString))
+                    Text(timeFormatterShort.string(from: item.glucose.dateString))
                     Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
