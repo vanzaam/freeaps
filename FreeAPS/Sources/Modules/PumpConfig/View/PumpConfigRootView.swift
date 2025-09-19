@@ -51,13 +51,6 @@ extension PumpConfig {
                     )
                 }
             }
-            .onChange(of: state.pumpState) { newValue in
-                // Open full settings automatically once, when entering from Settings and pump exists
-                if !autoOpenOnce, newValue != nil, state.provider.apsManager.pumpManager != nil {
-                    autoOpenOnce = true
-                    state.setupPump = true
-                }
-            }
         }
     }
 }
