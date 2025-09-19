@@ -37,3 +37,7 @@
 [submodule "Dependencies/LibreTransmitter"]
 	path = Dependencies/LibreTransmitter
 	url = https://github.com/LoopKit/LibreTransmitter.git
+[submodule "Dependencies/LoopKit"]
+	path = Dependencies/LoopKit
+	url = https://github.com/vanzaam/LoopKit.git
+	branch = dev
