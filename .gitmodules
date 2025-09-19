@@ -26,3 +26,7 @@
 	url = https://github.com/vanzaam/OmniKit.git
 	path = Dependencies/OmniKit
 	branch = main
+[submodule "Dependencies/RileyLinkKit"]
+	path = Dependencies/RileyLinkKit
+	url = https://github.com/LoopKit/RileyLinkKit.git
+	branch = dev
