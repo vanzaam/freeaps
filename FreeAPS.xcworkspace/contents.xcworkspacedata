@@ -40,5 +40,4 @@
    <FileRef
       location = "group:Dependencies/LibreTransmitter/LibreTransmitter.xcodeproj">
    </FileRef>
-
 </Workspace>

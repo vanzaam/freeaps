@@ -1,6 +1,12 @@
+import Combine
 import Foundation
 import LibreTransmitter
 import Swinject
+
+// Fallback notification name used by LibreTransmitter to indicate a new sensor was detected
+extension Notification.Name {
+    static let libreNewSensorDetected = Notification.Name("LibreTransmitter.newSensorDetected")
+}
 
 struct Calibration: JSON, Hashable, Identifiable {
     let x: Double
@@ -52,11 +58,14 @@ final class BaseCalibrationService: CalibrationService, Injectable {
     }
 
     private func subscribe() {
-        notificationCenter.publisher(for: .newSensorDetected)
-            .sink { [weak self] _ in
-                self?.removeAllCalibrations()
-            }
-            .store(in: &lifetime)
+        if #available(iOS 13.0, *) {
+            guard let nc = notificationCenter else { return }
+            nc.publisher(for: .libreNewSensorDetected, object: nil)
+                .sink(receiveValue: { [weak self] (_: Notification) in
+                    self?.removeAllCalibrations()
+                })
+                .store(in: &lifetime)
+        }
     }
 
     var slope: Double {
