@@ -34,7 +34,7 @@ extension PumpConfig {
 
             // Refresh initial settings if a clamped basal profile is imported during onboarding
             basalObserver = Foundation.NotificationCenter.default.addObserver(
-                forName: Notification.Name("FreeAPS.MinimedClampedBasal"),
+                forName: Notification.Name("OpenAPS.MinimedClampedBasal"),
                 object: nil,
                 queue: OperationQueue.main,
                 using: { [weak self] _ in

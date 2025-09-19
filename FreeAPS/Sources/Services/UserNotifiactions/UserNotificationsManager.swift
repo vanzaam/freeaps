@@ -24,11 +24,11 @@ protocol BolusFailureObserver {
 
 final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, Injectable {
     private enum Identifier: String {
-        case glucocoseNotification = "FreeAPS.glucoseNotification"
-        case carbsRequiredNotification = "FreeAPS.carbsRequiredNotification"
-        case noLoopFirstNotification = "FreeAPS.noLoopFirstNotification"
-        case noLoopSecondNotification = "FreeAPS.noLoopSecondNotification"
-        case bolusFailedNotification = "FreeAPS.bolusFailedNotification"
+        case glucocoseNotification = "OpenAPS.glucoseNotification"
+        case carbsRequiredNotification = "OpenAPS.carbsRequiredNotification"
+        case noLoopFirstNotification = "OpenAPS.noLoopFirstNotification"
+        case noLoopSecondNotification = "OpenAPS.noLoopSecondNotification"
+        case bolusFailedNotification = "OpenAPS.bolusFailedNotification"
     }
 
     @Injected() private var settingsManager: SettingsManager!
@@ -116,7 +116,7 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
 
     private func scheduleMissingLoopNotifiactions(date _: Date) {
         ensureCanSendNotification {
-            let title = NSLocalizedString("FreeAPS X not active", comment: "FreeAPS X not active")
+            let title = NSLocalizedString("OpenAPS not active", comment: "OpenAPS not active")
             let body = NSLocalizedString("Last loop was more then %d min ago", comment: "Last loop was more then %d min ago")
 
             let firstInterval = 20 // min

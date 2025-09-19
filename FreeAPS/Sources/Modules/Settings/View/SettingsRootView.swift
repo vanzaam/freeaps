@@ -10,7 +10,7 @@ extension Settings {
 
         var body: some View {
             Form {
-                Section(header: Text("FreeAPS X v\(state.buildNumber)")) {
+                Section(header: Text("OpenAPS v\(state.buildNumber)")) {
                     Toggle("Closed loop", isOn: $state.closedLoop)
                 }
 

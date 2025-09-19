@@ -24,7 +24,7 @@ extension DispatchQueue {
         RunLoop.main.perform(inModes: [.default], block: block)
     }
 
-    /// FreeAPS X Performance Enhancement: Non-blocking main queue operations
+    /// OpenAPS Performance Enhancement: Non-blocking main queue operations
     static func performOnMainIfNeeded<T>(_ block: @escaping () -> T) -> Future<T, Never> {
         Future { promise in
             if isMain {
@@ -39,7 +39,7 @@ extension DispatchQueue {
         }
     }
 
-    /// FreeAPS X Performance Enhancement: Safe sync with timeout to prevent hangs
+    /// OpenAPS Performance Enhancement: Safe sync with timeout to prevent hangs
     func safeSync<T>(timeout: DispatchTime = .now() + .seconds(5), execute block: @escaping () throws -> T) -> T? {
         var result: T?
         var thrownError: Error?

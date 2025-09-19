@@ -113,7 +113,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
         // Listen for Minimed imported limits and persist them
         Foundation.NotificationCenter.default.addObserver(
-            forName: Notification.Name("FreeAPS.MinimedImportedLimits"),
+            forName: Notification.Name("OpenAPS.MinimedImportedLimits"),
             object: nil,
             queue: OperationQueue.main,
             using: { [weak self] (note: Notification) in
@@ -142,7 +142,7 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
         // Persist clamped basal schedule from pump onboarding
         Foundation.NotificationCenter.default.addObserver(
-            forName: Notification.Name("FreeAPS.MinimedClampedBasal"),
+            forName: Notification.Name("OpenAPS.MinimedClampedBasal"),
             object: nil,
             queue: OperationQueue.main,
             using: { [weak self] (note: Notification) in

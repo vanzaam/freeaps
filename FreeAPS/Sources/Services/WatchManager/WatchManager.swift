@@ -88,7 +88,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     private func sendState() {
         dispatchPrecondition(condition: .onQueue(processQueue))
 
-        // FreeAPS X Performance Enhancement: Improved WatchKit state management
+        // OpenAPS Performance Enhancement: Improved WatchKit state management
         guard session.activationState == .activated else {
             debug(.service, "WCSession not activated, skipping sendState")
             return
@@ -236,7 +236,7 @@ extension BaseWatchManager: WCSessionDelegate {
     func session(_: WCSession, activationDidCompleteWith state: WCSessionActivationState, error: Error?) {
         debug(.service, "WCSession is activated: \(state == .activated)")
 
-        // FreeAPS X Performance Enhancement: Improve WatchKit error handling
+        // OpenAPS Performance Enhancement: Improve WatchKit error handling
         if let error = error {
             warning(.service, "WCSession activation error: \(error.localizedDescription)")
         }

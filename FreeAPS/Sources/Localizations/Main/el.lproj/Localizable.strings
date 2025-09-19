@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  FreeAPS X
+  OpenAPS
 */
 /* Bolus screen when adding insulin */
 
@@ -46,7 +46,7 @@
 "Disclaimer" = "Disclaimer";
 
 /* Disclaimer Description */
-"FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "FreeAPS X is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
+"OpenAPS is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions." = "OpenAPS is in an active development state. We do not recommend to use the system for everyday control of blood glucose! Use it for testing purposes only at your own risk. We are not responsible for your decisions and actions.";
 
 /* Enacted at a date */
 "Enacted at %@" = "Enacted at %@";
@@ -371,7 +371,7 @@
 
 /*
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS
+  OpenAPS
 */
 
 /* ”Rewind Resets Autosens” */

@@ -49,7 +49,7 @@ extension PumpConfig {
                 basalSchedule: pumpInitialSettings.basalSchedule
             )
 
-            // FreeAPS X: use conservative defaults; actual pump limits are preserved (no forcing)
+            // OpenAPS: use conservative defaults; actual pump limits are preserved (no forcing)
             let minimedSettings = PumpManagerSetupSettings(
                 maxBasalRateUnitsPerHour: 2,
                 maxBolusUnits: 10,

@@ -150,7 +150,7 @@ extension PreferencesEditor { // swift-format-ignore: Cannot find type 'Preferen
                     displayName: "Enable UAM",
                     type: .boolean(keypath: \.enableUAM),
                     infoText: NSLocalizedString(
-                        "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier.",
+                        "With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell OpenAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier.",
                         comment: "Enable UAM"
                     ),
                     settable: self
@@ -291,7 +291,7 @@ extension PreferencesEditor { // swift-format-ignore: Cannot find type 'Preferen
                     displayName: "Insulin Peak Time",
                     type: .decimal(keypath: \.insulinPeakTime),
                     infoText: NSLocalizedString(
-                        "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops.",
+                        "Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with OpenAPS-X, longer loop calculations and possible red loops.",
                         comment: "Insulin Peak Time"
                     ),
                     settable: self
@@ -309,7 +309,7 @@ extension PreferencesEditor { // swift-format-ignore: Cannot find type 'Preferen
                     displayName: "Skip Neutral Temps",
                     type: .boolean(keypath: \.skipNeutralTemps),
                     infoText: NSLocalizedString(
-                        "Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night.",
+                        "Defaults to false, so that OpenAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night.",
                         comment: "Skip Neutral Temps"
                     ),
                     settable: self

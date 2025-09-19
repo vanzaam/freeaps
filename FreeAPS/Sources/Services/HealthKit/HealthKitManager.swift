@@ -13,9 +13,9 @@ protocol HealthKitManager: GlucoseSource {
     func requestPermission(completion: ((Bool, Error?) -> Void)?)
     /// Save blood glucose to Health store (dublicate of bg will ignore)
     func saveIfNeeded(bloodGlucose: [BloodGlucose])
-    /// Create observer for data passing beetwen Health Store and FreeAPS
+    /// Create observer for data passing beetwen Health Store and OpenAPS
     func createObserver()
-    /// Enable background delivering objects from Apple Health to FreeAPS
+    /// Enable background delivering objects from Apple Health to OpenAPS
     func enableBackgroundDelivery()
     /// Delete glucose with syncID
     func deleteGlucise(syncID: String)
@@ -75,7 +75,7 @@ final class BaseHealthKitManager: HealthKitManager, Injectable {
             options: .strictStartDate
         )
 
-        // loading only not FreeAPS bg
+        // loading only not OpenAPS bg
         // this predicate dont influence on Deleted Objects, only on added
         let predicateByMeta = HKQuery.predicateForObjects(
             withMetadataKey: Config.freeAPSMetaKey,

@@ -95,7 +95,7 @@ extension BaseLibreTransmitterSource: CGMManagerDelegate {
 
     func credentialStoragePrefix(for _: CGMManager) -> String { "freeaps" }
 
-    // New event notifications are not used in FreeAPS; ignore safely
+    // New event notifications are not used in OpenAPS; ignore safely
     func cgmManager(_: CGMManager, hasNew _: [PersistedCgmEvent]) {}
 
     // DeviceManagerDelegate (via CGMManagerDelegate)
@@ -111,7 +111,7 @@ extension BaseLibreTransmitterSource: CGMManagerDelegate {
 
     // AlertIssuer (via DeviceManagerDelegate)
     func issueAlert(_ alert: Alert) {
-        // No-op fallback; FreeAPS handles notifications elsewhere
+        // No-op fallback; OpenAPS handles notifications elsewhere
         _ = alert
     }
 

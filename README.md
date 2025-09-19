@@ -1,8 +1,8 @@
-# FreeAPS X
+# OpenAPS
 
-FreeAPS X - an artificial pancreas system for iOS based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms
+OpenAPS - an artificial pancreas system for iOS based on [OpenAPS Reference](https://github.com/openaps/oref0) algorithms
 
-FreeAPS X uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system
+OpenAPS uses original JavaScript files of oref0 and provides a user interface (UI) to control and set up the system
 
 ## Documentation
 
@@ -16,7 +16,7 @@ FreeAPS X uses original JavaScript files of oref0 and provides a user interface 
 
 ## Supported pumps
 
-To control an insulin pump FreeAPS X uses modified [rileylink_ios](https://github.com/ps2/rileylink_ios) library, thus supporting the same pump list:
+To control an insulin pump OpenAPS uses modified [rileylink_ios](https://github.com/ps2/rileylink_ios) library, thus supporting the same pump list:
 
 - Medtronic 515 or 715 (any firmware)
 - Medtronic 522 or 722 (any firmware)
@@ -27,9 +27,9 @@ To control an insulin pump FreeAPS X uses modified [rileylink_ios](https://githu
 
 To control an insulin you need to have a [RileyLink](https://getrileylink.org), OrangeLink, Pickle, GNARL, Emalink, DiaLink or similar device
 
-## Current state of FreeAPS X
+## Current state of OpenAPS
 
-FreeAPS X is in an active development state and changes frequently.
+OpenAPS is in an active development state and changes frequently.
 
 You can find a description of versions on the [releases page](https://github.com/ivalkou/freeaps/releases).
 

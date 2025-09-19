@@ -1,8 +1,8 @@
-# FreeAPS X
+# OpenAPS
 
-FreeAPS X - система искуственной поджелудочной железы для iOS на основе алгоритмов [OpenAPS Reference](https://github.com/openaps/oref0)
+OpenAPS - система искуственной поджелудочной железы для iOS на основе алгоритмов [OpenAPS Reference](https://github.com/openaps/oref0)
 
-FreeAPS X использует оригинальные JavaScript файлы oref0 и предоставляет пользовательский интерфейс (UI) для управления и настроек системы.
+OpenAPS использует оригинальные JavaScript файлы oref0 и предоставляет пользовательский интерфейс (UI) для управления и настроек системы.
 
 ## Документация
 
@@ -27,9 +27,9 @@ FreeAPS X использует оригинальные JavaScript файлы or
 
 Для управления помпой необходимо устройство [RileyLink](https://getrileylink.org), OrangeLink, Pickle, GNARL, Emalink, DiaLink или аналоги.
 
-## Текущее состояние FreeAPS X
+## Текущее состояние OpenAPS
 
-FreeAPS X находится в состоянии активной разработки и часто меняется.
+OpenAPS находится в состоянии активной разработки и часто меняется.
 
 Описание версий вы можете найти на [странице релизов](https://github.com/ivalkou/freeaps/releases).
 

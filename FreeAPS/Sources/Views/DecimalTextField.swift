@@ -30,7 +30,7 @@ struct DecimalTextField: UIViewRepresentable {
         textfield.text = cleanInput ? "" : formatter.string(for: value) ?? placeholder
         textfield.textAlignment = .right
 
-        // FreeAPS X Performance Enhancement: Remove inputAccessoryView to eliminate constraint conflicts
+        // OpenAPS Performance Enhancement: Remove inputAccessoryView to eliminate constraint conflicts
         // Users can tap outside or use system keyboard dismiss gestures
         // This completely eliminates UIToolbar constraint conflicts
         textfield.inputAccessoryView = nil
@@ -118,7 +118,7 @@ struct DecimalTextField: UIViewRepresentable {
 
 // MARK: UITextField extensions removed since inputAccessoryView disabled
 
-// This eliminates unused code and improves FreeAPS X performance
+// This eliminates unused code and improves OpenAPS performance
 
 // MARK: extension for keyboard to dismiss
 

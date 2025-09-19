@@ -20,7 +20,7 @@ extension DataTable {
         }
 
         private func setupTreatments() {
-            // FreeAPS X Performance Enhancement: Async data processing to prevent UI blocking
+            // OpenAPS Performance Enhancement: Async data processing to prevent UI blocking
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 guard let self = self else { return }
 
@@ -107,7 +107,7 @@ extension DataTable {
         }
 
         func setupGlucose() {
-            // FreeAPS X Performance Enhancement: Async glucose processing to prevent UI blocking
+            // OpenAPS Performance Enhancement: Async glucose processing to prevent UI blocking
             DispatchQueue.global(qos: .userInitiated).async { [weak self] in
                 guard let self = self else { return }
 

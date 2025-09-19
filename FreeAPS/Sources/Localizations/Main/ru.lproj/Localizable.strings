@@ -1,6 +1,6 @@
 /*
   Localizable.strings
-  FreeAPS X
+  OpenAPS
 */
 /* -------------------------------- */
 /* Bolus screen when adding insulin */
@@ -858,7 +858,7 @@ Enact a temp Basal or a temp target */
 "To prevent LOW required %d g of carbs" = "Для избежания ГИПО необходимо %d г углеводов";
 
 /* */
-"FreeAPS X not active" = "FreeAPS X неактивен";
+"OpenAPS not active" = "OpenAPS неактивен";
 
 /* */
 "Last loop was more then %d min ago" = "Последний цикл был более %d минут назад";
@@ -947,12 +947,12 @@ Enact a temp Basal or a temp target */
 "For write data to Apple Health you must give permissions in Settings > Health > Data Access" = "Чтобы записывать данные в Apple Health вам необходимо дать соответствующие разрешения, перейдя к меню Настройки > Здоровье > Доступ к данным";
 
 /* */
-"After you create glucose records in the Health app, please open FreeAPS X to help us guaranteed transfer changed data" = "После ручного создания записей о глюкозы в программе Здоровье пожалуйста откройте FreeAPS X, чтобы помочь нам гарантированно загрузить измененные данные";
+"After you create glucose records in the Health app, please open OpenAPS to help us guaranteed transfer changed data" = "После ручного создания записей о глюкозы в программе Здоровье пожалуйста откройте OpenAPS, чтобы помочь нам гарантированно загрузить измененные данные";
 /* --------------------------------------------
 
 
   Infotexts from openaps.docs and androidaps.docs
-  FreeAPS X
+  OpenAPS
 */
 /* ”Rewind Resets Autosens” */
 
@@ -980,13 +980,13 @@ Enact a temp Basal or a temp target */
 "Defaults to false, which means by default only the low end of the pump’s BG target range is used as OpenAPS target. This is a safety feature to prevent too-wide targets and less-optimal outcomes. Therefore the higher end of the target range is used only for avoiding bolus wizard overcorrections. Use wide_bg_target_range: true to force neutral temps over a wider range of eventualBGs." = "По умолчанию значение false, что означает, что в качестве цели OpenAPS используется только низкий нижний BG помпы. Это свойство безопасности для предотвращения слишком широких целей и менее оптимальных результатов. Поэтому верхний диапазона постоянной цели используется только для избежания чрезмерной коррекции в мастере болюса на помпах Медтроник. Используйте wide_bg_target_range: true для принудительного включения нейтральной ВБС, когда eventualBG в пределах диапазона.";
 
 /* "Skip Neutral Temps" */
-"Defaults to false, so that FreeAPS X will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means FreeAPS X will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "По умолчанию значение false, так что OpenAPS будет устанавливать временные цели когда это возможно,  так будет проще увидеть, работает ли система даже в автономном режиме. Эта настройка означает, что OpenAPS установит «нейтральную» ВБС (такую же, как и исходная база по умолчанию), если изменения не нужны. Это старая настройка OpenAPS для минимизации звуков и уведомлений на помпе.";
+"Defaults to false, so that OpenAPS will set temps whenever it can, so it will be easier to see if the system is working, even when you are offline. This means OpenAPS will set a “neutral” temp (same as your default basal) if no adjustments are needed. This is an old setting for OpenAPS to have the options to minimise sounds and notifications from the 'rig', that may wake you up during the night." = "По умолчанию значение false, так что OpenAPS будет устанавливать временные цели когда это возможно,  так будет проще увидеть, работает ли система даже в автономном режиме. Эта настройка означает, что OpenAPS установит «нейтральную» ВБС (такую же, как и исходная база по умолчанию), если изменения не нужны. Это старая настройка OpenAPS для минимизации звуков и уведомлений на помпе.";
 
 /* "Unsuspend If No Temp” */
 "Many people occasionally forget to resume / unsuspend their pump after reconnecting it. If you’re one of them, and you are willing to reliably set a zero temp basal whenever suspending and disconnecting your pump, this feature has your back. If enabled, it will automatically resume / unsuspend the pump if you forget to do so before your zero temp expires. As long as the zero temp is still running, it will leave the pump suspended." = "Многие люди иногда забывают возобновить подачу на помпе после повторного подключения. Если этот параметр включен, он автоматически возобновит / разблокирует помпу, если вы забыли сделать это до того, как срок ВБС истечет. До тех пор, пока ВБС работает, помпа будет приостановлена.";
 
 /* "Enable UAM" */
-"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell FreeAPS X about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Режим не объявленных углеводов. При включенной опции алгоритм SMB может распознавать не объявленные углеводы. Это полезно, если вы забыли сообщить о приеме пищи или оценили ваши углеводы неправильно. Так же, если еда с большим количеством жира и белка всасывание углеводов дольше, чем ожидалось. Без ввода количества углеводов механизм UAM может распознавать быстрые увеличения глюкозы, вызванные углеводами, адреналином и т. д., и нейтрализовать их с помощью SMB. Это также работает наоборот: если есть быстрое снижение глюкозы, то это может остановить SMB раньше.";
+"With this option enabled, the SMB algorithm can recognize unannounced meals. This is helpful, if you forget to tell OpenAPS about your carbs or estimate your carbs wrong and the amount of entered carbs is wrong or if a meal with lots of fat and protein has a longer duration than expected. Without any carb entry, UAM can recognize fast glucose increasments caused by carbs, adrenaline, etc, and tries to adjust it with SMBs. This also works the opposite way: if there is a fast glucose decreasement, it can stop SMBs earlier." = "Режим не объявленных углеводов. При включенной опции алгоритм SMB может распознавать не объявленные углеводы. Это полезно, если вы забыли сообщить о приеме пищи или оценили ваши углеводы неправильно. Так же, если еда с большим количеством жира и белка всасывание углеводов дольше, чем ожидалось. Без ввода количества углеводов механизм UAM может распознавать быстрые увеличения глюкозы, вызванные углеводами, адреналином и т. д., и нейтрализовать их с помощью SMB. Это также работает наоборот: если есть быстрое снижение глюкозы, то это может остановить SMB раньше.";
 
 /* Enable SMB With COB" */
 
@@ -1059,7 +1059,7 @@ Enact a temp Basal or a temp target */
 "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1." = "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.";
 
 /* "Insulin Peak Time" */
-"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with FreeAPS-X, longer loop calculations and possible red loops." = "Пиковое время инсулина в минутах. Время необходимое инсулину для достижения максимального воздействия";
+"Time of maximum blood glucose lowering effect of insulin, in minutes. Beware: Oref assumes for ultra-rapid (Lyumjev) & rapid-acting (Fiasp) curves minimal (35 & 50 min) and maximal (100 & 120 min) applicable insulinPeakTimes. Using a custom insulinPeakTime outside these bounds will result in issues with OpenAPS-X, longer loop calculations and possible red loops." = "Пиковое время инсулина в минутах. Время необходимое инсулину для достижения максимального воздействия";
 
 /* "Carbs Req Threshold" */
 "Grams of carbsReq to trigger a pushover. Defaults to 1 (for 1 gram of carbohydrate). Can be increased if you only want to get Pushover for carbsReq at X threshold." = "Требуемое количество грамм углеводов для срабатывания оповещения pushover. По умолчанию 1 (для 1 грамма углевода). Можно увеличить только если вы хотите получить Pushover для carbsReq при X пороге.";
