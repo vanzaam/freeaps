@@ -8,6 +8,7 @@ extension DataTable {
         @State private var isRemoveCarbsAlertPresented = false
         @State private var removeCarbsAlert: Alert?
         @State private var selectedTreatmentId: UUID? = nil
+        @State private var selectedGlucoseId: String? = nil
 
         private var glucoseFormatter: NumberFormatter {
             let formatter = NumberFormatter()
@@ -127,7 +128,10 @@ extension DataTable {
         @ViewBuilder private func gluciseView(_ item: Glucose) -> some View {
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(timeFormatterShort.string(from: item.glucose.dateString))
+                    Text(
+                        (selectedGlucoseId == item.glucose.id ? timeFormatterFull : timeFormatterShort)
+                            .string(from: item.glucose.dateString)
+                    )
                     Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
@@ -137,7 +141,13 @@ extension DataTable {
                     Text(state.units.rawValue)
                     Text(item.glucose.direction?.symbol ?? "--")
                 }
-                Text("ID: " + item.glucose.id).font(.caption2).foregroundColor(.secondary)
+                if selectedGlucoseId == item.glucose.id {
+                    Text("ID: " + item.glucose.id).font(.caption2).foregroundColor(.secondary)
+                }
+            }
+            .contentShape(Rectangle())
+            .onTapGesture {
+                selectedGlucoseId = (selectedGlucoseId == item.glucose.id) ? nil : item.glucose.id
             }
         }
 
