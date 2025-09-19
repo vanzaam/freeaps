@@ -150,6 +150,18 @@ enum DataTable {
             }
             return numberFormater.string(from: duration as NSNumber)! + " min"
         }
+
+        var displayTypeName: String {
+            switch type {
+            case .bolus:
+                if let flag = secondAmount, flag == 1 { return "SMB" }
+                return "Ручной болюс"
+            case .tempBasal:
+                return "ВБС"
+            default:
+                return type.name
+            }
+        }
     }
 
     class Glucose: Identifiable, Hashable, Equatable {

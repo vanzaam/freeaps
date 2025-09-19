@@ -43,7 +43,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         durationMin: nil,
                         rate: nil,
                         temp: nil,
-                        carbInput: nil
+                        carbInput: nil,
+                        automatic: dose.automatic
                     )]
                 case .tempBasal:
                     guard let dose = event.dose else { return [] }
@@ -67,7 +68,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             durationMin: Int(round(minutes)),
                             rate: nil,
                             temp: nil,
-                            carbInput: nil
+                            carbInput: nil,
+                            automatic: nil
                         ),
                         PumpHistoryEvent(
                             id: "_" + id,
@@ -78,7 +80,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             durationMin: nil,
                             rate: rate,
                             temp: .absolute,
-                            carbInput: nil
+                            carbInput: nil,
+                            automatic: nil
                         )
                     ]
                 case .suspend:
@@ -224,13 +227,14 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         let bolusesAndCarbs = events.compactMap { event -> NigtscoutTreatment? in
             switch event.type {
             case .bolus:
+                let eventType: EventType = (event.automatic == true) ? .smb : .bolus
                 return NigtscoutTreatment(
                     duration: event.duration,
                     rawDuration: nil,
                     rawRate: nil,
                     absolute: nil,
                     rate: nil,
-                    eventType: .bolus,
+                    eventType: eventType,
                     createdAt: event.timestamp,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: event,

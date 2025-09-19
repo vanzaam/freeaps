@@ -10,6 +10,7 @@ struct PumpHistoryEvent: JSON, Equatable {
     let rate: Decimal?
     let temp: TempType?
     let carbInput: Int?
+    let automatic: Bool?
 }
 
 enum EventType: String, JSON {
@@ -30,6 +31,7 @@ enum EventType: String, JSON {
     case nsCarbCorrection = "Carb Correction"
     case nsTempTarget = "Temporary Target"
     case note = "Note"
+    case smb = "SMB"
 }
 
 enum TempType: String, JSON {
@@ -48,5 +50,6 @@ extension PumpHistoryEvent {
         case rate
         case temp
         case carbInput = "carb_input"
+        case automatic
     }
 }

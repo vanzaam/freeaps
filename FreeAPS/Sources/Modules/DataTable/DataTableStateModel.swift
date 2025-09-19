@@ -39,7 +39,15 @@ extension DataTable {
                         .lazy // Use lazy evaluation for better performance
                         .filter { $0.type == .bolus }
                         .map {
-                            Treatment(units: units, type: .bolus, date: $0.timestamp, amount: $0.amount)
+                            // Pack SMB flag into secondAmount: 1 for SMB (automatic), 0 or nil for manual
+                            let smbFlag: Decimal? = ($0.automatic == true) ? 1 : nil
+                            return Treatment(
+                                units: units,
+                                type: .bolus,
+                                date: $0.timestamp,
+                                amount: $0.amount,
+                                secondAmount: smbFlag
+                            )
                         }
 
                     let tempBasals = pumpHistory
