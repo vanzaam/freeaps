@@ -5,6 +5,7 @@ extension PumpConfig {
     struct RootView: BaseView {
         let resolver: Resolver
         @StateObject var state = StateModel()
+        @State private var autoOpenOnce = false
 
         var body: some View {
             Form {
@@ -33,16 +34,12 @@ extension PumpConfig {
                     }
                 }
             }
-            .onAppear {
-                configureView()
-                // If pump already configured, open the same full settings screen automatically
-                if state.provider.apsManager.pumpManager != nil {
-                    state.setupPump = true
-                }
-            }
+            .onAppear(perform: configureView)
             .navigationTitle("Pump config")
             .navigationBarTitleDisplayMode(.automatic)
-            .sheet(isPresented: $state.setupPump) {
+            .sheet(isPresented: $state.setupPump, onDismiss: {
+                // nothing
+            }) {
                 if let pumpManager = state.provider.apsManager.pumpManager {
                     PumpSettingsView(pumpManager: pumpManager, completionDelegate: state)
                 } else {
@@ -52,6 +49,13 @@ extension PumpConfig {
                         completionDelegate: state,
                         setupDelegate: state
                     )
+                }
+            }
+            .onChange(of: state.pumpState) { newValue in
+                // Open full settings automatically once, when entering from Settings and pump exists
+                if !autoOpenOnce, newValue != nil, state.provider.apsManager.pumpManager != nil {
+                    autoOpenOnce = true
+                    state.setupPump = true
                 }
             }
         }
