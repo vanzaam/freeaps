@@ -18,3 +18,7 @@
 	path = Dependencies/LoopSupport
 	url = https://github.com/LoopKit/LoopSupport.git
 	branch = dev
+[submodule "Dependencies/MinimedKit"]
+	url = https://github.com/vanzaam/MinimedKit.git
+[submodule "Dependencies/OmniKit"]
+	url = https://github.com/vanzaam/OmniKit.git
