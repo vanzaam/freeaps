@@ -385,7 +385,10 @@ final class BaseAPSManager: APSManager, Injectable {
         guard let pump = pumpManager else { return }
         debug(.apsManager, "Enact temp basal \(rate) - \(duration)")
 
-        let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: rate)
+        // Clamp by app-level maxBasal and round to pump-supported rate
+        let appMaxBasal = Double(settingsManager.pumpSettings.maxBasal)
+        let clampedRate = min(rate, appMaxBasal)
+        let roundedAmout = pump.roundToSupportedBasalRate(unitsPerHour: clampedRate)
         pump.enactTempBasal(unitsPerHour: roundedAmout, for: duration) { error in
             if let error = error {
                 debug(.apsManager, "Temp Basal failed with error: \(error.localizedDescription)")
@@ -491,7 +494,10 @@ final class BaseAPSManager: APSManager, Injectable {
             guard !settings.closedLoop else {
                 return
             }
-            let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: Double(rate))
+            // Clamp announcement rate by app-level maxBasal
+            let appMaxBasal = Double(self.settingsManager.pumpSettings.maxBasal)
+            let clampedRate = min(Double(truncating: rate as NSNumber), appMaxBasal)
+            let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: clampedRate)
             pump.enactTempBasal(unitsPerHour: roundedRate, for: TimeInterval(duration) * 60) { error in
                 if let error = error {
                     warning(.apsManager, "Announcement TempBasal failed with error: \(error.localizedDescription)")
@@ -550,7 +556,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             }
-            return pump.enactTempBasal(unitsPerHour: Double(rate), for: TimeInterval(duration * 60))
+            // Clamp by app-level maxBasal and round to pump-supported rate
+            let appMaxBasal = Double(self.settingsManager.pumpSettings.maxBasal)
+            let clampedRate = min(Double(truncating: rate as NSNumber), appMaxBasal)
+            let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: clampedRate)
+            return pump.enactTempBasal(unitsPerHour: roundedRate, for: TimeInterval(duration * 60))
                 .map { _ in
                     let temp = TempBasal(duration: duration, rate: rate, temp: .absolute, timestamp: Date())
                     self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)

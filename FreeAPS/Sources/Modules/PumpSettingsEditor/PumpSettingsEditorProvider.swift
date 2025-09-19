@@ -1,6 +1,7 @@
 import Combine
 import LoopKit
 import LoopKitUI
+import HealthKit
 
 protocol PumpSettingsObserver {
     func pumpSettingsDidChange(_ pumpSettings: PumpSettings)
@@ -31,18 +32,26 @@ extension PumpSettingsEditor {
                 save()
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
-            // Updated for LoopKit UI changes: apply limits via PumpManager API
+            // Use PumpManager API to sync delivery limits; fall back to local save
             return Future<Void, Error> { promise in
-                // FreeAPS X Performance Enhancement: Improved pump communication with timeout handling
                 debug(.service, "Starting delivery limit settings sync to pump")
-
                 self.processQueue.async {
-                    // Best-effort: set limits if API available; otherwise fall back to local save
-                    (pump as? AnyObject)?.setValue(Double(settings.maxBasal), forKey: "maximumBasalRatePerHour")
-                    (pump as? AnyObject)?.setValue(Double(settings.maxBolus), forKey: "maximumBolus")
-                    debug(.service, "Applied delivery limits to pump manager (best-effort)")
-                    save()
-                    promise(.success(()))
+                    let limits = DeliveryLimits(
+                        maximumBasalRate: HKQuantity(unit: .internationalUnitsPerHour, doubleValue: Double(truncating: settings.maxBasal as NSNumber)),
+                        maximumBolus: HKQuantity(unit: .internationalUnit(), doubleValue: Double(truncating: settings.maxBolus as NSNumber))
+                    )
+                    pump.syncDeliveryLimits(limits: limits) { result in
+                        switch result {
+                        case .success:
+                            debug(.service, "Delivery limits sync finished (pump may ignore if unsupported)")
+                            save()
+                            promise(.success(()))
+                        case let .failure(error):
+                            warning(.service, "Delivery limit settings operation failed: \(error)")
+                            save()
+                            promise(.success(()))
+                        }
+                    }
                 }
             }
             .timeout(60, scheduler: processQueue) // 60 second timeout to prevent hangs
