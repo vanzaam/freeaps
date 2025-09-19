@@ -30,3 +30,7 @@
 	path = Dependencies/RileyLinkKit
 	url = https://github.com/LoopKit/RileyLinkKit.git
 	branch = dev
+[submodule "Dependencies/dexcom-share-client-swift"]
+	path = Dependencies/dexcom-share-client-swift
+	url = https://github.com/vanzaam/dexcom-share-client-swift.git
+	branch = dev
