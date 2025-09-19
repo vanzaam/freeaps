@@ -37,18 +37,22 @@ extension PumpConfig {
             .onAppear(perform: configureView)
             .navigationTitle("Pump config")
             .navigationBarTitleDisplayMode(.automatic)
-            .sheet(isPresented: $state.setupPump, onDismiss: {
-                // nothing
-            }) {
+            .fullScreenCover(isPresented: $state.setupPump, onDismiss: {}) {
                 if let pumpManager = state.provider.apsManager.pumpManager {
-                    PumpSettingsView(pumpManager: pumpManager, completionDelegate: state)
+                    NavigationView {
+                        PumpSettingsView(pumpManager: pumpManager, completionDelegate: state)
+                    }
+                    .navigationViewStyle(StackNavigationViewStyle())
                 } else {
-                    PumpSetupView(
-                        pumpType: state.setupPumpType,
-                        pumpInitialSettings: state.initialSettings,
-                        completionDelegate: state,
-                        setupDelegate: state
-                    )
+                    NavigationView {
+                        PumpSetupView(
+                            pumpType: state.setupPumpType,
+                            pumpInitialSettings: state.initialSettings,
+                            completionDelegate: state,
+                            setupDelegate: state
+                        )
+                    }
+                    .navigationViewStyle(StackNavigationViewStyle())
                 }
             }
         }
