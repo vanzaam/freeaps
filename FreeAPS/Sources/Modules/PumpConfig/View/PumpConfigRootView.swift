@@ -33,7 +33,13 @@ extension PumpConfig {
                     }
                 }
             }
-            .onAppear(perform: configureView)
+            .onAppear {
+                configureView()
+                // If pump already configured, open the same full settings screen automatically
+                if state.provider.apsManager.pumpManager != nil {
+                    state.setupPump = true
+                }
+            }
             .navigationTitle("Pump config")
             .navigationBarTitleDisplayMode(.automatic)
             .sheet(isPresented: $state.setupPump) {
