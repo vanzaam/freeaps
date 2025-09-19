@@ -10,3 +10,11 @@
 	path = Dependencies/LoopOnboarding
 	url = https://github.com/LoopKit/LoopOnboarding.git
 	branch = main
+[submodule "Dependencies/NightscoutService"]
+	path = Dependencies/NightscoutService
+	url = https://github.com/LoopKit/NightscoutService.git
+	branch = dev
+[submodule "Dependencies/LoopSupport"]
+	path = Dependencies/LoopSupport
+	url = https://github.com/LoopKit/LoopSupport.git
+	branch = dev

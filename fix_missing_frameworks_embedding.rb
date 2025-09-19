@@ -33,7 +33,8 @@ puts "✅ Found Embed Frameworks phase"
 # Список framework'ов, которые должны быть встроены
 required_frameworks = [
   'SwiftCharts',
-  'RileyLinkKitUI'
+  'RileyLinkKitUI',
+  'SlideButton'
 ]
 
 frameworks_added = []

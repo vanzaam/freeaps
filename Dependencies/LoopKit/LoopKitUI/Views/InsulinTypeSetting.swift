@@ -39,7 +39,10 @@ public struct InsulinTypeSetting: View {
             get: { self.insulinType },
             set: { newValue in
               insulinType = newValue
-              didChange(newValue)
+              // Avoid "Publishing changes from within view updates" by deferring state propagation
+              DispatchQueue.main.async {
+                  didChange(newValue)
+              }
             }
         )
     }
