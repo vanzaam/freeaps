@@ -34,3 +34,6 @@
 	path = Dependencies/dexcom-share-client-swift
 	url = https://github.com/vanzaam/dexcom-share-client-swift.git
 	branch = dev
+[submodule "Dependencies/LibreTransmitter"]
+	path = Dependencies/LibreTransmitter
+	url = https://github.com/LoopKit/LibreTransmitter.git
