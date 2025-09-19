@@ -20,5 +20,9 @@
 	branch = dev
 [submodule "Dependencies/MinimedKit"]
 	url = https://github.com/vanzaam/MinimedKit.git
+	path = Dependencies/MinimedKit
+	branch = main
 [submodule "Dependencies/OmniKit"]
 	url = https://github.com/vanzaam/OmniKit.git
+	path = Dependencies/OmniKit
+	branch = main
