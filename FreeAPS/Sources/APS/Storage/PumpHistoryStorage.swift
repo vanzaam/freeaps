@@ -95,7 +95,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             durationMin: nil,
                             rate: nil,
                             temp: nil,
-                            carbInput: nil
+                            carbInput: nil,
+                            automatic: nil
                         )
                     ]
                 case .resume:
@@ -109,7 +110,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             durationMin: nil,
                             rate: nil,
                             temp: nil,
-                            carbInput: nil
+                            carbInput: nil,
+                            automatic: nil
                         )
                     ]
                 case .rewind:
@@ -123,7 +125,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             durationMin: nil,
                             rate: nil,
                             temp: nil,
-                            carbInput: nil
+                            carbInput: nil,
+                            automatic: nil
                         )
                     ]
                 case .prime:
@@ -137,7 +140,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             durationMin: nil,
                             rate: nil,
                             temp: nil,
-                            carbInput: nil
+                            carbInput: nil,
+                            automatic: nil
                         )
                     ]
                 default:
@@ -161,7 +165,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     durationMin: nil,
                     rate: nil,
                     temp: nil,
-                    carbInput: carbs
+                    carbInput: carbs,
+                    automatic: nil
                 )
             ]
             self.storeEvents(eventsToStore)
@@ -286,7 +291,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 durationMin: 0,
                 rate: nil,
                 temp: nil,
-                carbInput: nil
+                carbInput: nil,
+                automatic: nil
             ),
             PumpHistoryEvent(
                 id: "_" + basalID,
@@ -297,7 +303,8 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 durationMin: nil,
                 rate: 0,
                 temp: .absolute,
-                carbInput: nil
+                carbInput: nil,
+                automatic: nil
             )
         ]
 
