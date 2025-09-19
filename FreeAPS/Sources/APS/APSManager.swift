@@ -609,7 +609,8 @@ final class BaseAPSManager: APSManager, Injectable {
     }
 
     // MARK: - Bolus Increment Auto-Adjust
-    private func adjustBolusIncrementIfNeeded(pump: PumpManagerUI, roundedUnits: Double) {
+
+    private func adjustBolusIncrementIfNeeded(pump: PumpManagerUI, roundedUnits _: Double) {
         // Determine pump step by probing rounding of a small delta around 0.05 and 0.1
         // Fallback to 0.05 as default desired step
         let desiredDefaultStep: Decimal = 0.05
@@ -620,7 +621,8 @@ final class BaseAPSManager: APSManager, Injectable {
         // Try to see what pump rounds 0.05 to
         let probeSmall = pump.roundToSupportedBolusVolume(units: 0.05)
         let probeLarge = pump.roundToSupportedBolusVolume(units: 0.1)
-        let detectedStep: Decimal = probeSmall > 0 ? 0.05 : (probeLarge > 0 ? 0.1 : Decimal(probeSmall > 0 ? probeSmall : probeLarge))
+        let detectedStep: Decimal = probeSmall > 0 ? 0.05 :
+            (probeLarge > 0 ? 0.1 : Decimal(probeSmall > 0 ? probeSmall : probeLarge))
 
         // If no change needed, return
         guard detectedStep > 0, detectedStep != currentStep else { return }

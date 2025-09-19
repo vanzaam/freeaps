@@ -76,11 +76,19 @@ extension PumpConfig.StateModel: CompletionDelegate {
 extension PumpConfig.StateModel: PumpManagerOnboardingDelegate {
     func pumpManagerOnboarding(didCreatePumpManager pumpManager: PumpManagerUI) {
         provider.setPumpManager(pumpManager)
+        // Set default desired bolus step to 0.05 for a new pump
+        settingsManager.updatePreferences { prefs in
+            prefs.bolusIncrement = 0.05
+        }
         setupPump = false
     }
 
     func pumpManagerOnboarding(didOnboardPumpManager pumpManager: PumpManagerUI) {
         provider.setPumpManager(pumpManager)
+        // Set default desired bolus step to 0.05 for a new pump
+        settingsManager.updatePreferences { prefs in
+            prefs.bolusIncrement = 0.05
+        }
         setupPump = false
     }
 
