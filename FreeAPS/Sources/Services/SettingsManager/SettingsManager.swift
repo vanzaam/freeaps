@@ -5,6 +5,7 @@ protocol SettingsManager: AnyObject {
     var settings: FreeAPSSettings { get set }
     var preferences: Preferences { get }
     var pumpSettings: PumpSettings { get }
+    func updatePreferences(_ mutate: (inout Preferences) -> Void)
 }
 
 protocol SettingsObserver {
@@ -45,6 +46,12 @@ final class BaseSettingsManager: SettingsManager, Injectable {
         storage.retrieve(OpenAPS.Settings.preferences, as: Preferences.self)
             ?? Preferences(from: OpenAPS.defaults(for: OpenAPS.Settings.preferences))
             ?? Preferences()
+    }
+
+    func updatePreferences(_ mutate: (inout Preferences) -> Void) {
+        var prefs = preferences
+        mutate(&prefs)
+        storage.save(prefs, as: OpenAPS.Settings.preferences)
     }
 
     var pumpSettings: PumpSettings {

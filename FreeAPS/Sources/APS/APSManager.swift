@@ -340,6 +340,9 @@ final class BaseAPSManager: APSManager, Injectable {
 
         debug(.apsManager, "Enact bolus \(roundedAmout), manual \(!isSMB)")
 
+        // Auto-adjust bolus increment preference to pump capability on first success
+        adjustBolusIncrementIfNeeded(pump: pump, roundedUnits: roundedAmout)
+
         pump.enactBolus(units: roundedAmout, activationType: isSMB ? .automatic : .manualNoRecommendation).sink { completion in
             if case let .failure(error) = completion {
                 warning(.apsManager, "Bolus failed with error: \(error.localizedDescription)")
@@ -451,6 +454,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 warning(.apsManager, "Skip announcement bolus: rounded amount is 0")
                 return
             }
+            adjustBolusIncrementIfNeeded(pump: pump, roundedUnits: roundedAmount)
             pump.enactBolus(units: roundedAmount, activationType: .manualNoRecommendation) { error in
                 if let error = error {
                     warning(.apsManager, "Announcement Bolus failed with error: \(error.localizedDescription)")
@@ -592,6 +596,7 @@ final class BaseAPSManager: APSManager, Injectable {
                 debug(.apsManager, "Rounded suggested bolus to 0; skipping")
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
+            self.adjustBolusIncrementIfNeeded(pump: pump, roundedUnits: rounded)
             return pump.enactBolus(units: rounded, activationType: .automatic)
                 .map { _ in
                     self.bolusProgress.send(0)
@@ -601,6 +606,30 @@ final class BaseAPSManager: APSManager, Injectable {
         }.eraseToAnyPublisher()
 
         return basalPublisher.flatMap { bolusPublisher }.eraseToAnyPublisher()
+    }
+
+    // MARK: - Bolus Increment Auto-Adjust
+    private func adjustBolusIncrementIfNeeded(pump: PumpManagerUI, roundedUnits: Double) {
+        // Determine pump step by probing rounding of a small delta around 0.05 and 0.1
+        // Fallback to 0.05 as default desired step
+        let desiredDefaultStep: Decimal = 0.05
+        var currentPrefs = settingsManager.preferences
+        let currentStep = currentPrefs.bolusIncrement
+
+        // Detect pump step from rounding behaviour
+        // Try to see what pump rounds 0.05 to
+        let probeSmall = pump.roundToSupportedBolusVolume(units: 0.05)
+        let probeLarge = pump.roundToSupportedBolusVolume(units: 0.1)
+        let detectedStep: Decimal = probeSmall > 0 ? 0.05 : (probeLarge > 0 ? 0.1 : Decimal(probeSmall > 0 ? probeSmall : probeLarge))
+
+        // If no change needed, return
+        guard detectedStep > 0, detectedStep != currentStep else { return }
+
+        // Update preferences
+        settingsManager.updatePreferences { prefs in
+            prefs.bolusIncrement = detectedStep
+        }
+        debug(.apsManager, "Bolus increment adjusted to \(detectedStep) based on pump capability")
     }
 
     private func reportEnacted(received: Bool) {
