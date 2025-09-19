@@ -8,11 +8,11 @@
 	branch = dev
 [submodule "Dependencies/LoopOnboarding"]
 	path = Dependencies/LoopOnboarding
-	url = https://github.com/LoopKit/LoopOnboarding.git
+	url = https://github.com/vanzaam/LoopOnboarding.git
 	branch = main
 [submodule "Dependencies/NightscoutService"]
 	path = Dependencies/NightscoutService
-	url = https://github.com/LoopKit/NightscoutService.git
+	url = https://github.com/vanzaam/NightscoutService.git
 	branch = dev
 [submodule "Dependencies/LoopSupport"]
 	path = Dependencies/LoopSupport
