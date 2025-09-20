@@ -10,10 +10,6 @@
 	path = Dependencies/LoopOnboarding
 	url = https://github.com/vanzaam/LoopOnboarding.git
 	branch = main
-[submodule "Dependencies/NightscoutService"]
-	path = Dependencies/NightscoutService
-	url = https://github.com/vanzaam/NightscoutService.git
-	branch = dev
 [submodule "Dependencies/LoopSupport"]
 	path = Dependencies/LoopSupport
 	url = https://github.com/vanzaam/LoopSupport.git
@@ -41,10 +37,6 @@
 	path = Dependencies/LoopKit
 	url = https://github.com/vanzaam/LoopKit.git
 	branch = dev
-[submodule "Dependencies/rileylink_ios"]
-	path = Dependencies/rileylink_ios
-	url = https://github.com/vanzaam/rileylink_ios.git
-	branch = master
 [submodule "Dependencies/G7SensorKit"]
 	path = Dependencies/G7SensorKit
 	url = https://github.com/vanzaam/G7SensorKit.git
