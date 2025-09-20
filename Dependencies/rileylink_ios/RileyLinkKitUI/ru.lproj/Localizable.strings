@@ -1,20 +1,44 @@
+/* Unit format string for an RSSI value in decibles */
+"%@ dB" = "%@ дБ";
+
+/* Unit format string for an value in percent */
+"%@%%" = "%@%%";
+
+/* The title of the section for alerts */
+"Alert" = "Оповещение";
+
+/* Text indicating LED Mode is auto */
+"Auto" = "Авто";
+
+/* The title of the cell showing battery level */
+"Battery level" = "Уровень заряда";
+
 /* The title of the section describing commands */
 "Commands" = "Команды";
 
 /* The connected state */
-"Connected" = "Соединение установлено";
+"Connected" = "Подключено";
 
 /* The in-progress connecting state */
-"Connecting" = "Соединяется";
+"Connecting" = "Подключение";
+
+/* The title of the cell for connection LED */
+"Connection LED" = "Индикатор соединения";
+
+/* The title of the section for connection monitoring */
+"Connection Monitoring" = "Мониторинг соединения";
 
 /* The title of the cell showing BLE connection state */
 "Connection State" = "Состояние соединения";
 
+/* The title of the cell for connection vibration */
+"Connection Vibration" = "Вибрация при разъединении";
+
 /* The title of the section describing the device */
-"Device" = "устройство";
+"Device" = "Устройство";
 
 /* The title of the devices table section in RileyLink settings */
-"Devices" = "устройства";
+"Devices" = "Устройства";
 
 /* The disconnected state */
 "Disconnected" = "Разъединено";
@@ -22,14 +46,39 @@
 /* The in-progress disconnecting state */
 "Disconnecting" = "Разъединяется";
 
+/* The title of the cell for sounding device finding piezo */
+"Find Device" = "Найти устройство";
+
 /* The title of the cell showing firmware version */
 "Firmware" = "Прошивка";
 
 /* The title of the cell showing current rileylink frequency */
 "Frequency" = "Частота";
 
+/* The title of the command to fetch RileyLink statistics */
+"Get RileyLink Statistics" = "Получить статистику Rileylink";
+
+/* Progress message for getting statistics. */
+"Get Statistics…" = "Получить статистику…";
+
+/* The title of the cell showing Lighten Red LED */
+"Lighten Red LED" = "Lighten Red LED";
+
+/* The title of the cell showing Lighten Yellow LED */
+"Lighten Yellow LED" = "Lighten Yellow LED";
+
+/* The title of the cell showing battery level */
+"Low Battery Alert" = "Низкий заряд";
+
 /* The title of the cell showing device name */
-"Name" = "Название";
+"Name" = "Имя";
+
+/* Detail text when battery alert disabled.
+   Text indicating LED Mode is off */
+"Off" = "Выключено";
+
+/* Text indicating LED Mode is on */
+"On" = "Включено";
 
 /* RileyLink setup description */
 "RileyLink allows for communication with the pump over Bluetooth Low Energy." = "RileyLink позволяет вести коммуникацию с помпой через Bluetooth Low Energy.";
@@ -37,68 +86,22 @@
 /* The title of the cell showing BLE signal strength (RSSI) */
 "Signal Strength" = "Уровень сигнала";
 
-/* The header of the cells showing connection monitoring */
-"Connection Monitoring" = "Проверка подключения";
-
-/* The title of the cell showing uptime */
-"Uptime" = "Время непрерывной работы";
-
-/* The title of the cell showing battery level */
-"Battery level" = "Уровень заряда батареи";
-
-/* The title of the cell showing Voltage */
-"Voltage" = "Напряжение";
-
-/* "The title of the section for alerts" */
-"Alert" = "Тревога";
-
-/* The title of the cell showing Low Battery Alert */
-"Low Battery Alert" = "Предупредить при уровне заряда";
-
-/* Header of list showing battery level alert options */
-"Battery level Alert" = "Уровень предупреждения о низком заряде";
-
-/* Battery level alert OFF in list of options */
-"OFF" = "Не предупреждать";
-
-/* The title of the command to update diagnostic LEDs */
-"Diagnostic LEDs" = "Индикатор диагностики";
-
-/* The title of the command to fetch RileyLink statistics */
-"Get RileyLink Statistics" = "Статистика RileyLink";
-
-/* The title of the command to invert BLE connection LED logic */
-"Invert LED Logic" = "Обратная логика индикации";
-
-/* The header of the cells showing test commands */
-"Test Commands" = "Проверочные команды";
-
-/* The title of the cell showing Lighten Yellow LED */
-"Lighten Yellow LED" = "Светло-желтый индикатор";
-
-/* The title of the cell showing Lighten Yellow LED */
-"Lighten Red LED" = "Светло-красный индикатор";
+/* The title of the section for orangelink commands
+   The title of the section for rileylink commands */
+"Test Commands" = "Команды для проверки";
 
 /* The title of the cell showing Test Vibration */
-"Test Vibration" = "Проверка вибрации";
+"Test Vibration" = "Проверить вибрацию";
 
-/* The title of the cell for sounding device finding piezo */
-"Find Device" = "Поиск устройства";
+/* The title of the command to update diagnostic LEDs */
+"Toggle Diagnostic LEDs" = "Переключить режим светодиодов";
 
-/* The title of the cell for connection LED */
-"Connection LED" = "Индикатор подключения";
+/* Progress message for changing diagnostic LED mode */
+"Updating diagnostic LEDs mode" = "Изменить режим светодиодов";
 
-/* The title of the cell for connection vibration */
-"Connection Vibration" = "Вибрировать при потере связи";
+/* The title of the cell showing uptime */
+"Uptime" = "Uptime";
 
-/* Detail text when battery alert disabled. */
-"Off" = "Выкл";
+/* The title of the cell showing ORL */
+"Voltage" = "Напряжение";
 
-/* Text indicating LED Mode is on */
-"On" = "Вкл";
-
-/* Text indicating LED Mode is off */
-"Off" = "Выкл";
-
-/* Text indicating LED Mode is auto */
-"Auto" = "Авто";

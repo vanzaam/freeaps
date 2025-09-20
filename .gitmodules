@@ -16,8 +16,8 @@
 	branch = dev
 [submodule "Dependencies/LoopSupport"]
 	path = Dependencies/LoopSupport
-	url = https://github.com/LoopKit/LoopSupport.git
-	branch = dev
+	url = https://github.com/vanzaam/LoopSupport.git
+	branch = main
 [submodule "Dependencies/MinimedKit"]
 	url = https://github.com/vanzaam/MinimedKit.git
 	path = Dependencies/MinimedKit
@@ -28,7 +28,7 @@
 	branch = main
 [submodule "Dependencies/RileyLinkKit"]
 	path = Dependencies/RileyLinkKit
-	url = https://github.com/LoopKit/RileyLinkKit.git
+	url = https://github.com/vanzaam/RileyLinkKit.git
 	branch = dev
 [submodule "Dependencies/dexcom-share-client-swift"]
 	path = Dependencies/dexcom-share-client-swift
@@ -36,8 +36,12 @@
 	branch = dev
 [submodule "Dependencies/LibreTransmitter"]
 	path = Dependencies/LibreTransmitter
-	url = https://github.com/LoopKit/LibreTransmitter.git
+	url = https://github.com/vanzaam/LibreTransmitter.git
 [submodule "Dependencies/LoopKit"]
 	path = Dependencies/LoopKit
 	url = https://github.com/vanzaam/LoopKit.git
 	branch = dev
+[submodule "Dependencies/rileylink_ios"]
+	path = Dependencies/rileylink_ios
+	url = https://github.com/vanzaam/rileylink_ios.git
+	branch = master

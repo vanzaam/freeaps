@@ -1,0 +1,184 @@
+---
+description: FreeAPS X performance optimization rules
+globs: ["**/*.swift"]
+alwaysApply: true
+---
+
+# FreeAPS X Performance Optimization Rules
+
+## 🎯 **CRITICAL: Eliminate iAPS Performance Issues**
+
+**FreeAPS X is designed to improve upon iAPS by eliminating freezes, lags, and performance problems.**
+
+## Core Performance Principles
+
+### 1. **UI Responsiveness (Critical)**
+- **NEVER block the main thread** with heavy operations
+- **Use background queues** for all data processing
+- **Implement proper async/await** patterns
+- **Use Combine publishers** for reactive programming
+- **Minimize UI updates** to prevent lag
+
+### 2. **Memory Management (Critical)**
+- **Use weak references** in all closures to prevent retain cycles
+- **Proper cleanup** of Combine subscriptions in deinit
+- **Monitor memory usage** during development
+- **Use autoreleasepool** for memory-intensive operations
+- **Avoid memory leaks** in long-running operations
+
+### 3. **Data Processing Optimization**
+- **Batch operations** instead of processing one by one
+- **Use lazy loading** for large datasets
+- **Implement proper caching** to avoid redundant operations
+- **Optimize database queries** for performance
+- **Use efficient data structures** for glucose data
+
+### 4. **Network Operations**
+- **Use URLSession.shared.dataTaskPublisher** with Combine
+- **Implement proper timeout handling** for network requests
+- **Use background queues** for network operations
+- **Implement retry logic** for failed requests
+- **Cache network responses** when appropriate
+
+## FreeAPS X Specific Optimizations
+
+### Glucose Data Processing
+```swift
+// ✅ GOOD: Background processing
+DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+    let processedData = self?.processGlucoseData(rawData)
+    DispatchQueue.main.async {
+        self?.updateUI(with: processedData)
+    }
+}
+
+// ❌ BAD: Main thread blocking
+let processedData = processGlucoseData(rawData) // Blocks UI
+updateUI(with: processedData)
+```
+
+### Chart Rendering
+```swift
+// ✅ GOOD: Efficient Path API
+Path { path in
+    for (i, value) in glucoseData.enumerated() {
+        let x = CGFloat(i) * stepX
+        let y = height - CGFloat(value) * (height - 2)
+        if i == 0 { 
+            path.move(to: CGPoint(x: x, y: y)) 
+        } else { 
+            path.addLine(to: CGPoint(x: x, y: y)) 
+        }
+    }
+}
+.stroke(Color.green, lineWidth: 2)
+
+// ❌ BAD: Individual views for each point
+ForEach(glucoseData) { point in
+    Circle()
+        .position(x: point.x, y: point.y)
+}
+```
+
+### Memory Management
+```swift
+// ✅ GOOD: Weak references
+class GlucoseManager {
+    func processData() {
+        networkService.fetchData { [weak self] result in
+            guard let self = self else { return }
+            self.handleResult(result)
+        }
+    }
+}
+
+// ❌ BAD: Strong references causing retain cycles
+class GlucoseManager {
+    func processData() {
+        networkService.fetchData { result in
+            self.handleResult(result) // Retain cycle!
+        }
+    }
+}
+```
+
+## Performance Testing Checklist
+
+### UI Responsiveness
+- ✅ **No UI freezes** during data processing
+- ✅ **Smooth animations** at 60 FPS
+- ✅ **Instant touch response** on all interactions
+- ✅ **No lag** when scrolling through data
+- ✅ **Responsive charts** with real-time updates
+
+### Memory Usage
+- ✅ **No memory leaks** in long-running sessions
+- ✅ **Stable memory usage** over time
+- ✅ **Proper cleanup** of resources
+- ✅ **Efficient data structures** for large datasets
+- ✅ **Background processing** doesn't accumulate memory
+
+### Network Performance
+- ✅ **Async network operations** don't block UI
+- ✅ **Proper timeout handling** for failed requests
+- ✅ **Retry logic** for transient failures
+- ✅ **Caching** to reduce network calls
+- ✅ **Background sync** doesn't impact user experience
+
+## Common Performance Anti-Patterns to Avoid
+
+### ❌ **DON'T:**
+- Block main thread with heavy operations
+- Create retain cycles with strong references
+- Process data synchronously on main thread
+- Update UI from background threads
+- Use inefficient data structures for large datasets
+- Ignore memory management in closures
+- Process all data at once instead of batching
+- Use synchronous network calls
+
+### ✅ **DO:**
+- Use background queues for heavy operations
+- Use weak references in closures
+- Process data asynchronously
+- Update UI only on main thread
+- Use efficient data structures (Path API for graphics)
+- Properly manage memory in closures
+- Batch operations for better performance
+- Use async network operations with Combine
+
+## Performance Monitoring
+
+### Development Tools
+- **Xcode Instruments**: Monitor memory usage and CPU
+- **Console Logs**: Track performance metrics
+- **Memory Graph**: Identify memory leaks
+- **Time Profiler**: Find performance bottlenecks
+- **Energy Log**: Monitor battery usage
+
+### Key Metrics to Track
+- **Memory Usage**: Should remain stable over time
+- **CPU Usage**: Should be minimal during idle
+- **Network Latency**: Should not impact UI responsiveness
+- **UI Frame Rate**: Should maintain 60 FPS
+- **Battery Usage**: Should be optimized for long-term use
+
+## FreeAPS X Performance Goals
+
+### Primary Objectives
+1. **Eliminate UI freezes** from iAPS implementation
+2. **Reduce lag** in user interface
+3. **Improve stability** and reliability
+4. **Optimize memory usage** to prevent crashes
+5. **Enhance user experience** with smooth performance
+
+### Success Criteria
+- **Zero UI freezes** during normal operation
+- **Smooth 60 FPS** animations and transitions
+- **Instant response** to user interactions
+- **Stable memory usage** over 24+ hour sessions
+- **Efficient battery usage** for continuous operation
+
+---
+
+*FreeAPS X performance optimization is critical for creating a superior user experience that eliminates the performance issues found in iAPS.*

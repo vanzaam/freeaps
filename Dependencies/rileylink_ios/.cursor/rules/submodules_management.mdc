@@ -1,0 +1,177 @@
+---
+description: Git Submodules Management for FreeAPS X
+globs: ["**/*.swift", "**/.gitmodules", "**/*.rb"]
+alwaysApply: true
+---
+
+# Git Submodules Management for FreeAPS X
+
+## ✅ **PROVEN SUCCESS: How to Commit Submodule Changes**
+
+**CRITICAL:** This method successfully resolved "modified content" submodule issues that were blocking development!
+
+## Problem: Persistent Submodule "Modified Content" Warnings
+
+When Git shows:
+```
+Changes not staged for commit:
+	modified:   Dependencies/dexcom-share-client-swift (modified content)
+	modified:   rileylink_ios (modified content)
+```
+
+And normal `git add` and `git commit` commands don't work.
+
+## ✅ **SOLUTION: Step-by-Step Submodule Commit Process**
+
+### Step 1: Commit Changes INSIDE Each Submodule
+```bash
+# Go into each submodule and commit changes internally
+cd Dependencies/dexcom-share-client-swift
+git add -A
+git commit -m "Update dexcom-share-client-swift with formatting improvements"
+
+cd ../rileylink_ios  # or wherever the submodule is
+git add -A
+git commit -m "🔧 Preserve Bluetooth safety checks and formatting improvements"
+```
+
+### Step 2: Update Main Project with New Submodule Commits
+```bash
+# Return to main project root
+cd /path/to/main/project
+
+# Add the updated submodules to main project
+git add Dependencies/dexcom-share-client-swift rileylink_ios
+
+# Commit the submodule updates in main project
+git commit -m "📦 Update submodules with all improvements"
+```
+
+### Step 3: Push Everything
+```bash
+# Push main project changes
+git push origin master
+
+# Optionally push submodule changes (if they have remotes)
+cd Dependencies/dexcom-share-client-swift && git push || echo "No remote"
+cd ../rileylink_ios && git push || echo "No remote"
+```
+
+## 🎯 **Why This Works**
+
+1. **Submodules are separate Git repositories** - they need their own commits
+2. **Main project tracks submodule commit hashes** - not the actual files
+3. **"Modified content" means uncommitted changes** inside the submodule
+4. **Main project can't commit** until submodule is clean
+
+## 🚨 **Common Mistakes to Avoid**
+
+### ❌ **DON'T:**
+- Try to commit submodule changes from main project root
+- Use `git add .` expecting it to handle submodules
+- Ignore "modified content" warnings
+- Reset submodule changes without checking if they're important
+
+### ✅ **DO:**
+- Always commit inside submodule first
+- Then update main project with new submodule commit hash
+- Check what changed before committing (`git diff` inside submodule)
+- Preserve important changes (like our Bluetooth safety checks)
+
+## 📊 **Real Example from FreeAPS X**
+
+### What We Had:
+- **Critical Bluetooth safety checks** in `Dependencies/rileylink_ios/RileyLinkBLEKit/RileyLinkDeviceManager.swift`
+- **Code formatting improvements** in both submodules
+- **Git showing "modified content"** and refusing to commit
+
+### What We Did:
+```bash
+# 1. Committed in dexcom submodule
+cd Dependencies/dexcom-share-client-swift
+git commit -m "Update with formatting improvements"
+# Result: [dev bc9ec3a] 2 files changed
+
+# 2. Committed in rileylink submodule  
+cd ../rileylink_ios
+git commit -m "🔧 Preserve Bluetooth safety checks and formatting"
+# Result: [dev 096a9ab] 67 files changed, 1477 insertions
+
+# 3. Updated main project
+cd /main/project
+git add Dependencies/dexcom-share-client-swift rileylink_ios
+git commit -m "📦 Update submodules with all improvements"
+# Result: [master 0827e57] 2 files changed
+```
+
+### Final Result:
+- ✅ **"nothing to commit, working tree clean"**
+- ✅ **All changes preserved and committed**
+- ✅ **No more Git warnings**
+
+## 🔍 **Troubleshooting Submodules**
+
+### Issue: "No such file or directory" when cd into submodule
+**Cause:** Submodule not properly initialized
+**Solution:**
+```bash
+git submodule update --init --recursive
+```
+
+### Issue: "fatal: no submodule mapping found in .gitmodules"
+**Cause:** Broken submodule configuration
+**Solution:**
+1. Check if `.gitmodules` file exists
+2. If not, submodules might be regular directories (which is fine)
+3. Treat them as regular directories and commit normally
+
+### Issue: Submodule shows as "dirty" after commit
+**Cause:** Main project still references old commit hash
+**Solution:**
+```bash
+# In main project
+git add path/to/submodule
+git commit -m "Update submodule reference"
+```
+
+## 🚀 **Best Practices for FreeAPS X**
+
+### Before Making Submodule Changes:
+1. **Backup important changes** - use `git stash` if needed
+2. **Document what you're changing** and why
+3. **Check if changes are yours** or automatic formatting
+
+### When Committing Submodule Changes:
+1. **Always commit inside submodule first**
+2. **Use descriptive commit messages**
+3. **Mention critical changes** (like Bluetooth fixes)
+4. **Update main project immediately after**
+
+### After Submodule Commits:
+1. **Verify working tree is clean** in main project
+2. **Test that important changes still work**
+3. **Push all changes** to prevent loss
+
+## 🎯 **Integration with FreeAPS X Development**
+
+### When Adding New Dependencies:
+- Use workspace project references (see xcode_workspace_management.mdc)
+- Avoid creating new submodules unless absolutely necessary
+- Prefer copying dependencies into Dependencies/ as regular folders
+
+### When Updating Dependencies:
+- Always check what changed before committing
+- Preserve any custom modifications we made
+- Test thoroughly after submodule updates
+
+### When Seeing "Modified Content":
+- **Don't panic** - follow the step-by-step process above
+- **Check what changed** - might be important improvements
+- **Commit properly** - inside submodule then main project
+
+---
+
+**This process successfully resolved persistent submodule issues in FreeAPS X and preserved all critical Bluetooth stability improvements!** 🚀
+
+*Last updated: 2025-09-17*
+*Based on successful resolution of rileylink_ios and dexcom-share-client-swift submodule issues*

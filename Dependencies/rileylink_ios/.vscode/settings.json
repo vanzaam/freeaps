@@ -1,0 +1,32 @@
+{
+  "swift.sourcekit-lsp.enabled": true,
+  "swift.diagnostics.enable": true,
+  "swift.diagnostics.severity": {
+    "error": "warning",
+    "warning": "info",
+    "info": "info"
+  },
+  "swift.sourcekit-lsp.serverArguments": [
+    "-Xswiftc", "-suppress-warnings",
+    "-Xswiftc", "-warn-long-function-bodies=100",
+    "-Xswiftc", "-warn-long-expression-type-checking=100"
+  ],
+  "swift.buildPath": "build",
+  "swift.packagePath": ".",
+  "swift.sourcekit-lsp.logLevel": "error",
+  "swift.sourcekit-lsp.trace.server": "off",
+  "swift.sourcekit-lsp.trace.client": "off",
+  "files.associations": {
+    "*.swift": "swift"
+  },
+  "editor.semanticHighlighting.enabled": true,
+  "editor.semanticTokenColorCustomizations": {
+    "rules": {
+      "type": "#4EC9B0",
+      "class": "#4EC9B0",
+      "enum": "#4EC9B0",
+      "interface": "#4EC9B0",
+      "struct": "#4EC9B0"
+    }
+  }
+}

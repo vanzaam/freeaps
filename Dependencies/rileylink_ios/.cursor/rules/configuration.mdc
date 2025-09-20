@@ -1,0 +1,32 @@
+---
+description: Configuration management
+globs: ["**/*.xcconfig", "**/Info.plist", "**/Config*.xcconfig"]
+alwaysApply: true
+---
+
+# Configuration Management
+
+## ConfigOverride.xcconfig Usage
+- Use ConfigOverride.xcconfig for all app settings instead of hardcoding in Info.plist
+- Required settings: APP_DISPLAY_NAME, APP_VERSION, APP_BUILD_NUMBER, DEVELOPER_TEAM, BUNDLE_IDENTIFIER, APP_GROUP_ID
+- Never hardcode sensitive data in configuration files
+- Use environment-specific configurations when needed
+
+## Bundle Configuration
+- Bundle version and build number must come from ConfigOverride.xcconfig
+- App display name should be configurable via xcconfig
+- Developer team and bundle identifier must be externalized
+- App group ID should be configurable for different environments
+
+## Security
+- Never store API keys, secrets, or sensitive data in configuration files
+- Use Keychain for sensitive configuration data
+- Validate configuration values at runtime
+- Provide meaningful error messages for configuration issues
+
+## Best Practices
+- Keep configuration files version controlled
+- Document all configuration options
+- Use meaningful names for configuration keys
+- Provide default values where appropriate
+- Validate configuration on app startup
