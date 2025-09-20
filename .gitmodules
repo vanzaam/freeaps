@@ -49,3 +49,7 @@
 	path = Dependencies/G7SensorKit
 	url = https://github.com/vanzaam/G7SensorKit.git
 	branch = main
+[submodule "Dependencies/CGMBLEKit"]
+	path = Dependencies/CGMBLEKit
+	url = https://github.com/vanzaam/CGMBLEKit.git
+	branch = dev
