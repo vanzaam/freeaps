@@ -8,18 +8,13 @@ extension ISFEditor {
         @State private var editMode = EditMode.inactive
 
         private var dateFormatter: DateFormatter {
-            let formatter = DateFormatter()
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-            formatter.timeStyle = .short
-            return formatter
+            let f = FormatterCache.dateFormatter(timeStyle: .short)
+            f.timeZone = TimeZone(secondsFromGMT: 0)
+            return f
         }
 
         private var rateFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 2
-            return formatter
-        }
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2) }
 
         var body: some View {
             Form {

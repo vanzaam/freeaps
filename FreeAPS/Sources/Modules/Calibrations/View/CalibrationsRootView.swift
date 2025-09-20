@@ -7,18 +7,9 @@ extension Calibrations {
         @StateObject var state = StateModel()
 
         private var formatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 2
-            return formatter
-        }
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2) }
 
-        private var dateFormatter: DateFormatter {
-            let formatter = DateFormatter()
-            formatter.timeStyle = .short
-            formatter.dateStyle = .short
-            return formatter
-        }
+        private var dateFormatter: DateFormatter { FormatterCache.dateFormatter(dateStyle: .short, timeStyle: .short) }
 
         var body: some View {
             GeometryReader { geo in

@@ -5,9 +5,7 @@ final class SimpleLogReporter: IssueReporter {
     private let fileManager = FileManager.default
 
     private var dateFormatter: DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        return dateFormatter
+        FormatterCache.dateFormatter(format: "yyyy-MM-dd'T'HH:mm:ssZ")
     }
 
     func setup() {}

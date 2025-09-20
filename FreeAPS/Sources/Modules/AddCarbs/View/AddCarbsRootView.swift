@@ -7,11 +7,7 @@ extension AddCarbs {
         @StateObject var state = StateModel()
 
         private var formatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 0
-            return formatter
-        }
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0) }
 
         var body: some View {
             Form {

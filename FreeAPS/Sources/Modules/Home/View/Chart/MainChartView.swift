@@ -64,34 +64,16 @@ struct MainChartView: View {
 
     private let calculationQueue = DispatchQueue(label: "MainChartView.calculationQueue")
 
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter
-    }
+    private var dateFormatter: DateFormatter { FormatterCache.dateFormatter(timeStyle: .short) }
 
     private var glucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 1
-        return formatter
-    }
+        FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 1) }
 
     private var bolusFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.minimumIntegerDigits = 0
-        formatter.maximumFractionDigits = 2
-        formatter.decimalSeparator = "."
-        return formatter
-    }
+        FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2) }
 
     private var carbsFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        return formatter
-    }
+        FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0) }
 
     @Environment(\.horizontalSizeClass) var hSizeClass
     @Environment(\.verticalSizeClass) var vSizeClass

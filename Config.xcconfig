@@ -1,7 +1,8 @@
 APP_DISPLAY_NAME = OpenAPS
 BUILD_VERSION = 0.2.6
-DEVELOPER_TEAM = ##TEAM_ID##
+DEVELOPER_TEAM = T2LQ8V9YPW
 BUNDLE_IDENTIFIER = ru.zamot.freeeapsx
 APP_GROUP_ID = group.ru.zamot.freeeapsx
+APP_DEBUG_LOGS = YES
 
 #include? "ConfigOverride.xcconfig"

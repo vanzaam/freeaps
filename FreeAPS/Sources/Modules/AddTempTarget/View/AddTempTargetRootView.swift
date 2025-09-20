@@ -10,11 +10,7 @@ extension AddTempTarget {
         @State private var removeAlert: Alert?
 
         private var formatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 1
-            return formatter
-        }
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 1) }
 
         var body: some View {
             Form {

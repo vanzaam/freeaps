@@ -7,10 +7,9 @@ extension AddGlucose {
         @StateObject var state = StateModel()
 
         private var valueFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = state.units == .mmolL ? 1 : 0
-            return formatter
+            state.units == .mmolL
+                ? FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 1, maxFractionDigits: 1)
+                : FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0)
         }
 
         var body: some View {

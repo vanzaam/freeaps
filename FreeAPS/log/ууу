@@ -1,0 +1,1126 @@
+BluetoothManager.swift - centralManager(_:willRestoreState:)#331: No restored peripherals!
+BluetoothManager.swift - centralManagerDidUpdateState(_:)#266: 5
+NightscoutManager.swift - subscribe() - 68 DEV: Network status: reachable by WiFi
+HealthKitManager.swift - init(resolver:) - 95 DEV: HealthKitManager did create
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:44:49.822Z
+Couldn't read values in CFPrefsPlistSource<0x1092e8c00> (Domain: group.ru.zamot.freeeapsx, User: kCFPreferencesAnyUser, ByHost: Yes, Container: (null), Contents Need Refresh: Yes): Using kCFPreferencesAnyUser with a container is only allowed for System Containers, detaching from cfprefsd
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:44:50.426Z
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000
+UserNotificationsManager.swift - requestNotificationPermissionsIfNeeded() - 288 DEV: UNUserNotificationCenter.authorizationStatus: UNAuthorizationStatus(rawValue: 2)
+Application context data is nil
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 237 DEV: WCSession is activated: true
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 246 DEV: WCSession activated successfully
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 248 DEV: Watch is paired
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 256 DEV: Watch app is not installed
+Application context data is nil
+WCSession counterpart app not installed
+WatchManager.swift - sendState() - 103 DEV: Watch app not installed, skipping sendState
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+Thread Performance Checker: -[AVCaptureSession startRunning] should be called from background thread. Calling it on the main thread can lead to UI unresponsiveness
+PID: 1164, TID: 128854
+Backtrace
+=================================================================
+0   MedtrumKit                          0x0000000105e648c0 $s10MedtrumKit21ScannerViewControllerC11setupCamera33_A90CDF90230318DEC68BEF740EF649FELLyyF + 1776
+1   MedtrumKit                          0x0000000105e635f4 $s10MedtrumKit21ScannerViewControllerC23checkPermissionAndStart33_A90CDF90230318DEC68BEF740EF649FELLyyF + 152
+2   MedtrumKit                          0x0000000105e63448 $s10MedtrumKit21ScannerViewControllerC11viewDidLoadyyF + 5220
+3   MedtrumKit                          0x0000000105e637a4 $s10MedtrumKit21ScannerViewControllerC11viewDidLoadyyFTo + 44
+4   UIKitCore                           0x000000018ee332d4 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 684756
+5   UIKitCore                           0x000000018ee020b4 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 483508
+6   UIKitCore                           0x000000018eda0430 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 82992
+7   SwiftUI                             0x0000000190da2450 D62ACC4D-C51E-34D9-9670-19604C6400AA + 865360
+8   SwiftUI                             0x0000000190da3240 D62ACC4D-C51E-34D9-9670-19604C6400AA + 868928
+9   SwiftUI                             0x0000000190d9fa58 D62ACC4D-C51E-34D9-9670-19604C6400AA + 854616
+10  SwiftUI                             0x0000000190d6e504 D62ACC4D-C51E-34D9-9670-19604C6400AA + 652548
+11  SwiftUI                             0x0000000190d6f210 D62ACC4D-C51E-34D9-9670-19604C6400AA + 655888
+12  SwiftUI                             0x0000000190d6dea8 D62ACC4D-C51E-34D9-9670-19604C6400AA + 650920
+13  SwiftUI                             0x0000000190d6df1c D62ACC4D-C51E-34D9-9670-19604C6400AA + 651036
+14  SwiftUI                             0x0000000190d6dc68 D62ACC4D-C51E-34D9-9670-19604C6400AA + 650344
+15  SwiftUI                             0x0000000190d6dabc D62ACC4D-C51E-34D9-9670-19604C6400AA + 649916
+16  SwiftUI                             0x0000000190d6db84 D62ACC4D-C51E-34D9-9670-19604C6400AA + 650116
+17  SwiftUICore                         0x000000024d567588 1BA59E45-5297-3EA3-98FE-964810EADF07 + 247176
+18  SwiftUICore                         0x000000024d580388 1BA59E45-5297-3EA3-98FE-964810EADF07 + 349064
+19  SwiftUICore                         0x000000024d5398e8 1BA59E45-5297-3EA3-98FE-964810EADF07 + 59624
+20  SwiftUICore                         0x000000024d5670e8 1BA59E45-5297-3EA3-98FE-964810EADF07 + 245992
+21  SwiftUICore                         0x000000024d567530 $s14AttributeGraph12StatefulRuleP7SwiftUIE15withObservation2doqd__qd__yKXE_tKlF + 72
+22  SwiftUI                             0x0000000190d6d498 D62ACC4D-C51E-34D9-9670-19604C6400AA + 648344
+23  SwiftUICore                         0x000000024d5c9b88 $s7SwiftUI8SignpostV13traceInterval6object__7closurexyXlSg_s12StaticStringVSays7CVarArg_pGyXKxyXEtlF + 452
+24  SwiftUI                             0x0000000190fcca78 D62ACC4D-C51E-34D9-9670-19604C6400AA + 3136120
+25  SwiftUI                             0x0000000190cf7d30 D62ACC4D-C51E-34D9-9670-19604C6400AA + 167216
+26  AttributeGraph                      0x00000001b95f8418 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 37912
+27  AttributeGraph                      0x00000001b95f7fec 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 36844
+28  AttributeGraph                      0x00000001b95f8e34 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 40500
+29  AttributeGraph                      0x00000001b95f1e30 AGGraphGetValue + 228
+30  SwiftUI                             0x0000000190d22574 D62ACC4D-C51E-34D9-9670-19604C6400AA + 341364
+31  SwiftUI                             0x0000000190ee7520 D62ACC4D-C51E-34D9-9670-19604C6400AA + 2196768
+32  SwiftUI                             0x0000000190d34d48 D62ACC4D-C51E-34D9-9670-19604C6400AA + 417096
+33  AttributeGraph                      0x00000001b95f8418 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 37912
+34  AttributeGraph                      0x00000001b95f7fec 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 36844
+35  AttributeGraph                      0x00000001b95f8e34 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 40500
+36  AttributeGraph                      0x00000001b95f1e30 AGGraphGetValue + 228
+37  SwiftUICore                         0x000000024d74a144 1BA59E45-5297-3EA3-98FE-964810EADF07 + 2224452
+38  SwiftUI                             0x0000000190eeca70 D62ACC4D-C51E-34D9-9670-19604C6400AA + 2218608
+39  SwiftUICore                         0x000000024d5acda8 1BA59E45-5297-3EA3-98FE-964810EADF07 + 531880
+40  SwiftUICore                         0x000000024d57974c 1BA59E45-5297-3EA3-98FE-964810EADF07 + 321356
+41  AttributeGraph                      0x00000001b95f8418 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 37912
+42  AttributeGraph                      0x00000001b95f7fec 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 36844
+43  AttributeGraph                      0x00000001b95f2b2c 459349FE-60E1-3D2E-BDF1-58D3BD53D81E + 15148
+44  AttributeGraph                      0x00000001b95f1e80 AGGraphGetValue + 308
+45  SwiftUI                             0x0000000190ef39c8 D62ACC4D-C51E-34D9-9670-19604C6400AA + 2247112
+46  SwiftUI                             0x0000000190ef3a28 D62ACC4D-C51E-34D9-9670-19604C6400AA + 2247208
+47  SwiftUICore                         0x000000024d5316c0 1BA59E45-5297-3EA3-98FE-964810EADF07 + 26304
+48  SwiftUICore                         0x000000024d530f28 $s7SwiftUI6UpdateO6ensureyxxyKXEKlFZ + 96
+49  SwiftUI                             0x0000000190ee7370 D62ACC4D-C51E-34D9-9670-19604C6400AA + 2196336
+50  SwiftUI                             0x0000000191002b04 D62ACC4D-C51E-34D9-9670-19604C6400AA + 3357444
+51  UIKitCore                           0x000000018ef22518 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 1664280
+52  UIKitCore                           0x000000018ef12f2c CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 1601324
+53  UIKitCore                           0x000000018f0a47b4 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 3246004
+54  UIKitCore                           0x000000018ef11dd0 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 1596880
+55  UIKitCore                           0x000000018ef134f8 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 1602808
+56  UIKitCore                           0x000000018ee1184c CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 546892
+57  UIKitCore                           0x000000018ee11784 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 546692
+58  UIKitCore                           0x000000018ed96254 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 41556
+59  UIKitCore                           0x000000018ed95f74 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 40820
+60  UIKitCore                           0x000000018ed95e84 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 40580
+61  UIKitCore                           0x000000018ed95e0c CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 40460
+62  UIKitCore                           0x000000018ed95404 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 37892
+63  UIKitCore                           0x000000018ed94ab4 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 35508
+64  UIKitCore                           0x000000018ed901e4 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 16868
+65  CoreFoundation                      0x000000018c49e92c 67585043-7292-3D09-AF17-CDF8DFF2152A + 63788
+66  CoreFoundation                      0x000000018c49e744 67585043-7292-3D09-AF17-CDF8DFF2152A + 63300
+67  CoreFoundation                      0x000000018c49e5a0 67585043-7292-3D09-AF17-CDF8DFF2152A + 62880
+68  CoreFoundation                      0x000000018c49ef20 67585043-7292-3D09-AF17-CDF8DFF2152A + 65312
+69  CoreFoundation                      0x000000018c4a0adc CFRunLoopRunSpecific + 572
+70  GraphicsServices                    0x00000001d92cd454 GSEventRunModal + 168
+71  UIKitCore                           0x000000018eec1274 CEC11703-1F0F-38D9-B0A4-65AA60B2DD27 + 1266292
+72  UIKitCore                           0x000000018ee8ca28 UIApplicationMain + 336
+73  SwiftUI                             0x0000000190fd27a4 D62ACC4D-C51E-34D9-9670-19604C6400AA + 3159972
+74  SwiftUI                             0x0000000190cd801c D62ACC4D-C51E-34D9-9670-19604C6400AA + 36892
+75  SwiftUI                             0x0000000190cd7ed0 $s7SwiftUI3AppPAAE4mainyyFZ + 180
+76  FreeAPS.debug.dylib                 0x00000001041971a4 $s7FreeAPS0A6APSAppV5$mainyyFZ + 40
+77  FreeAPS.debug.dylib                 0x0000000104197250 __debug_main_executable_dylib_entry_point + 12
+78  dyld                                0x00000001b2f39f08 B674E1A5-95EA-36DE-A127-99A4ADC94BA4 + 257800
+App is being debugged, do not track this hang
+Hang detected: 0.33s (debugger attached, not reporting)
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:45:49.834Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:45:49.838Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+BluetoothManager.swift - startScan(_:)#60: Started scanning
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+BluetoothManager.swift - connect(peripheral:)#70: Connecting to <CBPeripheral: 0x1092388c0, identifier = F847EF3E-B1A7-875E-EB89-9EBF0DE9516E, name = MT, mtu = 23, state = connecting>
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+BluetoothManager.swift - centralManager(_:didConnect:)#315: Connected to pump: MT!
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didDiscoverCharacteristicsFor:error:)#284: Enable notify for: 669A9120-0008-968F-E311-6050405558B3
+PeripheralManager.swift - peripheral(_:didDiscoverCharacteristicsFor:error:)#284: Enable notify for: 669A9141-0008-968F-E311-6050405558B3
+PeripheralManager.swift - peripheral(_:didDiscoverCharacteristicsFor:error:)#284: Enable notify for: 669A9101-0008-968F-E311-6050405558B3
+PeripheralManager.swift - peripheral(_:didDiscoverCharacteristicsFor:error:)#289: Notify enabled and ready to start auth flow!
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 0e05000002ff7311fb544f61b09000
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 1005000000000258015057045700002600
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 050b0100b700
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 0d0b01000000690100000000d200
+PeripheralManager.swift - getTime()#137: Time drift detected, resetting time
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 0a0a020002eaac0a16bd00
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 070a020000005500
+PeripheralManager.swift - setTime()#153: Successfully set time
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 0b0c0300b400ebac0a163900
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 070c030000002900
+PeripheralManager.swift - setTimeZone()#168: Successfully set timezone
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 05030400a400
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 17030401000002a005850a593b5a0100e10069c0
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 170304020100002d6d
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"battery":{"voltageA":5.673828125,"voltageB":2.818359375},"state":2,"reservoir":134.65,"storage":{"patchId":225,"sequence":1},"activeAlarms":[],"patchAge":361}
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 07040500ff0fbd00
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 070405000000e200
+PeripheralManager.swift - subscribe()#208: Connected to pump!
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 05100600d000
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 0710060000006f00
+MedtrumPumpManager.swift - primePatch(_:)#682: Priming has started!
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 03a0118c0a533b5a0100e1000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"battery":{"voltageA":5.662109375,"voltageB":2.818359375},"reservoir":135,"activeAlarms":[],"storage":{"patchId":225,"sequence":1},"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010010000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":1,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010020000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":2,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010030000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":3,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010040000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":4,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010060000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":6,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010070000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":3,"primeProgress":7}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010080000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":8}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010090000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":9}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310100a0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":10,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310100c0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":12,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310100d0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"primeProgress":13,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310100e0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"primeProgress":14,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310100f0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"primeProgress":15,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010100000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"primeProgress":16,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010120000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"primeProgress":18,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010130000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":19,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010140000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"primeProgress":20,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010150000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"primeProgress":21,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010160000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":22,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010180000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":24,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:46:49.828Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:46:49.832Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010190000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":25,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310101a0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":26}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310101b0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":27,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310101c0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":28,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310101e0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":30,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310101f0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":31,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010200000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":32,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010210000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":33,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010220000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":34,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010240000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":36}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010250000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":37,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010260000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":38,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010270000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":39,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010280000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":40,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310102a0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":42,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310102b0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":43,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310102c0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":44,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310102d0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":45,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310102e0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":46}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010300000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":48}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010310000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":49,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010320000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":50,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010330000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":51,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010340000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":52,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010360000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":54,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010370000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"primeProgress":55,"activeAlarms":[],"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010380000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":56,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010390000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":57,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310103a0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":58}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310103c0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":60}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310103d0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":3,"primeProgress":61}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310103e0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":62,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310103f0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":63}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010400000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":64}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010420000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":66}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010430000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":67}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010440000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":68}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010450000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":69}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010460000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":70,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010480000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":72,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010490000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":73}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310104a0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":74}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310104b0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":75}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:47:49.835Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:47:49.839Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310104c0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":76}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310104e0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":78}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310104f0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":79}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010500000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":80,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010510000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":3,"primeProgress":81}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010520000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":82,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010540000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"primeProgress":84,"state":3}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010550000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":3,"primeProgress":85}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010560000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":3,"primeProgress":86}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010570000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":87}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 031010580000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":88}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310105a0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":90}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310105b0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":91}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310105c0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":92}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310105d0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":93}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 0310105e0000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":3,"activeAlarms":[],"primeProgress":94}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 06301000ea090000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"reservoir":126.9,"activeAlarms":[],"state":6,"primeProgress":0}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumPumpManager.swift - activatePatch(_:)#688: Activate patch pump...
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 17120701000c010600001e9001d0070000010142
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 17120702004001043e
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 1a1207010000e100000073ad0a16011400010059
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 20401073ad0a160000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"activeAlarms":[],"startTime":780025715}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 1a120702e10073ad0a162803
+MedtrumPumpManager.swift - activatePatch(_:)#745: Patch activated!
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Patch replace
+NotificationManager.swift - addRequest(identifier:content:triggerAfter:deleteOld:)#117: sending com.nightscout.medtrumkit.patch-expired notification
+DeviceDataManager.swift - pumpManagerPumpWasReplaced(_:) - 515 DEV: Pump hardware was replaced
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:48:49.833Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:48:49.837Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000
+MedtrumPumpManager.swift - suspendDelivery(completion:)#504: Suspending delivery...
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 071c080003780200
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 071c08000000bf00
+MedtrumPumpManager.swift - suspendDelivery(completion:)#523: Delivery suspended for 120min!
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 45011389ad0a160300e100100000000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"suspendTime":780025737,"activeAlarms":[],"storage":{"sequence":3,"patchId":225},"state":69}
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Suspend
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.suspended(2025-09-20 01:48:58 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 391 DEV: 🛑 PUMP SUSPENDED at 2025-09-20 01:48:58 +0000
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.suspended(2025-09-20 01:48:58 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 391 DEV: 🛑 PUMP SUSPENDED at 2025-09-20 01:48:58 +0000
+MedtrumPumpManager.swift - resumeDelivery(completion:)#545: Suspending delivery...
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 051d0900e200
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 121d090000000114000300e1008cad0a169c00
+MedtrumPumpManager.swift - resumeDelivery(completion:)#563: Resumed delivery!
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Resume
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:01 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 393 DEV: ▶️ PUMP RESUMED at 2025-09-20 01:49:01 +0000
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200801010300e1008cad0a161400000400e100
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"storage":{"sequence":4,"patchId":225},"activeAlarms":[],"state":32,"basal":{"delivery":0,"rate":1,"type":1,"sequence":3,"patchId":225,"startTime":780025740}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:01 +0000))
+MedtrumPumpManager.swift - suspendDelivery(completion:)#504: Suspending delivery...
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 071c0a0003788700
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 071c0a0000003a00
+MedtrumPumpManager.swift - suspendDelivery(completion:)#523: Delivery suspended for 120min!
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Suspend
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.suspended(2025-09-20 01:49:03 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 391 DEV: 🛑 PUMP SUSPENDED at 2025-09-20 01:49:03 +0000
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 4501138ead0a160600e100100000000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"suspendTime":780025742,"storage":{"sequence":6,"patchId":225},"activeAlarms":[],"state":69}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.suspended(2025-09-20 01:49:03 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 391 DEV: 🛑 PUMP SUSPENDED at 2025-09-20 01:49:03 +0000
+MedtrumPumpManager.swift - resumeDelivery(completion:)#545: Suspending delivery...
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 051d0b00ce00
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 121d0b0000000114000600e10091ad0a168500
+MedtrumPumpManager.swift - resumeDelivery(completion:)#563: Resumed delivery!
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200801010600e10091ad0a161400000700e100
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":32,"storage":{"sequence":7,"patchId":225},"basal":{"startTime":780025745,"type":1,"patchId":225,"rate":1,"delivery":0,"sequence":6}}
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Resume
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 393 DEV: ▶️ PUMP RESUMED at 2025-09-20 01:49:06 +0000
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] RB query for the extension process state failed with error: Error Domain=RBSServiceErrorDomain Code=1 "Client not entitled" UserInfo={RBSEntitlement=com.apple.runningboard.process-state, NSLocalizedFailureReason=Client not entitled, RBSPermanent=false}
+App is being debugged, do not track this hang
+Hang detected: 1.72s (debugger attached, not reporting)
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] Connection to plugin interrupted while in use.
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] Connection to plugin invalidated while in use.
+-[RTIInputSystemClient remoteTextInputSessionWithID:performInputOperation:]  perform input operation requires a valid sessionID. inputModality = Keyboard, inputOperation = <null selector>, customInfoType = UIEmojiSearchOperations
+Error acquiring assertion: <Error Domain=RBSAssertionErrorDomain Code=2 "Specified target process 1138 does not exist" UserInfo={NSLocalizedFailureReason=Specified target process 1138 does not exist}>
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] RB query for the extension process state failed with error: Error Domain=RBSServiceErrorDomain Code=1 "Client not entitled" UserInfo={RBSEntitlement=com.apple.runningboard.process-state, NSLocalizedFailureReason=Client not entitled, RBSPermanent=false}
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: inactive
+APSManager.swift - enactBolus(amount:isSMB:) - 341 DEV: Enact bolus 0.1, manual true
+MedtrumPumpManager.swift - enactBolus(units:activationType:completion:)#286: Enact bolus - 0.1U, 6.0sec
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 09130c00010200009800
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] Connection to plugin interrupted while in use.
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] Connection to plugin invalidated while in use.
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 0f130c0000000800e1009ead0a16b600
+APSManager.swift - enactBolus(units:activationType:) - 696 DEV: Bolus succeeded: 0.1
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Bolus
+APSManager.swift - enactBolus(amount:isSMB:) - 358 DEV: Bolus succeeded
+APSManager.swift - determineBasal() - 238 DEV: Start determine basal
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: inProgress(LoopKit.DoseEntry(type: LoopKit.DoseType.bolus, startDate: 2025-09-20 01:49:19 +0000, endDate: 2025-09-20 01:49:25 +0000, value: 0.1, unit: LoopKit.DoseUnit.units, deliveredUnits: Optional(0.0), description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: Optional(false), manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+OpenAPS.swift - makeProfiles(useAutotune:) - 159 DEV: Start makeProfiles
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 18 DEV: Start determineBasal
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Middleware reason: Nothing changed
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Autosens ratio: 0.78;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Adjusting basal from 1 to 0.8;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: target_bg from 99 to 110;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ISF from 54 to 69.2
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ; CR:,10
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: currenttemp:,[object Object],lastTempAge:,29305549,m,tempModulus:,19,m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: SMB disabled (no enableSMB preferences active or no condition satisfied)
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: profile.sens:,54,sens:,69.2,CSF:,6.92
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Carb Impact:,7,mg/dL per 5m; CI Duration:,0,hours; remaining CI (~2h peak):,0,mg/dL per 5m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: UAM Impact:,7,mg/dL per 5m; UAM Duration:,1,hours
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: minPredBG: 180 minIOBPredBG: 180 minZTGuardBG: 148
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log:  avgPredBG:,180,COB:,0,/,0
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: BG projected to remain above,6.1,for,240,minutes
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: naive_eventualBG:,141,bgUndershoot:,-66,zeroTempDuration:,240,zeroTempEffect:,277,carbsReq:,-50
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 69 DEV: SUGGESTED: {
+    "temp": "absolute",
+    "bg": 148,
+    "tick": "+7",
+    "eventualBG": 183,
+    "insulinReq": 0,
+    "reservoir": 134.5,
+    "deliverAt": "2025-09-20T01:49:19.615Z",
+    "sensitivityRatio": 0.78,
+    "predBGs": {
+        "IOB": [
+            148,
+            154,
+            160,
+            165,
+            170,
+            174,
+            177,
+            180,
+            182,
+            184,
+            185,
+            185,
+            185,
+            185,
+            185,
+            184,
+            184,
+            184,
+            184,
+            184,
+            183,
+            183,
+            183,
+            183,
+            183,
+            182,
+            182,
+            182,
+            182,
+            182,
+            182,
+            181,
+            181,
+            181,
+            181,
+            181,
+            181,
+            181,
+            181,
+            180
+        ],
+        "ZT": [
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            149,
+            149,
+            150,
+            150
+        ]
+    },
+    "COB": 0,
+    "IOB": 0.1,
+    "reason": "COB: 0, Dev: 2.3, BGI: 0.0, ISF: 3.8, CR: 10, Target: 6.1, minPredBG 10.0, minGuardBG 8.6, IOBpredBG 10.0; Eventual BG 10.2 >= 6.1, IOB 0.1 > max_iob 0; setting current basal of 0.8 as temp. ",
+    "duration": 30,
+    "rate": 0.8
+}
+WatchManager.swift - sendState() - 103 DEV: Watch app not installed, skipping sendState
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202211800200e8090800e1000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"bolus":{"delivered":0.1,"type":0,"completed":true},"storage":{"sequence":8,"patchId":225},"activeAlarms":[],"reservoir":126.80000000000001,"state":32}
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Bolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+-[RTIInputSystemClient remoteTextInputSessionWithID:performInputOperation:]  perform input operation requires a valid sessionID. inputModality = Keyboard, inputOperation = <null selector>, customInfoType = UIEmojiSearchOperations
+Error acquiring assertion: <Error Domain=RBSAssertionErrorDomain Code=2 "Specified target process 1166 does not exist" UserInfo={NSLocalizedFailureReason=Specified target process 1166 does not exist}>
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] RB query for the extension process state failed with error: Error Domain=RBSServiceErrorDomain Code=1 "Client not entitled" UserInfo={RBSEntitlement=com.apple.runningboard.process-state, NSLocalizedFailureReason=Client not entitled, RBSPermanent=false}
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: inactive
+APSManager.swift - enactBolus(amount:isSMB:) - 341 DEV: Enact bolus 0.05, manual true
+MedtrumPumpManager.swift - enactBolus(units:activationType:completion:)#286: Enact bolus - 0.05U, 3.0sec
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 09130d00010100008700
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] Connection to plugin interrupted while in use.
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] Connection to plugin invalidated while in use.
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 0f130d0000000900e100a6ad0a16c300
+APSManager.swift - enactBolus(units:activationType:) - 696 DEV: Bolus succeeded: 0.05
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Bolus
+APSManager.swift - enactBolus(amount:isSMB:) - 358 DEV: Bolus succeeded
+APSManager.swift - determineBasal() - 238 DEV: Start determine basal
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: inProgress(LoopKit.DoseEntry(type: LoopKit.DoseType.bolus, startDate: 2025-09-20 01:49:27 +0000, endDate: 2025-09-20 01:49:30 +0000, value: 0.05, unit: LoopKit.DoseUnit.units, deliveredUnits: Optional(0.0), description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: Optional(false), manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+OpenAPS.swift - makeProfiles(useAutotune:) - 159 DEV: Start makeProfiles
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 18 DEV: Start determineBasal
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Middleware reason: Nothing changed
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Autosens ratio: 0.78;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Adjusting basal from 1 to 0.8;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: target_bg from 99 to 110;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ISF from 54 to 69.2
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ; CR:,10
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: currenttemp:,[object Object],lastTempAge:,29305549,m,tempModulus:,19,m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: SMB disabled (no enableSMB preferences active or no condition satisfied)
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: profile.sens:,54,sens:,69.2,CSF:,6.92
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Carb Impact:,7,mg/dL per 5m; CI Duration:,0,hours; remaining CI (~2h peak):,0,mg/dL per 5m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: UAM Impact:,7,mg/dL per 5m; UAM Duration:,1,hours
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: minPredBG: 177 minIOBPredBG: 177 minZTGuardBG: 148
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log:  avgPredBG:,177,COB:,0,/,0
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: BG projected to remain above,6.1,for,240,minutes
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: naive_eventualBG:,138,bgUndershoot:,-63,zeroTempDuration:,240,zeroTempEffect:,277,carbsReq:,-49
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 69 DEV: SUGGESTED: {
+    "temp": "absolute",
+    "bg": 148,
+    "tick": "+7",
+    "eventualBG": 180,
+    "insulinReq": 0,
+    "reservoir": 134.5,
+    "deliverAt": "2025-09-20T01:49:27.270Z",
+    "sensitivityRatio": 0.78,
+    "predBGs": {
+        "IOB": [
+            148,
+            154,
+            160,
+            165,
+            170,
+            174,
+            177,
+            180,
+            182,
+            183,
+            184,
+            185,
+            184,
+            184,
+            184,
+            183,
+            183,
+            183,
+            182,
+            182,
+            182,
+            181,
+            181,
+            181,
+            181,
+            180,
+            180,
+            180,
+            179,
+            179,
+            179,
+            179,
+            179,
+            178,
+            178,
+            178,
+            178,
+            178,
+            178,
+            177
+        ],
+        "ZT": [
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            149,
+            149,
+            150,
+            150
+        ]
+    },
+    "COB": 0,
+    "IOB": 0.15,
+    "reason": "COB: 0, Dev: 2.3, BGI: 0.0, ISF: 3.8, CR: 10, Target: 6.1, minPredBG 9.8, minGuardBG 8.6, IOBpredBG 9.8; Eventual BG 10.0 >= 6.1, IOB 0.15 > max_iob 0; setting current basal of 0.8 as temp. ",
+    "duration": 30,
+    "rate": 0.8
+}
+WatchManager.swift - sendState() - 103 DEV: Watch app not installed, skipping sendState
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202211800100e7090900e1000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"reservoir":126.75,"state":32,"bolus":{"type":0,"delivered":0.05,"completed":true},"storage":{"sequence":9,"patchId":225},"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Bolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+-[RTIInputSystemClient remoteTextInputSessionWithID:performInputOperation:]  perform input operation requires a valid sessionID. inputModality = Keyboard, inputOperation = <null selector>, customInfoType = UIEmojiSearchOperations
+Error acquiring assertion: <Error Domain=RBSAssertionErrorDomain Code=2 "Specified target process 1168 does not exist" UserInfo={NSLocalizedFailureReason=Specified target process 1168 does not exist}>
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] RB query for the extension process state failed with error: Error Domain=RBSServiceErrorDomain Code=1 "Client not entitled" UserInfo={RBSEntitlement=com.apple.runningboard.process-state, NSLocalizedFailureReason=Client not entitled, RBSPermanent=false}
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: inactive
+APSManager.swift - enactBolus(amount:isSMB:) - 341 DEV: Enact bolus 0.1, manual true
+MedtrumPumpManager.swift - enactBolus(units:activationType:completion:)#286: Enact bolus - 0.1U, 6.0sec
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 09130e0001020000f900
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] Connection to plugin interrupted while in use.
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] Connection to plugin invalidated while in use.
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 0f130e0000000a00e100acad0a164b00
+APSManager.swift - enactBolus(units:activationType:) - 696 DEV: Bolus succeeded: 0.1
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Bolus
+APSManager.swift - enactBolus(amount:isSMB:) - 358 DEV: Bolus succeeded
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: inProgress(LoopKit.DoseEntry(type: LoopKit.DoseType.bolus, startDate: 2025-09-20 01:49:33 +0000, endDate: 2025-09-20 01:49:39 +0000, value: 0.1, unit: LoopKit.DoseUnit.units, deliveredUnits: Optional(0.0), description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: Optional(false), manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil))
+APSManager.swift - determineBasal() - 238 DEV: Start determine basal
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+OpenAPS.swift - makeProfiles(useAutotune:) - 159 DEV: Start makeProfiles
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 18 DEV: Start determineBasal
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Middleware reason: Nothing changed
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Autosens ratio: 0.78;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Adjusting basal from 1 to 0.8;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: target_bg from 99 to 110;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ISF from 54 to 69.2
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ; CR:,10
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: currenttemp:,[object Object],lastTempAge:,29305550,m,tempModulus:,20,m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: SMB disabled (no enableSMB preferences active or no condition satisfied)
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: profile.sens:,54,sens:,69.2,CSF:,6.92
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Carb Impact:,7,mg/dL per 5m; CI Duration:,0,hours; remaining CI (~2h peak):,0,mg/dL per 5m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: UAM Impact:,7,mg/dL per 5m; UAM Duration:,1,hours
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: minPredBG: 170 minIOBPredBG: 170 minZTGuardBG: 148
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log:  avgPredBG:,170,COB:,0,/,0
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: BG projected to remain above,6.1,for,240,minutes
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: naive_eventualBG:,131,bgUndershoot:,-56,zeroTempDuration:,240,zeroTempEffect:,277,carbsReq:,-48
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 69 DEV: SUGGESTED: {
+    "temp": "absolute",
+    "bg": 148,
+    "tick": "+7",
+    "eventualBG": 173,
+    "insulinReq": 0,
+    "reservoir": 134.5,
+    "deliverAt": "2025-09-20T01:49:33.645Z",
+    "sensitivityRatio": 0.78,
+    "predBGs": {
+        "IOB": [
+            148,
+            154,
+            160,
+            165,
+            170,
+            173,
+            177,
+            179,
+            181,
+            182,
+            183,
+            183,
+            183,
+            182,
+            182,
+            181,
+            181,
+            180,
+            180,
+            179,
+            178,
+            178,
+            177,
+            177,
+            177,
+            176,
+            176,
+            175,
+            175,
+            174,
+            174,
+            174,
+            173,
+            173,
+            173,
+            172,
+            172,
+            172,
+            172,
+            171,
+            171,
+            171,
+            171,
+            171,
+            170
+        ],
+        "ZT": [
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            148,
+            149,
+            149
+        ]
+    },
+    "COB": 0,
+    "IOB": 0.25,
+    "reason": "COB: 0, Dev: 2.3, BGI: 0.0, ISF: 3.8, CR: 10, Target: 6.1, minPredBG 9.4, minGuardBG 8.6, IOBpredBG 9.4; Eventual BG 9.6 >= 6.1, IOB 0.25 > max_iob 0; setting current basal of 0.8 as temp. ",
+    "duration": 30,
+    "rate": 0.8
+}
+WatchManager.swift - sendState() - 103 DEV: Watch app not installed, skipping sendState
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202210000100e6090000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"bolus":{"delivered":0.05,"completed":false,"type":0},"state":32,"reservoir":126.7,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: inProgress(LoopKit.DoseEntry(type: LoopKit.DoseType.bolus, startDate: 2025-09-20 01:49:33 +0000, endDate: 2025-09-20 01:49:39 +0000, value: 0.1, unit: LoopKit.DoseUnit.units, deliveredUnits: Optional(0.05), description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: Optional(false), manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202211800200e5090a00e1000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"reservoir":126.65,"activeAlarms":[],"storage":{"sequence":10,"patchId":225},"bolus":{"delivered":0.1,"completed":true,"type":0}}
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Bolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(2025-09-20 01:49:06 +0000))
+-[RTIInputSystemClient remoteTextInputSessionWithID:performInputOperation:]  perform input operation requires a valid sessionID. inputModality = Keyboard, inputOperation = <null selector>, customInfoType = UIEmojiSearchOperations
+Error acquiring assertion: <Error Domain=RBSAssertionErrorDomain Code=2 "Specified target process 1169 does not exist" UserInfo={NSLocalizedFailureReason=Specified target process 1169 does not exist}>
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] RB query for the extension process state failed with error: Error Domain=RBSServiceErrorDomain Code=1 "Client not entitled" UserInfo={RBSEntitlement=com.apple.runningboard.process-state, NSLocalizedFailureReason=Client not entitled, RBSPermanent=false}
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:49:49.834Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:49:49.837Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000
+-[RTIInputSystemClient remoteTextInputSessionWithID:performInputOperation:]  perform input operation requires a valid sessionID. inputModality = Keyboard, inputOperation = <null selector>, customInfoType = UIEmojiSearchOperations
+App is being debugged, do not track this hang
+Hang detected: 1.13s (debugger attached, not reporting)
+App is being debugged, do not track this hang
+Hang detected: 0.34s (debugger attached, not reporting)
+PumpSettingsEditorProvider.swift - save(settings:) - 37 DEV: Starting delivery limit settings sync to pump
+MedtrumPumpManager.swift - syncDeliveryLimits(limits:completion:)#643: Skipping sync delivery limits (not supported by Medtrum)
+PumpSettingsEditorProvider.swift - save(settings:) - 52 DEV: Delivery limits sync finished (pump may ignore if unsupported)
+WatchManager.swift - sendState() - 103 DEV: Watch app not installed, skipping sendState
+-[RTIInputSystemClient remoteTextInputSessionWithID:performInputOperation:]  perform input operation requires a valid sessionID. inputModality = Keyboard, inputOperation = <null selector>, customInfoType = UIEmojiSearchOperations
+APSManager.swift - enactTempBasal(rate:duration:) - 393 DEV: Enact temp basal 35.0 - 1800.0
+MedtrumPumpManager.swift - enactTempBasal(unitsPerHour:for:completion:)#420: Setting temp basal at 25.0U/hr for 1800.0 seconds...
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 0a180f0006f4011e00b400
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 12180f00000006f4010b00e100cead0a163c00
+MedtrumPumpManager.swift - enactTempBasal(unitsPerHour:for:completion:)#477: Set temp basal!
+APSManager.swift - enactTempBasal(rate:duration:) - 404 DEV: Temp Basal succeeded
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 464 DEV: New pump events:
+Временный базал
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f41100e409
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"basal":{"type":6,"sequence":11,"patchId":225,"rate":25,"delivery":0.05,"startTime":780025806},"activeAlarms":[],"reservoir":126.60000000000001,"state":32}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f411000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"basal":{"patchId":225,"startTime":780025806,"delivery":0.05,"type":6,"sequence":11,"rate":25},"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f43100e209
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"basal":{"delivery":0.15000000000000002,"sequence":11,"startTime":780025806,"type":6,"rate":25,"patchId":225},"reservoir":126.5,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+MedtrumPumpManager.swift - updatePatchSettings(completion:)#790: Update patch settings...
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 10231000062003d00701000c00001e4a00
+NotificationManager.swift - addRequest(identifier:content:triggerAfter:deleteOld:)#117: sending com.nightscout.medtrumkit.patch-expired notification
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 0723100000004900
+MedtrumPumpManager.swift - updatePatchSettings(completion:)#812: Patch settings updated!
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f431000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"basal":{"startTime":780025806,"delivery":0.15000000000000002,"type":6,"sequence":11,"patchId":225,"rate":25},"state":32}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+MedtrumPumpManager.swift - updatePatchSettings(completion:)#790: Update patch settings...
+PeripheralManager.swift - writePacket(_:)#61: Writing data: 10231100062003d00701000c00001e4400
+NotificationManager.swift - addRequest(identifier:content:triggerAfter:deleteOld:)#117: sending com.nightscout.medtrumkit.patch-expired notification
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#330: Got data: 072311000000c600
+MedtrumPumpManager.swift - updatePatchSettings(completion:)#812: Patch settings updated!
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f45100e009
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"activeAlarms":[],"basal":{"rate":25,"sequence":11,"delivery":0.25,"type":6,"patchId":225,"startTime":780025806},"reservoir":126.4}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: inactive
+-[RTIInputSystemClient remoteTextInputSessionWithID:performInputOperation:]  perform input operation requires a valid sessionID. inputModality = Keyboard, inputOperation = dismissAutoFillPanel, customInfoType = UIUserInteractionRemoteInputOperations
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: background
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f451000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":32,"basal":{"type":6,"sequence":11,"startTime":780025806,"patchId":225,"rate":25,"delivery":0.25}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:50:49.832Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:50:49.837Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f47100de09
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"activeAlarms":[],"basal":{"rate":25,"sequence":11,"patchId":225,"startTime":780025806,"delivery":0.35000000000000003,"type":6},"reservoir":126.30000000000001}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f471000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"basal":{"delivery":0.35000000000000003,"type":6,"sequence":11,"patchId":225,"startTime":780025806,"rate":25},"state":32}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: inactive
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f49100dc09
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"reservoir":126.2,"activeAlarms":[],"state":32,"basal":{"delivery":0.45,"type":6,"sequence":11,"patchId":225,"startTime":780025806,"rate":25}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: inactive
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: background
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f491000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":32,"basal":{"rate":25,"patchId":225,"type":6,"sequence":11,"startTime":780025806,"delivery":0.45}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f4b100da09
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"basal":{"rate":25,"delivery":0.55,"startTime":780025806,"type":6,"sequence":11,"patchId":225},"activeAlarms":[],"state":32,"reservoir":126.10000000000001}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f4b1000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":32,"basal":{"rate":25,"delivery":0.55,"patchId":225,"startTime":780025806,"type":6,"sequence":11}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f4d100d809
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"basal":{"patchId":225,"rate":25,"sequence":11,"startTime":780025806,"type":6,"delivery":0.65},"reservoir":126,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f4d1000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"state":32,"basal":{"rate":25,"delivery":0.65,"patchId":225,"startTime":780025806,"type":6,"sequence":11}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f4f100d609
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"basal":{"startTime":780025806,"rate":25,"sequence":11,"delivery":0.75,"patchId":225,"type":6},"state":32,"reservoir":125.9,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:51:49.820Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:51:49.823Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f4f1000000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"activeAlarms":[],"basal":{"startTime":780025806,"rate":25,"sequence":11,"patchId":225,"delivery":0.75,"type":6}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f41101d409
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"reservoir":125.80000000000001,"basal":{"rate":25,"delivery":0.8500000000000001,"startTime":780025806,"type":6,"sequence":11,"patchId":225},"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f411010000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"activeAlarms":[],"basal":{"rate":25,"patchId":225,"type":6,"sequence":11,"startTime":780025806,"delivery":0.8500000000000001}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f43101d209
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"activeAlarms":[],"reservoir":125.7,"state":32,"basal":{"rate":25,"delivery":0.9500000000000001,"startTime":780025806,"type":6,"sequence":11,"patchId":225}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f431010000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"activeAlarms":[],"basal":{"rate":25,"patchId":225,"type":6,"sequence":11,"startTime":780025806,"delivery":0.9500000000000001}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f45101d009
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"basal":{"rate":25,"delivery":1.05,"startTime":780025806,"type":6,"sequence":11,"patchId":225},"state":32,"reservoir":125.60000000000001,"activeAlarms":[]}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 200810060b00e100cead0a16f451010000000000
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"basal":{"rate":25,"patchId":225,"type":6,"sequence":11,"startTime":780025806,"delivery":1.05},"activeAlarms":[],"state":32}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PeripheralManager.swift - peripheral(_:didUpdateValueFor:error:)#313: READ -> Got data: 202800060b00e100cead0a16f47101ce09
+PeripheralManager.swift - parseStateUpdate(_:)#219: State update: {"state":32,"activeAlarms":[],"reservoir":125.5,"basal":{"patchId":225,"rate":25,"sequence":11,"startTime":780025806,"type":6,"delivery":1.1500000000000001}}
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-20 01:50:07 +0000, endDate: 2025-09-20 02:20:07 +0000, value: 25.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.novolog), automatic: nil, manuallyEntered: false, syncIdentifier: nil, isMutable: false, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:52:49.840Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T01:52:49.843Z
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 01:43:03 +0000

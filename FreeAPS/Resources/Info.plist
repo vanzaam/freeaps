@@ -81,6 +81,8 @@
 	</array>
 	<key>UIFileSharingEnabled</key>
 	<true/>
+	<key>APP_DEBUG_LOGS</key>
+	<string>$(APP_DEBUG_LOGS)</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UIRequiredDeviceCapabilities</key>

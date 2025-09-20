@@ -1,0 +1,629 @@
+BluetoothManager.swift - centralManager(_:willRestoreState:)#352: No restored peripherals!
+BluetoothManager.swift - centralManagerDidUpdateState(_:)#287: 5
+NightscoutManager.swift - subscribe() - 68 DEV: Network status: reachable by WiFi
+HealthKitManager.swift - init(resolver:) - 95 DEV: HealthKitManager did create
+Restoring peripheral from state: B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+Connecting to peripheral: B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+API MISUSE: <CBCentralManager: 0x107298600> can only accept this command while in the powered on state
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+Restoring peripheral from state: E926E760-258A-38B6-1809-3D3BC7BC94A7
+Connecting to peripheral: E926E760-258A-38B6-1809-3D3BC7BC94A7
+API MISUSE: <CBCentralManager: 0x107298600> can only accept this command while in the powered on state
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+Restoring peripheral from state: AF975C27-1624-F114-76E3-514F1731EFCE
+Connecting to peripheral: AF975C27-1624-F114-76E3-514F1731EFCE
+API MISUSE: <CBCentralManager: 0x107298600> can only accept this command while in the powered on state
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+centralManagerDidUpdateState(_:): 5
+Scanning for peripherals and listening for connection events
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+centralManager(_:didDiscover:advertisementData:rssi:): <CBPeripheral: 0x1071fd5e0, identifier = 5DFBA815-D9D7-679E-B6BE-2887E06E54BB, name = DXCMXn, mtu = 0, state = disconnected>, data = ["kCBAdvDataRxSecondaryPHY": 0, "kCBAdvDataIsConnectable": 1, "kCBAdvDataManufacturerData": <d000c93d 0004>, "kCBAdvDataServiceUUIDs": <__NSArrayM 0x1070399b0>(
+FEBC
+)
+, "kCBAdvDataTimestamp": 780030825.766856, "kCBAdvDataLocalName": DXCMXn, "kCBAdvDataRxPrimaryPHY": 129]
+Connecting to peripheral: 5DFBA815-D9D7-679E-B6BE-2887E06E54BB
+assertConfiguration
+Discovering servicesToDiscover [F8083532-849E-531C-C594-30F1F86A4EA5]
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+Unable to run command: central state = Optional("poweredOff"), peripheral state = CBPeripheralState(rawValue: 1)
+Error applying peripheral configuration: notReady
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T03:14:00.985Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+Scanning for peripherals and listening for connection events
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T03:14:01.494Z
+UserNotificationsManager.swift - requestNotificationPermissionsIfNeeded() - 288 DEV: UNUserNotificationCenter.authorizationStatus: UNAuthorizationStatus(rawValue: 2)
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 237 DEV: WCSession is activated: true
+Application context data is nil
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 246 DEV: WCSession activated successfully
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 248 DEV: Watch is paired
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 250 DEV: Watch app is installed
+Application context data is nil
+WatchManager.swift - sendState() - 128 DEV: Updated application context for watch
+WatchManager.swift - sendState() - 128 DEV: Updated application context for watch
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+App is being debugged, do not track this hang
+Hang detected: 0.27s (debugger attached, not reporting)
+BluetoothManager.swift - centralManagerDidUpdateState(_:)#287: 2
+NotificationManager.swift - addRequest(identifier:content:triggerAfter:deleteOld:)#117: sending com.nightscout.medtrumkit.patch-expired notification
+App is being debugged, do not track this hang
+Hang detected: 1.00s (debugger attached, not reporting)
+PumpBaseSettingsViewModel.swift - saveAndContinue()#56: Serial number change detected -> Removing references to old pump base...
+UIScrollView does not support multiple observers implementing _observeScrollView:willEndDraggingWithVelocity:targetContentOffset:unclampedOriginalTarget:. Scroll view <SwiftUI.UpdateCoalescingCollectionView: 0x12c53aa00; baseClass = UICollectionView; frame = (0 0; 430 702); clipsToBounds = YES; autoresize = W+H; gestureRecognizers = <NSArray: 0x12c5ebe10>; backgroundColor = <UIDynamicSystemColor: 0x12acdca80; name = systemGroupedBackgroundColor>; layer = <CALayer: 0x12c715cc0>; contentOffset: {0, -44}; contentSize: {430, 400.33333333333337}; adjustedContentInset: {44, 0, 0, 0}; layout: <UICollectionViewCompositionalLayout: 0x12c4f7980>; dataSource: <_TtGC7SwiftUI31UICollectionViewListCoordinatorGVS_28CollectionViewListDataSourceOs5Never_GOS_19SelectionManagerBoxS2___: 0x12d070400>>, new observer <SwiftUI.UIKitNavigationController: 0x11a719c00>, removing old observer <MedtrumKit.MedtrumKitUICoordinator: 0x11a71a300>
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T03:15:00.982Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T03:15:00.986Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+Scanning for peripherals and listening for connection events
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 03:13:03 +0000
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+centralManager(_:didDiscover:advertisementData:rssi:): <CBPeripheral: 0x1071fd880, identifier = B9AB9AF1-6354-C8ED-24A7-00FD69122AAA, name = DXCMzM, mtu = 23, state = connecting>, data = ["kCBAdvDataLocalName": DXCMzM, "kCBAdvDataRxSecondaryPHY": 0, "kCBAdvDataRxPrimaryPHY": 129, "kCBAdvDataManufacturerData": <d000cc50 0004cc50 0004>, "kCBAdvDataIsConnectable": 1, "kCBAdvDataTimestamp": 780030903.0061589, "kCBAdvDataServiceUUIDs": <__NSArrayM 0x12d1b1020>(
+FEBC,
+FEBC
+)
+]
+Connecting to peripheral: B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+Discovered peripheral from connectionEventDidOccur B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+Connecting to peripheral: B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+centralManager(_:didDiscover:advertisementData:rssi:): <CBPeripheral: 0x1071fda40, identifier = AF975C27-1624-F114-76E3-514F1731EFCE, name = DXCMNG, mtu = 23, state = connecting>, data = ["kCBAdvDataLocalName": DXCMNG, "kCBAdvDataRxSecondaryPHY": 0, "kCBAdvDataRxPrimaryPHY": 129, "kCBAdvDataManufacturerData": <d000d540 0004>, "kCBAdvDataIsConnectable": 1, "kCBAdvDataTimestamp": 780030913.5362689, "kCBAdvDataServiceUUIDs": <__NSArrayM 0x12d1b2490>(
+FEBC
+)
+]
+Connecting to peripheral: AF975C27-1624-F114-76E3-514F1731EFCE
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+Discovered peripheral from connectionEventDidOccur AF975C27-1624-F114-76E3-514F1731EFCE
+Connecting to peripheral: AF975C27-1624-F114-76E3-514F1731EFCE
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+centralManager(_:didConnect:): <CBPeripheral: 0x1071fda40, identifier = AF975C27-1624-F114-76E3-514F1731EFCE, name = DXCMNG, mtu = 23, state = connected>
+didConnect to AF975C27-1624-F114-76E3-514F1731EFCE
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+Listening for authentication responses for Optional("DXCMNG")
+Set notify true for <CBPeripheral: 0x1071fda40, identifier = AF975C27-1624-F114-76E3-514F1731EFCE, name = DXCMNG, mtu = 23, state = connected>
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+centralManager(_:didDisconnectPeripheral:error:): <CBPeripheral: 0x1071fda40, identifier = AF975C27-1624-F114-76E3-514F1731EFCE, name = DXCMNG, mtu = 23, state = disconnected>
+Discovered peripheral from connectionEventDidOccur AF975C27-1624-F114-76E3-514F1731EFCE
+Not connecting to unnamed peripheral: <CBPeripheral: 0x12d764540, identifier = AF975C27-1624-F114-76E3-514F1731EFCE, name = (null), mtu = 23, state = disconnected>
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+Scanning for peripherals and listening for connection events
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: inactive
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: background
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: inactive
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T03:16:00.960Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T03:16:00.962Z
+Scanning for peripherals and listening for connection events
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 03:13:03 +0000
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+BluetoothManager.swift - centralManagerDidUpdateState(_:)#287: 2
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+MedtrumKitUICoordinator.swift - viewControllerForScreen(_:)#133: Not onboarded -> no onboardDelegate...
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-20 03:13:03 +0000
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+Scanning for peripherals and listening for connection events
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T03:17:00.971Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-19T03:17:00.974Z
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 385 DEV: New pump status Bolus: noBolus
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.active(0001-01-01 00:00:00 +0000))

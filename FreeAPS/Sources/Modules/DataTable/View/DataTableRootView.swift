@@ -11,28 +11,16 @@ extension DataTable {
         @State private var selectedGlucoseId: String? = nil
 
         private var glucoseFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 0
             if state.units == .mmolL {
-                formatter.minimumFractionDigits = 1
-                formatter.maximumFractionDigits = 1
+                return FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 1, maxFractionDigits: 1)
+            } else {
+                return FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0)
             }
-            formatter.roundingMode = .halfUp
-            return formatter
         }
 
-        private var timeFormatterShort: DateFormatter {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm"
-            return formatter
-        }
+        private var timeFormatterShort: DateFormatter { FormatterCache.dateFormatter(format: "HH:mm") }
 
-        private var timeFormatterFull: DateFormatter {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "HH:mm:ss"
-            return formatter
-        }
+        private var timeFormatterFull: DateFormatter { FormatterCache.dateFormatter(format: "HH:mm:ss") }
 
         var body: some View {
             VStack {

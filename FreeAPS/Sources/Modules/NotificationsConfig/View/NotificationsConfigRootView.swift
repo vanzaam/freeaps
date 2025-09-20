@@ -7,22 +7,13 @@ extension NotificationsConfig {
         @StateObject var state = StateModel()
 
         private var glucoseFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 0
-            if state.units == .mmolL {
-                formatter.maximumFractionDigits = 1
-            }
-            formatter.roundingMode = .halfUp
-            return formatter
+            state.units == .mmolL
+                ? FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 1)
+                : FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0)
         }
 
         private var carbsFormatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 0
-            return formatter
-        }
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0) }
 
         var body: some View {
             Form {

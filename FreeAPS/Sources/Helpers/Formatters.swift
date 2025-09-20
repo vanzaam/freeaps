@@ -3,16 +3,15 @@ import HealthKit
 
 enum Formatters {
     static func percent(for number: Double) -> String {
-        let formater = NumberFormatter()
-        formater.numberStyle = .percent
-        return formater.string(for: number)!
+        let formatter = FormatterCache.numberFormatter(style: .percent)
+        return formatter.string(for: number)!
     }
 
     static func timeFor(minutes: Int) -> String {
-        let formater = DateComponentsFormatter()
-        formater.unitsStyle = .abbreviated
-        formater.allowedUnits = [.hour, .minute]
-        return formater.string(from: TimeInterval(minutes * 60))!
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .abbreviated
+        formatter.allowedUnits = [.hour, .minute]
+        return formatter.string(from: TimeInterval(minutes * 60))!
     }
 }
 

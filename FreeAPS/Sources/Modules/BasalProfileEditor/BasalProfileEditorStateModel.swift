@@ -50,14 +50,13 @@ extension BasalProfileEditor {
 
         func save() {
             syncInProgress = true
+            let formatter = FormatterCache.dateFormatter(format: "HH:mm:ss", locale: .current)
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
             let profile = items.map { item -> BasalProfileEntry in
-                let fotmatter = DateFormatter()
-                fotmatter.timeZone = TimeZone(secondsFromGMT: 0)
-                fotmatter.dateFormat = "HH:mm:ss"
                 let date = Date(timeIntervalSince1970: self.timeValues[item.timeIndex])
                 let minutes = Int(date.timeIntervalSince1970 / 60)
                 let rate = self.rateValues[item.rateIndex]
-                return BasalProfileEntry(start: fotmatter.string(from: date), minutes: minutes, rate: rate)
+                return BasalProfileEntry(start: formatter.string(from: date), minutes: minutes, rate: rate)
             }
             provider.saveProfile(profile)
                 .receive(on: DispatchQueue.main)

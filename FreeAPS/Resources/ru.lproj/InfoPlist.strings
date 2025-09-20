@@ -18,3 +18,6 @@
 
 /* Privacy - Health Share Usage Description */
 "NSHealthShareUsageDescription" = "Приложение Здоровье используется для хранения данных о глюкозе в крови";
+
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Камера используется только для сканирования QR‑кода на базе помпы Medtrum, чтобы автоматически заполнить серийный номер при настройке. Изображения и видео не сохраняются и не передаются.";

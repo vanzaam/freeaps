@@ -7,30 +7,16 @@ struct CurrentGlucoseView: View {
     let alarm: GlucoseAlarm?
 
     private var glucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
-        if units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
-        }
-        formatter.roundingMode = .halfUp
-        return formatter
+        units == .mmolL
+            ? FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 1, maxFractionDigits: 1)
+            : FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0)
     }
 
     private var deltaFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.positivePrefix = "+"
-        return formatter
+        FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2, positivePrefix: "+")
     }
 
-    private var dateFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter
-    }
+    private var dateFormatter: DateFormatter { FormatterCache.dateFormatter(timeStyle: .short) }
 
     var body: some View {
         VStack(alignment: .center, spacing: 6) {

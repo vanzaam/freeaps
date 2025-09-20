@@ -61,11 +61,7 @@ enum DataTable {
         let duration: Decimal?
 
         private var numberFormater: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            formatter.maximumFractionDigits = 2
-            return formatter
-        }
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2) }
 
         init(
             units: GlucoseUnits,

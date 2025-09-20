@@ -368,23 +368,15 @@ final class BaseUserNotificationsManager: NSObject, UserNotificationsManager, In
     }
 
     private var glucoseFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 0
         if settingsManager.settings.units == .mmolL {
-            formatter.minimumFractionDigits = 1
-            formatter.maximumFractionDigits = 1
+            return FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 1, maxFractionDigits: 1)
+        } else {
+            return FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0)
         }
-        formatter.roundingMode = .halfUp
-        return formatter
     }
 
     private var deltaFormatter: NumberFormatter {
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .decimal
-        formatter.maximumFractionDigits = 2
-        formatter.positivePrefix = "+"
-        return formatter
+        FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2, positivePrefix: "+")
     }
 }
 

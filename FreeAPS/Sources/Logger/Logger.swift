@@ -17,6 +17,8 @@ func debug(
     function: String = #function,
     line: UInt = #line
 ) {
+    // Respect runtime flag for verbose logs
+    guard AppRuntimeConfig.debugLogsEnabled else { return }
     let msg = message()
     DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
         loggerLock.perform {
@@ -32,6 +34,7 @@ func info(
     function: String = #function,
     line: UInt = #line
 ) {
+    // Always allow info/warn/error; if needed, this can also be gated later
     DispatchWorkItem(qos: .userInteractive, flags: .enforceQoS) {
         loggerLock.perform {
             category.logger.info(message, file: file, function: function, line: line)

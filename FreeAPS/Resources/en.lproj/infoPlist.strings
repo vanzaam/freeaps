@@ -12,5 +12,8 @@
 
 /* Privacy - Calendars Usage Description */
 "NSCalendarsUsageDescription" = "Calendar is used to create a new glucose events.";
+/* Privacy - Camera Usage Description */
+"NSCameraUsageDescription" = "Camera is used only to scan the QR code on the Medtrum pump base to auto-fill the serial number during setup. No photos or videos are saved or transmitted.";
+
 
 

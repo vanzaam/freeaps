@@ -12,11 +12,7 @@ extension PreferencesEditor {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
-        private var formatter: NumberFormatter {
-            let formatter = NumberFormatter()
-            formatter.numberStyle = .decimal
-            return formatter
-        }
+        private var formatter: NumberFormatter { FormatterCache.numberFormatter(style: .decimal) }
 
         @State private var infoButtonPressed: InfoText?
 
