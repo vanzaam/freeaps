@@ -347,21 +347,14 @@ public class RileyLinkDeviceTableViewController: UITableViewController {
     // MARK: - Formatters
 
     private lazy var dateFormatter: DateFormatter = {
-        let dateFormatter = DateFormatter()
-
-        dateFormatter.dateStyle = .none
-        dateFormatter.timeStyle = .medium
-
+        let dateFormatter = FormatterCache.shared.dateFormatter(dateStyle: .none, timeStyle: .medium)
         return dateFormatter
     }()
     
-    private lazy var integerFormatter = NumberFormatter()
+    private lazy var integerFormatter = FormatterCache.shared.numberFormatter(numberStyle: .decimal)
 
     private lazy var decimalFormatter: NumberFormatter = {
-        let decimalFormatter = NumberFormatter()
-
-        decimalFormatter.numberStyle = .decimal
-        decimalFormatter.maximumFractionDigits = 2
+        let decimalFormatter = FormatterCache.shared.numberFormatter(numberStyle: .decimal, maximumFractionDigits: 2)
         return decimalFormatter
     }()
     

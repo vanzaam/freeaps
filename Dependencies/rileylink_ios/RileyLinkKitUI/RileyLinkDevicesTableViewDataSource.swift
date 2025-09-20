@@ -43,10 +43,7 @@ public class RileyLinkDevicesTableViewDataSource: NSObject {
     // MARK: -
 
     lazy var decimalFormatter: NumberFormatter = {
-        let formatter = NumberFormatter()
-
-        formatter.numberStyle = .decimal
-        formatter.minimumFractionDigits = 0
+        let formatter = FormatterCache.shared.numberFormatter(numberStyle: .decimal, maximumFractionDigits: 0, minimumFractionDigits: 0)
         formatter.maximumFractionDigits = 2
 
         return formatter
