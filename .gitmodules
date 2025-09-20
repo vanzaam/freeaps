@@ -45,3 +45,7 @@
 	path = Dependencies/rileylink_ios
 	url = https://github.com/vanzaam/rileylink_ios.git
 	branch = master
+[submodule "Dependencies/G7SensorKit"]
+	path = Dependencies/G7SensorKit
+	url = https://github.com/vanzaam/G7SensorKit.git
+	branch = main
