@@ -41,6 +41,10 @@ final class JavaScriptWorker {
     }
 
     private func evaluate(string: String) -> JSValue! {
+        if Bundle.main.object(forInfoDictionaryKey: "USE_LOOP_ENGINE") as? String == "YES" {
+            warning(.openAPS, "JavaScript evaluate skipped (USE_LOOP_ENGINE)")
+            return nil
+        }
         let ctx = commonContext ?? createContext()
         let result = ctx.evaluateScript(string)
         if let exc = ctx.exception, let error = exc.toString() {
@@ -78,6 +82,10 @@ final class JavaScriptWorker {
     }
 
     func call(function: String, with arguments: [JSON]) -> RawJSON {
+        if Bundle.main.object(forInfoDictionaryKey: "USE_LOOP_ENGINE") as? String == "YES" {
+            warning(.openAPS, "JavaScript call skipped (USE_LOOP_ENGINE)")
+            return "{}"
+        }
         // Sanitize empty JSON arguments to avoid constructs like function(a,,c) → SyntaxError: Unexpected token ','
         let joined = arguments
             .map { arg -> String in

@@ -223,16 +223,9 @@ final class BaseAPSManager: APSManager, Injectable {
         return nil
     }
 
+    // Removed autosens/UAM for Loop engine. Keep no-op for compatibility.
     private func autosens() -> AnyPublisher<Bool, Never> {
-        guard let autosens = storage.retrieve(OpenAPS.Settings.autosense, as: Autosens.self),
-              (autosens.timestamp ?? .distantPast).addingTimeInterval(30.minutes.timeInterval) > Date()
-        else {
-            return openAPS.autosense()
-                .map { $0 != nil }
-                .eraseToAnyPublisher()
-        }
-
-        return Just(false).eraseToAnyPublisher()
+        Just(false).eraseToAnyPublisher()
     }
 
     func determineBasal() -> AnyPublisher<Bool, Never> {
@@ -262,7 +255,14 @@ final class BaseAPSManager: APSManager, Injectable {
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
+            .flatMap { _ -> AnyPublisher<Suggestion?, Never> in
+                if Bundle.main.object(forInfoDictionaryKey: "USE_LOOP_ENGINE") as? String == "YES" {
+                    debug(.apsManager, "Using LoopEngineAdapter (stub) instead of JS")
+                    // Placeholder: return nil until adapter implemented
+                    return Just<Suggestion?>(nil).eraseToAnyPublisher()
+                }
+                return self.openAPS.determineBasal(currentTemp: temp, clock: now)
+            }
             .flatMap { suggestion -> AnyPublisher<Suggestion?, Never> in
                 guard let suggestion = suggestion else {
                     return Just(nil).eraseToAnyPublisher()
@@ -472,24 +472,10 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
-    func dailyAutotune() -> AnyPublisher<Bool, Never> {
-        guard settings.useAutotune else {
-            return Just(false).eraseToAnyPublisher()
-        }
+    // Removed autotune for Loop engine. Keep no-op to preserve call sites.
+    func dailyAutotune() -> AnyPublisher<Bool, Never> { Just(false).eraseToAnyPublisher() }
 
-        let now = Date()
-
-        guard lastAutotuneDate.isBeforeDate(now, granularity: .day) else {
-            return Just(false).eraseToAnyPublisher()
-        }
-        lastAutotuneDate = now
-
-        return autotune().map { $0 != nil }.eraseToAnyPublisher()
-    }
-
-    func autotune() -> AnyPublisher<Autotune?, Never> {
-        openAPS.autotune().eraseToAnyPublisher()
-    }
+    func autotune() -> AnyPublisher<Autotune?, Never> { Just(nil).eraseToAnyPublisher() }
 
     func enactAnnouncement(_ announcement: Announcement) {
         guard let action = announcement.action else {
