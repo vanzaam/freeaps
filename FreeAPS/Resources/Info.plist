@@ -83,6 +83,8 @@
 	<true/>
 	<key>APP_DEBUG_LOGS</key>
 	<string>$(APP_DEBUG_LOGS)</string>
+	<key>MEAL_TRACE</key>
+	<string>$(MEAL_TRACE)</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -87,3 +87,5 @@ package-lock.json
 node_modules
 oref0
 log/*
+# Ignore app logs inside project tree
+FreeAPS/log/
