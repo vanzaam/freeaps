@@ -89,3 +89,6 @@ oref0
 log/*
 # Ignore app logs inside project tree
 FreeAPS/log/
+
+# Backup files
+*.bak
