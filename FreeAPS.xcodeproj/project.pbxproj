@@ -257,6 +257,7 @@
 		7EF7EBF192E10218B803926A /* G7SensorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C742ED62FCFB1824C4374774 /* G7SensorKit.framework */; };
 		7F7B756BE8543965D9FDF1A2 /* DataTableDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401509D21F7F35D4E109EDA /* DataTableDataFlow.swift */; };
 		8194B80890CDD6A3C13B0FEE /* SnoozeStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26904AACA8D9C15D229D675 /* SnoozeStateModel.swift */; };
+		86CFFE8D3052B4EED33E7741 /* LoopEngineAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12387BCB441FF5A38095D2C0 /* LoopEngineAdapter.swift */; };
 		88AB39B23C9552BD6E0C9461 /* ISFEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB3BAE7494CB771ABAC7B8B /* ISFEditorRootView.swift */; };
 		891DECF7BC20968D7F566161 /* AutotuneConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF98E22A39CD656A230704 /* AutotuneConfigProvider.swift */; };
 		8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */; };
@@ -453,6 +454,7 @@
 		1039B8BEB5676889B889227F /* OmniBLEPlugin.loopplugin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = OmniBLEPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		10A0C32B0DAB52726EF9B6D9 /* BolusRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusRootView.swift; sourceTree = "<group>"; };
 		12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorDataFlow.swift; sourceTree = "<group>"; };
+		12387BCB441FF5A38095D2C0 /* LoopEngineAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoopEngineAdapter.swift; path = FreeAPS/Sources/Services/APS/LoopEngineAdapter.swift; sourceTree = "<group>"; };
 		12463473C604C9D338505D32 /* LoopStatusHUDView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoopStatusHUDView.swift; sourceTree = "<group>"; };
 		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1927C8E92744611700347C69 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1106,6 +1108,7 @@
 				F446173EAC6F54397D73A655 /* Bluetooth */,
 				0AFF910D830385303EE1135F /* Carbs */,
 				D307180BB26BDBFB4618A74F /* SMB */,
+				46021BDD1C22553BF6195CB0 /* APS */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1621,6 +1624,14 @@
 				3862CC1E273FDC9200BF832C /* CalibrationsChart.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		46021BDD1C22553BF6195CB0 /* APS */ = {
+			isa = PBXGroup;
+			children = (
+				12387BCB441FF5A38095D2C0 /* LoopEngineAdapter.swift */,
+			);
+			name = APS;
 			sourceTree = "<group>";
 		};
 		4945505A6A1B3BA81217E509 /* AddGlucose */ = {
@@ -2501,6 +2512,7 @@
 				62B27F96C8B81F8BF6EFBF5A /* LoopActionButtonsView.swift in Sources */,
 				3A9E4D246658C6FB2A34B87E /* ChartData.swift in Sources */,
 				475C523F6756FD31130D4EF6 /* LoopStatusRootView.swift in Sources */,
+				86CFFE8D3052B4EED33E7741 /* LoopEngineAdapter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
