@@ -1,10 +1,10 @@
 ---
-description: Git Submodules Management for FreeAPS X
+description: Git Submodules Management for OpenAPS
 globs: ["**/*.swift", "**/.gitmodules", "**/*.rb"]
 alwaysApply: true
 ---
 
-# Git Submodules Management for FreeAPS X
+# Git Submodules Management for OpenAPS
 
 ## ✅ **PROVEN SUCCESS: How to Commit Submodule Changes**
 
@@ -78,7 +78,7 @@ cd ../rileylink_ios && git push || echo "No remote"
 - Check what changed before committing (`git diff` inside submodule)
 - Preserve important changes (like our Bluetooth safety checks)
 
-## 📊 **Real Example from FreeAPS X**
+## 📊 **Real Example from OpenAPS**
 
 ### What We Had:
 - **Critical Bluetooth safety checks** in `Dependencies/rileylink_ios/RileyLinkBLEKit/RileyLinkDeviceManager.swift`
@@ -134,7 +134,7 @@ git add path/to/submodule
 git commit -m "Update submodule reference"
 ```
 
-## 🚀 **Best Practices for FreeAPS X**
+## 🚀 **Best Practices for OpenAPS**
 
 ### Before Making Submodule Changes:
 1. **Backup important changes** - use `git stash` if needed
@@ -152,7 +152,7 @@ git commit -m "Update submodule reference"
 2. **Test that important changes still work**
 3. **Push all changes** to prevent loss
 
-## 🎯 **Integration with FreeAPS X Development**
+## 🎯 **Integration with OpenAPS Development**
 
 ### When Adding New Dependencies:
 - Use workspace project references (see xcode_workspace_management.mdc)
@@ -171,7 +171,7 @@ git commit -m "Update submodule reference"
 
 ---
 
-**This process successfully resolved persistent submodule issues in FreeAPS X and preserved all critical Bluetooth stability improvements!** 🚀
+**This process successfully resolved persistent submodule issues in OpenAPS and preserved all critical Bluetooth stability improvements!** 🚀
 
 *Last updated: 2025-09-17*
 *Based on successful resolution of rileylink_ios and dexcom-share-client-swift submodule issues*

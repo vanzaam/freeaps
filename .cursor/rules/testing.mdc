@@ -1,10 +1,10 @@
 ---
-description: FreeAPS X testing guidelines
+description: OpenAPS testing guidelines
 globs: ["**/*.swift", "**/*Test*.swift"]
 alwaysApply: true
 ---
 
-# FreeAPS X Testing Guidelines
+# OpenAPS Testing Guidelines
 
 ## Testing Environment
 - Test only in Xcode real device/simulator
@@ -37,7 +37,7 @@ alwaysApply: true
 - Verify app performance under different conditions
 - Test battery usage and optimization
 
-## FreeAPS X Performance Testing (Critical)
+## OpenAPS Performance Testing (Critical)
 - **Eliminate UI freezes**: Test all operations for UI blocking
 - **Reduce lag**: Test animations and transitions for smoothness
 - **Memory optimization**: Monitor memory usage during long sessions
@@ -45,7 +45,7 @@ alwaysApply: true
 - **Data processing**: Test with large glucose datasets
 - **Network operations**: Test async operations for responsiveness
 
-## FreeAPS X Specific Testing
+## OpenAPS Specific Testing
 - **Glucose Data Processing**: Test with high-frequency CGM data
 - **Chart Rendering**: Test SwiftUI graphics performance with Path API
 - **Nightscout Integration**: Test network operations and error handling

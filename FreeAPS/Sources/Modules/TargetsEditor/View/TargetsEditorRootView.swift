@@ -13,7 +13,13 @@ extension TargetsEditor {
             return f
         }
 
-        private var rateFormatter: NumberFormatter { FormatterCache.numberFormatter(style: .decimal) }
+        private var rateFormatter: NumberFormatter {
+            if state.units == .mmolL {
+                return FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 1, maxFractionDigits: 1)
+            } else {
+                return FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0)
+            }
+        }
 
         var body: some View {
             Form {

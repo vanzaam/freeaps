@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-puts "🔧 Fixing FreeAPS X Swift Package Manager dependencies..."
+puts "🔧 Fixing OpenAPS Swift Package Manager dependencies..."
 
 # 1. Clean FreeAPS derived data first
 puts "🧹 Cleaning FreeAPS derived data..."
@@ -8,7 +8,7 @@ system("rm -rf ~/Library/Developer/Xcode/DerivedData/FreeAPS*")
 
 # 2. Try resolving with workspace and scheme
 puts "📦 Resolving package dependencies with workspace..."
-result = system("xcodebuild -workspace FreeAPS.xcworkspace -scheme 'FreeAPS X' -resolvePackageDependencies")
+result = system("xcodebuild -workspace FreeAPS.xcworkspace -scheme 'OpenAPS' -resolvePackageDependencies")
 
 if !result
   puts "⚠️  Workspace resolution failed, trying project resolution..."

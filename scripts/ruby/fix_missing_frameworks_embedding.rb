@@ -105,7 +105,7 @@ system("rm -rf ~/Library/Developer/Xcode/DerivedData/FreeAPS*")
 
 # Разрешить зависимости
 puts "📦 Resolving dependencies..."
-system("xcodebuild -workspace FreeAPS.xcworkspace -scheme 'FreeAPS X' -resolvePackageDependencies")
+system("xcodebuild -workspace FreeAPS.xcworkspace -scheme 'OpenAPS' -resolvePackageDependencies")
 
 puts ""
 puts "🎉 Framework embedding fix completed!"

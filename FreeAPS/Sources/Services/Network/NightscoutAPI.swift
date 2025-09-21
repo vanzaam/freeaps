@@ -30,6 +30,45 @@ class NightscoutAPI {
 }
 
 extension NightscoutAPI {
+    // Minimal helpers for treatments used by carb sync
+    func uploadTreatmentDictionary(_ treatment: [String: Any]) async throws {
+        var request = URLRequest(url: url.appendingPathComponent(Config.treatmentsPath))
+        request.httpMethod = "POST"
+        request.timeoutInterval = Config.timeout
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let secret = secret { request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret") }
+        request.httpBody = try JSONSerialization.data(withJSONObject: treatment, options: [])
+        _ = try await service.runAsync(request)
+    }
+
+    func fetchTreatments(from startDate: Date? = nil, to endDate: Date? = nil) async throws -> [[String: Any]] {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+        if let startDate = startDate {
+            let dateItem = URLQueryItem(
+                name: "find[created_at][$gte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: startDate)
+            )
+            components.queryItems = (components.queryItems ?? []) + [dateItem]
+        }
+        if let endDate = endDate {
+            let dateItem = URLQueryItem(
+                name: "find[created_at][$lte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: endDate)
+            )
+            components.queryItems = (components.queryItems ?? []) + [dateItem]
+        }
+        var request = URLRequest(url: components.url!)
+        request.timeoutInterval = Config.timeout
+        if let secret = secret { request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret") }
+        let data = try await service.runAsync(request)
+        let json = try JSONSerialization.jsonObject(with: data, options: [])
+        return json as? [[String: Any]] ?? []
+    }
+
     func checkConnection() -> AnyPublisher<Void, Swift.Error> {
         struct Check: Codable, Equatable {
             var eventType = "Note"

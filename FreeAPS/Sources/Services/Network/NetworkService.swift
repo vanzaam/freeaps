@@ -26,4 +26,14 @@ struct NetworkService {
             }
             .eraseToAnyPublisher()
     }
+
+    func runAsync(_ request: URLRequest) async throws -> Data {
+        debug(.nightscout, "\(request.httpMethod ?? "GET")  ***\(request.url!.path)\(request.url!.query.map { "?" + $0 } ?? "")")
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let code = (response as! HTTPURLResponse).statusCode
+        guard 200 ..< 300 ~= code else {
+            throw NetworkError.badStatusCode(.init(statusCode: code))
+        }
+        return data
+    }
 }

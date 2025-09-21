@@ -447,7 +447,11 @@ enum MealCalculator {
         _ = worker.evaluate(script: Script(name: OpenAPS.Prepare.log))
         _ = worker.evaluate(script: Script(name: OpenAPS.Bundle.iob))
         _ = worker.evaluate(script: Script(name: OpenAPS.Prepare.iob))
-        let result = worker.call(function: OpenAPS.Function.generate, with: [pumphistory, profile, clockJSON, RawJSON.null])
+        let result = worker
+            .call(
+                function: OpenAPS.Function.generate,
+                with: [pumphistory, profile, clockJSON, "null"]
+            ) // pass JSON null as string
         if let data = result.data(using: .utf8), let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
             if let activity = dict["activity"] as? NSNumber { return activity.doubleValue }
         }

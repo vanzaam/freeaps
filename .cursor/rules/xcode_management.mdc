@@ -1,10 +1,10 @@
 ---
-description: FreeAPS X project management
+description: OpenAPS project management
 globs: ["**/*.rb", "**/*.py", "**/*.xcodeproj/**"]
 alwaysApply: true
 ---
 
-# FreeAPS X Project Management
+# OpenAPS Project Management
 
 ## File Addition Scripts
 - ALWAYS use Ruby scripts for adding files to Xcode project, NOT Python

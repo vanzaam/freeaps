@@ -62,6 +62,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var smbAdapter: SMBAdapter!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
         didSet {
@@ -262,6 +263,14 @@ final class BaseAPSManager: APSManager, Injectable {
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }
             .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
+            .flatMap { suggestion -> AnyPublisher<Suggestion?, Never> in
+                guard let suggestion = suggestion else {
+                    return Just(nil).eraseToAnyPublisher()
+                }
+
+                // Интеграция SMB адаптера
+                return self.enhanceSuggestionWithSMB(suggestion: suggestion, at: now)
+            }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async {
@@ -315,6 +324,58 @@ final class BaseAPSManager: APSManager, Injectable {
         let rounded = Decimal(pump.roundToSupportedBolusVolume(units: Double(amount)))
         let maxBolus = Decimal(pump.roundToSupportedBolusVolume(units: Double(settingsManager.pumpSettings.maxBolus)))
         return min(rounded, maxBolus)
+    }
+
+    /// Улучшить предложение OpenAPS с помощью SMB адаптера
+    private func enhanceSuggestionWithSMB(suggestion: Suggestion, at date: Date) -> AnyPublisher<Suggestion?, Never> {
+        Future { promise in
+            Task {
+                let smbDose = await self.smbAdapter.calculateSMB()
+                let isSafe = await self.smbAdapter.isSMBSafe()
+
+                // Если SMB безопасен и есть доза для введения
+                if isSafe, smbDose > 0.01 {
+                    let roundedSMB = self.roundBolus(amount: smbDose)
+
+                    if roundedSMB > 0.01 {
+                        // Создать новое предложение с SMB
+                        let enhancedSuggestion = Suggestion(
+                            reason: (suggestion.reason ?? "") + " + SMB \(roundedSMB)U for carbs",
+                            units: roundedSMB,
+                            insulinReq: suggestion.insulinReq,
+                            eventualBG: suggestion.eventualBG,
+                            sensitivityRatio: suggestion.sensitivityRatio,
+                            rate: suggestion.rate,
+                            duration: suggestion.duration,
+                            iob: suggestion.iob,
+                            cob: suggestion.cob,
+                            predictions: suggestion.predictions,
+                            deliverAt: date,
+                            carbsReq: suggestion.carbsReq,
+                            temp: suggestion.temp,
+                            bg: suggestion.bg,
+                            reservoir: suggestion.reservoir,
+                            timestamp: suggestion.timestamp,
+                            recieved: suggestion.recieved
+                        )
+
+                        info(.apsManager, "SMB enhanced suggestion: \(roundedSMB)U")
+
+                        // Отправить уведомление об SMB
+                        self.nightscout.uploadStatus()
+
+                        promise(.success(enhancedSuggestion))
+                        return
+                    }
+                } else {
+                    debug(.apsManager, "SMB not recommended: safe=\(isSafe), dose=\(smbDose)")
+                }
+
+                // Вернуть оригинальное предложение если SMB не нужен
+                promise(.success(suggestion))
+            }
+        }
+        .eraseToAnyPublisher()
     }
 
     private var bolusReporter: DoseProgressReporter?

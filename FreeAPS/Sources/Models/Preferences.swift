@@ -40,6 +40,14 @@ struct Preferences: JSON {
     var carbsReqThreshold: Decimal = 1.0
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = true
+
+    // MARK: - Loop CarbStore SMB Settings
+
+    var enableLoopCarbSMB: Bool = false
+    var carbSMBMinDelta: Decimal = 5.0
+    var carbSMBMaxDose: Decimal = 1.0
+    var carbSMBSafetyMultiplier: Decimal = 0.8
+
     var timestamp: Date?
 }
 

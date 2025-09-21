@@ -180,7 +180,7 @@ final class OpenAPS {
                     carbRatio: cr,
                     tempTargets: tempTargets,
                     model: model,
-                    autotune: RawJSON.null
+                    autotune: "null"
                 )
 
                 let profile = self.makeProfile(

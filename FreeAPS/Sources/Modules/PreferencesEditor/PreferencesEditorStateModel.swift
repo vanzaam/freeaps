@@ -183,8 +183,44 @@ extension PreferencesEditor { // swift-format-ignore: Cannot find type 'Preferen
                     displayName: "Bolus Increment",
                     type: .decimal(keypath: \.bolusIncrement),
                     infoText: NSLocalizedString(
-                        "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it’s 0.05 U. The default value is 0.1.",
+                        "Smallest SMB / SMB increment in oref0. Minimum amount for Medtronic pumps is 0.1 U, whereas for Omnipod it's 0.05 U. The default value is 0.1.",
                         comment: "Bolus Increment"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Enable Loop CarbStore SMB",
+                    type: .boolean(keypath: \.enableLoopCarbSMB),
+                    infoText: NSLocalizedString(
+                        "Enable advanced SMB calculations based on Loop CarbStore carb absorption prediction. This uses more sophisticated carb impact calculations compared to standard OpenAPS SMB.",
+                        comment: "Enable Loop CarbStore SMB"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Carb SMB Min Delta",
+                    type: .decimal(keypath: \.carbSMBMinDelta),
+                    infoText: NSLocalizedString(
+                        "Minimum glucose trend (mg/dL per 5min) required to activate carb-based SMB. Higher values make SMB more conservative.",
+                        comment: "Carb SMB Min Delta"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Carb SMB Max Dose",
+                    type: .decimal(keypath: \.carbSMBMaxDose),
+                    infoText: NSLocalizedString(
+                        "Maximum single SMB dose (in units) for carb-based SMB calculations. This is independent of regular maxSMBBasalMinutes.",
+                        comment: "Carb SMB Max Dose"
+                    ),
+                    settable: self
+                ),
+                Field(
+                    displayName: "Carb SMB Safety Multiplier",
+                    type: .decimal(keypath: \.carbSMBSafetyMultiplier),
+                    infoText: NSLocalizedString(
+                        "Safety multiplier applied to calculated carb SMB doses. 0.8 means 80% of calculated dose will be delivered. Range: 0.1-1.0.",
+                        comment: "Carb SMB Safety Multiplier"
                     ),
                     settable: self
                 )

@@ -1,4 +1,4 @@
-# FreeAPS X Project Rules and Guidelines
+# OpenAPS Project Rules and Guidelines
 
 ## Core Project Information
 - **Project Type**: iOS Xcode project for diabetes management (artificial pancreas system)
@@ -6,7 +6,7 @@
 - **Architecture**: MVVM with Combine framework
 - **Dependency Injection**: Swinject
 - **Key Framework**: LoopKit for diabetes device integration
-- **Project Goal**: Improving FreeAPS X to eliminate freezes and lags from iAPS (creating new software!)
+- **Project Goal**: Improving OpenAPS to eliminate freezes and lags from iAPS (creating new software!)
 
 ## Critical Development Rules
 
@@ -33,7 +33,7 @@
   - API endpoint: Uses SERVER_BASE_URL from configuration (NO trailing slash)
   - Fallback to hardcoded URL if configuration not found
 
-### 3. Performance Optimization (Critical for FreeAPS X)
+### 3. Performance Optimization (Critical for OpenAPS)
 - **Eliminate UI freezes**: Move heavy operations to background queues
 - **Optimize memory usage**: Use weak references in closures to prevent retain cycles
 - **Reduce lag**: Implement proper caching and avoid blocking main thread
@@ -107,7 +107,7 @@
 - **Network timeouts**: Implement proper timeout handling
 - **Keychain access failures**: Check entitlements and permissions
 
-### Performance Issues (Critical for FreeAPS X)
+### Performance Issues (Critical for OpenAPS)
 - **Memory leaks**: Use weak references in closures
 - **Slow network**: Implement proper caching and retry logic
 - **UI freezes**: Move heavy operations to background queues
@@ -141,7 +141,7 @@
 - **UI Layer**: SwiftUI views with Combine publishers for reactive updates
 
 ### 2. Data Flow Architecture
-- **Glucose Data**: CGM → FreeAPS X App → Nightscout
+- **Glucose Data**: CGM → OpenAPS App → Nightscout
 - **Settings Sync**: App ↔ Backend via authenticated API
 - **Local Processing**: Optimized for performance and reliability
 
@@ -160,7 +160,7 @@
 - **Validate user inputs**
 - **Implement proper error handling**
 
-## Performance Guidelines (Critical for FreeAPS X)
+## Performance Guidelines (Critical for OpenAPS)
 - **Use background queues** for heavy operations
 - **Implement proper caching**
 - **Monitor memory usage**
@@ -220,7 +220,7 @@
 - **Plan for scalability**
 - **Focus on performance improvements**
 
-## FreeAPS X Specific Goals
+## OpenAPS Specific Goals
 - **Eliminate freezes** from iAPS implementation
 - **Reduce lag** in user interface
 - **Improve stability** and reliability
@@ -230,5 +230,5 @@
 ---
 
 *Last updated: 2025-01-27*
-*Created for FreeAPS X project to improve upon iAPS and eliminate performance issues*
+*Created for OpenAPS project to improve upon iAPS and eliminate performance issues*
 *Focus on performance optimization and stability improvements*

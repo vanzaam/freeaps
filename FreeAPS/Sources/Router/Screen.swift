@@ -4,6 +4,7 @@ import Swinject
 enum Screen: Identifiable, Hashable {
     case loading
     case home
+    case dashboard
     case settings
     case configEditor(file: String)
     case nighscoutConfig
@@ -15,6 +16,7 @@ enum Screen: Identifiable, Hashable {
     case targetsEditor
     case preferencesEditor
     case addCarbs
+    case addCarbsLoop
     case addTempTarget
     case addGlucose
     case bolus(waitForSuggestion: Bool)
@@ -37,7 +39,9 @@ extension Screen {
         case .loading:
             ProgressView()
         case .home:
-            Home.RootView(resolver: resolver)
+            DashboardRootView(resolver: resolver)
+        case .dashboard:
+            DashboardRootView(resolver: resolver)
         case .settings:
             Settings.RootView(resolver: resolver)
         case let .configEditor(file):
@@ -59,7 +63,9 @@ extension Screen {
         case .preferencesEditor:
             PreferencesEditor.RootView(resolver: resolver)
         case .addCarbs:
-            AddCarbs.RootView(resolver: resolver)
+            AddCarbsLoopView(resolver: resolver)
+        case .addCarbsLoop:
+            AddCarbsLoopView(resolver: resolver)
         case .addTempTarget:
             AddTempTarget.RootView(resolver: resolver)
         case .addGlucose:

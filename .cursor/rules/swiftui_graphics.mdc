@@ -1,10 +1,10 @@
 ---
-description: FreeAPS X SwiftUI Graphics and Charting Best Practices
+description: OpenAPS SwiftUI Graphics and Charting Best Practices
 globs: ["**/*.swift"]
 alwaysApply: true
 ---
 
-# FreeAPS X SwiftUI Graphics and Charting Best Practices
+# OpenAPS SwiftUI Graphics and Charting Best Practices
 
 ## 🚀 **BEST METHOD: High-Performance SwiftUI Graphics**
 
@@ -187,7 +187,7 @@ if let hoverIndex = hoverIndex {
 - Bar charts (use `HStack` with rectangles)
 - Complex 3D graphics (use SceneKit)
 
-## FreeAPS X Specific Graphics Requirements
+## OpenAPS Specific Graphics Requirements
 
 ### Glucose Charts
 - **Real-time Updates**: Smooth updates without lag
@@ -208,7 +208,7 @@ if let hoverIndex = hoverIndex {
 - **Visual Indicators**: Clear representation of active insulin
 - **Time-based Display**: Show insulin activity timeline
 
-## FreeAPS X Performance Requirements
+## OpenAPS Performance Requirements
 - **Zero Lag**: All charts must render without delay
 - **Memory Efficient**: Handle large datasets without memory issues
 - **Battery Optimized**: Minimize CPU usage for graphics
@@ -217,13 +217,13 @@ if let hoverIndex = hoverIndex {
 
 ## Conclusion
 
-**This is the GOLD STANDARD for SwiftUI graphics in FreeAPS X!** 
+**This is the GOLD STANDARD for SwiftUI graphics in OpenAPS!** 
 
 - **Performance**: GPU-accelerated, zero lag
 - **Responsiveness**: Instant touch feedback
 - **Scalability**: Handles thousands of points
 - **Maintainability**: Clean, readable code
 - **Efficiency**: Minimal memory usage
-- **FreeAPS X Optimized**: Specifically designed to eliminate iAPS performance issues
+- **OpenAPS Optimized**: Specifically designed to eliminate iAPS performance issues
 
-**Use this pattern for ALL charts and graphs in FreeAPS X to ensure smooth, lag-free performance!** 🚀
+**Use this pattern for ALL charts and graphs in OpenAPS to ensure smooth, lag-free performance!** 🚀

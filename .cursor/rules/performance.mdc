@@ -1,14 +1,14 @@
 ---
-description: FreeAPS X performance optimization rules
+description: OpenAPS performance optimization rules
 globs: ["**/*.swift"]
 alwaysApply: true
 ---
 
-# FreeAPS X Performance Optimization Rules
+# OpenAPS Performance Optimization Rules
 
 ## 🎯 **CRITICAL: Eliminate iAPS Performance Issues**
 
-**FreeAPS X is designed to improve upon iAPS by eliminating freezes, lags, and performance problems.**
+**OpenAPS is designed to improve upon iAPS by eliminating freezes, lags, and performance problems.**
 
 ## Core Performance Principles
 
@@ -40,7 +40,7 @@ alwaysApply: true
 - **Implement retry logic** for failed requests
 - **Cache network responses** when appropriate
 
-## FreeAPS X Specific Optimizations
+## OpenAPS Specific Optimizations
 
 ### Glucose Data Processing
 ```swift
@@ -163,7 +163,7 @@ class GlucoseManager {
 - **UI Frame Rate**: Should maintain 60 FPS
 - **Battery Usage**: Should be optimized for long-term use
 
-## FreeAPS X Performance Goals
+## OpenAPS Performance Goals
 
 ### Primary Objectives
 1. **Eliminate UI freezes** from iAPS implementation
@@ -181,4 +181,4 @@ class GlucoseManager {
 
 ---
 
-*FreeAPS X performance optimization is critical for creating a superior user experience that eliminates the performance issues found in iAPS.*
+*OpenAPS performance optimization is critical for creating a superior user experience that eliminates the performance issues found in iAPS.*

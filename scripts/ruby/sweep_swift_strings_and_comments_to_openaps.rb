@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # coding: utf-8
 
-# Safely replace user-visible mentions of "FreeAPS X" and "FreeAPS" to "OpenAPS"
+# Safely replace user-visible mentions of "OpenAPS" and "FreeAPS" to "OpenAPS"
 # in Swift sources, but ONLY inside string literals and comments.
 # - Supports // line comments, /* */ block comments (with naive nesting),
 #   normal "..." strings and multiline """...""" strings.
@@ -12,7 +12,7 @@ ROOT = File.expand_path(File.join(__dir__, '../..'))
 
 def replace_visible(text)
   # First replace the compound phrase, then the standalone word
-  text = text.gsub('FreeAPS X', 'OpenAPS')
+  text = text.gsub('OpenAPS', 'OpenAPS')
   # Replace standalone FreeAPS word with word boundaries, case-sensitive
   text = text.gsub(/\bFreeAPS\b/, 'OpenAPS')
   text

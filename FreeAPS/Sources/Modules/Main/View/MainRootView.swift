@@ -7,7 +7,7 @@ extension Main {
         @StateObject var state = StateModel()
 
         var body: some View {
-            router.view(for: .home)
+            router.view(for: .dashboard)
                 .sheet(isPresented: $state.isModalPresented) {
                     NavigationView { self.state.modal!.view }
                         .navigationViewStyle(StackNavigationViewStyle())

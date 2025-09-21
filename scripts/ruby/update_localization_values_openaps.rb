@@ -18,8 +18,8 @@ def update_strings_values
       if line =~ /^\s*"(.*)"\s*=\s*"(.*)";\s*$/
         key = $1
         val = $2
-        # Keep keys intact (even if they include FreeAPS X)
-        new_val = val.gsub('FreeAPS X', 'OpenAPS')
+        # Keep keys intact (even if they include OpenAPS)
+        new_val = val.gsub('OpenAPS', 'OpenAPS')
         # Also replace plain FreeAPS in values
         new_val = new_val.gsub(/\bFreeAPS\b/, 'OpenAPS')
         if new_val != val
@@ -45,7 +45,7 @@ def update_markdown
   changed_files = 0
   docs.each do |path|
     content = File.read(path, mode: 'r:utf-8')
-    updated = content.gsub('FreeAPS X', 'OpenAPS')
+    updated = content.gsub('OpenAPS', 'OpenAPS')
     next if updated == content
     File.write(path, updated)
     changed_files += 1

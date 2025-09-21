@@ -1,28 +1,28 @@
 ---
-description: FreeAPS X server deployment (if needed)
+description: OpenAPS server deployment (if needed)
 globs: ["**/*.swift", "**/*.sh", "**/*.yml", "**/*.yaml"]
 alwaysApply: true
 ---
 
-# FreeAPS X Server Deployment Rules
+# OpenAPS Server Deployment Rules
 
-## FreeAPS X Server Components (Optional)
-**Note**: FreeAPS X is primarily a local iOS app. Server deployment is optional and only needed for specific features.
+## OpenAPS Server Components (Optional)
+**Note**: OpenAPS is primarily a local iOS app. Server deployment is optional and only needed for specific features.
 
 ## Local Development Focus
-- **Primary Goal**: Improve FreeAPS X iOS app performance
+- **Primary Goal**: Improve OpenAPS iOS app performance
 - **Eliminate freezes and lags** from iAPS implementation
 - **Focus on local processing** and optimization
 - **Server deployment is secondary** to app improvements
 
-## FreeAPS X Architecture
+## OpenAPS Architecture
 - **Local Processing**: All core functionality runs locally on iOS device
 - **Nightscout Integration**: Direct connection to user's Nightscout instance
 - **No Backend Dependency**: App works independently without external servers
 - **Performance First**: Optimized for speed and reliability
 
 ## Optional Server Features (If Implemented)
-If FreeAPS X needs server components in the future:
+If OpenAPS needs server components in the future:
 
 ### Development Server Setup
 ```bash
@@ -46,7 +46,7 @@ cd freeapsx-server
 ssh server "journalctl -u freeapsx-backend -n 20 --no-pager"
 ```
 
-## FreeAPS X Priority
+## OpenAPS Priority
 1. **iOS App Performance**: Eliminate freezes and lags
 2. **Local Processing**: Optimize on-device operations
 3. **Memory Management**: Prevent crashes and memory leaks
@@ -67,7 +67,7 @@ ssh server "journalctl -u freeapsx-backend -n 20 --no-pager"
 - **UI Responsiveness**: Test for smooth interactions
 - **Battery Usage**: Optimize for power efficiency
 
-## Best Practices for FreeAPS X
+## Best Practices for OpenAPS
 - **Local First**: Keep all critical functionality local
 - **Performance Focus**: Prioritize speed and reliability
 - **Minimal Dependencies**: Reduce external service reliance
@@ -76,4 +76,4 @@ ssh server "journalctl -u freeapsx-backend -n 20 --no-pager"
 
 ---
 
-*FreeAPS X is designed to be a high-performance, local-first iOS application that improves upon iAPS by eliminating performance issues and providing a smoother user experience.*
+*OpenAPS is designed to be a high-performance, local-first iOS application that improves upon iAPS by eliminating performance issues and providing a smoother user experience.*

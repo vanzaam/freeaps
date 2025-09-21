@@ -184,7 +184,7 @@ let dateFormatter = FormatterCache.shared.dateFormatter(timeStyle: .medium)
 - Skip FormatterCache in dependencies
 - Forget to test on real devices
 
-## 🎯 **FreeAPS X Specific Benefits**
+## 🎯 **OpenAPS Specific Benefits**
 
 ### Performance Goals Achieved:
 1. **Eliminate UI freezes** ✅ - No more memory pressure
@@ -226,7 +226,7 @@ let dateFormatter = FormatterCache.shared.dateFormatter(timeStyle: .medium)
 
 ---
 
-**This FormatterCache optimization is a GOLD STANDARD for memory optimization in FreeAPS X!** 🚀
+**This FormatterCache optimization is a GOLD STANDARD for memory optimization in OpenAPS!** 🚀
 
 *Proven to reduce memory consumption by 5-10x while maintaining full functionality and improving user experience.*
 

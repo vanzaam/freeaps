@@ -1,10 +1,10 @@
 ---
-description: Ruby Automation Capabilities for FreeAPS X - Complete Xcode Project Management
+description: Ruby Automation Capabilities for OpenAPS - Complete Xcode Project Management
 globs: ["**/*.rb", "**/*.xcodeproj/**", "**/*.xcworkspace/**"]
 alwaysApply: true
 ---
 
-# Ruby Automation Capabilities for FreeAPS X
+# Ruby Automation Capabilities for OpenAPS
 
 ## 🚀 **CRITICAL: Ruby Can Do EVERYTHING Automatically**
 
@@ -230,7 +230,7 @@ end
 # Run tests automatically after fixes
 def run_tests
   puts "🧪 Running automated tests..."
-  result = system("xcodebuild test -workspace FreeAPS.xcworkspace -scheme 'FreeAPS X' -destination 'platform=iOS Simulator,name=iPhone 16'")
+  result = system("xcodebuild test -workspace FreeAPS.xcworkspace -scheme 'OpenAPS' -destination 'platform=iOS Simulator,name=iPhone 16'")
   puts result ? "✅ Tests passed" : "❌ Tests failed"
 end
 ```
@@ -285,7 +285,7 @@ end
 - ✅ **File Addition**: Added multiple files to project structure
 - ✅ **Workspace Management**: Added project references automatically
 
-## Integration with FreeAPS X Development
+## Integration with OpenAPS Development
 
 ### Performance Focus:
 - Automate performance-critical fixes
@@ -303,4 +303,4 @@ end
 **Ruby can automate 95% of Xcode project management tasks. Always use Ruby automation instead of asking users to perform manual operations!** 🚀
 
 *Last updated: 2025-09-18*
-*Focus: Complete automation of FreeAPS X project management*
+*Focus: Complete automation of OpenAPS project management*

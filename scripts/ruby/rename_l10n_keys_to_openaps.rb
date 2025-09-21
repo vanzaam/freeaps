@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # Rename localization KEYS across all Localizable.strings:
-# - "FreeAPS X"  -> "OpenAPS"
+# - "OpenAPS"  -> "OpenAPS"
 # - "FreeAPS-X"  -> "OpenAPS-X"
 # - word-boundary "FreeAPS" -> "OpenAPS"
 # Values are left intact (they already were updated by another script).
@@ -15,7 +15,7 @@ files = Dir.glob(File.join(base, '*', 'Localizable.strings'))
 
 def transform_key(key)
   k = key.dup
-  k.gsub!('FreeAPS X', 'OpenAPS')
+  k.gsub!('OpenAPS', 'OpenAPS')
   k.gsub!('FreeAPS-X', 'OpenAPS-X')
   k.gsub!(/\bFreeAPS\b/, 'OpenAPS')
   k
@@ -44,7 +44,7 @@ files.each do |path|
       end
     else
       # For comments or any other lines, keep as is but normalize comment headers
-      normalized = line.gsub('FreeAPS X', 'OpenAPS')
+      normalized = line.gsub('OpenAPS', 'OpenAPS')
       out_lines << normalized
       modified ||= (normalized != line)
     end
