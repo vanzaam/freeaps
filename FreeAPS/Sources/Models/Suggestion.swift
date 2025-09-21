@@ -56,6 +56,26 @@ extension Predictions {
         case cob = "COB"
         case uam = "UAM"
     }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        func decodeIntArray(for key: CodingKeys) -> [Int]? {
+            if let strict = try? container.decode([Int].self, forKey: key) {
+                return strict
+            }
+            if let loose = try? container.decode([Int?].self, forKey: key) {
+                let filtered = loose.compactMap { $0 }
+                return filtered.isEmpty ? nil : filtered
+            }
+            return nil
+        }
+
+        iob = decodeIntArray(for: .iob)
+        zt = decodeIntArray(for: .zt)
+        cob = decodeIntArray(for: .cob)
+        uam = decodeIntArray(for: .uam)
+    }
 }
 
 protocol SuggestionObserver {

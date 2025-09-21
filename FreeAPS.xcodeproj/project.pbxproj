@@ -296,6 +296,9 @@
 		B66F44F52E7CFA6700840503 /* AddGlucoseDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F44F22E7CFA6700840503 /* AddGlucoseDataFlow.swift */; };
 		B66F44F62E7CFA6700840503 /* AddGlucoseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F44F32E7CFA6700840503 /* AddGlucoseProvider.swift */; };
 		B66F44F72E7CFA6700840503 /* AddGlucoseStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F44F42E7CFA6700840503 /* AddGlucoseStateModel.swift */; };
+		B6A6755A2E7F247E00A36496 /* MealCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A675592E7F247E00A36496 /* MealCalculator.swift */; };
+		B6A6755C2E7F2C8900A36496 /* MealParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6755B2E7F2C8900A36496 /* MealParityTests.swift */; };
+		B6FB7E492E7F918E00C7403E /* COBDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6FB7E482E7F918E00C7403E /* COBDetailView.swift */; };
 		B788E19F3799816EDF684B06 /* ShareClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5303829B0BD7C74096552A4E /* ShareClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA241FB1663EC96FDBE64C8A /* CalibrationsDataFlow.swift */; };
 		BA00D96F7B2FF169A06FB530 /* CGMStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C018D1680307A31C9ED7120 /* CGMStateModel.swift */; };
@@ -753,6 +756,9 @@
 		B66F44F22E7CFA6700840503 /* AddGlucoseDataFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGlucoseDataFlow.swift; path = AddGlucose/AddGlucoseDataFlow.swift; sourceTree = "<group>"; };
 		B66F44F32E7CFA6700840503 /* AddGlucoseProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGlucoseProvider.swift; path = AddGlucose/AddGlucoseProvider.swift; sourceTree = "<group>"; };
 		B66F44F42E7CFA6700840503 /* AddGlucoseStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGlucoseStateModel.swift; path = AddGlucose/AddGlucoseStateModel.swift; sourceTree = "<group>"; };
+		B6A675592E7F247E00A36496 /* MealCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCalculator.swift; sourceTree = "<group>"; };
+		B6A6755B2E7F2C8900A36496 /* MealParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealParityTests.swift; sourceTree = "<group>"; };
+		B6FB7E482E7F918E00C7403E /* COBDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COBDetailView.swift; sourceTree = "<group>"; };
 		B8C7F882606FF83A21BE00D8 /* PumpSettingsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorRootView.swift; sourceTree = "<group>"; };
 		B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CGMDataFlow.swift; sourceTree = "<group>"; };
 		BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = TargetsEditorDataFlow.swift; sourceTree = "<group>"; };
@@ -1059,6 +1065,7 @@
 		3811DE2C25C9D49500A708ED /* View */ = {
 			isa = PBXGroup;
 			children = (
+				B6FB7E482E7F918E00C7403E /* COBDetailView.swift */,
 				3811DE2E25C9D49500A708ED /* HomeRootView.swift */,
 				3833B51E260264AC003021B3 /* Chart */,
 				3833B51F260264B6003021B3 /* Header */,
@@ -1362,6 +1369,7 @@
 				384E803325C385E60086DB71 /* JavaScriptWorker.swift */,
 				384E803725C388640086DB71 /* Script.swift */,
 				3821ED4B25DD18BA00BC42AD /* Constants.swift */,
+				B6A675592E7F247E00A36496 /* MealCalculator.swift */,
 			);
 			path = OpenAPS;
 			sourceTree = "<group>";
@@ -1598,6 +1606,7 @@
 		38FCF3EE25E9028E0078B0D1 /* FreeAPSTests */ = {
 			isa = PBXGroup;
 			children = (
+				B6A6755B2E7F2C8900A36496 /* MealParityTests.swift */,
 				38FCF3F125E9028E0078B0D1 /* Info.plist */,
 				38FCF3F825E902C20078B0D1 /* FileStorageTests.swift */,
 			);
@@ -2272,6 +2281,7 @@
 				38E44535274E411700EC9A94 /* Disk+Data.swift in Sources */,
 				3811DE3125C9D49500A708ED /* HomeProvider.swift in Sources */,
 				E013D872273AC6FE0014109C /* GlucoseSimulatorSource.swift in Sources */,
+				B6FB7E492E7F918E00C7403E /* COBDetailView.swift in Sources */,
 				388E5A5C25B6F0770019842D /* JSON.swift in Sources */,
 				3811DF0225CA9FEA00A708ED /* Credentials.swift in Sources */,
 				389A572026079BAA00BC102F /* Interpolation.swift in Sources */,
@@ -2435,6 +2445,7 @@
 				3083261C4B268E353F36CD0B /* AutotuneConfigDataFlow.swift in Sources */,
 				891DECF7BC20968D7F566161 /* AutotuneConfigProvider.swift in Sources */,
 				D76333C9256787610B3B4875 /* AutotuneConfigStateModel.swift in Sources */,
+				B6A6755A2E7F247E00A36496 /* MealCalculator.swift in Sources */,
 				A05235B9112E677ED03B6E8E /* AutotuneConfigRootView.swift in Sources */,
 				7F7B756BE8543965D9FDF1A2 /* DataTableDataFlow.swift in Sources */,
 				1D845DF2E3324130E1D95E67 /* DataTableProvider.swift in Sources */,
@@ -2492,6 +2503,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38FCF3F925E902C20078B0D1 /* FileStorageTests.swift in Sources */,
+				B6A6755C2E7F2C8900A36496 /* MealParityTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

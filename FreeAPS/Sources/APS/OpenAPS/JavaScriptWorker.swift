@@ -15,8 +15,14 @@ final class JavaScriptWorker {
     private func createContext() -> JSContext {
         let context = JSContext(virtualMachine: virtualMachine)!
         context.exceptionHandler = { _, exception in
-            if let error = exception?.toString() {
-                warning(.openAPS, "JavaScript Error: \(error)")
+            if let exc = exception, let error = exc.toString() {
+                var location = ""
+                if let file = exc.forProperty("sourceURL")?.toString(),
+                   let line = exc.forProperty("line")?.toString()
+                {
+                    location = " (\(file):\(line))"
+                }
+                warning(.openAPS, "JavaScript Error: \(error)\(location)")
             }
         }
         let consoleLog: @convention(block) (String) -> Void = { message in
@@ -36,21 +42,50 @@ final class JavaScriptWorker {
 
     private func evaluate(string: String) -> JSValue! {
         let ctx = commonContext ?? createContext()
-        return ctx.evaluateScript(string)
+        let result = ctx.evaluateScript(string)
+        if let exc = ctx.exception, let error = exc.toString() {
+            var location = ""
+            if let file = exc.forProperty("sourceURL")?.toString(),
+               let line = exc.forProperty("line")?.toString()
+            {
+                location = " (\(file):\(line))"
+            }
+            warning(.openAPS, "JavaScript Error: \(error)\(location)")
+        }
+        return result
     }
 
-    private func json(for string: String) -> RawJSON {
-        let result = evaluate(string: "JSON.stringify(\(string), null, 4);")
+    private func json(for callable: String, args: String) -> RawJSON {
+        let wrapped = """
+        (function(){
+            try {
+                if (typeof \(callable) !== 'function') {
+                    return JSON.stringify({ error: "Function \(callable) is not defined" }, null, 4);
+                }
+                return JSON.stringify(\(callable)(\(args)), null, 4);
+            } catch (e) {
+                return JSON.stringify({ error: String(e), stack: e && e.stack }, null, 4);
+            }
+        })();
+        //# sourceURL=call:\(callable)
+        """
+        let result = evaluate(string: wrapped)
         guard let jsonString = result?.toString(), !jsonString.isEmpty else {
-            warning(.openAPS, "JavaScript returned empty or null JSON for: \(string)")
+            warning(.openAPS, "JavaScript returned empty or null JSON for call: \(callable)")
             return "{}"
         }
         return jsonString
     }
 
     func call(function: String, with arguments: [JSON]) -> RawJSON {
-        let joined = arguments.map(\.rawJSON).joined(separator: ",")
-        return json(for: "\(function)(\(joined))")
+        // Sanitize empty JSON arguments to avoid constructs like function(a,,c) → SyntaxError: Unexpected token ','
+        let joined = arguments
+            .map { arg -> String in
+                let s = arg.rawJSON.trimmingCharacters(in: .whitespacesAndNewlines)
+                return s.isEmpty ? "null" : s
+            }
+            .joined(separator: ",")
+        return json(for: function, args: joined)
     }
 
     func inCommonContext<Value>(execute: (JavaScriptWorker) -> Value) -> Value {

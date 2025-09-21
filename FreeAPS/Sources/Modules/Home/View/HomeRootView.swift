@@ -72,6 +72,18 @@ extension Home {
                             NSLocalizedString(" g", comment: "gram of carbs")
                     )
                     .font(.system(size: 12, weight: .bold))
+                    .onTapGesture {
+                        state.appendCobHistory(state.suggestion?.cob ?? 0)
+                        state.router.mainSecondaryModalView.send(COBDetailView(state: state).asAny())
+                    }
+                    .padding(EdgeInsets(top: 8, leading: 8, bottom: 8, trailing: 8))
+                    .background(Color.clear.contentShape(Rectangle()))
+                    if state.uamActive {
+                        Text("UAM")
+                            .font(.system(size: 10, weight: .bold))
+                            .foregroundColor(.uam)
+                            .padding(.leading, 4)
+                    }
                 }
             }
         }
@@ -273,6 +285,7 @@ extension Home {
                     timerDate: state.timerDate,
                     units: state.units
                 )
+                // Fullscreen COB detail now opens as separate modal view
             }
             .padding(.bottom)
             .modal(for: .dataTable, from: self)

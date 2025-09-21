@@ -47,6 +47,102 @@ extension Home {
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
+        @Published var uamActive = false
+
+        struct CobSample: Identifiable, Equatable {
+            let id = UUID()
+            let date: Date
+            let grams: Decimal
+        }
+
+        @Published var cobHistory: [CobSample] = []
+
+        func appendCobHistory(_ cob: Decimal, at date: Date = Date()) {
+            let sample = CobSample(date: date, grams: cob)
+            cobHistory.append(sample)
+            // Keep last 24h at 5m cadence (~288 points)
+            if cobHistory.count > 300 { cobHistory.removeFirst(cobHistory.count - 300) }
+        }
+
+        func cobForecastSteps(maxSteps: Int = 36) -> [Decimal] { // next 3 hours (5m steps)
+            guard let current = suggestion?.cob else { return [] }
+            // Use observed decay per step when available, fallback to 1 g/5m
+            var decay: Decimal = 1
+            if cobHistory.count >= 2 {
+                let last = cobHistory[cobHistory.count - 1].grams
+                let prev = cobHistory[cobHistory.count - 2].grams
+                let d = prev - last
+                if d > 0 { decay = d }
+            }
+            var out: [Decimal] = []
+            var value = current
+            for _ in 0 ..< maxSteps {
+                value = max(0, value - decay)
+                out.append(value)
+                if value == 0 { break }
+            }
+            return out
+        }
+
+        func cobHistoryLast6h() -> [(Date, Decimal)] {
+            let cutoff = Date(timeIntervalSinceNow: -6 * 3600)
+            return cobHistory.filter { $0.date >= cutoff }.map { ($0.date, $0.grams) }
+        }
+
+        func cobForecast6h() -> [(Date, Decimal)] {
+            guard let current = suggestion?.cob else { return [] }
+            // Профильный расчёт скорости списания по oref0: min_5m_carbimpact * CR / ISF(t)
+            // Берём данные пациента из текущего профиля
+            let profile: RawJSON = provider.storage.retrieve(OpenAPS.Settings.profile, as: RawJSON.self)
+                ?? OpenAPS.defaults(for: OpenAPS.Settings.profile)
+            var cr: Decimal = 0
+            var min5m: Decimal = 8
+            var sens: [[String: Any]] = []
+            if let data = profile.data(using: String.Encoding.utf8),
+               let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+            {
+                if let n = dict["carb_ratio"] as? NSNumber { cr = n.decimalValue }
+                if let n = dict["min_5m_carbimpact"] as? NSNumber { min5m = n.decimalValue }
+                if let isfProf = dict["isfProfile"] as? [String: Any],
+                   let arr = isfProf["sensitivities"] as? [[String: Any]]
+                { sens = arr }
+            }
+
+            func isfAt(_ date: Date) -> Decimal {
+                guard !sens.isEmpty else { return 0 }
+                let comp = Calendar.current.dateComponents([.hour, .minute], from: date)
+                let minutes = (comp.hour ?? 0) * 60 + (comp.minute ?? 0)
+                var cur: Decimal = (sens.last?["sensitivity"] as? NSNumber)?.decimalValue ?? 0
+                for i in 0 ..< max(0, sens.count - 1) {
+                    let s = sens[i]
+                    let e = sens[i + 1]
+                    let off = (s["offset"] as? NSNumber)?.intValue ?? 0
+                    let nextOff = (e["offset"] as? NSNumber)?.intValue ?? 1440
+                    if minutes >= off, minutes < nextOff {
+                        cur = (s["sensitivity"] as? NSNumber)?.decimalValue ?? cur
+                        break
+                    }
+                }
+                return cur
+            }
+
+            // Clamp sensitivityRatio вручную, т.к. Decimal не имеет clamped
+            let rawSR: Decimal = suggestion?.sensitivityRatio ?? 1
+            let sr: Decimal = max(Decimal(0.1), min(Decimal(3), rawSR))
+
+            var series: [(Date, Decimal)] = []
+            var value = current
+            let now = Date()
+            for step in 1 ... 72 { // 6h ahead, 5m per step
+                let t = Date(timeInterval: Double(step * 300), since: now)
+                let stepISF = isfAt(t)
+                let stepDecay: Decimal = (stepISF > 0 && cr > 0) ? (min5m * cr / (stepISF * sr)) : 1
+                value = max(0, value - stepDecay)
+                series.append((t, value))
+                if value == 0 { break }
+            }
+            return series
+        }
 
         override func subscribe() {
             setupGlucose()
@@ -68,6 +164,7 @@ extension Home {
             lastLoopDate = apsManager.lastLoopDate
             carbsRequired = suggestion?.carbsReq
             alarm = provider.glucoseStorage.alarm
+            uamActive = (suggestion?.predictions?.uam?.isEmpty == false)
 
             setStatusTitle()
             setupCurrentTempTarget()
@@ -343,6 +440,7 @@ extension Home.StateModel:
     @MainActor func suggestionDidUpdate(_ suggestion: Suggestion) {
         self.suggestion = suggestion
         carbsRequired = suggestion.carbsReq
+        uamActive = (suggestion.predictions?.uam?.isEmpty == false)
         setStatusTitle()
     }
 

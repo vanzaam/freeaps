@@ -228,18 +228,99 @@ final class OpenAPS {
 
     private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {
         dispatchPrecondition(condition: .onQueue(processQueue))
-        return jsWorker.inCommonContext { worker in
-            worker.evaluate(script: Script(name: Prepare.log))
-            worker.evaluate(script: Script(name: Bundle.meal))
-            worker.evaluate(script: Script(name: Prepare.meal))
-            return worker.call(function: Function.generate, with: [
-                pumphistory,
-                profile,
-                clock,
-                glucose,
-                basalProfile,
-                carbs
-            ])
+        // Normalize clock to avoid 'clock unzoned' warnings in JS
+        let normalizedClock: RawJSON = {
+            if let s = clock.rawJSON.data(using: .utf8),
+               let dict = (try? JSONSerialization.jsonObject(with: s)) as? [String: Any],
+               (dict["date"] as? String) != nil || (dict["timestamp"] as? String) != nil
+            {
+                return clock.rawJSON
+            }
+            let iso = ISO8601DateFormatter().string(from: Date())
+            let obj: [String: Any] = ["date": iso]
+            let data = try! JSONSerialization.data(withJSONObject: obj, options: [])
+            return String(data: data, encoding: .utf8)!
+        }()
+        // Ensure carbs entries have timestamp for JS compatibility
+        let normalizedCarbs: RawJSON = {
+            guard let data = carbs.rawJSON.data(using: .utf8),
+                  var arr = (try? JSONSerialization.jsonObject(with: data, options: [])) as? [[String: Any]]
+            else {
+                return carbs.rawJSON
+            }
+            var changed = false
+            for index in arr.indices {
+                if arr[index]["timestamp"] == nil, let created = arr[index]["created_at"] as? String {
+                    arr[index]["timestamp"] = created
+                    changed = true
+                }
+                if arr[index]["eventType"] == nil {
+                    arr[index]["eventType"] = "Carb Correction"
+                    changed = true
+                }
+                // Remove "enteredBy" when это локальные записи от приложений (openaps/freeaps), чтобы JS не фильтровал их
+                if let by = arr[index]["enteredBy"] as? String {
+                    let lower = by.lowercased()
+                    if lower.contains("openaps") || lower.contains("freeaps") {
+                        arr[index].removeValue(forKey: "enteredBy")
+                        changed = true
+                    }
+                }
+            }
+            guard changed, let out = try? JSONSerialization.data(withJSONObject: arr, options: []) else {
+                return carbs.rawJSON
+            }
+            return String(data: out, encoding: .utf8) ?? carbs.rawJSON
+        }()
+
+        // Debug: preview carbs payload
+        if let data = normalizedCarbs.data(using: .utf8),
+           let arr = (try? JSONSerialization.jsonObject(with: data)) as? [[String: Any]]
+        {
+            let cnt = arr.count
+            let preview = String(normalizedCarbs.prefix(300))
+            debug(.openAPS, "MEAL input carbs count=\(cnt) preview=\(preview)")
+        }
+
+        // JS meal отключён: Swift — источник истины
+
+        // Swift parity harness: compute native result and compare key fields
+        let inputs = MealInputs(
+            history: pumphistory.rawJSON,
+            profile: profile.rawJSON,
+            basalprofile: basalProfile.rawJSON,
+            clock: normalizedClock,
+            carbs: normalizedCarbs,
+            glucose: glucose.rawJSON
+        )
+        let swiftResult = MealCalculator.compute(inputs: inputs)
+
+        // Возвращаем meal, сформированный из Swift
+        do {
+            var out: [String: Any] = [:]
+            if let v = swiftResult.mealCOB { out["mealCOB"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.carbs { out["carbs"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.carbsAbsorbed { out["carbsAbsorbed"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.bwCarbs { out["bwCarbs"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.nsCarbs { out["nsCarbs"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.journalCarbs { out["journalCarbs"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.bwFound { out["bwFound"] = v }
+            if let v = swiftResult.reason { out["reason"] = v }
+            if let v = swiftResult.lastCarbTime { out["lastCarbTime"] = Formatter.iso8601withFractionalSeconds.string(from: v) }
+            if let v = swiftResult.lastMealTime { out["mealTime"] = Formatter.iso8601withFractionalSeconds.string(from: v) }
+            if let v = swiftResult.currentDeviation { out["currentDeviation"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.maxDeviation { out["maxDeviation"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.minDeviation { out["minDeviation"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.slopeFromMaxDeviation { out["slopeFromMaxDeviation"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.slopeFromMinDeviation { out["slopeFromMinDeviation"] = NSDecimalNumber(decimal: v) }
+            if let v = swiftResult.allDeviations { out["allDeviations"] = v }
+            let data = try JSONSerialization.data(withJSONObject: out, options: [.prettyPrinted, .withoutEscapingSlashes])
+            let raw = String(data: data, encoding: .utf8) ?? "{}"
+            debug(.openAPS, "MEAL swift output used")
+            return raw
+        } catch {
+            warning(.openAPS, "Failed to encode Swift meal JSON: \(error.localizedDescription)")
+            return "{}"
         }
     }
 
