@@ -63,6 +63,7 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
     @Injected() private var smbAdapter: SMBAdapter!
+    @Injected() private var loopEngine: LoopEngineAdapterProtocol!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
         didSet {
@@ -258,8 +259,7 @@ final class BaseAPSManager: APSManager, Injectable {
             .flatMap { _ -> AnyPublisher<Suggestion?, Never> in
                 if Bundle.main.object(forInfoDictionaryKey: "USE_LOOP_ENGINE") as? String == "YES" {
                     debug(.apsManager, "Using LoopEngineAdapter (stub) instead of JS")
-                    // Placeholder: return nil until adapter implemented
-                    return Just<Suggestion?>(nil).eraseToAnyPublisher()
+                    return self.loopEngine.determine(now: now)
                 }
                 return self.openAPS.determineBasal(currentTemp: temp, clock: now)
             }

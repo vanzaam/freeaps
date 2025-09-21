@@ -102,5 +102,10 @@ final class ServiceAssembly: Assembly {
                 storage: storage
             )
         }.inObjectScope(.container)
+
+        // LoopEngineAdapter
+        container.register(LoopEngineAdapterProtocol.self) { r in
+            LoopEngineAdapter(resolver: r)
+        }.inObjectScope(.container)
     }
 }
