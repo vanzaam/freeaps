@@ -703,9 +703,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Fail(error: error).eraseToAnyPublisher()
             }
 
-            // If SMB-basal is active, apply OpenAPS temp basal only when the option is enabled
-            if self.settings.smbBasalEnabled, !self.settings.useOpenAPSForTempBasalWhenSmbBasal {
-                debug(.apsManager, "SMB-basal active: skipping OpenAPS temp basal per settings")
+            // When SMB-basal is active we NEVER enact real temp basal on the pump.
+            // Basal is replaced by SMB pulses; any OpenAPS 'rate' is consumed by SmbBasalManager.
+            if self.settings.smbBasalEnabled {
+                debug(.apsManager, "SMB-basal active: skipping OpenAPS temp basal (pump held at 0 U/h)")
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
 
