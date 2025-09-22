@@ -1,15 +1,5 @@
 import Foundation
 
-protocol DataTableProvider: Provider {
-    func pumpHistory() -> [PumpHistoryEvent]
-    func tempTargets() -> [TempTarget]
-    func carbs() -> [CarbsEntry]
-    func deleteCarbs(at date: Date)
-    func glucose() -> [BloodGlucose]
-    func deleteGlucose(id: String)
-    func deleteTreatment(_ treatment: Treatment)
-}
-
 extension DataTable {
     final class Provider: BaseProvider, DataTableProvider {
         @Injected() var pumpHistoryStorage: PumpHistoryStorage!
@@ -43,8 +33,8 @@ extension DataTable {
             glucoseStorage.removeGlucose(ids: [id])
             healthkitManager.deleteGlucise(syncID: id)
         }
-        
-        func deleteTreatment(_ treatment: Treatment) {
+
+        func deleteTreatment(_ treatment: DataTable.Treatment) {
             switch treatment.type {
             case .carbs:
                 nightscoutManager.deleteCarbs(at: treatment.date)
@@ -60,8 +50,6 @@ extension DataTable {
                 nightscoutManager.deleteSuspend(at: treatment.date)
             case .resume:
                 nightscoutManager.deleteResume(at: treatment.date)
-            case .fpus:
-                break // FPUS is calculated, not stored in Nightscout
             }
         }
     }
