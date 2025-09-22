@@ -242,12 +242,15 @@ final class OpenAPS {
         else { return pumpHistory }
 
         let dayAgo = Date().addingTimeInterval(-24 * 60 * 60)
+        let recentCutoff = Date().addingTimeInterval(-120) // don't filter very recent boluses (<2 min)
         array.removeAll { dict in
             guard let type = dict["_type"] as? String, type.lowercased().contains("bolus") else { return false }
             // created_at or timestamp
             let dateString = (dict["created_at"] as? String) ?? (dict["timestamp"] as? String) ?? ""
             guard let date = Formatter.iso8601withFractionalSeconds.date(from: dateString) else { return false }
             guard date > dayAgo else { return false }
+            // Keep very recent boluses to ensure IOB reflects them immediately
+            guard date < recentCutoff else { return false }
             let insulin = (dict["insulin"] as? NSNumber)?.decimalValue
             return DeletedTreatmentsStore.shared.containsBolus(date: date, amount: insulin)
         }
@@ -456,7 +459,8 @@ final class OpenAPS {
             "rate": currentBasal
         ]
         if let tempData = try? JSONSerialization.data(withJSONObject: temp),
-           let tempString = String(data: tempData, encoding: .utf8) {
+           let tempString = String(data: tempData, encoding: .utf8)
+        {
             return tempString
         }
         return nil
