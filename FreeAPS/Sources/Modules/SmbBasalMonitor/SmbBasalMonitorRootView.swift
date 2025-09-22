@@ -88,10 +88,81 @@ extension SmbBasalMonitor {
                             Text("Apply OpenAPS temp basal suggestions")
                         }
                     }
+
+                    Section(header: Text("Basal over last 24h (hourly)")) {
+                        HourlyBasalChart(rates: state.hourlyRates.map { Double(truncating: $0 as NSDecimalNumber) })
+                            .frame(height: 160)
+                        HStack {
+                            Text("Total SMB (24h)")
+                            Spacer()
+                            Text("\(Double(truncating: state.totalUnits24h as NSDecimalNumber), specifier: "%.2f") U")
+                        }
+                    }
                 }
             }
             .navigationTitle("SMB-Basal Monitor")
             .onAppear(perform: configureView)
+        }
+    }
+}
+
+private struct HourlyBasalChart: View {
+    let rates: [Double] // 24 values, oldest -> newest
+    @State private var hoverIndex: Int? = nil
+
+    var body: some View {
+        GeometryReader { geo in
+            let w = geo.size.width
+            let h = geo.size.height
+            let count = max(rates.count, 1)
+            let stepX = w / CGFloat(count)
+            let maxRate = max(rates.max() ?? 0.0, 0.01)
+
+            ZStack {
+                // Grid
+                Path { p in
+                    for i in 0...6 {
+                        let y = h - CGFloat(Double(i) / 6.0 * maxRate) * (h - 2) / CGFloat(maxRate)
+                        p.move(to: CGPoint(x: 0, y: y))
+                        p.addLine(to: CGPoint(x: w, y: y))
+                    }
+                }
+                .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+
+                // Bars
+                ForEach(0..<count, id: \.self) { i in
+                    let x = CGFloat(i) * stepX
+                    let value = rates[i]
+                    let barH = CGFloat(value / maxRate) * (h - 2)
+                    Path { p in
+                        p.addRoundedRect(in: CGRect(x: x + 2, y: h - barH, width: stepX - 4, height: barH), cornerSize: CGSize(width: 3, height: 3))
+                    }
+                    .fill(Color.accentColor.opacity(0.7))
+                }
+
+                // Hover overlay
+                Rectangle().fill(Color.clear)
+                    .contentShape(Rectangle())
+                    .gesture(DragGesture(minimumDistance: 0).onChanged { g in
+                        let idx = min(count - 1, max(0, Int(g.location.x / stepX)))
+                        hoverIndex = idx
+                    }.onEnded { _ in hoverIndex = nil })
+
+                if let idx = hoverIndex {
+                    let value = rates[idx]
+                    let x = CGFloat(idx) * stepX + stepX / 2
+                    VStack(spacing: 4) {
+                        Text("\(Int(24 - (Double(count - 1 - idx))))h ago")
+                        Text(String(format: "%.3f U/h", value))
+                    }
+                    .font(.caption2)
+                    .padding(6)
+                    .background(Color.black.opacity(0.8))
+                    .foregroundColor(.white)
+                    .cornerRadius(6)
+                    .position(x: min(max(60, x), w - 60), y: 16)
+                }
+            }
         }
     }
 }

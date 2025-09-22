@@ -15,6 +15,9 @@ extension SmbBasalMonitor {
         @Published var smbInterval: Decimal = 3
         @Published var currentBasalRate: Decimal = 0
         @Published var applyOpenAPSTempBasal: Bool = true
+        @Published var hourlyRates: [Decimal] = Array(repeating: 0, count: 24)
+        @Published var totalUnits24h: Decimal = 0
+        @Published var totalFromRates24h: Decimal = 0
 
         private var timer: Timer?
 
@@ -54,6 +57,7 @@ extension SmbBasalMonitor {
             // Получаем последние пульсы
             let allPulses = storage.retrieve(OpenAPS.Monitor.smbBasalPulses, as: [SmbBasalPulse].self) ?? []
             recentPulses = Array(allPulses.suffix(10)) // Последние 10 пульсов
+            computeHourly(from: allPulses)
 
             // Получаем текущие настройки
             let preferences = settingsManager.preferences
@@ -70,14 +74,16 @@ extension SmbBasalMonitor {
                let enacted = storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self),
                let enactedRate = enacted.rate,
                let enactedTs = enacted.timestamp,
-               now.timeIntervalSince(enactedTs) <= 20 * 60 {
+               now.timeIntervalSince(enactedTs) <= 20 * 60
+            {
                 // Показываем фактически применённый OpenAPS temp basal (свежий)
                 currentBasalRate = enactedRate
             } else if applyOpenAPSTempBasal,
                       let suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self),
                       let suggestedRate = suggested.rate,
                       let sugTs = suggested.timestamp,
-                      now.timeIntervalSince(sugTs) <= 20 * 60 {
+                      now.timeIntervalSince(sugTs) <= 20 * 60
+            {
                 // Или свежее предложение
                 currentBasalRate = suggestedRate
             } else if let currentEntry = currentProfile.first(where: { entry in
@@ -92,6 +98,22 @@ extension SmbBasalMonitor {
         func toggleApplyOpenAPSTempBasal(_ value: Bool) {
             settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal = value
             applyOpenAPSTempBasal = value
+        }
+
+        private func computeHourly(from pulses: [SmbBasalPulse]) {
+            let now = Date()
+            let start = now.addingTimeInterval(-24 * 3600)
+            var bins = Array(repeating: Decimal(0), count: 24)
+            var total: Decimal = 0
+            for p in pulses {
+                guard p.timestamp >= start else { continue }
+                let idx = min(23, max(0, Int(p.timestamp.timeIntervalSince(start) / 3600)))
+                bins[idx] += p.units
+                total += p.units
+            }
+            hourlyRates = bins
+            totalUnits24h = total
+            totalFromRates24h = bins.reduce(0, +)
         }
     }
 }
