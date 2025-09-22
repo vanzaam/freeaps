@@ -35,7 +35,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     guard let dose = event.dose else { return [] }
                     let amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
-                    
+
                     // Create temporary event to check if it's SMB-Basal
                     let tempEvent = PumpHistoryEvent(
                         id: id,
@@ -49,16 +49,16 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         carbInput: nil,
                         automatic: dose.automatic
                     )
-                    
+
                     // Determine correct event type
                     let eventType: EventType = {
-                        if dose.automatic {
+                        if dose.automatic == true {
                             return self.isSmbBasalPulse(event: tempEvent) ? .smbBasal : .smb
                         } else {
                             return .bolus
                         }
                     }()
-                    
+
                     return [PumpHistoryEvent(
                         id: id,
                         type: eventType,
@@ -254,7 +254,22 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
             return result
         }
 
-        let bolusesAndCarbs = events.compactMap { event -> NigtscoutTreatment? in
+        // Deduplicate events by timestamp and amount to prevent SMB/SMB-Basal duplicates
+        let uniqueEvents = events.reduce([PumpHistoryEvent]()) { result, event in
+            var result = result
+            let isDuplicate = result.contains { existing in
+                existing.type == event.type &&
+                abs(existing.timestamp.timeIntervalSince(event.timestamp)) < 30 && // within 30 seconds
+                existing.amount == event.amount &&
+                existing.automatic == event.automatic
+            }
+            if !isDuplicate {
+                result.append(event)
+            }
+            return result
+        }
+        
+        let bolusesAndCarbs = uniqueEvents.compactMap { event -> NigtscoutTreatment? in
             switch event.type {
             case .bolus:
                 // Determine if this is a regular SMB or SMB-Basal
@@ -347,18 +362,18 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
 
         storeEvents(events)
     }
-    
+
     // MARK: - SMB-Basal Detection
-    
+
     private func isSmbBasalPulse(event: PumpHistoryEvent) -> Bool {
         // Only check if SMB-basal is enabled
         guard settingsManager.settings.smbBasalEnabled else {
             return false
         }
-        
+
         // Get stored SMB-basal pulses
         let pulses = storage.retrieve(OpenAPS.Monitor.smbBasalPulses, as: [SmbBasalPulse].self) ?? []
-        
+
         // Look for matching pulse within 30 seconds and same amount
         return pulses.contains { pulse in
             let timeDifference = abs(event.timestamp.timeIntervalSince(pulse.timestamp))
