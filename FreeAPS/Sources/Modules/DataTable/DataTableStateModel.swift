@@ -45,6 +45,13 @@ extension DataTable {
                     let boluses = pumpHistory
                         .lazy // Use lazy evaluation for better performance
                         .filter { $0.type == .bolus || $0.type == .smb || $0.type == .smbBasal }
+                        .filter { event in
+                            // Hide locally deleted boluses
+                            if event.type == .bolus || event.type == .smb {
+                                return !DeletedTreatmentsStore.shared.containsBolus(date: event.timestamp, amount: event.amount)
+                            }
+                            return true
+                        }
                         .map { event in
                             // Pack type info into secondAmount: nil = manual, 1 = SMB, 2 = SMB-Basal
                             let typeFlag: Decimal? = {

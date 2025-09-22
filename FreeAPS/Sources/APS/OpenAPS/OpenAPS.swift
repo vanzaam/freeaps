@@ -24,7 +24,9 @@ final class OpenAPS {
                 self.storage.save(tempBasal, as: Monitor.tempBasal)
 
                 // meal
-                let pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+                var pumpHistory = self.loadFileFromStorage(name: OpenAPS.Monitor.pumpHistory)
+                // Filter locally deleted boluses from pumpHistory JSON before IOB/meal
+                pumpHistory = self.filterDeletedBoluses(in: pumpHistory)
                 let carbs = self.loadFileFromStorage(name: Monitor.carbHistory)
                 let glucose = self.loadFileFromStorage(name: Monitor.glucose)
                 let profile = self.loadFileFromStorage(name: Settings.profile)
@@ -226,6 +228,30 @@ final class OpenAPS {
                 autosens
             ])
         }
+    }
+
+    // Remove locally deleted boluses for last 24h from pumpHistory RawJSON
+    private func filterDeletedBoluses(in pumpHistory: RawJSON) -> RawJSON {
+        guard let data = pumpHistory.data(using: .utf8),
+              var array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+        else { return pumpHistory }
+
+        let dayAgo = Date().addingTimeInterval(-24 * 60 * 60)
+        array.removeAll { dict in
+            guard let type = dict["_type"] as? String, type.lowercased().contains("bolus") else { return false }
+            // created_at or timestamp
+            let dateString = (dict["created_at"] as? String) ?? (dict["timestamp"] as? String) ?? ""
+            guard let date = Formatter.iso8601withFractionalSeconds.date(from: dateString) else { return false }
+            guard date > dayAgo else { return false }
+            let insulin = (dict["insulin"] as? NSNumber)?.decimalValue
+            return DeletedTreatmentsStore.shared.containsBolus(date: date, amount: insulin)
+        }
+
+        if let filteredData = try? JSONSerialization.data(withJSONObject: array),
+           let filteredString = String(data: filteredData, encoding: .utf8) {
+            return filteredString
+        }
+        return pumpHistory
     }
 
     private func meal(pumphistory: JSON, profile: JSON, basalProfile: JSON, clock: JSON, carbs: JSON, glucose: JSON) -> RawJSON {

@@ -219,9 +219,11 @@ extension Home {
         private func setupBoluses() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                // Exclude SMB-Basal events from main chart - they should be visualized as basal, not bolus
-                self.boluses = self.provider.pumpHistory(hours: self.filteredHours).filter {
-                    $0.type == .bolus || $0.type == .smb  // Show regular boluses and SMB, but NOT SMB-Basal
+                // Exclude SMB-Basal and locally-deleted boluses
+                let events = self.provider.pumpHistory(hours: self.filteredHours)
+                self.boluses = events.filter { event in
+                    guard event.type == .bolus || event.type == .smb else { return false }
+                    return !DeletedTreatmentsStore.shared.containsBolus(date: event.timestamp, amount: event.amount)
                 }
             }
         }
