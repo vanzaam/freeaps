@@ -66,7 +66,21 @@ extension SmbBasalMonitor {
             let calendar = Calendar.current
             let minutesFromMidnight = calendar.component(.hour, from: now) * 60 + calendar.component(.minute, from: now)
 
-            if let currentEntry = currentProfile.first(where: { entry in
+            if applyOpenAPSTempBasal,
+               let enacted = storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self),
+               let enactedRate = enacted.rate,
+               let enactedTs = enacted.timestamp,
+               now.timeIntervalSince(enactedTs) <= 20 * 60 {
+                // Показываем фактически применённый OpenAPS temp basal (свежий)
+                currentBasalRate = enactedRate
+            } else if applyOpenAPSTempBasal,
+                      let suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self),
+                      let suggestedRate = suggested.rate,
+                      let sugTs = suggested.timestamp,
+                      now.timeIntervalSince(sugTs) <= 20 * 60 {
+                // Или свежее предложение
+                currentBasalRate = suggestedRate
+            } else if let currentEntry = currentProfile.first(where: { entry in
                 let startMinutes = entry.minutes
                 let endMinutes = currentProfile.first(where: { $0.minutes > startMinutes })?.minutes ?? 1440
                 return minutesFromMidnight >= startMinutes && minutesFromMidnight < endMinutes
