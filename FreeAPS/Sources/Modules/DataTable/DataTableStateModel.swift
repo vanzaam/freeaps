@@ -38,16 +38,16 @@ extension DataTable {
                     let boluses = pumpHistory
                         .lazy // Use lazy evaluation for better performance
                         .filter { $0.type == .bolus || $0.type == .smb || $0.type == .smbBasal }
-                        .map {
+                        .map { event in
                             // Pack type info into secondAmount: nil = manual, 1 = SMB, 2 = SMB-Basal
                             let typeFlag: Decimal? = {
-                                switch $0.type {
+                                switch event.type {
                                 case .smb:
                                     return 1
                                 case .smbBasal:
                                     return 2
                                 case .bolus:
-                                    return $0.automatic == true ? 1 : nil
+                                    return event.automatic == true ? 1 : nil
                                 default:
                                     return nil
                                 }
@@ -55,8 +55,8 @@ extension DataTable {
                             return Treatment(
                                 units: units,
                                 type: .bolus,
-                                date: $0.timestamp,
-                                amount: $0.amount,
+                                date: event.timestamp,
+                                amount: event.amount,
                                 secondAmount: typeFlag
                             )
                         }
