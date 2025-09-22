@@ -107,12 +107,22 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
         }
 
         print("SMB-Basal: tick() - processing basal replacement")
+        let applyOpenAPSTempBasal = settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal
 
-        // 1) Ensure zero temp basal is maintained (30 min window, refresh every 25 min)
-        maintainZeroTempBasalIfNeeded()
+        // 1) Maintain zero temp basal ourselves ONLY when we are not applying OpenAPS temp basal suggestions
+        if !applyOpenAPSTempBasal {
+            maintainZeroTempBasalIfNeeded()
+        }
 
         // 2) Accumulate basal dose and fire step boluses when enough units are accumulated
         guard let step = optionalBolusStep(), step > 0 else { return }
+
+        // If OpenAPS temp basal suggestions are applied and current temp basal is 0 U/h,
+        // pause SMB-basal pulses to respect hypo protection
+        if applyOpenAPSTempBasal && isCurrentTempBasalZero() {
+            print("SMB-Basal: OpenAPS temp basal is 0 U/h - pausing SMB-basal pulses")
+            return
+        }
 
         let unitsPerMinute = currentScheduledBasalRate() / 60
         accumulatorUnits += unitsPerMinute
@@ -138,6 +148,10 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
     // MARK: - Helpers
 
     private func maintainZeroTempBasalIfNeeded() {
+        // If user opted to apply OpenAPS temp basal suggestions, do not override with forced 0 basal
+        if settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal {
+            return
+        }
         let now = Date()
 
         // Check every 5 minutes instead of every 25 minutes
@@ -205,7 +219,7 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
 
     private func deliverPulse(units: Decimal, completion: @escaping (Bool) -> Void) {
         let amount = Double(truncating: units as NSNumber)
-        apsManager.enactBolus(amount: amount, isSMB: true, true)
+        apsManager.enactBolus(amount: amount, isSMB: true, isBasalReplacement: true)
         // We don't get immediate completion callback from APSManager here; assume success optimistically and persist.
         persistPulse(units: units)
         completion(true)
