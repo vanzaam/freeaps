@@ -150,7 +150,16 @@ enum DataTable {
         var displayTypeName: String {
             switch type {
             case .bolus:
-                if let flag = secondAmount, flag == 1 { return "SMB" }
+                if let flag = secondAmount {
+                    switch flag {
+                    case 1:
+                        return "SMB"
+                    case 2:
+                        return "SMB-Basal"
+                    default:
+                        return "Ручной болюс"
+                    }
+                }
                 return "Ручной болюс"
             case .tempBasal:
                 return "ВБС"
