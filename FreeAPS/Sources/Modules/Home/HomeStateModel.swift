@@ -219,8 +219,9 @@ extension Home {
         private func setupBoluses() {
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
+                // Exclude SMB-Basal events from main chart - they should be visualized as basal, not bolus
                 self.boluses = self.provider.pumpHistory(hours: self.filteredHours).filter {
-                    $0.type == .bolus
+                    $0.type == .bolus || $0.type == .smb  // Show regular boluses and SMB, but NOT SMB-Basal
                 }
             }
         }
