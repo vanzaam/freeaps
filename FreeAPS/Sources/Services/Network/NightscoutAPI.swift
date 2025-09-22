@@ -241,7 +241,7 @@ extension NightscoutAPI {
         components.host = url.host
         components.port = url.port
         components.path = Config.treatmentsPath
-        components.queryItems = queryItems + [URLQueryItem(name: "count", value: "50")]
+        components.queryItems = queryItems + [URLQueryItem(name: "count", value: "100")]
 
         var fetchRequest = URLRequest(url: components.url!)
         fetchRequest.allowsConstrainedNetworkAccess = false
@@ -265,19 +265,30 @@ extension NightscoutAPI {
     }
 
     // Delete the single treatment closest to the targetDate (and optionally closest by amount)
-    private func deleteSingleTreatmentSafely(queryItems: [URLQueryItem], targetDate: Date, preferredAmount: Decimal?, logName: String) -> AnyPublisher<Void, Swift.Error> {
-        return performFetch(queryItems: queryItems, logName: logName)
-            .flatMap { [weak self] treatments -> AnyPublisher<Void, Swift.Error> in
-                guard let self = self else { return Fail(error: Error.missingURL).eraseToAnyPublisher() }
-                if let best = self.selectNearestTreatment(from: treatments, targetDate: targetDate, preferredAmount: preferredAmount) {
+    private func deleteSingleTreatmentSafely(
+        queryItems: [URLQueryItem],
+        targetDate: Date,
+        preferredAmount: Decimal?,
+        logName: String
+    ) -> AnyPublisher<Void, Swift.Error> {
+        performFetch(queryItems: queryItems, logName: logName)
+            .flatMap { treatments -> AnyPublisher<Void, Swift.Error> in
+                if let best = self.selectNearestTreatment(
+                    from: treatments,
+                    targetDate: targetDate,
+                    preferredAmount: preferredAmount
+                ) {
                     return self.deleteTreatmentsByIds([best], logName: logName)
                 }
                 // fallback: widen and drop strict filters
                 let fallbackItems = self.fallbackQueryItems(from: queryItems)
                 return self.performFetch(queryItems: fallbackItems, logName: logName + " (fallback)")
-                    .flatMap { [weak self] fallbackTreatments -> AnyPublisher<Void, Swift.Error> in
-                        guard let self = self else { return Fail(error: Error.missingURL).eraseToAnyPublisher() }
-                        if let best = self.selectNearestTreatment(from: fallbackTreatments, targetDate: targetDate, preferredAmount: preferredAmount) {
+                    .flatMap { fallbackTreatments -> AnyPublisher<Void, Swift.Error> in
+                        if let best = self.selectNearestTreatment(
+                            from: fallbackTreatments,
+                            targetDate: targetDate,
+                            preferredAmount: preferredAmount
+                        ) {
                             return self.deleteTreatmentsByIds([best], logName: logName)
                         }
                         return Fail(error: Error.notFound).eraseToAnyPublisher()
@@ -287,7 +298,11 @@ extension NightscoutAPI {
             .eraseToAnyPublisher()
     }
 
-    private func selectNearestTreatment(from treatments: [NightscoutTreatment], targetDate: Date, preferredAmount: Decimal?) -> NightscoutTreatment? {
+    private func selectNearestTreatment(
+        from treatments: [NightscoutTreatment],
+        targetDate: Date,
+        preferredAmount: Decimal?
+    ) -> NightscoutTreatment? {
         guard !treatments.isEmpty else { return nil }
         func date(of t: NightscoutTreatment) -> Date? {
             guard let s = t.created_at else { return nil }
@@ -299,7 +314,7 @@ extension NightscoutAPI {
         let sortedByTime = withDates.sorted { abs($0.1.timeIntervalSince(targetDate)) < abs($1.1.timeIntervalSince(targetDate)) }
         if let preferredAmount = preferredAmount {
             // Choose among top 3 closest by time the one closest by insulin amount
-            let top = Array(sortedByTime.prefix(3)).map { $0.0 }
+            let top = Array(sortedByTime.prefix(3)).map(\.0)
             let best = top.min { a, b in
                 let da = (a.insulin ?? -999) - preferredAmount
                 let db = (b.insulin ?? -999) - preferredAmount
