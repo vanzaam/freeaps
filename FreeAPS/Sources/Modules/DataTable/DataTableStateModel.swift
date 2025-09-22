@@ -9,9 +9,14 @@ extension DataTable {
         @Published var history: [HistoryItem] = []
         @Published var showDeletedItems: Bool = false
         var units: GlucoseUnits = .mmolL
+        
+        // Persistent storage for deleted items to survive data reloads
+        private var deletedTreatmentIds: Set<String> = []
+        private var deletedGlucoseIds: Set<String> = []
 
         override func subscribe() {
             units = settingsManager.settings.units
+            loadDeletedItems()
             setupTreatments()
             setupGlucose()
             broadcaster.register(SettingsObserver.self, observer: self)
@@ -107,9 +112,18 @@ extension DataTable {
                             Treatment(units: units, type: .resume, date: $0.timestamp)
                         }
 
-                    return [carbs, Array(boluses), Array(tempBasals), tempTargets, Array(suspend), Array(resume)]
+                    let allTreatments = [carbs, Array(boluses), Array(tempBasals), tempTargets, Array(suspend), Array(resume)]
                         .flatMap { $0 }
                         .sorted { $0.date > $1.date }
+                    
+                    // Apply persistent deletion status
+                    for treatment in allTreatments {
+                        if self.deletedTreatmentIds.contains(treatment.stableId) {
+                            treatment.isDeleted = true
+                        }
+                    }
+                    
+                    return allTreatments
                 }
 
                 // Update UI on main thread without blocking
@@ -126,7 +140,16 @@ extension DataTable {
                 guard let self = self else { return }
 
                 let glucoseData = autoreleasepool {
-                    self.provider.glucose().map { Glucose(glucose: $0) }
+                    let allGlucose = self.provider.glucose().map { Glucose(glucose: $0) }
+                    
+                    // Apply persistent deletion status
+                    for glucoseItem in allGlucose {
+                        if self.deletedGlucoseIds.contains(glucoseItem.id) {
+                            glucoseItem.isDeleted = true
+                        }
+                    }
+                    
+                    return allGlucose
                 }
 
                 DispatchQueue.main.async { [weak self] in
@@ -139,51 +162,98 @@ extension DataTable {
         private func setupHistory() {
             // Combine treatments and glucose into one chronologically sorted list
             var combinedItems: [HistoryItem] = []
-            
+
             // Filter treatments based on showDeletedItems setting
             let visibleTreatments = showDeletedItems ? treatments : treatments.filter { !$0.isDeleted }
             combinedItems.append(contentsOf: visibleTreatments.map { HistoryItem(treatment: $0) })
-            
+
             // Filter glucose based on showDeletedItems setting
             let visibleGlucose = showDeletedItems ? glucose : glucose.filter { !$0.isDeleted }
             combinedItems.append(contentsOf: visibleGlucose.map { HistoryItem(glucose: $0) })
-            
+
             // Sort by date (most recent first)
             combinedItems.sort { $0.date > $1.date }
-            
+
             history = combinedItems
         }
 
         // Soft delete methods - mark as deleted instead of physically removing
         func softDeleteTreatment(with id: UUID) {
             if let index = treatments.firstIndex(where: { $0.id == id }) {
+                let treatment = treatments[index]
                 treatments[index].isDeleted = true
+                markTreatmentAsDeleted(treatment.stableId)
                 setupHistory() // Refresh history display
             }
         }
         
         func softDeleteGlucose(at index: Int) {
             guard index < glucose.count else { return }
+            let glucoseItem = glucose[index]
             glucose[index].isDeleted = true
+            markGlucoseAsDeleted(glucoseItem.id)
             setupHistory() // Refresh history display
         }
         
         func restoreTreatment(with id: UUID) {
             if let index = treatments.firstIndex(where: { $0.id == id }) {
+                let treatment = treatments[index]
                 treatments[index].isDeleted = false
+                unmarkTreatmentAsDeleted(treatment.stableId)
                 setupHistory() // Refresh history display
             }
         }
         
         func restoreGlucose(at index: Int) {
             guard index < glucose.count else { return }
+            let glucoseItem = glucose[index]
             glucose[index].isDeleted = false
+            unmarkGlucoseAsDeleted(glucoseItem.id)
             setupHistory() // Refresh history display
         }
-        
+
         func toggleShowDeletedItems() {
             showDeletedItems.toggle()
             setupHistory() // Refresh display based on new setting
+        }
+        
+        // MARK: - Persistent Deleted Items Management
+        
+        private func loadDeletedItems() {
+            // Load deleted treatment IDs from UserDefaults
+            if let treatmentIds = UserDefaults.standard.array(forKey: "DeletedTreatmentIds") as? [String] {
+                deletedTreatmentIds = Set(treatmentIds)
+            }
+            
+            // Load deleted glucose IDs from UserDefaults  
+            if let glucoseIds = UserDefaults.standard.array(forKey: "DeletedGlucoseIds") as? [String] {
+                deletedGlucoseIds = Set(glucoseIds)
+            }
+        }
+        
+        private func saveDeletedItems() {
+            UserDefaults.standard.set(Array(deletedTreatmentIds), forKey: "DeletedTreatmentIds")
+            UserDefaults.standard.set(Array(deletedGlucoseIds), forKey: "DeletedGlucoseIds")
+        }
+        
+        private func markTreatmentAsDeleted(_ stableId: String) {
+            deletedTreatmentIds.insert(stableId)
+            saveDeletedItems()
+        }
+        
+        private func markGlucoseAsDeleted(_ id: String) {
+            deletedGlucoseIds.insert(id)
+            saveDeletedItems()
+        }
+        
+        private func unmarkTreatmentAsDeleted(_ stableId: String) {
+            deletedTreatmentIds.remove(stableId)
+            saveDeletedItems()
+        }
+        
+        private func unmarkGlucoseAsDeleted(_ id: String) {
+            deletedGlucoseIds.remove(id)
+            saveDeletedItems()
         }
 
         func deleteCarbs(at date: Date) {

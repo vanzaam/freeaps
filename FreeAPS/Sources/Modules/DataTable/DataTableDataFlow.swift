@@ -51,9 +51,9 @@ enum DataTable {
         var isTreatment: Bool {
             treatment != nil
         }
-        
+
         var isDeleted: Bool {
-            return treatment?.isDeleted == true || glucose?.isDeleted == true
+            treatment?.isDeleted == true || glucose?.isDeleted == true
         }
 
         static func == (lhs: HistoryItem, rhs: HistoryItem) -> Bool {
@@ -103,6 +103,15 @@ enum DataTable {
         let secondAmount: Decimal?
         let duration: Decimal?
         var isDeleted: Bool = false
+        
+        // Stable identifier for persistence - based on content, not random UUID
+        var stableId: String {
+            let timestamp = Int(date.timeIntervalSince1970)
+            let amountStr = amount?.description ?? "0"
+            let secondAmountStr = secondAmount?.description ?? "0"
+            let durationStr = duration?.description ?? "0"
+            return "\(type.rawValue)_\(timestamp)_\(amountStr)_\(secondAmountStr)_\(durationStr)"
+        }
 
         private var numberFormater: NumberFormatter {
             FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2) }
@@ -176,7 +185,7 @@ enum DataTable {
             if isDeleted {
                 return .secondary.opacity(0.5)
             }
-            
+
             switch type {
             case .carbs:
                 return .loopYellow
@@ -234,7 +243,7 @@ enum DataTable {
         }
 
         var id: String { glucose.id }
-        
+
         func hash(into hasher: inout Hasher) {
             hasher.combine(glucose.id)
         }
