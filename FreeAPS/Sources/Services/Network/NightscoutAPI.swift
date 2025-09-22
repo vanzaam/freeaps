@@ -22,6 +22,19 @@ class NightscoutAPI {
         case badStatusCode
         case missingURL
     }
+    
+    // Structure for decoding Nightscout treatments for deletion
+    private struct NightscoutTreatment: Codable {
+        let id: String?
+        let created_at: String?
+        let eventType: String?
+        let enteredBy: String?
+        
+        private enum CodingKeys: String, CodingKey {
+            case id = "_id"
+            case created_at, eventType, enteredBy
+        }
+    }
 
     let url: URL
     let secret: String?
@@ -138,183 +151,167 @@ extension NightscoutAPI {
     }
 
     func deleteCarbs(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        // Use official Nightscout API v14.2.3 DELETE /treatments with query parameters
+        let queryItems = [
+            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
+            URLQueryItem(name: "find[eventType]", value: "Carbs"),
+            URLQueryItem(
+                name: "find[created_at][$gte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-300))
+            ),
+            URLQueryItem(
+                name: "find[created_at][$lte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(300))
+            ),
+            URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
+        ]
+        
+        return deleteTreatmentsSafely(queryItems: queryItems, logName: "Carbs")
+    }
+    
+    // Safe DELETE implementation: GET treatments first, then DELETE by _id individually
+    // This prevents Nightscout server crashes from unsupported bulk DELETE operations
+    private func deleteTreatmentsSafely(queryItems: [URLQueryItem], logName: String) -> AnyPublisher<Void, Swift.Error> {
+        // Step 1: Find matching treatments using GET
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
         components.port = url.port
         components.path = Config.treatmentsPath
-        
-        // Use proper query syntax as per API docs: find[field][operator]=value
-        components.queryItems = [
-            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
-            URLQueryItem(name: "find[eventType]", value: "Carbs"),
-            URLQueryItem(name: "find[created_at][$gte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-60))),
-            URLQueryItem(name: "find[created_at][$lte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(60))),
-            URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
-        ]
+        components.queryItems = queryItems + [URLQueryItem(name: "count", value: "50")]
 
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        var fetchRequest = URLRequest(url: components.url!)
+        fetchRequest.allowsConstrainedNetworkAccess = false
+        fetchRequest.timeoutInterval = Config.timeout
+        fetchRequest.httpMethod = "GET"
 
         if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+            fetchRequest.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
         }
 
-        debug(.nightscout, "DELETE Carbs at \(date): \(components.url?.absoluteString ?? "invalid URL")")
-        
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
+        debug(.nightscout, "Fetching \(logName) to delete: \(components.url?.absoluteString ?? "invalid URL")")
+
+        return service.run(fetchRequest)
+            .decode(type: [NightscoutTreatment].self, decoder: JSONCoding.decoder)
+            .flatMap { treatments -> AnyPublisher<Void, Swift.Error> in
+                return self.deleteTreatmentsByIds(treatments, logName: logName)
+            }
             .eraseToAnyPublisher()
+    }
+    
+    // Helper method to delete treatments by their _id - prevents server crashes
+    private func deleteTreatmentsByIds(_ treatments: [NightscoutTreatment], logName: String) -> AnyPublisher<Void, Swift.Error> {
+        let publishers = treatments.compactMap { treatment -> AnyPublisher<Void, Swift.Error>? in
+            guard let treatmentId = treatment.id else {
+                debug(.nightscout, "Skipping \(logName) without _id")
+                return nil
+            }
+            
+            // Step 2: DELETE each treatment by _id using correct endpoint
+            var deleteComponents = URLComponents()
+            deleteComponents.scheme = url.scheme
+            deleteComponents.host = url.host
+            deleteComponents.port = url.port
+            deleteComponents.path = "/api/v1/treatments/\(treatmentId)"
+
+            var deleteRequest = URLRequest(url: deleteComponents.url!)
+            deleteRequest.allowsConstrainedNetworkAccess = false
+            deleteRequest.timeoutInterval = Config.timeout
+            deleteRequest.httpMethod = "DELETE"
+
+            if let secret = secret {
+                deleteRequest.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+            }
+
+            debug(.nightscout, "DELETE \(logName) by _id: \(treatmentId)")
+            
+            return service.run(deleteRequest)
+                .map { _ in () }
+                .eraseToAnyPublisher()
+        }
+        
+        guard !publishers.isEmpty else {
+            debug(.nightscout, "No matching \(logName) found to delete")
+            return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+        }
+        
+        return Publishers.MergeMany(publishers).eraseToAnyPublisher()
     }
 
     func deleteTempTarget(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        // Use official Nightscout API v14.2.3 DELETE /treatments with query parameters
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        
-        // Use proper query syntax as per API docs: find[field][operator]=value
-        components.queryItems = [
+        let queryItems = [
             URLQueryItem(name: "find[eventType]", value: "Temporary Target"),
-            URLQueryItem(name: "find[created_at][$gte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-60))),
-            URLQueryItem(name: "find[created_at][$lte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(60))),
+            URLQueryItem(
+                name: "find[created_at][$gte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-300))
+            ),
+            URLQueryItem(
+                name: "find[created_at][$lte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(300))
+            ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        debug(.nightscout, "DELETE TempTarget at \(date): \(components.url?.absoluteString ?? "invalid URL")")
         
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        return deleteTreatmentsSafely(queryItems: queryItems, logName: "Temp Target")
     }
 
     func deleteBolus(at date: Date, amount: Decimal) -> AnyPublisher<Void, Swift.Error> {
-        // Use official Nightscout API v14.2.3 DELETE /treatments with query parameters
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        
-        // Use proper query syntax as per API docs: find[field][operator]=value
-        components.queryItems = [
+        let queryItems = [
             URLQueryItem(name: "find[insulin][$exists]", value: "true"),
             URLQueryItem(name: "find[insulin]", value: amount.description),
-            URLQueryItem(name: "find[created_at][$gte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-60))),
-            URLQueryItem(name: "find[created_at][$lte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(60))),
+            URLQueryItem(
+                name: "find[created_at][$gte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-300))
+            ),
+            URLQueryItem(
+                name: "find[created_at][$lte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(300))
+            ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        debug(.nightscout, "DELETE Bolus \(amount)U at \(date): \(components.url?.absoluteString ?? "invalid URL")")
         
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        return deleteTreatmentsSafely(queryItems: queryItems, logName: "Bolus")
     }
 
     func deleteTempBasal(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        // Use official Nightscout API v14.2.3 DELETE /treatments with query parameters
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        
-        // Use proper query syntax as per API docs: find[field][operator]=value
-        components.queryItems = [
+        let queryItems = [
             URLQueryItem(name: "find[eventType]", value: "Temp Basal"),
-            URLQueryItem(name: "find[created_at][$gte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-60))),
-            URLQueryItem(name: "find[created_at][$lte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(60))),
+            URLQueryItem(
+                name: "find[created_at][$gte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-300))
+            ),
+            URLQueryItem(
+                name: "find[created_at][$lte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(300))
+            ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        debug(.nightscout, "DELETE TempBasal at \(date): \(components.url?.absoluteString ?? "invalid URL")")
         
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        return deleteTreatmentsSafely(queryItems: queryItems, logName: "Temp Basal")
     }
 
     func deleteSuspend(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        deleteTreatment(eventType: "Pump Suspend", at: date)
+        return deleteTreatment(eventType: "Pump Suspend", at: date)
     }
 
     func deleteResume(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        deleteTreatment(eventType: "Pump Resume", at: date)
+        return deleteTreatment(eventType: "Pump Resume", at: date)
     }
 
     private func deleteTreatment(eventType: String, at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        // Use official Nightscout API v14.2.3 DELETE /treatments with query parameters
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        
-        // Use proper query syntax as per API docs: find[field][operator]=value
-        components.queryItems = [
+        let queryItems = [
             URLQueryItem(name: "find[eventType]", value: eventType),
-            URLQueryItem(name: "find[created_at][$gte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-60))),
-            URLQueryItem(name: "find[created_at][$lte]", value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(60))),
+            URLQueryItem(
+                name: "find[created_at][$gte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-300))
+            ),
+            URLQueryItem(
+                name: "find[created_at][$lte]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(300))
+            ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        debug(.nightscout, "DELETE Treatment (\(eventType)) at \(date): \(components.url?.absoluteString ?? "invalid URL")")
         
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        return deleteTreatmentsSafely(queryItems: queryItems, logName: eventType)
     }
 
     func fetchTempTargets(sinceDate: Date? = nil) -> AnyPublisher<[TempTarget], Swift.Error> {
