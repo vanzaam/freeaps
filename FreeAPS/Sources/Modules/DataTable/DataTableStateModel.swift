@@ -7,6 +7,7 @@ extension DataTable {
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
         @Published var history: [HistoryItem] = []
+        @Published var showDeletedItems: Bool = false
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -125,7 +126,7 @@ extension DataTable {
                 guard let self = self else { return }
 
                 let glucoseData = autoreleasepool {
-                    self.provider.glucose().map(Glucose.init)
+                    self.provider.glucose().map { Glucose(glucose: $0) }
                 }
 
                 DispatchQueue.main.async { [weak self] in
@@ -139,16 +140,50 @@ extension DataTable {
             // Combine treatments and glucose into one chronologically sorted list
             var combinedItems: [HistoryItem] = []
             
-            // Add all treatments
-            combinedItems.append(contentsOf: treatments.map { HistoryItem(treatment: $0) })
+            // Filter treatments based on showDeletedItems setting
+            let visibleTreatments = showDeletedItems ? treatments : treatments.filter { !$0.isDeleted }
+            combinedItems.append(contentsOf: visibleTreatments.map { HistoryItem(treatment: $0) })
             
-            // Add all glucose entries
-            combinedItems.append(contentsOf: glucose.map { HistoryItem(glucose: $0) })
+            // Filter glucose based on showDeletedItems setting
+            let visibleGlucose = showDeletedItems ? glucose : glucose.filter { !$0.isDeleted }
+            combinedItems.append(contentsOf: visibleGlucose.map { HistoryItem(glucose: $0) })
             
             // Sort by date (most recent first)
             combinedItems.sort { $0.date > $1.date }
             
             history = combinedItems
+        }
+
+        // Soft delete methods - mark as deleted instead of physically removing
+        func softDeleteTreatment(with id: UUID) {
+            if let index = treatments.firstIndex(where: { $0.id == id }) {
+                treatments[index].isDeleted = true
+                setupHistory() // Refresh history display
+            }
+        }
+        
+        func softDeleteGlucose(at index: Int) {
+            guard index < glucose.count else { return }
+            glucose[index].isDeleted = true
+            setupHistory() // Refresh history display
+        }
+        
+        func restoreTreatment(with id: UUID) {
+            if let index = treatments.firstIndex(where: { $0.id == id }) {
+                treatments[index].isDeleted = false
+                setupHistory() // Refresh history display
+            }
+        }
+        
+        func restoreGlucose(at index: Int) {
+            guard index < glucose.count else { return }
+            glucose[index].isDeleted = false
+            setupHistory() // Refresh history display
+        }
+        
+        func toggleShowDeletedItems() {
+            showDeletedItems.toggle()
+            setupHistory() // Refresh display based on new setting
         }
 
         func deleteCarbs(at date: Date) {

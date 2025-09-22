@@ -35,6 +35,11 @@ extension DataTable {
                     Button(action: { state.showModal(for: .addGlucose) }) {
                         Image(systemName: "plus")
                     }
+                    
+                    Button(action: { state.toggleShowDeletedItems() }) {
+                        Image(systemName: state.showDeletedItems ? "eye.slash" : "eye")
+                    }
+                    
                     EditButton()
                 }
             )
@@ -43,21 +48,33 @@ extension DataTable {
         private var combinedHistoryList: some View {
             List {
                 ForEach(state.history) { item in
-                    if item.isGlucose, let glucose = item.glucose {
-                        gluciseView(glucose)
-                    } else if item.isTreatment, let treatment = item.treatment {
-                        treatmentView(treatment)
+                    Group {
+                        if item.isGlucose, let glucose = item.glucose {
+                            gluciseView(glucose)
+                                .opacity(glucose.isDeleted ? 0.5 : 1.0)
+                        } else if item.isTreatment, let treatment = item.treatment {
+                            treatmentView(treatment)
+                                .opacity(treatment.isDeleted ? 0.5 : 1.0)
+                        }
+                    }
+                    .contextMenu {
+                        if item.isDeleted {
+                            Button("Восстановить") {
+                                restoreHistoryItem(item)
+                            }
+                        } else {
+                            Button("Удалить") {
+                                softDeleteHistoryItem(item)
+                            }
+                        }
                     }
                 }
                 .onDelete { offsets in
-                    // Only delete if the item is glucose
-                    let validGlucoseOffsets = offsets.filter { index in
-                        guard index < state.history.count else { return false }
-                        return state.history[index].isGlucose
-                    }
-                    
-                    if !validGlucoseOffsets.isEmpty {
-                        deleteHistoryItem(at: IndexSet(validGlucoseOffsets))
+                    // Soft delete any items
+                    for index in offsets {
+                        guard index < state.history.count else { continue }
+                        let item = state.history[index]
+                        softDeleteHistoryItem(item)
                     }
                 }
             }
@@ -87,7 +104,20 @@ extension DataTable {
                         .string(from: item.date)
                 )
                 .moveDisabled(true)
-                Text(item.displayTypeName)
+                
+                VStack(alignment: .leading, spacing: 2) {
+                    HStack {
+                        Text(item.displayTypeName)
+                        if item.isDeleted {
+                            Text("(Удалено)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                
+                Spacer()
+                
                 Text(item.amountText).foregroundColor(.secondary)
                 if let duration = item.durationText {
                     Text(duration).foregroundColor(.secondary)
@@ -128,6 +158,13 @@ extension DataTable {
                         (selectedGlucoseId == item.glucose.id ? timeFormatterFull : timeFormatterShort)
                             .string(from: item.glucose.dateString)
                     )
+                    
+                    if item.isDeleted {
+                        Text("(Удалено)")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                    
                     Spacer()
                     Text(item.glucose.glucose.map {
                         glucoseFormatter.string(from: Double(
@@ -144,6 +181,28 @@ extension DataTable {
             .contentShape(Rectangle())
             .onTapGesture {
                 selectedGlucoseId = (selectedGlucoseId == item.glucose.id) ? nil : item.glucose.id
+            }
+        }
+
+        private func softDeleteHistoryItem(_ item: HistoryItem) {
+            if item.isGlucose, let glucose = item.glucose {
+                // Find glucose index in original array
+                if let index = state.glucose.firstIndex(where: { $0.id == glucose.id }) {
+                    state.softDeleteGlucose(at: index)
+                }
+            } else if item.isTreatment, let treatment = item.treatment {
+                state.softDeleteTreatment(with: treatment.id)
+            }
+        }
+        
+        private func restoreHistoryItem(_ item: HistoryItem) {
+            if item.isGlucose, let glucose = item.glucose {
+                // Find glucose index in original array
+                if let index = state.glucose.firstIndex(where: { $0.id == glucose.id }) {
+                    state.restoreGlucose(at: index)
+                }
+            } else if item.isTreatment, let treatment = item.treatment {
+                state.restoreTreatment(with: treatment.id)
             }
         }
 

@@ -34,14 +34,14 @@ enum DataTable {
 
         init(treatment: Treatment) {
             self.treatment = treatment
-            self.glucose = nil
-            self.date = treatment.date
+            glucose = nil
+            date = treatment.date
         }
 
         init(glucose: Glucose) {
-            self.treatment = nil
+            treatment = nil
             self.glucose = glucose
-            self.date = glucose.glucose.dateString
+            date = glucose.glucose.dateString
         }
 
         var isGlucose: Bool {
@@ -50,6 +50,10 @@ enum DataTable {
 
         var isTreatment: Bool {
             treatment != nil
+        }
+        
+        var isDeleted: Bool {
+            return treatment?.isDeleted == true || glucose?.isDeleted == true
         }
 
         static func == (lhs: HistoryItem, rhs: HistoryItem) -> Bool {
@@ -98,6 +102,7 @@ enum DataTable {
         let amount: Decimal?
         let secondAmount: Decimal?
         let duration: Decimal?
+        var isDeleted: Bool = false
 
         private var numberFormater: NumberFormatter {
             FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2) }
@@ -108,7 +113,8 @@ enum DataTable {
             date: Date,
             amount: Decimal? = nil,
             secondAmount: Decimal? = nil,
-            duration: Decimal? = nil
+            duration: Decimal? = nil,
+            isDeleted: Bool = false
         ) {
             self.units = units
             self.type = type
@@ -116,6 +122,7 @@ enum DataTable {
             self.amount = amount
             self.secondAmount = secondAmount
             self.duration = duration
+            self.isDeleted = isDeleted
         }
 
         static func == (lhs: Treatment, rhs: Treatment) -> Bool {
@@ -165,6 +172,11 @@ enum DataTable {
         }
 
         var color: Color {
+            // Show deleted items in light gray
+            if isDeleted {
+                return .secondary.opacity(0.5)
+            }
+            
             switch type {
             case .carbs:
                 return .loopYellow
@@ -214,12 +226,18 @@ enum DataTable {
         }
 
         let glucose: BloodGlucose
+        var isDeleted: Bool = false
 
-        init(glucose: BloodGlucose) {
+        init(glucose: BloodGlucose, isDeleted: Bool = false) {
             self.glucose = glucose
+            self.isDeleted = isDeleted
         }
 
         var id: String { glucose.id }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(glucose.id)
+        }
     }
 }
 
