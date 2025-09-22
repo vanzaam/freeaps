@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+// Access DeletedTreatmentsStore blacklist
 import JavaScriptCore
 
 final class OpenAPS {
@@ -248,7 +249,8 @@ final class OpenAPS {
         }
 
         if let filteredData = try? JSONSerialization.data(withJSONObject: array),
-           let filteredString = String(data: filteredData, encoding: .utf8) {
+           let filteredString = String(data: filteredData, encoding: .utf8)
+        {
             return filteredString
         }
         return pumpHistory
