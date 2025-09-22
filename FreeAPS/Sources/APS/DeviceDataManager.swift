@@ -41,7 +41,7 @@ private let staticPumpManagersByIdentifier: [String: PumpManagerUI.Type] = stati
 private let accessLock = NSRecursiveLock(label: "BaseDeviceDataManager.accessLock")
 
 final class BaseDeviceDataManager: DeviceDataManager, Injectable {
-    private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue")
+    private let processQueue = DispatchQueue.markedQueue(label: "BaseDeviceDataManager.processQueue", qos: .userInitiated)
     @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
@@ -64,8 +64,9 @@ final class BaseDeviceDataManager: DeviceDataManager, Injectable {
 
     var pumpManager: PumpManagerUI? {
         didSet {
-            pumpManager?.pumpManagerDelegate = self
+            // Set queue BEFORE assigning delegate to avoid any early delegate callbacks on default QoS queue
             pumpManager?.delegateQueue = processQueue
+            pumpManager?.pumpManagerDelegate = self
             UserDefaults.standard.pumpManagerRawValue = pumpManager?.rawValue
             if let pumpManager = pumpManager {
                 pumpDisplayState.value = PumpDisplayState(name: pumpManager.localizedTitle, image: pumpManager.smallImage)
