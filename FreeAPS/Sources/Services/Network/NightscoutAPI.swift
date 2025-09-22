@@ -369,16 +369,17 @@ extension NightscoutAPI {
             URLQueryItem(name: "find[eventType]", value: "Temporary Target"),
             URLQueryItem(
                 name: "find[created_at][$gte]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-300))
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-600))
             ),
             URLQueryItem(
                 name: "find[created_at][$lte]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(300))
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(600))
             ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
 
-        return deleteTreatmentsSafely(queryItems: queryItems, logName: "Temp Target")
+        // Pick the nearest temp target by time and delete by _id
+        return deleteSingleTreatmentSafely(queryItems: queryItems, targetDate: date, preferredAmount: nil, logName: "Temp Target")
     }
 
     func deleteBolus(at date: Date, amount: Decimal) -> AnyPublisher<Void, Swift.Error> {
