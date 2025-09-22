@@ -73,7 +73,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         _ = reachabilityManager.startListening(onQueue: processQueue) { status in
             debug(.nightscout, "Network status: \(status)")
             // Process pending deletions when network becomes available
-            if status.isReachable {
+            if case .reachable = status {
                 self.processPendingDeletions()
             }
         }
@@ -190,7 +190,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             } receiveValue: {}
             .store(in: &lifetime)
     }
-    
+
     func deleteTempTarget(at date: Date) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
@@ -209,7 +209,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             } receiveValue: {}
             .store(in: &lifetime)
     }
-    
+
     func deleteBolus(at date: Date, amount: Decimal) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
@@ -228,7 +228,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             } receiveValue: {}
             .store(in: &lifetime)
     }
-    
+
     func deleteTempBasal(at date: Date) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
@@ -247,7 +247,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             } receiveValue: {}
             .store(in: &lifetime)
     }
-    
+
     func deleteSuspend(at date: Date) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
@@ -266,7 +266,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             } receiveValue: {}
             .store(in: &lifetime)
     }
-    
+
     func deleteResume(at date: Date) {
         guard let nightscout = nightscoutAPI, isUploadEnabled else {
             return
@@ -285,51 +285,53 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             } receiveValue: {}
             .store(in: &lifetime)
     }
-    
+
     // MARK: - Pending Deletions Queue
-    
+
     private enum PendingDeletion: Codable, Hashable {
         case carbs(Date)
-        case tempTarget(Date)  
+        case tempTarget(Date)
         case bolus(Date, Decimal)
         case tempBasal(Date)
         case suspend(Date)
         case resume(Date)
-        
+
         enum CodingKeys: String, CodingKey {
-            case type, date, amount
+            case type
+            case date
+            case amount
         }
-        
+
         func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             switch self {
-            case .carbs(let date):
+            case let .carbs(date):
                 try container.encode("carbs", forKey: .type)
                 try container.encode(date, forKey: .date)
-            case .tempTarget(let date):
+            case let .tempTarget(date):
                 try container.encode("tempTarget", forKey: .type)
                 try container.encode(date, forKey: .date)
-            case .bolus(let date, let amount):
+            case let .bolus(date, amount):
                 try container.encode("bolus", forKey: .type)
                 try container.encode(date, forKey: .date)
                 try container.encode(amount, forKey: .amount)
-            case .tempBasal(let date):
+            case let .tempBasal(date):
                 try container.encode("tempBasal", forKey: .type)
                 try container.encode(date, forKey: .date)
-            case .suspend(let date):
+            case let .suspend(date):
                 try container.encode("suspend", forKey: .type)
                 try container.encode(date, forKey: .date)
-            case .resume(let date):
+            case let .resume(date):
                 try container.encode("resume", forKey: .type)
                 try container.encode(date, forKey: .date)
             }
         }
-        
+
         init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
             let type = try container.decode(String.self, forKey: .type)
             let date = try container.decode(Date.self, forKey: .date)
-            
+
             switch type {
             case "carbs":
                 self = .carbs(date)
@@ -351,11 +353,12 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             }
         }
     }
-    
+
     private var pendingDeletions: Set<PendingDeletion> {
         get {
             guard let data = UserDefaults.standard.data(forKey: "PendingNightscoutDeletions"),
-                  let deletions = try? JSONDecoder().decode(Set<PendingDeletion>.self, from: data) else {
+                  let deletions = try? JSONDecoder().decode(Set<PendingDeletion>.self, from: data)
+            else {
                 return []
             }
             return deletions
@@ -366,39 +369,39 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
             }
         }
     }
-    
+
     private func addToPendingDeletions(_ deletion: PendingDeletion) {
         var pending = pendingDeletions
         pending.insert(deletion)
         pendingDeletions = pending
     }
-    
+
     func processPendingDeletions() {
         guard let nightscout = nightscoutAPI, isUploadEnabled, isNetworkReachable else {
             return
         }
-        
+
         let pending = pendingDeletions
         var processed: Set<PendingDeletion> = []
-        
+
         for deletion in pending {
             let publisher: AnyPublisher<Void, Swift.Error>
-            
+
             switch deletion {
-            case .carbs(let date):
+            case let .carbs(date):
                 publisher = nightscout.deleteCarbs(at: date)
-            case .tempTarget(let date):
+            case let .tempTarget(date):
                 publisher = nightscout.deleteTempTarget(at: date)
-            case .bolus(let date, let amount):
+            case let .bolus(date, amount):
                 publisher = nightscout.deleteBolus(at: date, amount: amount)
-            case .tempBasal(let date):
+            case let .tempBasal(date):
                 publisher = nightscout.deleteTempBasal(at: date)
-            case .suspend(let date):
+            case let .suspend(date):
                 publisher = nightscout.deleteSuspend(at: date)
-            case .resume(let date):
+            case let .resume(date):
                 publisher = nightscout.deleteResume(at: date)
             }
-            
+
             publisher
                 .sink { completion in
                     switch completion {
@@ -411,7 +414,7 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &lifetime)
         }
-        
+
         // Remove processed deletions
         if !processed.isEmpty {
             var remaining = pendingDeletions
