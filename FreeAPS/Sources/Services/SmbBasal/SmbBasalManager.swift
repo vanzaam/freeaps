@@ -143,29 +143,12 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
     // MARK: - Helpers
 
     private func maintainZeroTempBasalIfNeeded() {
-        // If user opted to apply OpenAPS temp basal suggestions, do not override with forced 0 basal
-        if settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal {
-            return
-        }
-        let now = Date()
-
-        // Check every 5 minutes instead of every 25 minutes
-        if let last = lastZeroBasalSetAt, now.timeIntervalSince(last) < TimeInterval(5 * 60) {
-            return
-        }
-
-        // Check if current temp basal is already 0 U/h
+        // Always enforce 0 U/h while SMB-basal is active
         if isCurrentTempBasalZero() {
-            print("SMB-Basal: Current temp basal is already 0 U/h, skipping")
-            lastZeroBasalSetAt = now // Update timer even if we skip
             return
         }
-
-        // Set zero temp basal for 30 minutes if not already zero
-        print("SMB-Basal: Current temp basal is NOT zero, setting zero temp basal for 30 minutes")
         apsManager.enactTempBasal(rate: 0, duration: TimeInterval(30 * 60))
-        print("SMB-Basal: Zero temp basal command sent")
-        lastZeroBasalSetAt = now
+        lastZeroBasalSetAt = Date()
     }
 
     private func isCurrentTempBasalZero() -> Bool {
