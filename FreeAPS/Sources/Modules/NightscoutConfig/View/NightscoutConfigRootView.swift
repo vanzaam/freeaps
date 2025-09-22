@@ -6,7 +6,8 @@ extension NightscoutConfig {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
-        private var portFormater: NumberFormatter { FormatterCache.numberFormatter(style: .decimal) }
+        private var portFormater: NumberFormatter {
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 0) }
 
         var body: some View {
             Form {

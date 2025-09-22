@@ -12,7 +12,8 @@ extension PreferencesEditor {
         let resolver: Resolver
         @StateObject var state = StateModel()
 
-        private var formatter: NumberFormatter { FormatterCache.numberFormatter(style: .decimal) }
+        private var formatter: NumberFormatter {
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 2) }
 
         @State private var infoButtonPressed: InfoText?
 

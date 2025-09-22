@@ -13,7 +13,8 @@ extension CREditor {
             return f
         }
 
-        private var rateFormatter: NumberFormatter { FormatterCache.numberFormatter(style: .decimal) }
+        private var rateFormatter: NumberFormatter {
+            FormatterCache.numberFormatter(style: .decimal, minFractionDigits: 0, maxFractionDigits: 1) }
 
         var body: some View {
             Form {
