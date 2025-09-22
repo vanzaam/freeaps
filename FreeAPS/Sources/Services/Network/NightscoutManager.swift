@@ -221,6 +221,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 case .finished:
                     debug(.nightscout, "Bolus deleted")
                     // Force-refresh local storages (carbs + temp targets) after deletion
+                    DeletedTreatmentsStore.shared.addBolus(date: date, amount: amount)
+                    DeletedTreatmentsStore.shared.prune()
                     _ = self.fetchCarbs().sink { _ in }
                     _ = self.fetchTempTargets().sink { _ in }
                 case let .failure(error):

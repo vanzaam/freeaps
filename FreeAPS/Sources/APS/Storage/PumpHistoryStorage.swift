@@ -259,30 +259,30 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
             var result = result
             let isDuplicate = result.contains { existing in
                 existing.type == event.type &&
-                abs(existing.timestamp.timeIntervalSince(event.timestamp)) < 30 && // within 30 seconds
-                existing.amount == event.amount &&
-                existing.automatic == event.automatic
+                    abs(existing.timestamp.timeIntervalSince(event.timestamp)) < 30 && // within 30 seconds
+                    existing.amount == event.amount &&
+                    existing.automatic == event.automatic
             }
             if !isDuplicate {
                 result.append(event)
             }
             return result
         }
-        
+
         let bolusesAndCarbs = uniqueEvents.compactMap { event -> NigtscoutTreatment? in
             switch event.type {
-            case .bolus:
+            case .bolus, .smb, .smbBasal:
                 // Determine if this is a regular SMB or SMB-Basal
                 let eventType: EventType = {
-                    if event.automatic == true {
-                        // Check if this bolus matches SMB-Basal pulse
-                        if self.isSmbBasalPulse(event: event) {
-                            return .smbBasal
+                    switch event.type {
+                    case .smb, .smbBasal:
+                        return event.type
+                    default:
+                        if event.automatic == true {
+                            return self.isSmbBasalPulse(event: event) ? .smbBasal : .smb
                         } else {
-                            return .smb
+                            return .bolus
                         }
-                    } else {
-                        return .bolus
                     }
                 }()
                 return NigtscoutTreatment(
