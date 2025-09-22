@@ -21,7 +21,11 @@ final class OpenAPS {
                 self.storage.save(clock, as: Monitor.clock)
 
                 // temp_basal
-                let tempBasal = currentTemp.rawJSON
+                var tempBasal = currentTemp.rawJSON
+                // If SMB-basal is enabled, override with a virtual temp basal equal to current basal
+                if let virtual = self.virtualTempBasal(from: self.loadFileFromStorage(name: Settings.profile)) {
+                    tempBasal = virtual
+                }
                 self.storage.save(tempBasal, as: Monitor.tempBasal)
 
                 // meal
@@ -434,6 +438,28 @@ final class OpenAPS {
 
     private func loadFileFromStorage(name: String) -> RawJSON {
         storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
+    }
+
+    // Build a virtual temp basal JSON equal to current basal if SMB-basal is enabled
+    // Expects profile JSON to contain current_basal and preferences.smb_basal_enabled
+    private func virtualTempBasal(from profile: RawJSON) -> RawJSON? {
+        guard let data = profile.data(using: .utf8),
+              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
+        let prefs = (json["preferences"] as? [String: Any]) ?? [:]
+        guard (prefs["smb_basal_enabled"] as? Bool) == true else { return nil }
+        guard let currentBasal = (json["current_basal"] as? NSNumber)?.doubleValue, currentBasal >= 0 else { return nil }
+
+        // Construct OpenAPS temp basal json (absolute) for 30 minutes
+        let temp: [String: Any] = [
+            "temp": "absolute",
+            "duration": 30,
+            "rate": currentBasal
+        ]
+        if let tempData = try? JSONSerialization.data(withJSONObject: temp),
+           let tempString = String(data: tempData, encoding: .utf8) {
+            return tempString
+        }
+        return nil
     }
 
     private func middlewareScript(name: String) -> Script? {
