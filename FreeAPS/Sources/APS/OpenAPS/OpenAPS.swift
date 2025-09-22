@@ -243,6 +243,10 @@ final class OpenAPS {
 
         let dayAgo = Date().addingTimeInterval(-24 * 60 * 60)
         let recentCutoff = Date().addingTimeInterval(-120) // don't filter very recent boluses (<2 min)
+        
+        // Get SMB-basal pulses to avoid filtering them
+        let smbBasalPulses = storage.retrieve(OpenAPS.Monitor.smbBasalPulses, as: [SmbBasalPulse].self) ?? []
+        
         array.removeAll { dict in
             guard let type = dict["_type"] as? String, type.lowercased().contains("bolus") else { return false }
             // created_at or timestamp
@@ -252,6 +256,19 @@ final class OpenAPS {
             // Keep very recent boluses to ensure IOB reflects them immediately
             guard date < recentCutoff else { return false }
             let insulin = (dict["insulin"] as? NSNumber)?.decimalValue
+            
+            // Don't filter SMB-Basal pulses - they should always contribute to IOB calculation
+            let isSmbBasal = smbBasalPulses.contains { pulse in
+                let timeDiff = abs(date.timeIntervalSince(pulse.timestamp))
+                let amountMatch = abs((insulin ?? 0) - pulse.units) < 0.001
+                return timeDiff < 30 && amountMatch
+            }
+            
+            if isSmbBasal {
+                return false // Never filter SMB-Basal pulses
+            }
+            
+            // Only filter manually deleted boluses
             return DeletedTreatmentsStore.shared.containsBolus(date: date, amount: insulin)
         }
 

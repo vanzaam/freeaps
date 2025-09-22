@@ -46,7 +46,7 @@ struct MainChartView: View {
     let carbs: [CarbsEntry]
     let timerDate: Date
     let units: GlucoseUnits
-    let smbHourlyRates: [Decimal] = [] // placeholder, injected via extension
+    let smbHourlyRates: [Decimal]
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -172,25 +172,51 @@ struct MainChartView: View {
 
     private func smbHourlyOverlay(fullSize: CGSize) -> some View {
         let rates = smbHourlyRates.map { Double(truncating: $0 as NSDecimalNumber) }
+        
+        // Prevent NaN errors by ensuring valid values
+        guard !rates.isEmpty, rates.allSatisfy({ $0.isFinite }) else {
+            return AnyView(EmptyView())
+        }
+        
         let maxRate = max(rates.max() ?? 0.0, 0.01)
-        return GeometryReader { geo in
+        guard maxRate.isFinite && maxRate > 0 else {
+            return AnyView(EmptyView())
+        }
+        
+        return AnyView(GeometryReader { _ in
             let w = fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width)
-            let h = geo.size.height
-            let count = max(rates.count, 1)
+            let count = rates.count
             let stepX = w / CGFloat(count)
             let rateCost = Config.basalHeight / CGFloat(maxRate)
-            ZStack {
+            
+            // Ensure no NaN values in calculations
+            guard stepX.isFinite && rateCost.isFinite else {
+                return AnyView(EmptyView())
+            }
+            
+            return AnyView(ZStack {
                 ForEach(0 ..< count, id: \.self) { i in
                     let value = rates[i]
                     let barH = CGFloat(value) * rateCost
-                    Path { p in
-                        p.addRect(CGRect(x: CGFloat(i) * stepX + 1, y: Config.basalHeight - barH, width: stepX - 2, height: barH))
+                    
+                    // Only draw if values are valid
+                    if barH.isFinite && barH >= 0 {
+                        Path { p in
+                            let x = CGFloat(i) * stepX + 1
+                            let y = Config.basalHeight - barH
+                            let width = max(stepX - 2, 1)
+                            let height = barH
+                            
+                            if x.isFinite && y.isFinite && width.isFinite && height.isFinite {
+                                p.addRect(CGRect(x: x, y: y, width: width, height: height))
+                            }
+                        }
+                        .fill(Color.accentColor.opacity(0.25))
                     }
-                    .fill(Color.accentColor.opacity(0.25))
                 }
-            }
+            })
         }
-        .frame(maxHeight: Config.basalHeight)
+        .frame(maxHeight: Config.basalHeight))
     }
 
     private func mainView(fullSize: CGSize) -> some View {
