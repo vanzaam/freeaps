@@ -21,18 +21,21 @@ class NightscoutAPI {
     enum Error: LocalizedError {
         case badStatusCode
         case missingURL
+        case notFound
     }
-    
+
     // Structure for decoding Nightscout treatments for deletion
     private struct NightscoutTreatment: Codable {
         let id: String?
         let created_at: String?
         let eventType: String?
         let enteredBy: String?
-        
+
         private enum CodingKeys: String, CodingKey {
             case id = "_id"
-            case created_at, eventType, enteredBy
+            case created_at
+            case eventType
+            case enteredBy
         }
     }
 
@@ -164,14 +167,72 @@ extension NightscoutAPI {
             ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-        
+
         return deleteTreatmentsSafely(queryItems: queryItems, logName: "Carbs")
     }
-    
+
     // Safe DELETE implementation: GET treatments first, then DELETE by _id individually
     // This prevents Nightscout server crashes from unsupported bulk DELETE operations
     private func deleteTreatmentsSafely(queryItems: [URLQueryItem], logName: String) -> AnyPublisher<Void, Swift.Error> {
-        // Step 1: Find matching treatments using GET
+        // Step 1: Try primary fetch, then fallback with widened time window and without strict filters
+        return performFetch(queryItems: queryItems, logName: logName)
+            .flatMap { [weak self] treatments -> AnyPublisher<Void, Swift.Error> in
+                guard let self = self else { return Fail(error: Error.missingURL).eraseToAnyPublisher() }
+                if !treatments.isEmpty {
+                    return self.deleteTreatmentsByIds(treatments, logName: logName)
+                }
+                // Fallback attempt: remove enteredBy/insulin filters and widen time window
+                let fallbackItems = self.fallbackQueryItems(from: queryItems)
+                return self.performFetch(queryItems: fallbackItems, logName: logName + " (fallback)")
+                    .flatMap { [weak self] fallbackTreatments -> AnyPublisher<Void, Swift.Error> in
+                        guard let self = self else { return Fail(error: Error.missingURL).eraseToAnyPublisher() }
+                        guard !fallbackTreatments.isEmpty else {
+                            return Fail(error: Error.notFound).eraseToAnyPublisher()
+                        }
+                        return self.deleteTreatmentsByIds(fallbackTreatments, logName: logName)
+                    }
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+
+    // Build a safer, broader query: drop strict filters and widen time window
+    private func fallbackQueryItems(from original: [URLQueryItem]) -> [URLQueryItem] {
+        var items: [URLQueryItem] = []
+        var gteIndex: Int?
+        var lteIndex: Int?
+
+        for (idx, item) in original.enumerated() {
+            switch item.name {
+            case "find[enteredBy]", "find[insulin]":
+                // drop strict filters in fallback
+                continue
+            case "find[created_at][$gte]":
+                gteIndex = items.count
+                items.append(item)
+            case "find[created_at][$lte]":
+                lteIndex = items.count
+                items.append(item)
+            default:
+                items.append(item)
+            }
+        }
+
+        // widen time window to ±10 minutes if present
+        if let gi = gteIndex, let value = items[gi].value, let date = Formatter.iso8601withFractionalSeconds.date(from: value) {
+            let widened = Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-600))
+            items[gi] = URLQueryItem(name: "find[created_at][$gte]", value: widened)
+        }
+        if let li = lteIndex, let value = items[li].value, let date = Formatter.iso8601withFractionalSeconds.date(from: value) {
+            let widened = Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(600))
+            items[li] = URLQueryItem(name: "find[created_at][$lte]", value: widened)
+        }
+
+        return items
+    }
+
+    // Perform GET fetch of treatments with common headers and logging
+    private func performFetch(queryItems: [URLQueryItem], logName: String) -> AnyPublisher<[NightscoutTreatment], Swift.Error> {
         var components = URLComponents()
         components.scheme = url.scheme
         components.host = url.host
@@ -192,12 +253,9 @@ extension NightscoutAPI {
 
         return service.run(fetchRequest)
             .decode(type: [NightscoutTreatment].self, decoder: JSONCoding.decoder)
-            .flatMap { treatments -> AnyPublisher<Void, Swift.Error> in
-                return self.deleteTreatmentsByIds(treatments, logName: logName)
-            }
             .eraseToAnyPublisher()
     }
-    
+
     // Helper method to delete treatments by their _id - prevents server crashes
     private func deleteTreatmentsByIds(_ treatments: [NightscoutTreatment], logName: String) -> AnyPublisher<Void, Swift.Error> {
         let publishers = treatments.compactMap { treatment -> AnyPublisher<Void, Swift.Error>? in
@@ -205,7 +263,7 @@ extension NightscoutAPI {
                 debug(.nightscout, "Skipping \(logName) without _id")
                 return nil
             }
-            
+
             // Step 2: DELETE each treatment by _id using correct endpoint
             var deleteComponents = URLComponents()
             deleteComponents.scheme = url.scheme
@@ -223,17 +281,17 @@ extension NightscoutAPI {
             }
 
             debug(.nightscout, "DELETE \(logName) by _id: \(treatmentId)")
-            
+
             return service.run(deleteRequest)
                 .map { _ in () }
                 .eraseToAnyPublisher()
         }
-        
+
         guard !publishers.isEmpty else {
             debug(.nightscout, "No matching \(logName) found to delete")
-            return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+            return Fail(error: Error.notFound).eraseToAnyPublisher()
         }
-        
+
         return Publishers.MergeMany(publishers).eraseToAnyPublisher()
     }
 
@@ -250,7 +308,7 @@ extension NightscoutAPI {
             ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-        
+
         return deleteTreatmentsSafely(queryItems: queryItems, logName: "Temp Target")
     }
 
@@ -268,7 +326,7 @@ extension NightscoutAPI {
             ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-        
+
         return deleteTreatmentsSafely(queryItems: queryItems, logName: "Bolus")
     }
 
@@ -285,16 +343,16 @@ extension NightscoutAPI {
             ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-        
+
         return deleteTreatmentsSafely(queryItems: queryItems, logName: "Temp Basal")
     }
 
     func deleteSuspend(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        return deleteTreatment(eventType: "Pump Suspend", at: date)
+        deleteTreatment(eventType: "Pump Suspend", at: date)
     }
 
     func deleteResume(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        return deleteTreatment(eventType: "Pump Resume", at: date)
+        deleteTreatment(eventType: "Pump Resume", at: date)
     }
 
     private func deleteTreatment(eventType: String, at date: Date) -> AnyPublisher<Void, Swift.Error> {
@@ -310,7 +368,7 @@ extension NightscoutAPI {
             ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
-        
+
         return deleteTreatmentsSafely(queryItems: queryItems, logName: eventType)
     }
 
