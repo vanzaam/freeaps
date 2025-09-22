@@ -319,7 +319,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private var bolusReporter: DoseProgressReporter?
 
-    func enactBolus(amount: Double, isSMB: Bool) {
+    func enactBolus(amount: Double, isSMB: Bool, isBasalReplacement: Bool = false) {
         if let error = verifyStatus() {
             processError(error)
             processQueue.async {

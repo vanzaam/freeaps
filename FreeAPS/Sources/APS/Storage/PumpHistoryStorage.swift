@@ -20,6 +20,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
     private let processQueue = DispatchQueue(label: "BasePumpHistoryStorage.processQueue")
     @Injected() private var storage: FileStorage!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var settingsManager: SettingsManager!
 
     init(resolver: Resolver) {
         injectServices(resolver)
@@ -34,9 +35,33 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     guard let dose = event.dose else { return [] }
                     let amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
-                    return [PumpHistoryEvent(
+                    
+                    // Create temporary event to check if it's SMB-Basal
+                    let tempEvent = PumpHistoryEvent(
                         id: id,
                         type: .bolus,
+                        timestamp: event.date,
+                        amount: amount,
+                        duration: minutes,
+                        durationMin: nil,
+                        rate: nil,
+                        temp: nil,
+                        carbInput: nil,
+                        automatic: dose.automatic
+                    )
+                    
+                    // Determine correct event type
+                    let eventType: EventType = {
+                        if dose.automatic {
+                            return self.isSmbBasalPulse(event: tempEvent) ? .smbBasal : .smb
+                        } else {
+                            return .bolus
+                        }
+                    }()
+                    
+                    return [PumpHistoryEvent(
+                        id: id,
+                        type: eventType,
                         timestamp: event.date,
                         amount: amount,
                         duration: minutes,
@@ -232,7 +257,19 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         let bolusesAndCarbs = events.compactMap { event -> NigtscoutTreatment? in
             switch event.type {
             case .bolus:
-                let eventType: EventType = (event.automatic == true) ? .smb : .bolus
+                // Determine if this is a regular SMB or SMB-Basal
+                let eventType: EventType = {
+                    if event.automatic == true {
+                        // Check if this bolus matches SMB-Basal pulse
+                        if self.isSmbBasalPulse(event: event) {
+                            return .smbBasal
+                        } else {
+                            return .smb
+                        }
+                    } else {
+                        return .bolus
+                    }
+                }()
                 return NigtscoutTreatment(
                     duration: event.duration,
                     rawDuration: nil,
@@ -309,5 +346,24 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
         ]
 
         storeEvents(events)
+    }
+    
+    // MARK: - SMB-Basal Detection
+    
+    private func isSmbBasalPulse(event: PumpHistoryEvent) -> Bool {
+        // Only check if SMB-basal is enabled
+        guard settingsManager.settings.smbBasalEnabled else {
+            return false
+        }
+        
+        // Get stored SMB-basal pulses
+        let pulses = storage.retrieve(OpenAPS.Monitor.smbBasalPulses, as: [SmbBasalPulse].self) ?? []
+        
+        // Look for matching pulse within 30 seconds and same amount
+        return pulses.contains { pulse in
+            let timeDifference = abs(event.timestamp.timeIntervalSince(pulse.timestamp))
+            let amountMatch = abs((event.amount ?? 0) - pulse.units) < 0.001
+            return timeDifference < 30 && amountMatch
+        }
     }
 }

@@ -32,6 +32,7 @@ enum EventType: String, JSON {
     case nsTempTarget = "Temporary Target"
     case note = "Note"
     case smb = "SMB"
+    case smbBasal = "SMB-Basal"
 }
 
 enum TempType: String, JSON {
