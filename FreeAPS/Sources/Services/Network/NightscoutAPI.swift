@@ -138,157 +138,59 @@ extension NightscoutAPI {
     }
 
     func deleteCarbs(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
-            URLQueryItem(name: "find[carbs][$exists]", value: "true"),
-            URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-        ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        // TEMPORARILY DISABLED: Our DELETE methods cause Nightscout server crashes
+        // Error: "TypeError: Cannot read properties of null (reading 'result')"
+        // TODO: Implement proper Nightscout deletion API (GET id first, then DELETE by id)
+        debug(.nightscout, "DELETE Carbs DISABLED - would crash Nightscout server")
+        return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
     }
-    
+
     func deleteTempTarget(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
-            URLQueryItem(name: "find[eventType]", value: "Temporary Target"),
-            URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-        ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        // TEMPORARILY DISABLED: Our DELETE methods cause Nightscout server crashes
+        // Error: "TypeError: Cannot read properties of null (reading 'result')"
+        // TODO: Implement proper Nightscout deletion API (GET id first, then DELETE by id)
+        debug(.nightscout, "DELETE TempTarget DISABLED - would crash Nightscout server")
+        return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
     }
-    
+
     func deleteBolus(at date: Date, amount: Decimal) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
-            URLQueryItem(name: "find[insulin][$exists]", value: "true"),
-            URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            ),
-            URLQueryItem(name: "find[insulin]", value: amount.description)
-        ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        // TEMPORARILY DISABLED: Our DELETE methods cause Nightscout server crashes
+        // Error: "TypeError: Cannot read properties of null (reading 'result')"
+        // TODO: Implement proper Nightscout deletion API (GET id first, then DELETE by id)
+        debug(.nightscout, "DELETE Bolus DISABLED - would crash Nightscout server")
+        return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
     }
-    
+
     func deleteTempBasal(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
-            URLQueryItem(name: "find[eventType]", value: "Temp Basal"),
-            URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-        ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        // TEMPORARILY DISABLED: Our DELETE methods cause Nightscout server crashes
+        // Error: "TypeError: Cannot read properties of null (reading 'result')"
+        // TODO: Implement proper Nightscout deletion API (GET id first, then DELETE by id)
+        debug(.nightscout, "DELETE TempBasal DISABLED - would crash Nightscout server")
+        return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
     }
-    
+
     func deleteSuspend(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        deleteTreatment(eventType: "Pump Suspend", at: date)
+        // TEMPORARILY DISABLED: Our DELETE methods cause Nightscout server crashes
+        // Error: "TypeError: Cannot read properties of null (reading 'result')"
+        // TODO: Implement proper Nightscout deletion API (GET id first, then DELETE by id)
+        debug(.nightscout, "DELETE Suspend DISABLED - would crash Nightscout server")
+        return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
     }
-    
+
     func deleteResume(at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        deleteTreatment(eventType: "Pump Resume", at: date)
+        // TEMPORARILY DISABLED: Our DELETE methods cause Nightscout server crashes
+        // Error: "TypeError: Cannot read properties of null (reading 'result')"
+        // TODO: Implement proper Nightscout deletion API (GET id first, then DELETE by id)
+        debug(.nightscout, "DELETE Resume DISABLED - would crash Nightscout server")
+        return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
     }
-    
+
     private func deleteTreatment(eventType: String, at date: Date) -> AnyPublisher<Void, Swift.Error> {
-        var components = URLComponents()
-        components.scheme = url.scheme
-        components.host = url.host
-        components.port = url.port
-        components.path = Config.treatmentsPath
-        components.queryItems = [
-            URLQueryItem(name: "find[eventType]", value: eventType),
-            URLQueryItem(
-                name: "find[created_at][$eq]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date)
-            )
-        ]
-
-        var request = URLRequest(url: components.url!)
-        request.allowsConstrainedNetworkAccess = false
-        request.timeoutInterval = Config.timeout
-        request.httpMethod = "DELETE"
-
-        if let secret = secret {
-            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
-        }
-
-        return service.run(request)
-            .retry(Config.retryCount)
-            .map { _ in () }
-            .eraseToAnyPublisher()
+        // TEMPORARILY DISABLED: Our DELETE methods cause Nightscout server crashes
+        // Error: "TypeError: Cannot read properties of null (reading 'result')"
+        // TODO: Implement proper Nightscout deletion API (GET id first, then DELETE by id)
+        debug(.nightscout, "DELETE Treatment (\(eventType)) DISABLED - would crash Nightscout server")
+        return Just(()).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
     }
 
     func fetchTempTargets(sinceDate: Date? = nil) -> AnyPublisher<[TempTarget], Swift.Error> {
