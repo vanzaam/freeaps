@@ -7,6 +7,7 @@ enum DataTable {
     enum Mode: String, Hashable, Identifiable, CaseIterable {
         case treatments
         case glucose
+        case combined // New combined mode
 
         var id: String { rawValue }
 
@@ -17,8 +18,46 @@ enum DataTable {
                 name = "Treatments"
             case .glucose:
                 name = "Glucose"
+            case .combined:
+                name = "History"
             }
             return NSLocalizedString(name, comment: "History Mode")
+        }
+    }
+
+    // Combined history item that can be either treatment or glucose
+    class HistoryItem: Identifiable, Hashable, Equatable {
+        let id = UUID()
+        let date: Date
+        let treatment: Treatment?
+        let glucose: Glucose?
+
+        init(treatment: Treatment) {
+            self.treatment = treatment
+            self.glucose = nil
+            self.date = treatment.date
+        }
+
+        init(glucose: Glucose) {
+            self.treatment = nil
+            self.glucose = glucose
+            self.date = glucose.glucose.dateString
+        }
+
+        var isGlucose: Bool {
+            glucose != nil
+        }
+
+        var isTreatment: Bool {
+            treatment != nil
+        }
+
+        static func == (lhs: HistoryItem, rhs: HistoryItem) -> Bool {
+            lhs.id == rhs.id
+        }
+
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
         }
     }
 

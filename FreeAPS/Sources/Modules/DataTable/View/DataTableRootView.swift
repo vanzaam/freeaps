@@ -23,21 +23,8 @@ extension DataTable {
         private var timeFormatterFull: DateFormatter { FormatterCache.dateFormatter(format: "HH:mm:ss") }
 
         var body: some View {
-            VStack {
-                Picker("Mode", selection: $state.mode) {
-                    ForEach(Mode.allCases.indexed(), id: \.1) { index, item in
-                        Text(item.name).tag(index)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-
-                Form {
-                    switch state.mode {
-                    case .treatments: treatmentsList
-                    case .glucose: glucoseList
-                    }
-                }
+            Form {
+                combinedHistoryList
             }
             .onAppear(perform: configureView)
             .navigationTitle("History")
@@ -45,14 +32,25 @@ extension DataTable {
             .navigationBarItems(
                 leading: Button("Close", action: state.hideModal),
                 trailing: HStack {
-                    if state.mode == .glucose {
-                        Button(action: { state.showModal(for: .addGlucose) }) {
-                            Image(systemName: "plus")
-                        }
-                        EditButton()
+                    Button(action: { state.showModal(for: .addGlucose) }) {
+                        Image(systemName: "plus")
                     }
+                    EditButton()
                 }
             )
+        }
+
+        private var combinedHistoryList: some View {
+            List {
+                ForEach(state.history) { item in
+                    if item.isGlucose, let glucose = item.glucose {
+                        gluciseView(glucose)
+                    } else if item.isTreatment, let treatment = item.treatment {
+                        treatmentView(treatment)
+                    }
+                }
+                .onDelete(perform: deleteHistoryItem)
+            }
         }
 
         private var treatmentsList: some View {
@@ -136,6 +134,20 @@ extension DataTable {
             .contentShape(Rectangle())
             .onTapGesture {
                 selectedGlucoseId = (selectedGlucoseId == item.glucose.id) ? nil : item.glucose.id
+            }
+        }
+
+        private func deleteHistoryItem(at offsets: IndexSet) {
+            for index in offsets {
+                let item = state.history[index]
+                if item.isGlucose, let glucose = item.glucose {
+                    // Find the glucose index in the original glucose array
+                    if let glucoseIndex = state.glucose.firstIndex(where: { $0.id == glucose.id }) {
+                        state.deleteGlucose(at: glucoseIndex)
+                    }
+                }
+                // Note: Treatments (carbs, boluses, etc.) can only be deleted through their specific methods
+                // like deleteCarbs which is handled in the treatmentView tap gesture
             }
         }
 

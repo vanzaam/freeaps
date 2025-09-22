@@ -3,9 +3,10 @@ import SwiftUI
 extension DataTable {
     final class StateModel: BaseStateModel<Provider> {
         @Injected() var broadcaster: Broadcaster!
-        @Published var mode: Mode = .treatments
+        @Published var mode: Mode = .combined
         @Published var treatments: [Treatment] = []
         @Published var glucose: [Glucose] = []
+        @Published var history: [HistoryItem] = []
         var units: GlucoseUnits = .mmolL
 
         override func subscribe() {
@@ -113,6 +114,7 @@ extension DataTable {
                 // Update UI on main thread without blocking
                 DispatchQueue.main.async { [weak self] in
                     self?.treatments = finalTreatments
+                    self?.setupHistory() // Update combined history when treatments change
                 }
             }
         }
@@ -128,8 +130,25 @@ extension DataTable {
 
                 DispatchQueue.main.async { [weak self] in
                     self?.glucose = glucoseData
+                    self?.setupHistory() // Update combined history when glucose changes
                 }
             }
+        }
+
+        private func setupHistory() {
+            // Combine treatments and glucose into one chronologically sorted list
+            var combinedItems: [HistoryItem] = []
+            
+            // Add all treatments
+            combinedItems.append(contentsOf: treatments.map { HistoryItem(treatment: $0) })
+            
+            // Add all glucose entries
+            combinedItems.append(contentsOf: glucose.map { HistoryItem(glucose: $0) })
+            
+            // Sort by date (most recent first)
+            combinedItems.sort { $0.date > $1.date }
+            
+            history = combinedItems
         }
 
         func deleteCarbs(at date: Date) {
