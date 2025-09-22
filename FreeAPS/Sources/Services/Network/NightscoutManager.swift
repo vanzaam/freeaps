@@ -9,6 +9,12 @@ protocol NightscoutManager: GlucoseSource {
     func fetchTempTargets() -> AnyPublisher<[TempTarget], Never>
     func fetchAnnouncements() -> AnyPublisher<[Announcement], Never>
     func deleteCarbs(at date: Date)
+    func deleteTempTarget(at date: Date)
+    func deleteBolus(at date: Date, amount: Decimal)
+    func deleteTempBasal(at date: Date)
+    func deleteSuspend(at date: Date)
+    func deleteResume(at date: Date)
+    func processPendingDeletions()
     func uploadStatus()
     func uploadGlucose()
     func uploadProfile()
@@ -66,6 +72,10 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         broadcaster.register(TempTargetsObserver.self, observer: self)
         _ = reachabilityManager.startListening(onQueue: processQueue) { status in
             debug(.nightscout, "Network status: \(status)")
+            // Process pending deletions when network becomes available
+            if status.isReachable {
+                self.processPendingDeletions()
+            }
         }
     }
 
@@ -174,9 +184,240 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                     debug(.nightscout, "Carbs deleted")
                 case let .failure(error):
                     debug(.nightscout, error.localizedDescription)
+                    // Add to pending deletions queue if failed
+                    self.addToPendingDeletions(.carbs(date))
                 }
             } receiveValue: {}
             .store(in: &lifetime)
+    }
+    
+    func deleteTempTarget(at date: Date) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+
+        nightscout.deleteTempTarget(at: date)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Temp target deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                    // Add to pending deletions queue if failed
+                    self.addToPendingDeletions(.tempTarget(date))
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
+    }
+    
+    func deleteBolus(at date: Date, amount: Decimal) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+
+        nightscout.deleteBolus(at: date, amount: amount)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Bolus deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                    // Add to pending deletions queue if failed
+                    self.addToPendingDeletions(.bolus(date, amount))
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
+    }
+    
+    func deleteTempBasal(at date: Date) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+
+        nightscout.deleteTempBasal(at: date)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Temp basal deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                    // Add to pending deletions queue if failed
+                    self.addToPendingDeletions(.tempBasal(date))
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
+    }
+    
+    func deleteSuspend(at date: Date) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+
+        nightscout.deleteSuspend(at: date)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Suspend deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                    // Add to pending deletions queue if failed
+                    self.addToPendingDeletions(.suspend(date))
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
+    }
+    
+    func deleteResume(at date: Date) {
+        guard let nightscout = nightscoutAPI, isUploadEnabled else {
+            return
+        }
+
+        nightscout.deleteResume(at: date)
+            .sink { completion in
+                switch completion {
+                case .finished:
+                    debug(.nightscout, "Resume deleted")
+                case let .failure(error):
+                    debug(.nightscout, error.localizedDescription)
+                    // Add to pending deletions queue if failed
+                    self.addToPendingDeletions(.resume(date))
+                }
+            } receiveValue: {}
+            .store(in: &lifetime)
+    }
+    
+    // MARK: - Pending Deletions Queue
+    
+    private enum PendingDeletion: Codable, Hashable {
+        case carbs(Date)
+        case tempTarget(Date)  
+        case bolus(Date, Decimal)
+        case tempBasal(Date)
+        case suspend(Date)
+        case resume(Date)
+        
+        enum CodingKeys: String, CodingKey {
+            case type, date, amount
+        }
+        
+        func encode(to encoder: Encoder) throws {
+            var container = encoder.container(keyedBy: CodingKeys.self)
+            switch self {
+            case .carbs(let date):
+                try container.encode("carbs", forKey: .type)
+                try container.encode(date, forKey: .date)
+            case .tempTarget(let date):
+                try container.encode("tempTarget", forKey: .type)
+                try container.encode(date, forKey: .date)
+            case .bolus(let date, let amount):
+                try container.encode("bolus", forKey: .type)
+                try container.encode(date, forKey: .date)
+                try container.encode(amount, forKey: .amount)
+            case .tempBasal(let date):
+                try container.encode("tempBasal", forKey: .type)
+                try container.encode(date, forKey: .date)
+            case .suspend(let date):
+                try container.encode("suspend", forKey: .type)
+                try container.encode(date, forKey: .date)
+            case .resume(let date):
+                try container.encode("resume", forKey: .type)
+                try container.encode(date, forKey: .date)
+            }
+        }
+        
+        init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+            let type = try container.decode(String.self, forKey: .type)
+            let date = try container.decode(Date.self, forKey: .date)
+            
+            switch type {
+            case "carbs":
+                self = .carbs(date)
+            case "tempTarget":
+                self = .tempTarget(date)
+            case "bolus":
+                let amount = try container.decode(Decimal.self, forKey: .amount)
+                self = .bolus(date, amount)
+            case "tempBasal":
+                self = .tempBasal(date)
+            case "suspend":
+                self = .suspend(date)
+            case "resume":
+                self = .resume(date)
+            default:
+                throw DecodingError.dataCorrupted(
+                    DecodingError.Context(codingPath: decoder.codingPath, debugDescription: "Unknown deletion type")
+                )
+            }
+        }
+    }
+    
+    private var pendingDeletions: Set<PendingDeletion> {
+        get {
+            guard let data = UserDefaults.standard.data(forKey: "PendingNightscoutDeletions"),
+                  let deletions = try? JSONDecoder().decode(Set<PendingDeletion>.self, from: data) else {
+                return []
+            }
+            return deletions
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue) {
+                UserDefaults.standard.set(data, forKey: "PendingNightscoutDeletions")
+            }
+        }
+    }
+    
+    private func addToPendingDeletions(_ deletion: PendingDeletion) {
+        var pending = pendingDeletions
+        pending.insert(deletion)
+        pendingDeletions = pending
+    }
+    
+    func processPendingDeletions() {
+        guard let nightscout = nightscoutAPI, isUploadEnabled, isNetworkReachable else {
+            return
+        }
+        
+        let pending = pendingDeletions
+        var processed: Set<PendingDeletion> = []
+        
+        for deletion in pending {
+            let publisher: AnyPublisher<Void, Swift.Error>
+            
+            switch deletion {
+            case .carbs(let date):
+                publisher = nightscout.deleteCarbs(at: date)
+            case .tempTarget(let date):
+                publisher = nightscout.deleteTempTarget(at: date)
+            case .bolus(let date, let amount):
+                publisher = nightscout.deleteBolus(at: date, amount: amount)
+            case .tempBasal(let date):
+                publisher = nightscout.deleteTempBasal(at: date)
+            case .suspend(let date):
+                publisher = nightscout.deleteSuspend(at: date)
+            case .resume(let date):
+                publisher = nightscout.deleteResume(at: date)
+            }
+            
+            publisher
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        processed.insert(deletion)
+                        debug(.nightscout, "Pending deletion processed: \(deletion)")
+                    case let .failure(error):
+                        debug(.nightscout, "Pending deletion failed: \(error.localizedDescription)")
+                    }
+                } receiveValue: {}
+                .store(in: &lifetime)
+        }
+        
+        // Remove processed deletions
+        if !processed.isEmpty {
+            var remaining = pendingDeletions
+            remaining.subtract(processed)
+            pendingDeletions = remaining
+        }
     }
 
     func uploadStatus() {

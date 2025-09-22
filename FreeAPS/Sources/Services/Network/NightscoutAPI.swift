@@ -165,6 +165,131 @@ extension NightscoutAPI {
             .map { _ in () }
             .eraseToAnyPublisher()
     }
+    
+    func deleteTempTarget(at date: Date) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+        components.queryItems = [
+            URLQueryItem(name: "find[eventType]", value: "Temporary Target"),
+            URLQueryItem(
+                name: "find[created_at][$eq]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+            )
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.httpMethod = "DELETE"
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+    
+    func deleteBolus(at date: Date, amount: Decimal) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+        components.queryItems = [
+            URLQueryItem(name: "find[insulin][$exists]", value: "true"),
+            URLQueryItem(
+                name: "find[created_at][$eq]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+            ),
+            URLQueryItem(name: "find[insulin]", value: amount.description)
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.httpMethod = "DELETE"
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+    
+    func deleteTempBasal(at date: Date) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+        components.queryItems = [
+            URLQueryItem(name: "find[eventType]", value: "Temp Basal"),
+            URLQueryItem(
+                name: "find[created_at][$eq]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+            )
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.httpMethod = "DELETE"
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
+    
+    func deleteSuspend(at date: Date) -> AnyPublisher<Void, Swift.Error> {
+        deleteTreatment(eventType: "Pump Suspend", at: date)
+    }
+    
+    func deleteResume(at date: Date) -> AnyPublisher<Void, Swift.Error> {
+        deleteTreatment(eventType: "Pump Resume", at: date)
+    }
+    
+    private func deleteTreatment(eventType: String, at date: Date) -> AnyPublisher<Void, Swift.Error> {
+        var components = URLComponents()
+        components.scheme = url.scheme
+        components.host = url.host
+        components.port = url.port
+        components.path = Config.treatmentsPath
+        components.queryItems = [
+            URLQueryItem(name: "find[eventType]", value: eventType),
+            URLQueryItem(
+                name: "find[created_at][$eq]",
+                value: Formatter.iso8601withFractionalSeconds.string(from: date)
+            )
+        ]
+
+        var request = URLRequest(url: components.url!)
+        request.allowsConstrainedNetworkAccess = false
+        request.timeoutInterval = Config.timeout
+        request.httpMethod = "DELETE"
+
+        if let secret = secret {
+            request.addValue(secret.sha1(), forHTTPHeaderField: "api-secret")
+        }
+
+        return service.run(request)
+            .retry(Config.retryCount)
+            .map { _ in () }
+            .eraseToAnyPublisher()
+    }
 
     func fetchTempTargets(sinceDate: Date? = nil) -> AnyPublisher<[TempTarget], Swift.Error> {
         var components = URLComponents()

@@ -103,7 +103,7 @@ enum DataTable {
         let secondAmount: Decimal?
         let duration: Decimal?
         var isDeleted: Bool = false
-        
+
         // Stable identifier for persistence - based on content, not random UUID
         var stableId: String {
             let timestamp = Int(date.timeIntervalSince1970)
