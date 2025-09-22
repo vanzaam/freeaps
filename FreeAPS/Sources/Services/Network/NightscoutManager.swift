@@ -220,6 +220,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 switch completion {
                 case .finished:
                     debug(.nightscout, "Bolus deleted")
+                    // Force-refresh treatments to reflect deletion immediately
+                    self.fetchTreatmentsSubject.send(())
                 case let .failure(error):
                     debug(.nightscout, error.localizedDescription)
                     // Add to pending deletions queue if failed

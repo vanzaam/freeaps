@@ -384,6 +384,7 @@ extension NightscoutAPI {
     func deleteBolus(at date: Date, amount: Decimal) -> AnyPublisher<Void, Swift.Error> {
         // Do not filter by exact insulin amount in query (server-side rounding varies)
         let queryItems = [
+            URLQueryItem(name: "find[eventType]", value: "Bolus"),
             URLQueryItem(name: "find[insulin][$exists]", value: "true"),
             URLQueryItem(
                 name: "find[created_at][$gte]",
