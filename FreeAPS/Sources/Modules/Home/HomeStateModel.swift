@@ -15,6 +15,7 @@ extension Home {
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
         @Published var enactedSuggestion: Suggestion?
+    @Published var smbHourlyRates: [Decimal] = []
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
         @Published var tempBasals: [PumpHistoryEvent] = []
@@ -223,6 +224,7 @@ extension Home {
                 let events = self.provider.pumpHistory(hours: self.filteredHours)
                 self.boluses = events.filter { event in
                     guard event.type == .bolus || event.type == .smb else { return false }
+                    // Always hide locally deleted boluses on the main screen
                     return !DeletedTreatmentsStore.shared.containsBolus(date: event.timestamp, amount: event.amount)
                 }
             }
@@ -364,6 +366,7 @@ extension Home.StateModel:
         setupBasals()
         setupBoluses()
         setupSuspensions()
+        computeSmbHourlyRates()
     }
 
     @MainActor func pumpSettingsDidChange(_: PumpSettings) {
@@ -402,6 +405,20 @@ extension Home.StateModel:
         }
 
         basalIob = smbBasalManager.currentBasalIob()
+        computeSmbHourlyRates()
+    }
+
+    private func computeSmbHourlyRates() {
+        let pulses = storage.retrieve(OpenAPS.Monitor.smbBasalPulses, as: [SmbBasalPulse].self) ?? []
+        let now = Date()
+        let start = now.addingTimeInterval(-24 * 3600)
+        var bins = Array(repeating: Decimal(0), count: 24)
+        for p in pulses {
+            guard p.timestamp >= start else { continue }
+            let idx = min(23, max(0, Int(p.timestamp.timeIntervalSince(start) / 3600)))
+            bins[idx] += p.units
+        }
+        smbHourlyRates = bins
     }
 }
 

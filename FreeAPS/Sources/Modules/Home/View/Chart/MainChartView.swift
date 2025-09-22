@@ -46,6 +46,7 @@ struct MainChartView: View {
     let carbs: [CarbsEntry]
     let timerDate: Date
     let units: GlucoseUnits
+    let smbHourlyRates: [Decimal] = [] // placeholder, injected via extension
 
     @State var didAppearTrigger = false
     @State private var glucoseDots: [CGRect] = []
@@ -155,6 +156,10 @@ struct MainChartView: View {
             tempBasalPath.stroke(Color.tempBasal, lineWidth: 1)
             suspensionsPath.fill(Color.loopGray)
             regularBasalPath.stroke(Color.basal, lineWidth: 1)
+            // SMB-Basal hourly equivalent (if provided via environment)
+            if !smbHourlyRates.isEmpty {
+                smbHourlyOverlay(fullSize: fullSize)
+            }
         }
         .frame(width: fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width))
         .frame(maxHeight: Config.basalHeight)
@@ -163,6 +168,29 @@ struct MainChartView: View {
             calculateBasalPoints(fullSize: fullSize)
             calculateSuspensions(fullSize: fullSize)
         }
+    }
+
+    private func smbHourlyOverlay(fullSize: CGSize) -> some View {
+        let rates = smbHourlyRates.map { Double(truncating: $0 as NSDecimalNumber) }
+        let maxRate = max(rates.max() ?? 0.0, 0.01)
+        return GeometryReader { geo in
+            let w = fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width)
+            let h = geo.size.height
+            let count = max(rates.count, 1)
+            let stepX = w / CGFloat(count)
+            let rateCost = Config.basalHeight / CGFloat(maxRate)
+            ZStack {
+                ForEach(0 ..< count, id: \.self) { i in
+                    let value = rates[i]
+                    let barH = CGFloat(value) * rateCost
+                    Path { p in
+                        p.addRect(CGRect(x: CGFloat(i) * stepX + 1, y: Config.basalHeight - barH, width: stepX - 2, height: barH))
+                    }
+                    .fill(Color.accentColor.opacity(0.25))
+                }
+            }
+        }
+        .frame(maxHeight: Config.basalHeight)
     }
 
     private func mainView(fullSize: CGSize) -> some View {
