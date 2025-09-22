@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import LoopKit
 import Swinject
 import UIKit
 
@@ -180,21 +181,86 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
     }
 
     func uploadStatus() {
-        let iob = storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)
+        // Рассчитываем свежий IOB вместо чтения старого файла
+        let freshIOBValue = calculateFreshIOB()
+        let now = Date()
+        let iob: [IOBEntry]? = freshIOBValue > 0 ? [IOBEntry(
+            iob: freshIOBValue,
+            activity: 0, // Упрощенная версия для Nightscout
+            basaliob: 0,
+            bolusiob: freshIOBValue,
+            netbasalinsulin: 0,
+            bolusinsulin: 0,
+            iobWithZeroTemp: IOBEntry.WithZeroTemp(
+                iob: freshIOBValue,
+                activity: 0,
+                basaliob: 0,
+                bolusiob: freshIOBValue,
+                netbasalinsulin: 0,
+                bolusinsulin: 0,
+                time: now
+            ),
+            lastBolusTime: nil,
+            lastTemp: nil,
+            time: now
+        )] : nil
+
         var suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
         var enacted = storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
 
-        if (suggested?.timestamp ?? .distantPast) > (enacted?.timestamp ?? .distantPast) {
-            enacted?.predictions = nil
-        } else {
-            suggested?.predictions = nil
+        // Freshen timestamps for Nightscout OpenAPS plugin (avoid stale data classification)
+        var latestIOB = iob?.first
+        if let current = latestIOB {
+            let now = Date()
+            let refreshedLastTemp: IOBEntry.LastTemp? = {
+                if let lt = current.lastTemp {
+                    return IOBEntry.LastTemp(
+                        rate: lt.rate,
+                        timestamp: now,
+                        started_at: lt.started_at,
+                        date: lt.date,
+                        duration: lt.duration
+                    )
+                }
+                return nil
+            }()
+            latestIOB = IOBEntry(
+                iob: current.iob,
+                activity: current.activity,
+                basaliob: current.basaliob,
+                bolusiob: current.bolusiob,
+                netbasalinsulin: current.netbasalinsulin,
+                bolusinsulin: current.bolusinsulin,
+                iobWithZeroTemp: current.iobWithZeroTemp,
+                lastBolusTime: current.lastBolusTime,
+                lastTemp: refreshedLastTemp,
+                time: now
+            )
+        }
+
+        // OpenAPS plugin compatibility: provide predBGs (IOB) in BOTH suggested and enacted
+        if let preds = (suggested?.predictions ?? enacted?.predictions) {
+            let fullSeries = preds.iob ?? preds.cob ?? preds.zt ?? preds.uam ?? []
+            // Ограничиваем прогноз максимум 6 часами (72 точки по 5 минут) для Nightscout
+            let maxForecastPoints = 72 // 6 часов * 12 точек в час
+            let iobSeries = Array(fullSeries.prefix(maxForecastPoints))
+
+            if iobSeries.isNotEmpty {
+                let normalized = Predictions(iob: iobSeries, zt: nil, cob: nil, uam: nil)
+                if var s = suggested { s.predictions = normalized
+                    suggested = s }
+                if var e = enacted { e.predictions = normalized
+                    enacted = e }
+                debug(.nightscout, "Glucose prediction for Nightscout limited to \(iobSeries.count) points (max 6 hours)")
+            }
         }
 
         let openapsStatus = OpenAPSStatus(
-            iob: iob?.first,
+            name: "openaps",
+            iob: latestIOB,
             suggested: suggested,
             enacted: enacted,
-            version: "0.7.0"
+            version: "0.7.1"
         )
 
         let battery = storage.retrieve(OpenAPS.Monitor.battery, as: Battery.self)
@@ -202,7 +268,8 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
         if reservoir == 0xDEAD_BEEF {
             reservoir = nil
         }
-        let pumpStatus = storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
+        var pumpStatus = storage.retrieve(OpenAPS.Monitor.status, as: PumpStatus.self)
+        pumpStatus?.timestamp = Date()
 
         let pump = NSPumpStatus(clock: Date(), battery: battery, reservoir: reservoir, status: pumpStatus)
 
@@ -210,13 +277,13 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
 
         let device = UIDevice.current
 
-        let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100))
+        let uploader = Uploader(batteryVoltage: nil, battery: Int(device.batteryLevel * 100), type: "PHONE")
 
         let status = NightscoutStatus(
-            device: "freeaps-x://" + device.name,
+            device: "openaps://" + device.name,
             openaps: openapsStatus,
             pump: pump,
-            preferences: preferences,
+            preferences: nil,
             uploader: uploader
         )
 
@@ -463,6 +530,65 @@ final class BaseNightscoutManager: NightscoutManager, Injectable {
                 } receiveValue: {}
                 .store(in: &self.lifetime)
         }
+    }
+
+    /// Рассчитать свежий IOB из pump history (как в Dashboard и LoopStatus)
+    private func calculateFreshIOB() -> Decimal {
+        let pumpHistory = pumpHistoryStorage.recent()
+        debug(.nightscout, "Nightscout: Loaded \(pumpHistory.count) pump events for IOB calculation")
+
+        // Используем ту же логику конвертации что и в Dashboard
+        let doseEntries: [DoseEntry] = pumpHistory.compactMap { e -> DoseEntry? in
+            switch e.type {
+            case .bolus,
+                 .correctionBolus,
+                 .mealBolus,
+                 .smb,
+                 .snackBolus:
+                return DoseEntry(
+                    type: .bolus,
+                    startDate: e.timestamp,
+                    endDate: e.timestamp,
+                    value: NSDecimalNumber(decimal: e.amount ?? 0).doubleValue,
+                    unit: .units
+                )
+            case .nsTempBasal,
+                 .tempBasal:
+                return DoseEntry(
+                    type: .tempBasal,
+                    startDate: e.timestamp,
+                    endDate: e.timestamp.addingTimeInterval(TimeInterval((e.duration ?? e.durationMin ?? 0) * 60)),
+                    value: NSDecimalNumber(decimal: e.rate ?? 0).doubleValue,
+                    unit: .unitsPerHour
+                )
+            default:
+                return nil
+            }
+        }
+        debug(.nightscout, "Nightscout: Converted \(doseEntries.count) pump events to DoseEntry")
+
+        // IOB временной ряд с шагом 5 минут (как в Dashboard)
+        let insulinModelProvider = PresetInsulinModelProvider(defaultRapidActingModel: nil)
+        let now = Date()
+        let iobSeries = doseEntries.insulinOnBoard(
+            insulinModelProvider: insulinModelProvider,
+            longestEffectDuration: InsulinMath.defaultInsulinActivityDuration,
+            from: now.addingTimeInterval(-6 * 3600),
+            to: now,
+            delta: 5 * 60
+        )
+
+        let lastIOBValue = iobSeries.last?.value ?? 0
+        debug(.nightscout, "Nightscout: Calculated fresh IOB=\(lastIOBValue), from \(doseEntries.count) doses")
+
+        if lastIOBValue.isNaN || lastIOBValue.isInfinite {
+            debug(.nightscout, "Nightscout: Invalid IOB value: \(lastIOBValue), using 0")
+            return 0
+        }
+
+        let freshIOB = Decimal(lastIOBValue)
+        debug(.nightscout, "Nightscout: Fresh IOB calculated successfully: \(freshIOB)")
+        return freshIOB
     }
 }
 

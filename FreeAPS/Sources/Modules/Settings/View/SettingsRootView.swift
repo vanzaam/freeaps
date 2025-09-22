@@ -39,6 +39,13 @@ extension Settings {
 
                 Section(header: Text("Developer")) {
                     Toggle("Debug options", isOn: $state.debugOptions)
+
+                    Picker("APS Algorithm", selection: $state.apsAlgorithm) {
+                        ForEach(APSAlgorithm.allCases) { algorithm in
+                            Text(algorithm.rawValue).tag(algorithm)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
                     if state.debugOptions {
                         Group {
                             Text("NS Upload Profile").onTapGesture {
@@ -66,13 +73,12 @@ extension Settings {
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
                             Text("Temp targets")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
-                            Text("Meal")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.meal), from: self)
+                            // Meal и IOB файлы устарели - теперь используются fresh calculations
+                            // Text("Meal").navigationLink(to: .configEditor(file: OpenAPS.Monitor.meal), from: self)
                         }
 
                         Group {
-                            Text("IOB")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.iob), from: self)
+                            // Text("IOB").navigationLink(to: .configEditor(file: OpenAPS.Monitor.iob), from: self)
                             Text("Pump profile")
                                 .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
                             Text("Profile")

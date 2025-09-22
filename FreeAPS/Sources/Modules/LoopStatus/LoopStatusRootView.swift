@@ -1,3 +1,4 @@
+import LoopKit
 import SwiftUI
 import Swinject
 
@@ -105,12 +106,14 @@ extension LoopStatus {
         private let storage: FileStorage?
         private let carbService: CarbAccountingService?
         private let settingsManager: SettingsManager?
+        private let pumpHistoryStorage: PumpHistoryStorage?
 
         init(resolver: Resolver) {
             aps = resolver.resolve(APSManager.self)
             storage = resolver.resolve(FileStorage.self)
             carbService = resolver.resolve(CarbAccountingService.self)
             settingsManager = resolver.resolve(SettingsManager.self)
+            pumpHistoryStorage = resolver.resolve(PumpHistoryStorage.self)
         }
 
         var lastLoopString: String {
@@ -128,9 +131,9 @@ extension LoopStatus {
             }
 
             if let storage = storage {
-                if let iobEntry = storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self)?.first {
-                    iob = iobEntry.iob
-                }
+                // Рассчитываем свежий IOB (как в Dashboard)
+                iob = calculateFreshIOB()
+
                 suggested = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self)
                 enacted = storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
             }
@@ -145,6 +148,72 @@ extension LoopStatus {
         func runLoop() {
             guard let aps = aps else { return }
             _ = aps.determineBasal().sink { _ in } receiveValue: { _ in }
+        }
+
+        /// Рассчитать свежий IOB из pump history (как в Dashboard)
+        private func calculateFreshIOB() -> Decimal {
+            guard let pumpHistoryStorage = pumpHistoryStorage,
+                  let storage = storage
+            else {
+                debug(.service, "LoopStatus: pumpHistoryStorage or storage not available")
+                return 0
+            }
+
+            let pumpHistory = pumpHistoryStorage.recent()
+            debug(.service, "LoopStatus: Loaded \(pumpHistory.count) pump events for IOB calculation")
+
+            // Используем ту же логику конвертации что и в Dashboard
+            let doseEntries: [DoseEntry] = pumpHistory.compactMap { e -> DoseEntry? in
+                switch e.type {
+                case .bolus,
+                     .correctionBolus,
+                     .mealBolus,
+                     .smb,
+                     .snackBolus:
+                    return DoseEntry(
+                        type: .bolus,
+                        startDate: e.timestamp,
+                        endDate: e.timestamp,
+                        value: NSDecimalNumber(decimal: e.amount ?? 0).doubleValue,
+                        unit: .units
+                    )
+                case .nsTempBasal,
+                     .tempBasal:
+                    return DoseEntry(
+                        type: .tempBasal,
+                        startDate: e.timestamp,
+                        endDate: e.timestamp.addingTimeInterval(TimeInterval((e.duration ?? e.durationMin ?? 0) * 60)),
+                        value: NSDecimalNumber(decimal: e.rate ?? 0).doubleValue,
+                        unit: .unitsPerHour
+                    )
+                default:
+                    return nil
+                }
+            }
+            debug(.service, "LoopStatus: Converted \(doseEntries.count) pump events to DoseEntry")
+
+            // IOB временной ряд с шагом 5 минут (как в Dashboard)
+            let insulinModelProvider = PresetInsulinModelProvider(defaultRapidActingModel: nil)
+            let now = Date()
+            let iobSeries = doseEntries.insulinOnBoard(
+                insulinModelProvider: insulinModelProvider,
+                longestEffectDuration: InsulinMath.defaultInsulinActivityDuration,
+                from: now.addingTimeInterval(-6 * 3600),
+                to: now,
+                delta: 5 * 60
+            )
+
+            let lastIOBValue = iobSeries.last?.value ?? 0
+            debug(.service, "LoopStatus: Calculated fresh IOB=\(lastIOBValue), from \(doseEntries.count) doses")
+
+            if lastIOBValue.isNaN || lastIOBValue.isInfinite {
+                debug(.service, "LoopStatus: Invalid IOB value: \(lastIOBValue), using 0")
+                return 0
+            }
+
+            let freshIOB = Decimal(lastIOBValue)
+            debug(.service, "LoopStatus: Fresh IOB calculated successfully: \(freshIOB)")
+            return freshIOB
         }
     }
 }

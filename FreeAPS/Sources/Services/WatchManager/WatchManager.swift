@@ -1,4 +1,5 @@
 import Foundation
+import LoopKit
 import Swinject
 import WatchConnectivity
 
@@ -16,6 +17,7 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
     @Injected() private var storage: FileStorage!
     @Injected() private var carbsStorage: CarbsStorage!
     @Injected() private var tempTargetsStorage: TempTargetsStorage!
+    @Injected() private var pumpHistoryStorage: PumpHistoryStorage!
 
     private var lifetime = Lifetime()
 
@@ -62,7 +64,10 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
             self.state.bolusRecommended = self.apsManager
                 .roundBolus(amount: max(insulinRequired * self.settingsManager.settings.insulinReqFraction, 0))
 
-            self.state.iob = self.suggestion?.iob
+            let freshIOB = self.calculateFreshIOB()
+            self.state.iob = freshIOB
+            debug(.service, "📱 WatchManager: Set state.iob = \(freshIOB?.description ?? "nil")")
+
             self.state.cob = self.suggestion?.cob
             self.state.tempTargets = self.tempTargetsStorage.presets()
                 .map { target -> TempTargetWatchPreset in
@@ -208,6 +213,101 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
 
     private var enactedSuggestion: Suggestion? {
         storage.retrieve(OpenAPS.Enact.enacted, as: Suggestion.self)
+    }
+
+    /// Рассчитать свежий IOB из pump history (как в Dashboard)
+    private func calculateFreshIOB() -> Decimal? {
+        debug(.service, "🔍 WatchManager: calculateFreshIOB() called")
+
+        guard let pumpHistoryStorage = pumpHistoryStorage else {
+            debug(
+                .service,
+                "❌ WatchManager: pumpHistoryStorage not available, fallback to suggestion IOB=\(suggestion?.iob?.description ?? "nil")"
+            )
+            return suggestion?.iob
+        }
+
+        let pumpHistory = pumpHistoryStorage.recent()
+        debug(.service, "🔄 WatchManager: Loaded \(pumpHistory.count) pump events from pumpHistoryStorage.recent()")
+
+        // Используем ту же логику конвертации что и в Dashboard
+        let doseEntries: [DoseEntry] = pumpHistory.compactMap { e -> DoseEntry? in
+            switch e.type {
+            case .bolus,
+                 .correctionBolus,
+                 .mealBolus,
+                 .smb,
+                 .snackBolus:
+                return DoseEntry(
+                    type: .bolus,
+                    startDate: e.timestamp,
+                    endDate: e.timestamp,
+                    value: NSDecimalNumber(decimal: e.amount ?? 0).doubleValue,
+                    unit: .units
+                )
+            case .nsTempBasal,
+                 .tempBasal:
+                return DoseEntry(
+                    type: .tempBasal,
+                    startDate: e.timestamp,
+                    endDate: e.timestamp.addingTimeInterval(TimeInterval((e.duration ?? e.durationMin ?? 0) * 60)),
+                    value: NSDecimalNumber(decimal: e.rate ?? 0).doubleValue,
+                    unit: .unitsPerHour
+                )
+            default:
+                return nil
+            }
+        }
+        debug(.service, "✅ WatchManager: Converted \(doseEntries.count) pump events to DoseEntry")
+
+        // Определяем модель инсулина из настроек пользователя
+        let defaultModel: InsulinModel
+        if let curveSettings: InsulinCurveSettings = storage.retrieve(
+            OpenAPS.Settings.insulinCurve,
+            as: InsulinCurveSettings.self
+        ) {
+            let delay = curveSettings.delay * 60 // минуты в секунды
+            let peakTime = curveSettings.peakTime * 60 // минуты в секунды
+            let duration = curveSettings.actionDuration * 3600 // часы в секунды
+            defaultModel = ExponentialInsulinModel(actionDuration: duration, peakActivityTime: peakTime, delay: delay)
+        } else {
+            // Fallback к Fiasp
+            let preset = ExponentialInsulinModelPreset.fiasp
+            defaultModel = ExponentialInsulinModel(
+                actionDuration: preset.actionDuration,
+                peakActivityTime: preset.peakActivity,
+                delay: preset.delay
+            )
+        }
+
+        let insulinModelProvider = PresetInsulinModelProvider(defaultRapidActingModel: defaultModel)
+
+        let now = Date()
+        let iobSeries = doseEntries.insulinOnBoard(
+            insulinModelProvider: insulinModelProvider,
+            longestEffectDuration: InsulinMath.defaultInsulinActivityDuration,
+            from: now.addingTimeInterval(-6 * 3600),
+            to: now,
+            delta: 5 * 60
+        )
+
+        let lastIOBValue = iobSeries.last?.value ?? 0
+        debug(
+            .service,
+            "💊 WatchManager: Calculated fresh IOB=\(lastIOBValue), from \(doseEntries.count) doses, \(iobSeries.count) IOB points"
+        )
+
+        if lastIOBValue.isNaN || lastIOBValue.isInfinite {
+            debug(
+                .service,
+                "❌ WatchManager: Invalid IOB value: \(lastIOBValue), using suggestion fallback=\(suggestion?.iob?.description ?? "nil")"
+            )
+            return suggestion?.iob
+        }
+
+        let freshIOB = Decimal(lastIOBValue)
+        debug(.service, "✅ WatchManager: Fresh IOB calculated successfully: \(freshIOB)")
+        return freshIOB
     }
 }
 

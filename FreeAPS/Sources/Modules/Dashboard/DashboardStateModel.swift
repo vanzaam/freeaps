@@ -35,8 +35,11 @@ import Swinject
     /// Предсказания глюкозы
     @Published var predictedGlucose: [PredictedGlucose] = []
 
-    /// Данные IOB для графика
+    /// Данные IOB для графика (исторические)
     @Published var iobData: [IOBData] = []
+
+    /// Прогнозные данные IOB
+    @Published var iobForecastData: [IOBData] = []
 
     /// Данные COB для графика
     @Published var cobData: [COBData] = []
@@ -82,10 +85,12 @@ import Swinject
 
     private var carbService: CarbAccountingService?
     private var glucoseService: GlucoseStorage?
+    private var pumpHistoryStorage: PumpHistoryStorage?
     private var resolver: Resolver?
     private let apsService: APSManager?
     private let storage: FileStorage?
     private let settingsManager: SettingsManager?
+    private let broadcaster: Broadcaster?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -95,9 +100,11 @@ import Swinject
         self.resolver = resolver
         carbService = resolver.resolve(CarbAccountingService.self)
         glucoseService = resolver.resolve(GlucoseStorage.self)
+        pumpHistoryStorage = resolver.resolve(PumpHistoryStorage.self)
         apsService = resolver.resolve(APSManager.self)
         storage = resolver.resolve(FileStorage.self)
         settingsManager = resolver.resolve(SettingsManager.self)
+        broadcaster = resolver.resolve(Broadcaster.self)
 
         if carbService == nil {
             warning(.service, "CarbAccountingService not available")
@@ -134,12 +141,25 @@ import Swinject
             await loadDeliveryData()
             await loadLoopStatus()
             await loadPumpStatus()
+            // Загружаем изначальный прогноз из файла (будет обновлен через SuggestionObserver)
+            await loadPredictionFromSuggestionFile()
 
             await MainActor.run {
                 isLoading = false
                 lastUpdate = Date()
             }
             info(.service, "Dashboard data loaded successfully")
+        }
+    }
+
+    private func loadPredictionFromSuggestionFile() async {
+        guard let storage = storage else { return }
+        if let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) {
+            debug(.service, "Dashboard: Loaded suggestion from file with timestamp \(suggestion.timestamp?.description ?? "nil")")
+            await MainActor.run { self.updatePredictionFromSuggestion(suggestion) }
+        } else {
+            debug(.service, "Dashboard: No suggestion found in file")
+            await MainActor.run { self.predictedGlucose = [] }
         }
     }
 
@@ -204,6 +224,9 @@ import Swinject
                 self?.bolusPercent = value?.doubleValue
             }
             .store(in: &cancellables)
+
+        // Реакция на новое предложение (прогноз)
+        broadcaster?.register(SuggestionObserver.self, observer: self)
     }
 
     private func loadGlucoseData() async {
@@ -268,50 +291,98 @@ import Swinject
             return
         }
 
-        do {
-            // Загрузить IOB из файла monitor/iob.json
-            if let iobEntries = storage.retrieve(OpenAPS.Monitor.iob, as: [IOBEntry].self),
-               let latestIOB = iobEntries.first
-            {
-                await MainActor.run {
-                    iob = latestIOB.iob
-                }
+        guard let pumpHistoryStorage = pumpHistoryStorage else {
+            warning(.service, "PumpHistoryStorage not available")
+            return
+        }
 
-                // Создать данные для графика IOB (последние 6 часов)
-                let endDate = Date()
-                let startDate = endDate.addingTimeInterval(-6 * 3600)
+        // Рассчитываем IOB из истории доз LoopKit (точно и динамично)
+        let endDate = Date()
+        let startDate = endDate.addingTimeInterval(-6 * 3600)
 
-                let iobDataPoints: [IOBData] = stride(
-                    from: startDate.timeIntervalSince1970,
-                    through: endDate.timeIntervalSince1970,
-                    by: 15 * 60 // Каждые 15 минут
-                ).map { timestamp in
-                    IOBData(
-                        value: latestIOB.iob, // Упрощенно - используем текущий IOB
-                        date: Date(timeIntervalSince1970: timestamp)
-                    )
-                }
-
-                await MainActor.run {
-                    iobData = iobDataPoints
-                }
-
-                debug(.service, "Loaded insulin data: IOB = \(iob)U")
-            } else {
-                warning(.service, "No IOB data available")
-                await MainActor.run {
-                    iob = 0
-                    iobData = []
-                }
-            }
-        } catch let err {
-            error(.service, "Failed to load IOB data: \(err.localizedDescription)")
-            await MainActor.run {
-                lastError = err
-                iob = 0
-                iobData = []
+        // Преобразуем свежую историю помпы в DoseEntry (используем актуальные данные)
+        let pumpHistory = pumpHistoryStorage.recent()
+        debug(.service, "Dashboard: Loaded \(pumpHistory.count) pump events from pumpHistoryStorage.recent() for IOB calculation")
+        let doseEntries: [DoseEntry] = pumpHistory.compactMap { e -> DoseEntry? in
+            switch e.type {
+            case .bolus,
+                 .correctionBolus,
+                 .mealBolus,
+                 .smb,
+                 .snackBolus:
+                return DoseEntry(
+                    type: .bolus,
+                    startDate: e.timestamp,
+                    endDate: e.timestamp,
+                    value: NSDecimalNumber(decimal: e.amount ?? 0).doubleValue,
+                    unit: .units
+                )
+            case .nsTempBasal,
+                 .tempBasal:
+                return DoseEntry(
+                    type: .tempBasal,
+                    startDate: e.timestamp,
+                    endDate: e.timestamp.addingTimeInterval(TimeInterval((e.duration ?? e.durationMin ?? 0) * 60)),
+                    value: NSDecimalNumber(decimal: e.rate ?? 0).doubleValue,
+                    unit: .unitsPerHour
+                )
+            default:
+                return nil
             }
         }
+
+        // IOB временной ряд с шагом 5 минут для точного прогноза
+        let insulinModelProvider = PresetInsulinModelProvider(defaultRapidActingModel: nil)
+        let iobSeries = doseEntries.insulinOnBoard(
+            insulinModelProvider: insulinModelProvider,
+            longestEffectDuration: InsulinMath.defaultInsulinActivityDuration,
+            from: startDate,
+            to: endDate,
+            delta: 5 * 60
+        )
+
+        let iobDataPoints: [IOBData] = iobSeries.compactMap { InsulinValue in
+            guard !InsulinValue.value.isNaN, !InsulinValue.value.isInfinite else {
+                debug(.service, "⚠️ Skipping invalid IOB value: \(InsulinValue.value)")
+                return nil
+            }
+            return IOBData(value: Decimal(InsulinValue.value), date: InsulinValue.startDate)
+        }
+
+        // Генерируем прогноз IOB на следующие 6 часов с интервалом 5 минут
+        let forecastEndDate = endDate.addingTimeInterval(6 * 3600) // +6 часов
+        let forecastSeries = doseEntries.insulinOnBoard(
+            insulinModelProvider: insulinModelProvider,
+            longestEffectDuration: InsulinMath.defaultInsulinActivityDuration,
+            from: endDate,
+            to: forecastEndDate,
+            delta: 5 * 60
+        )
+
+        let forecastDataPoints: [IOBData] = forecastSeries.compactMap { InsulinValue in
+            guard !InsulinValue.value.isNaN, !InsulinValue.value.isInfinite else {
+                debug(.service, "⚠️ Skipping invalid IOB forecast value: \(InsulinValue.value)")
+                return nil
+            }
+            return IOBData(value: Decimal(InsulinValue.value), date: InsulinValue.startDate)
+        }
+
+        await MainActor.run {
+            let lastIOBValue = iobSeries.last?.value ?? 0
+            if lastIOBValue.isNaN || lastIOBValue.isInfinite {
+                debug(.service, "⚠️ Invalid final IOB value: \(lastIOBValue), using 0")
+                iob = 0
+            } else {
+                iob = Decimal(lastIOBValue)
+            }
+            iobData = iobDataPoints
+            iobForecastData = forecastDataPoints
+        }
+
+        debug(
+            .service,
+            "Loaded insulin data: historical=\(iobDataPoints.count), forecast=\(forecastDataPoints.count), IOB=\(iob)U"
+        )
     }
 
     private func loadDeliveryData() async {
@@ -388,11 +459,13 @@ import Swinject
         let cobForecast = carbService.getCOBForecast(until: endDate)
 
         await MainActor.run {
-            cobData = cobForecast.map { date, value in
-                COBData(
-                    value: value,
-                    date: date
-                )
+            cobData = cobForecast.compactMap { date, value -> COBData? in
+                // Проверяем на некорректные значения COB
+                if value.isNaN || value.isInfinite || value < 0 {
+                    debug(.service, "⚠️ Skipping invalid COB value: \(value)")
+                    return nil
+                }
+                return COBData(value: value, date: date)
             }
             debug(.service, "Updated COB forecast: \(cobData.count) points")
         }
@@ -425,6 +498,49 @@ struct DashboardStats {
     let cob: Decimal
     let glucoseCount: Int
     let lastUpdate: Date
+}
+
+// MARK: - SuggestionObserver
+
+extension DashboardStateModel: SuggestionObserver {
+    @MainActor func suggestionDidUpdate(_ suggestion: Suggestion) {
+        debug(.service, "Dashboard: Received NEW suggestion update with timestamp \(suggestion.timestamp?.description ?? "nil")")
+        updatePredictionFromSuggestion(suggestion)
+    }
+
+    @MainActor private func updatePredictionFromSuggestion(_ suggestion: Suggestion) {
+        guard let preds = suggestion.predictions else {
+            predictedGlucose = []
+            return
+        }
+        let mgdlArray = preds.iob ?? preds.cob ?? preds.zt ?? preds.uam ?? []
+        guard !mgdlArray.isEmpty else {
+            predictedGlucose = []
+            return
+        }
+
+        // Ограничиваем прогноз максимум 6 часами (72 точки по 5 минут)
+        let maxForecastPoints = 72 // 6 часов * 12 точек в час (каждые 5 минут)
+        let limitedArray = Array(mgdlArray.prefix(maxForecastPoints))
+
+        let baseDate = glucose.last?.date ?? suggestion.timestamp ?? suggestion.deliverAt ?? Date()
+        let step: TimeInterval = 5 * 60
+        let unitAdjusted: [PredictedGlucose] = limitedArray.enumerated().compactMap { idx, mgdl in
+            let dec = Decimal(mgdl)
+            let value = (units == .mmolL) ? dec.asMmolL : dec
+
+            // Проверяем на некорректные значения
+            if value.isNaN || value.isInfinite || value < 0 {
+                debug(.service, "⚠️ Skipping invalid glucose prediction: \(value) from mgdl=\(mgdl)")
+                return nil
+            }
+
+            return PredictedGlucose(value: value, date: baseDate.addingTimeInterval(TimeInterval(idx) * step))
+        }
+        predictedGlucose = unitAdjusted
+
+        debug(.service, "Glucose prediction limited to \(limitedArray.count) points (max 6 hours)")
+    }
 }
 
 // MARK: - Extensions

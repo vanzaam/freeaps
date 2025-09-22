@@ -1,6 +1,10 @@
 import Foundation
 import LoopKit
 import LoopKitUI
+import MedtrumKit
+import MinimedKit
+import OmniBLE
+import OmniKit
 import SwiftDate
 import SwiftUI
 
@@ -11,6 +15,7 @@ extension PumpConfig {
         @Published var pumpState: PumpDisplayState?
         private(set) var initialSettings: PumpInitialSettings = .default
         private var basalObserver: NSObjectProtocol?
+        @Published var showInteractiveInsulinCurve = false
 
         override func subscribe() {
             provider.pumpDisplayState
@@ -94,5 +99,34 @@ extension PumpConfig.StateModel: PumpManagerOnboardingDelegate {
 
     func pumpManagerOnboarding(didPauseOnboarding _: PumpManagerUI) {
         // no-op
+    }
+}
+
+// MARK: - Insulin Type helpers
+
+extension PumpConfig.StateModel {
+    func insulinTypeDisplay(for pumpManager: PumpManagerUI) -> String {
+        // Try to read from status first (most accurate)
+        if let statusType = pumpManager.status.insulinType {
+            return statusType.brandName
+        }
+        // Fallback: read last persisted value saved by APSManager
+        if let raw = provider.storage.retrieveRaw(OpenAPS.Settings.insulinType),
+           let intVal = Int(raw),
+           let t = InsulinType(rawValue: intVal)
+        {
+            return t.brandName
+        }
+        return "Unknown"
+    }
+
+    func canOpenInsulinTypeChooser(_ pumpManager: PumpManagerUI) -> Bool {
+        pumpManager is OmniBLEPumpManager || pumpManager is OmnipodPumpManager || pumpManager is MedtrumPumpManager ||
+            pumpManager is MinimedPumpManager
+    }
+
+    func openInsulinTypeChooser(_: PumpManagerUI) {
+        // Leverage each manager's settings screen for changing insulin type
+        setupPump = true
     }
 }

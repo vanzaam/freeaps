@@ -9,12 +9,14 @@ import UIKit
 
 struct LoopUIKitIOBChartView: UIViewRepresentable {
     let iob: [IOBData]
+    let iobForecast: [IOBData]
     let timeRangeHours: Int
 
     func makeUIView(context _: Context) -> ChartContainerView { ChartContainerView() }
     func updateUIView(_ uiView: ChartContainerView, context _: Context) {
         let now = Date()
-        let startDate = now.addingTimeInterval(-Double(timeRangeHours * 3600))
+        let startDate = now.addingTimeInterval(-6 * 3600) // 6 часов назад
+        let endDate = now.addingTimeInterval(6 * 3600) // 6 часов вперед
         let colors = ChartColorPalette(
             axisLine: .secondaryLabel,
             axisLabel: .secondaryLabel,
@@ -24,8 +26,11 @@ struct LoopUIKitIOBChartView: UIViewRepresentable {
             carbTint: .systemGreen
         )
         let chart = IOBChart()
-        // Fallback Y-range by providing a dummy 0 line via display range
-        chart.setIOBValues(iob.map { InsulinValue(startDate: $0.date, value: $0.value.doubleValue) })
+        // Объединяем исторические и прогнозные данные IOB
+        let allIOBValues = iob.map { InsulinValue(startDate: $0.date, value: $0.value.doubleValue) } +
+            iobForecast.map { InsulinValue(startDate: $0.date, value: $0.value.doubleValue) }
+
+        chart.setIOBValues(allIOBValues)
         var settings = ChartSettings()
         settings.top = 4
         settings.bottom = 0
@@ -34,8 +39,8 @@ struct LoopUIKitIOBChartView: UIViewRepresentable {
         settings.clipInnerFrame = false
         let mgr = ChartsManager(colors: colors, settings: settings, charts: [chart], traitCollection: UITraitCollection.current)
         mgr.startDate = startDate
-        mgr.maxEndDate = now
-        mgr.updateEndDate(now)
+        mgr.maxEndDate = endDate
+        mgr.updateEndDate(endDate)
         mgr.prerender()
         // Локальный highlight для IOB
         let gr = UILongPressGestureRecognizer()
@@ -55,7 +60,8 @@ struct LoopUIKitDoseChartView: UIViewRepresentable {
     func makeUIView(context _: Context) -> ChartContainerView { ChartContainerView() }
     func updateUIView(_ uiView: ChartContainerView, context _: Context) {
         let now = Date()
-        let startDate = now.addingTimeInterval(-Double(timeRangeHours * 3600))
+        let startDate = now.addingTimeInterval(-6 * 3600) // 6 часов назад
+        let endDate = now.addingTimeInterval(6 * 3600) // 6 часов вперед
         let colors = ChartColorPalette(
             axisLine: .secondaryLabel,
             axisLabel: .secondaryLabel,
@@ -95,8 +101,8 @@ struct LoopUIKitDoseChartView: UIViewRepresentable {
         settings.clipInnerFrame = false
         let mgr = ChartsManager(colors: colors, settings: settings, charts: [chart], traitCollection: UITraitCollection.current)
         mgr.startDate = startDate
-        mgr.maxEndDate = now
-        mgr.updateEndDate(now)
+        mgr.maxEndDate = endDate
+        mgr.updateEndDate(endDate)
         mgr.prerender()
         let gr = UILongPressGestureRecognizer()
         gr.minimumPressDuration = 0
@@ -111,11 +117,29 @@ struct LoopUIKitDoseChartView: UIViewRepresentable {
 struct LoopUIKitCOBChartView: UIViewRepresentable {
     let cob: [COBData]
     let timeRangeHours: Int
+    var onTap: (() -> Void)? = nil
 
-    func makeUIView(context _: Context) -> ChartContainerView { ChartContainerView() }
-    func updateUIView(_ uiView: ChartContainerView, context _: Context) {
+    func makeUIView(context _: Context) -> ChartContainerView {
+        let view = ChartContainerView()
+        return view
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    class Coordinator: NSObject {
+        var onTap: (() -> Void)?
+
+        @objc func handleTap() {
+            onTap?()
+        }
+    }
+
+    func updateUIView(_ uiView: ChartContainerView, context: Context) {
         let now = Date()
-        let startDate = now.addingTimeInterval(-Double(timeRangeHours * 3600))
+        let startDate = now.addingTimeInterval(-6 * 3600) // 6 часов назад
+        let endDate = now.addingTimeInterval(6 * 3600) // 6 часов вперед
         let colors = ChartColorPalette(
             axisLine: .secondaryLabel,
             axisLabel: .secondaryLabel,
@@ -134,14 +158,29 @@ struct LoopUIKitCOBChartView: UIViewRepresentable {
         settings.clipInnerFrame = false
         let mgr = ChartsManager(colors: colors, settings: settings, charts: [chart], traitCollection: UITraitCollection.current)
         mgr.startDate = startDate
-        mgr.maxEndDate = now
-        mgr.updateEndDate(now)
+        mgr.maxEndDate = endDate
+        mgr.updateEndDate(endDate)
         mgr.prerender()
-        let gr = UILongPressGestureRecognizer()
-        gr.minimumPressDuration = 0
-        mgr.gestureRecognizer = gr
+
+        // Hover gesture для отображения значений
+        let longPressGesture = UILongPressGestureRecognizer()
+        longPressGesture.minimumPressDuration = 0
+        mgr.gestureRecognizer = longPressGesture
+
+        // Очищаем существующие gesture recognizers
+        uiView.gestureRecognizers?.removeAll()
+
+        // Добавляем hover gesture
+        uiView.addGestureRecognizer(longPressGesture)
+
+        // Tap gesture для открытия экрана ввода углеводов
+        if let onTap = onTap {
+            let tapGesture = UITapGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleTap))
+            context.coordinator.onTap = onTap
+            uiView.addGestureRecognizer(tapGesture)
+        }
+
         uiView.isUserInteractionEnabled = true
-        uiView.addGestureRecognizer(gr)
         uiView.chartGenerator = { frame in mgr.chart(atIndex: 0, frame: frame)?.view }
         uiView.reloadChart()
     }

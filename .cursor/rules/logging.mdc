@@ -6,33 +6,32 @@ alwaysApply: true
 
 # Logging and Notifications
 
-## Advanced Logging System
-- **CRITICAL**: Use ControlledLogging system instead of direct os_log/print calls
-- All logging is controlled through LoggingConfiguration.shared
+## Simplified Logging System
+- **CURRENT**: Use `debug(category, message)` function for all logging
+- Simple and unified logging approach
 - Log files are written to Documents/logs/ directory:
   - Main log: Documents/logs/log.txt (via SimpleLogReporter)
   - Previous day: Documents/logs/log_prev.txt
   - Nightscout logs: Documents/logs/nightscout.txt
   - Notification logs: Documents/logs/notifications.txt
 
-## Controlled Logging Functions
-- Use controlled_print_debug() instead of print()
-- Use controlled_os_log_info() instead of os_log()
-- Use controlled_nightscout_log() for Nightscout operations
-- Use controlled_glucose_log() for database operations
-- Use controlled_network_log() for network operations
-- Use controlled_bluetooth_log() for Bluetooth operations
+## Primary Logging Function
+- Use `debug(.category, "message")` for all logging needs
+- Examples:
+  - `debug(.service, "IOBPredictor: Generated forecast with 72 points")`
+  - `debug(.network, "Nightscout API request completed successfully")`
+  - `debug(.performance, "Chart rendering took 45ms")`
 
-## Log Categories
-- debug: Detailed debugging information
-- info: General application information
-- network: HTTP requests, responses, network errors
-- nightscout: Nightscout upload operations
-- database: Database operations (GlucoseStorage, FetchGlucoseManager)
-- bluetooth: Bluetooth device connections and commands
-- performance: Performance metrics and timing
-- deviceManager: Pump and sensor management
-- businessLogic: Core application logic
+
+## Log Categories (for debug function)
+- `.service`: Service operations, business logic, IOB calculations
+- `.network`: HTTP requests, responses, network errors  
+- `.nightscout`: Nightscout upload operations
+- `.database`: Database operations (GlucoseStorage, FetchGlucoseManager)
+- `.bluetooth`: Bluetooth device connections and commands
+- `.performance`: Performance metrics and timing
+- `.deviceManager`: Pump and sensor management
+- `.openAPS`: OpenAPS algorithm operations
 
 ## Logging Configuration
 - Settings accessible via Settings → Extra Features → "Настройки логирования"
@@ -46,11 +45,11 @@ alwaysApply: true
 - Event names should include timestamps (without seconds) in format: "EventName 2024-01-15 14:30"
 - Use consistent timestamp format across all notifications
 
-## Anti-Spam Measures
-- All direct os_log and print calls have been replaced with controlled functions
-- Log spam has been eliminated through category-based filtering
-- Users can disable specific log categories to reduce noise
-- Performance logging can be disabled to improve app performance
+## Usage Guidelines
+- **Always use `debug(.category, "message")`** instead of print() or os_log
+- Choose appropriate category for each log message
+- Include meaningful context in log messages
+- Use consistent message formats for easier debugging
 
 ## File Management
 - Keep notifications.txt size manageable (max 1000 entries)
@@ -60,10 +59,14 @@ alwaysApply: true
 - Log files are automatically rotated daily
 
 ## Best Practices
-- Use structured logging with consistent message formats
-- Include relevant identifiers (user ID, session ID, etc.) in logs
-- Log important state changes and user actions
+- **Use `debug(.category, "message")`** for all logging - unified approach
+- Include relevant context: service names, counts, values, timestamps
+- Log important state changes and user actions  
 - Provide clear, actionable log messages
-- Use appropriate log levels for different types of events
-- Always use controlled logging functions to respect user preferences
-- Categorize logs appropriately for better filtering
+- Choose appropriate categories (.service, .network, .performance, etc.)
+- Examples of good logging:
+  ```swift
+  debug(.service, "IOBPredictor: Loaded \(activeDoses.count) active doses")
+  debug(.network, "Nightscout upload completed: \(treatments.count) treatments")
+  debug(.performance, "Chart rendering completed in \(duration)ms")
+  ```

@@ -28,6 +28,7 @@
 		3083261C4B268E353F36CD0B /* AutotuneConfigDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCCCCE633F5E98E41B0CD3C /* AutotuneConfigDataFlow.swift */; };
 		3171D2818C7C72CD1584BB5E /* NotificationsConfigStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC2C6489D29ECCCAD78E0721 /* NotificationsConfigStateModel.swift */; };
 		320D030F724170A637F06D50 /* CalibrationsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212E8BFE6D66EE65AA26A114 /* CalibrationsProvider.swift */; };
+		34380C57497BAFB5C6BD2B15 /* IOBForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B7797537B1FEC37ABB6EAE9 /* IOBForecastView.swift */; };
 		3811DE0B25C9D32F00A708ED /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE0725C9D32E00A708ED /* BaseView.swift */; };
 		3811DE0C25C9D32F00A708ED /* BaseProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3811DE0825C9D32F00A708ED /* BaseProvider.swift */; };
 		3811DE1025C9D37700A708ED /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 3811DE0F25C9D37700A708ED /* Swinject */; };
@@ -139,13 +140,11 @@
 		38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEE75625F0F18E0013F05B /* CarbsStorage.swift */; };
 		38B17B6625DD90E0005CAE3D /* SwiftDate in Frameworks */ = {isa = PBXBuildFile; productRef = 38B17B6525DD90E0005CAE3D /* SwiftDate */; };
 		38B4F3AF25E2979F00E76A18 /* IndexedCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */; };
-		38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C225E2A20B00E76A18 /* PumpSetupView.swift */; };
 		38B4F3C625E5017E00E76A18 /* NotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C525E5017E00E76A18 /* NotificationCenter.swift */; };
 		38B4F3CA25E502E200E76A18 /* SwiftNotificationCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C825E502E100E76A18 /* SwiftNotificationCenter.swift */; };
 		38B4F3CB25E502E200E76A18 /* WeakObjectSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */; };
 		38B4F3CD25E5031100E76A18 /* Broadcaster.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B4F3CC25E5031100E76A18 /* Broadcaster.swift */; };
 		38BF021725E7CBBC00579895 /* PumpManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */; };
-		38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021A25E7D06400579895 /* PumpSettingsView.swift */; };
 		38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021C25E7E3AF00579895 /* Reservoir.swift */; };
 		38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */; };
 		38C4D33725E9A1A300D30B77 /* DispatchQueue+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */; };
@@ -232,7 +231,7 @@
 		45252C95D220E796FDB3B022 /* ConfigEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8A87AA037BD079BA3528BA /* ConfigEditorDataFlow.swift */; };
 		45717281F743594AA9D87191 /* ConfigEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920DDB21E5D0EB813197500D /* ConfigEditorRootView.swift */; };
 		475C523F6756FD31130D4EF6 /* LoopStatusRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26AB316318BA347BA40D1B4A /* LoopStatusRootView.swift */; };
-		4D2C8351A6975A74F315D2ED /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		4D2C8351A6975A74F315D2ED /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		5075C1608E6249A51495C422 /* TargetsEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDEA2DC60EDE0A3CA54DC73 /* TargetsEditorProvider.swift */; };
 		53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */; };
 		5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEE53A13D26F101B332EFFC8 /* AddTempTargetProvider.swift */; };
@@ -243,7 +242,7 @@
 		63E890B4D951EAA91C071D5C /* BasalProfileEditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFF91130F2FCCC7EBBA11AD /* BasalProfileEditorStateModel.swift */; };
 		642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8782B44544F38F2B2D82C38E /* NightscoutConfigRootView.swift */; };
 		646150D9E02599F5BE17CB5E /* LoopOnboardingKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = BA89EE5826F6859471DE1BE9 /* LoopOnboardingKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		659A5FD144CC870CAECB1A76 /* BuildFile in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		659A5FD144CC870CAECB1A76 /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		6632A0DC746872439A858B44 /* ISFEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BDA519C9B890FD9A5DFCF3 /* ISFEditorDataFlow.swift */; };
 		69A31254F2451C20361D172F /* BolusStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223EC0494F55A91E3EA69EF4 /* BolusStateModel.swift */; };
 		69B9A368029F7EB39F525422 /* CREditorStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AA5E04A2761F6EEA6568E1 /* CREditorStateModel.swift */; };
@@ -257,7 +256,6 @@
 		7EF7EBF192E10218B803926A /* G7SensorKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C742ED62FCFB1824C4374774 /* G7SensorKit.framework */; };
 		7F7B756BE8543965D9FDF1A2 /* DataTableDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = A401509D21F7F35D4E109EDA /* DataTableDataFlow.swift */; };
 		8194B80890CDD6A3C13B0FEE /* SnoozeStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E26904AACA8D9C15D229D675 /* SnoozeStateModel.swift */; };
-		86CFFE8D3052B4EED33E7741 /* LoopEngineAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12387BCB441FF5A38095D2C0 /* LoopEngineAdapter.swift */; };
 		88AB39B23C9552BD6E0C9461 /* ISFEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBB3BAE7494CB771ABAC7B8B /* ISFEditorRootView.swift */; };
 		891DECF7BC20968D7F566161 /* AutotuneConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF98E22A39CD656A230704 /* AutotuneConfigProvider.swift */; };
 		8B759CFCF47B392BB365C251 /* BasalProfileEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67F94DD2853CF42BA4E30616 /* BasalProfileEditorDataFlow.swift */; };
@@ -287,12 +285,34 @@
 		B606CEB42E800101009CE30A /* CarbIntegrationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B606CEAB2E800101009CE30A /* CarbIntegrationAdapter.swift */; };
 		B60DC0152E7B664C0040A1E1 /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = B60DC0142E7B664C0040A1E1 /* SwiftCharts */; settings = {ATTRIBUTES = (Required, ); }; };
 		B61438A22E7BBD77001E0993 /* SlideButton in Frameworks */ = {isa = PBXBuildFile; productRef = B61438A12E7BBD77001E0993 /* SlideButton */; settings = {ATTRIBUTES = (Required, ); }; };
+		B6272A1F2E816614004D74FE /* determine_basal.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A132E816614004D74FE /* determine_basal.js */; };
+		B6272A202E816614004D74FE /* log.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A1A2E816614004D74FE /* log.js */; };
+		B6272A212E816614004D74FE /* autosens.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A092E816614004D74FE /* autosens.js */; };
+		B6272A222E816614004D74FE /* autosens.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A152E816614004D74FE /* autosens.js */; };
+		B6272A232E816614004D74FE /* determine-basal.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A0D2E816614004D74FE /* determine-basal.js */; };
+		B6272A242E816614004D74FE /* meal.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A102E816614004D74FE /* meal.js */; };
+		B6272A252E816614004D74FE /* autotune-core.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A162E816614004D74FE /* autotune-core.js */; };
+		B6272A262E816614004D74FE /* iob.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A192E816614004D74FE /* iob.js */; };
+		B6272A272E816614004D74FE /* iob.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A0F2E816614004D74FE /* iob.js */; };
+		B6272A282E816614004D74FE /* autotune-prep.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A172E816614004D74FE /* autotune-prep.js */; };
+		B6272A292E816614004D74FE /* profile.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A1C2E816614004D74FE /* profile.js */; };
+		B6272A2A2E816614004D74FE /* autotune-core.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A0A2E816614004D74FE /* autotune-core.js */; };
+		B6272A2B2E816614004D74FE /* glucose-get-last.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A0E2E816614004D74FE /* glucose-get-last.js */; };
+		B6272A2C2E816614004D74FE /* basal-set-temp.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A0C2E816614004D74FE /* basal-set-temp.js */; };
+		B6272A2D2E816614004D74FE /* determine-basal.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A182E816614004D74FE /* determine-basal.js */; };
+		B6272A2E2E816614004D74FE /* profile.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A112E816614004D74FE /* profile.js */; };
+		B6272A2F2E816614004D74FE /* autotune-prep.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A0B2E816614004D74FE /* autotune-prep.js */; };
+		B6272A302E816614004D74FE /* meal.js in Resources */ = {isa = PBXBuildFile; fileRef = B6272A1B2E816614004D74FE /* meal.js */; };
 		B62F7FD82E80246A002B4DB4 /* LoopUIKitGlucoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62F7FD72E80246A002B4DB4 /* LoopUIKitGlucoseChartView.swift */; };
 		B62F7FDA2E8027F2002B4DB4 /* LoopUIKitSecondaryChartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62F7FD92E8027F2002B4DB4 /* LoopUIKitSecondaryChartsView.swift */; };
 		B63D5AFE2E800ABF00DD1DE6 /* DashboardRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63D5AFA2E800ABF00DD1DE6 /* DashboardRootView.swift */; };
 		B63D5AFF2E800ABF00DD1DE6 /* AddCarbsLoopViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63D5AF62E800ABF00DD1DE6 /* AddCarbsLoopViewModel.swift */; };
 		B63D5B002E800ABF00DD1DE6 /* DashboardStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63D5AFC2E800ABF00DD1DE6 /* DashboardStateModel.swift */; };
 		B63D5B022E800ABF00DD1DE6 /* AddCarbsLoopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63D5AF42E800ABF00DD1DE6 /* AddCarbsLoopView.swift */; };
+		B657CDC42E8088F1009AC2D1 /* LoopEngineAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657CDC32E8088F1009AC2D1 /* LoopEngineAdapter.swift */; };
+		B657CDCE2E80C342009AC2D1 /* PumpConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657CDCA2E80C342009AC2D1 /* PumpConfigRootView.swift */; };
+		B657CDD02E80C342009AC2D1 /* PumpSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657CDCC2E80C342009AC2D1 /* PumpSetupView.swift */; };
+		B657CDD12E80C342009AC2D1 /* PumpSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B657CDCB2E80C342009AC2D1 /* PumpSettingsView.swift */; };
 		B65A2CE02E7EE5F800A55E8E /* AppRuntimeConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65A2CDE2E7EE5F800A55E8E /* AppRuntimeConfig.swift */; };
 		B65A2CE12E7EE5F800A55E8E /* FormatterCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65A2CDF2E7EE5F800A55E8E /* FormatterCache.swift */; };
 		B66124F62E7BC815006EBC31 /* LoopSupportKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B66124F52E7BC815006EBC31 /* LoopSupportKitUI.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -303,6 +323,7 @@
 		B66F44F72E7CFA6700840503 /* AddGlucoseStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B66F44F42E7CFA6700840503 /* AddGlucoseStateModel.swift */; };
 		B6A6755A2E7F247E00A36496 /* MealCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A675592E7F247E00A36496 /* MealCalculator.swift */; };
 		B6A6755C2E7F2C8900A36496 /* MealParityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A6755B2E7F2C8900A36496 /* MealParityTests.swift */; };
+		B6A8B9BA2E80D79D007B05F7 /* IOBPredictorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6A8B9B92E80D79D007B05F7 /* IOBPredictorService.swift */; };
 		B6EE8B6F2E80376B00111FE9 /* SMBAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE8B6E2E80376B00111FE9 /* SMBAdapter.swift */; };
 		B788E19F3799816EDF684B06 /* ShareClient.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5303829B0BD7C74096552A4E /* ShareClient.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B7C465E9472624D8A2BE2A6A /* CalibrationsDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA241FB1663EC96FDBE64C8A /* CalibrationsDataFlow.swift */; };
@@ -311,6 +332,7 @@
 		BA90041DC8991147E5C8C3AA /* CalibrationsRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500371C09F54F89A97D65FDB /* CalibrationsRootView.swift */; };
 		BD2B464E0745FBE7B79913F4 /* NightscoutConfigProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF768BD6264FF7D71D66767 /* NightscoutConfigProvider.swift */; };
 		BF1667ADE69E4B5B111CECAE /* ManualTempBasalProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 680C4420C9A345D46D90D06C /* ManualTempBasalProvider.swift */; };
+		C1C9D57492DFF022DD9A09F0 /* InteractiveInsulinCurveEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AFEFDD64DF870B94BFAC1BB /* InteractiveInsulinCurveEditor.swift */; };
 		C967DACD3B1E638F8B43BE06 /* ManualTempBasalStateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CFCFE0781F9074C2917890E8 /* ManualTempBasalStateModel.swift */; };
 		CA370FC152BC98B3D1832968 /* BasalProfileEditorRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8BCB0C37DEB5EC377B9612 /* BasalProfileEditorRootView.swift */; };
 		CD78BB94E43B249D60CC1A1B /* NotificationsConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963BD06A9C83959D4914E4 /* NotificationsConfigRootView.swift */; };
@@ -337,7 +359,6 @@
 		E447857E18B3D536853D1284 /* LibreTransmitterUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 250FF4DD80E99A642B8DB8FE /* LibreTransmitterUI.framework */; };
 		E4984C5262A90469788754BB /* PreferencesEditorProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F8BA8533F56BC55748CA877 /* PreferencesEditorProvider.swift */; };
 		E60DBD1B83C7D1EF19CC903C /* OmniBLEPlugin.loopplugin in Embed PlugIns */ = {isa = PBXBuildFile; fileRef = 1039B8BEB5676889B889227F /* OmniBLEPlugin.loopplugin */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */; };
 		F5CA3DB1F9DC8B05792BBFAA /* CGMDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */; };
 		F5F7E6C1B7F098F59EB67EC5 /* TargetsEditorDataFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA49538D56989D8DA6FCF538 /* TargetsEditorDataFlow.swift */; };
 		F8D3FC83AEED92594B9C2526 /* OmniBLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 367DED0BE3B120D21895F8DE /* OmniBLE.framework */; };
@@ -401,7 +422,7 @@
 				1F01EC1BCB55D280D9321C00 /* RileyLinkKitUI.framework in Embed Frameworks */,
 				A761BD504C33091D033C02C5 /* MedtrumKit.framework in Embed Frameworks */,
 				F98FAE9A18F516433BA3E1C0 /* OmniBLE.framework in Embed Frameworks */,
-				659A5FD144CC870CAECB1A76 /* BuildFile in Embed Frameworks */,
+				659A5FD144CC870CAECB1A76 /* (null) in Embed Frameworks */,
 				646150D9E02599F5BE17CB5E /* LoopOnboardingKit.framework in Embed Frameworks */,
 				8F2608796EA3DDF365640100 /* LoopOnboardingKitUI.framework in Embed Frameworks */,
 				434CA89EA18DB2C70A8DA631 /* LibreTransmitter.framework in Embed Frameworks */,
@@ -449,12 +470,12 @@
 /* Begin PBXFileReference section */
 		0274EE6439B1C3ED70730D41 /* PumpSettingsEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorDataFlow.swift; sourceTree = "<group>"; };
 		06E9B71F4CAECC74BD6EDDF6 /* LibreTransmitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LibreTransmitter.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0B7797537B1FEC37ABB6EAE9 /* IOBForecastView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = IOBForecastView.swift; sourceTree = "<group>"; };
 		0CA3E609094E064C99A4752C /* PreferencesEditorStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorStateModel.swift; sourceTree = "<group>"; };
 		0D7755AFE5C5A2B66F4F8ECE /* RileyLinkKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = RileyLinkKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1039B8BEB5676889B889227F /* OmniBLEPlugin.loopplugin */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; path = OmniBLEPlugin.loopplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		10A0C32B0DAB52726EF9B6D9 /* BolusRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = BolusRootView.swift; sourceTree = "<group>"; };
 		12204445D7632AF09264A979 /* PreferencesEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorDataFlow.swift; sourceTree = "<group>"; };
-		12387BCB441FF5A38095D2C0 /* LoopEngineAdapter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoopEngineAdapter.swift; path = FreeAPS/Sources/Services/APS/LoopEngineAdapter.swift; sourceTree = "<group>"; };
 		12463473C604C9D338505D32 /* LoopStatusHUDView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = LoopStatusHUDView.swift; sourceTree = "<group>"; };
 		1918333A26ADA46800F45722 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		1927C8E92744611700347C69 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -504,7 +525,6 @@
 		22963BD06A9C83959D4914E4 /* NotificationsConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationsConfigRootView.swift; sourceTree = "<group>"; };
 		250FF4DD80E99A642B8DB8FE /* LibreTransmitterUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LibreTransmitterUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		26AB316318BA347BA40D1B4A /* LoopStatusRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LoopStatusRootView.swift; path = FreeAPS/Sources/Modules/LoopStatus/LoopStatusRootView.swift; sourceTree = "<group>"; };
-		2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpConfigRootView.swift; sourceTree = "<group>"; };
 		2F2A13DF0EDEEEDC4106AA2A /* NightscoutConfigDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NightscoutConfigDataFlow.swift; sourceTree = "<group>"; };
 		3260468377DA9DB4DEE9AF6D /* NotificationsConfigDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NotificationsConfigDataFlow.swift; sourceTree = "<group>"; };
 		367DED0BE3B120D21895F8DE /* OmniBLE.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OmniBLE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -611,13 +631,11 @@
 		38AEE75125F022080013F05B /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		38AEE75625F0F18E0013F05B /* CarbsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbsStorage.swift; sourceTree = "<group>"; };
 		38B4F3AE25E2979F00E76A18 /* IndexedCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexedCollection.swift; sourceTree = "<group>"; };
-		38B4F3C225E2A20B00E76A18 /* PumpSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSetupView.swift; sourceTree = "<group>"; };
 		38B4F3C525E5017E00E76A18 /* NotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationCenter.swift; sourceTree = "<group>"; };
 		38B4F3C825E502E100E76A18 /* SwiftNotificationCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftNotificationCenter.swift; sourceTree = "<group>"; };
 		38B4F3C925E502E100E76A18 /* WeakObjectSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakObjectSet.swift; sourceTree = "<group>"; };
 		38B4F3CC25E5031100E76A18 /* Broadcaster.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Broadcaster.swift; sourceTree = "<group>"; };
 		38BF021625E7CBBC00579895 /* PumpManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpManagerExtensions.swift; sourceTree = "<group>"; };
-		38BF021A25E7D06400579895 /* PumpSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSettingsView.swift; sourceTree = "<group>"; };
 		38BF021C25E7E3AF00579895 /* Reservoir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reservoir.swift; sourceTree = "<group>"; };
 		38BF021E25E7F0DE00579895 /* DeviceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDataManager.swift; sourceTree = "<group>"; };
 		38C4D33625E9A1A200D30B77 /* DispatchQueue+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DispatchQueue+Extensions.swift"; sourceTree = "<group>"; };
@@ -718,6 +736,7 @@
 		6F8BA8533F56BC55748CA877 /* PreferencesEditorProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PreferencesEditorProvider.swift; sourceTree = "<group>"; };
 		72778B68C3004F71F6E79BDC /* PumpSettingsEditorStateModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorStateModel.swift; sourceTree = "<group>"; };
 		79BDA519C9B890FD9A5DFCF3 /* ISFEditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ISFEditorDataFlow.swift; sourceTree = "<group>"; };
+		7AFEFDD64DF870B94BFAC1BB /* InteractiveInsulinCurveEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InteractiveInsulinCurveEditor.swift; sourceTree = "<group>"; };
 		7B9FCB70C053D36081A677EC /* DefaultBluetoothProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = DefaultBluetoothProvider.swift; sourceTree = "<group>"; };
 		7E22146D3DF4853786C78132 /* CREditorDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CREditorDataFlow.swift; sourceTree = "<group>"; };
 		80389CCBE5F931F95A3B5286 /* LoopOnboardingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LoopOnboardingKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -751,12 +770,34 @@
 		B606CEAC2E800101009CE30A /* CarbMathExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarbMathExtensions.swift; path = Carbs/CarbMathExtensions.swift; sourceTree = "<group>"; };
 		B606CEAD2E800101009CE30A /* CarbStoreAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CarbStoreAdapter.swift; path = Carbs/CarbStoreAdapter.swift; sourceTree = "<group>"; };
 		B606CEAE2E800101009CE30A /* NightscoutCarbSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NightscoutCarbSync.swift; path = Carbs/NightscoutCarbSync.swift; sourceTree = "<group>"; };
+		B6272A092E816614004D74FE /* autosens.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = autosens.js; sourceTree = "<group>"; };
+		B6272A0A2E816614004D74FE /* autotune-core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "autotune-core.js"; sourceTree = "<group>"; };
+		B6272A0B2E816614004D74FE /* autotune-prep.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "autotune-prep.js"; sourceTree = "<group>"; };
+		B6272A0C2E816614004D74FE /* basal-set-temp.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "basal-set-temp.js"; sourceTree = "<group>"; };
+		B6272A0D2E816614004D74FE /* determine-basal.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "determine-basal.js"; sourceTree = "<group>"; };
+		B6272A0E2E816614004D74FE /* glucose-get-last.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "glucose-get-last.js"; sourceTree = "<group>"; };
+		B6272A0F2E816614004D74FE /* iob.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = iob.js; sourceTree = "<group>"; };
+		B6272A102E816614004D74FE /* meal.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = meal.js; sourceTree = "<group>"; };
+		B6272A112E816614004D74FE /* profile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = profile.js; sourceTree = "<group>"; };
+		B6272A132E816614004D74FE /* determine_basal.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = determine_basal.js; sourceTree = "<group>"; };
+		B6272A152E816614004D74FE /* autosens.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = autosens.js; sourceTree = "<group>"; };
+		B6272A162E816614004D74FE /* autotune-core.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "autotune-core.js"; sourceTree = "<group>"; };
+		B6272A172E816614004D74FE /* autotune-prep.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "autotune-prep.js"; sourceTree = "<group>"; };
+		B6272A182E816614004D74FE /* determine-basal.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "determine-basal.js"; sourceTree = "<group>"; };
+		B6272A192E816614004D74FE /* iob.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = iob.js; sourceTree = "<group>"; };
+		B6272A1A2E816614004D74FE /* log.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = log.js; sourceTree = "<group>"; };
+		B6272A1B2E816614004D74FE /* meal.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = meal.js; sourceTree = "<group>"; };
+		B6272A1C2E816614004D74FE /* profile.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = profile.js; sourceTree = "<group>"; };
 		B62F7FD72E80246A002B4DB4 /* LoopUIKitGlucoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopUIKitGlucoseChartView.swift; sourceTree = "<group>"; };
 		B62F7FD92E8027F2002B4DB4 /* LoopUIKitSecondaryChartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopUIKitSecondaryChartsView.swift; sourceTree = "<group>"; };
 		B63D5AF42E800ABF00DD1DE6 /* AddCarbsLoopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarbsLoopView.swift; sourceTree = "<group>"; };
 		B63D5AF62E800ABF00DD1DE6 /* AddCarbsLoopViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCarbsLoopViewModel.swift; sourceTree = "<group>"; };
 		B63D5AFA2E800ABF00DD1DE6 /* DashboardRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardRootView.swift; sourceTree = "<group>"; };
 		B63D5AFC2E800ABF00DD1DE6 /* DashboardStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardStateModel.swift; sourceTree = "<group>"; };
+		B657CDC32E8088F1009AC2D1 /* LoopEngineAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoopEngineAdapter.swift; path = APS/LoopEngineAdapter.swift; sourceTree = "<group>"; };
+		B657CDCA2E80C342009AC2D1 /* PumpConfigRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpConfigRootView.swift; sourceTree = "<group>"; };
+		B657CDCB2E80C342009AC2D1 /* PumpSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSettingsView.swift; sourceTree = "<group>"; };
+		B657CDCC2E80C342009AC2D1 /* PumpSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PumpSetupView.swift; sourceTree = "<group>"; };
 		B65A2CDE2E7EE5F800A55E8E /* AppRuntimeConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppRuntimeConfig.swift; path = Utils/AppRuntimeConfig.swift; sourceTree = "<group>"; };
 		B65A2CDF2E7EE5F800A55E8E /* FormatterCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormatterCache.swift; path = Utils/FormatterCache.swift; sourceTree = "<group>"; };
 		B66124F52E7BC815006EBC31 /* LoopSupportKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopSupportKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -766,6 +807,7 @@
 		B66F44F42E7CFA6700840503 /* AddGlucoseStateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AddGlucoseStateModel.swift; path = AddGlucose/AddGlucoseStateModel.swift; sourceTree = "<group>"; };
 		B6A675592E7F247E00A36496 /* MealCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCalculator.swift; sourceTree = "<group>"; };
 		B6A6755B2E7F2C8900A36496 /* MealParityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealParityTests.swift; sourceTree = "<group>"; };
+		B6A8B9B92E80D79D007B05F7 /* IOBPredictorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IOBPredictorService.swift; path = IOBPredictor/IOBPredictorService.swift; sourceTree = "<group>"; };
 		B6EE8B6E2E80376B00111FE9 /* SMBAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SMBAdapter.swift; path = SMB/SMBAdapter.swift; sourceTree = "<group>"; };
 		B8C7F882606FF83A21BE00D8 /* PumpSettingsEditorRootView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PumpSettingsEditorRootView.swift; sourceTree = "<group>"; };
 		B9B5C0607505A38F256BF99A /* CGMDataFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CGMDataFlow.swift; sourceTree = "<group>"; };
@@ -839,7 +881,7 @@
 				190B3E6BC749531D0FC5D505 /* RileyLinkKitUI.framework in Frameworks */,
 				44D38FE03D5EF6B73FEB99D4 /* MedtrumKit.framework in Frameworks */,
 				F8D3FC83AEED92594B9C2526 /* OmniBLE.framework in Frameworks */,
-				4D2C8351A6975A74F315D2ED /* BuildFile in Frameworks */,
+				4D2C8351A6975A74F315D2ED /* (null) in Frameworks */,
 				603CC79D7A4E626463A592BD /* LoopOnboardingKit.framework in Frameworks */,
 				9F62CF33A1D7064D134FC174 /* LoopOnboardingKitUI.framework in Frameworks */,
 				0F1A65C4C53176707D3D455C /* LibreTransmitter.framework in Frameworks */,
@@ -1109,6 +1151,7 @@
 				0AFF910D830385303EE1135F /* Carbs */,
 				D307180BB26BDBFB4618A74F /* SMB */,
 				46021BDD1C22553BF6195CB0 /* APS */,
+				C3C1FBFE277D123201C3729F /* IOBPredictor */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -1176,6 +1219,7 @@
 		3811DED425C9E1E300A708ED /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B6272A1E2E816614004D74FE /* javascript */,
 				388E597125AD9CF10019842D /* json */,
 				3811DEC725C9DA7300A708ED /* FreeAPS.entitlements */,
 				388E596425AD948E0019842D /* Info.plist */,
@@ -1629,7 +1673,7 @@
 		46021BDD1C22553BF6195CB0 /* APS */ = {
 			isa = PBXGroup;
 			children = (
-				12387BCB441FF5A38095D2C0 /* LoopEngineAdapter.swift */,
+				B657CDC32E8088F1009AC2D1 /* LoopEngineAdapter.swift */,
 			);
 			name = APS;
 			sourceTree = "<group>";
@@ -1670,16 +1714,6 @@
 				84BDC840A57C65A1E6F9F780 /* View */,
 			);
 			path = ManualTempBasal;
-			sourceTree = "<group>";
-		};
-		510CCF29FD3216C5BBC49A15 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				2AD22C985B79A2F0D2EA3D9D /* PumpConfigRootView.swift */,
-				38B4F3C225E2A20B00E76A18 /* PumpSetupView.swift */,
-				38BF021A25E7D06400579895 /* PumpSettingsView.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		54946647FDCFE43028F60511 /* View */ = {
@@ -1755,10 +1789,10 @@
 		99C01B871ACAB3F32CE755C7 /* PumpConfig */ = {
 			isa = PBXGroup;
 			children = (
+				B657CDCD2E80C342009AC2D1 /* View */,
 				AF65DA88F972B56090AD6AC3 /* PumpConfigDataFlow.swift */,
 				A8630D58BDAD6D9C650B9B39 /* PumpConfigProvider.swift */,
 				3F60E97100041040446F44E7 /* PumpConfigStateModel.swift */,
-				510CCF29FD3216C5BBC49A15 /* View */,
 			);
 			path = PumpConfig;
 			sourceTree = "<group>";
@@ -1804,6 +1838,55 @@
 			path = AddTempTarget;
 			sourceTree = "<group>";
 		};
+		B6272A122E816614004D74FE /* bundle */ = {
+			isa = PBXGroup;
+			children = (
+				B6272A092E816614004D74FE /* autosens.js */,
+				B6272A0A2E816614004D74FE /* autotune-core.js */,
+				B6272A0B2E816614004D74FE /* autotune-prep.js */,
+				B6272A0C2E816614004D74FE /* basal-set-temp.js */,
+				B6272A0D2E816614004D74FE /* determine-basal.js */,
+				B6272A0E2E816614004D74FE /* glucose-get-last.js */,
+				B6272A0F2E816614004D74FE /* iob.js */,
+				B6272A102E816614004D74FE /* meal.js */,
+				B6272A112E816614004D74FE /* profile.js */,
+			);
+			path = bundle;
+			sourceTree = "<group>";
+		};
+		B6272A142E816614004D74FE /* middleware */ = {
+			isa = PBXGroup;
+			children = (
+				B6272A132E816614004D74FE /* determine_basal.js */,
+			);
+			path = middleware;
+			sourceTree = "<group>";
+		};
+		B6272A1D2E816614004D74FE /* prepare */ = {
+			isa = PBXGroup;
+			children = (
+				B6272A152E816614004D74FE /* autosens.js */,
+				B6272A162E816614004D74FE /* autotune-core.js */,
+				B6272A172E816614004D74FE /* autotune-prep.js */,
+				B6272A182E816614004D74FE /* determine-basal.js */,
+				B6272A192E816614004D74FE /* iob.js */,
+				B6272A1A2E816614004D74FE /* log.js */,
+				B6272A1B2E816614004D74FE /* meal.js */,
+				B6272A1C2E816614004D74FE /* profile.js */,
+			);
+			path = prepare;
+			sourceTree = "<group>";
+		};
+		B6272A1E2E816614004D74FE /* javascript */ = {
+			isa = PBXGroup;
+			children = (
+				B6272A122E816614004D74FE /* bundle */,
+				B6272A142E816614004D74FE /* middleware */,
+				B6272A1D2E816614004D74FE /* prepare */,
+			);
+			path = javascript;
+			sourceTree = "<group>";
+		};
 		B63D5AF52E800ABF00DD1DE6 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1836,6 +1919,7 @@
 				B63D5AFA2E800ABF00DD1DE6 /* DashboardRootView.swift */,
 				12463473C604C9D338505D32 /* LoopStatusHUDView.swift */,
 				ABC04AAB98E467D37DAF9531 /* LoopActionButtonsView.swift */,
+				0B7797537B1FEC37ABB6EAE9 /* IOBForecastView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1848,6 +1932,17 @@
 				B63D5AFC2E800ABF00DD1DE6 /* DashboardStateModel.swift */,
 			);
 			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		B657CDCD2E80C342009AC2D1 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				B657CDCA2E80C342009AC2D1 /* PumpConfigRootView.swift */,
+				B657CDCB2E80C342009AC2D1 /* PumpSettingsView.swift */,
+				B657CDCC2E80C342009AC2D1 /* PumpSetupView.swift */,
+				7AFEFDD64DF870B94BFAC1BB /* InteractiveInsulinCurveEditor.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		B9488883C59C31550E0B4CEC /* View */ = {
@@ -1878,6 +1973,14 @@
 				B9488883C59C31550E0B4CEC /* View */,
 			);
 			path = Bolus;
+			sourceTree = "<group>";
+		};
+		C3C1FBFE277D123201C3729F /* IOBPredictor */ = {
+			isa = PBXGroup;
+			children = (
+				B6A8B9B92E80D79D007B05F7 /* IOBPredictorService.swift */,
+			);
+			name = IOBPredictor;
 			sourceTree = "<group>";
 		};
 		D307180BB26BDBFB4618A74F /* SMB */ = {
@@ -2197,6 +2300,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6272A1F2E816614004D74FE /* determine_basal.js in Resources */,
+				B6272A202E816614004D74FE /* log.js in Resources */,
+				B6272A212E816614004D74FE /* autosens.js in Resources */,
+				B6272A222E816614004D74FE /* autosens.js in Resources */,
+				B6272A232E816614004D74FE /* determine-basal.js in Resources */,
+				B6272A242E816614004D74FE /* meal.js in Resources */,
+				B6272A252E816614004D74FE /* autotune-core.js in Resources */,
+				B6272A262E816614004D74FE /* iob.js in Resources */,
+				B6272A272E816614004D74FE /* iob.js in Resources */,
+				B6272A282E816614004D74FE /* autotune-prep.js in Resources */,
+				B6272A292E816614004D74FE /* profile.js in Resources */,
+				B6272A2A2E816614004D74FE /* autotune-core.js in Resources */,
+				B6272A2B2E816614004D74FE /* glucose-get-last.js in Resources */,
+				B6272A2C2E816614004D74FE /* basal-set-temp.js in Resources */,
+				B6272A2D2E816614004D74FE /* determine-basal.js in Resources */,
+				B6272A2E2E816614004D74FE /* profile.js in Resources */,
+				B6272A2F2E816614004D74FE /* autotune-prep.js in Resources */,
+				B6272A302E816614004D74FE /* meal.js in Resources */,
 				388E596025AD948E0019842D /* Assets.xcassets in Resources */,
 				198377D2266BFFF6004DE65E /* Localizable.strings in Resources */,
 				38DF178D27733E6800B3528F /* snow.sks in Resources */,
@@ -2279,7 +2400,6 @@
 				B63D5B022E800ABF00DD1DE6 /* AddCarbsLoopView.swift in Sources */,
 				F90692CF274B999A0037068D /* HealthKitDataFlow.swift in Sources */,
 				3862CC2E2743F9F700BF832C /* CalendarManager.swift in Sources */,
-				38B4F3C325E2A20B00E76A18 /* PumpSetupView.swift in Sources */,
 				38E4453C274E411700EC9A94 /* Disk+Codable.swift in Sources */,
 				382C134B25F14E3700715CE1 /* BGTargets.swift in Sources */,
 				38AEE75725F0F18E0013F05B /* CarbsStorage.swift in Sources */,
@@ -2372,7 +2492,6 @@
 				3811DE5F25C9D4D500A708ED /* ProgressBar.swift in Sources */,
 				38E87408274F9AD000975559 /* UserNotificationsManager.swift in Sources */,
 				38BF021D25E7E3AF00579895 /* Reservoir.swift in Sources */,
-				38BF021B25E7D06400579895 /* PumpSettingsView.swift in Sources */,
 				3862CC05273D152B00BF832C /* CalibrationService.swift in Sources */,
 				3811DEEA25CA063400A708ED /* SyncAccess.swift in Sources */,
 				38BF021F25E7F0DE00579895 /* DeviceDataManager.swift in Sources */,
@@ -2401,10 +2520,12 @@
 				9825E5E923F0B8FA80C8C7C7 /* NightscoutConfigStateModel.swift in Sources */,
 				38A43598262E0E4900E80935 /* FetchAnnouncementsManager.swift in Sources */,
 				642F76A05A4FF530463A9FD0 /* NightscoutConfigRootView.swift in Sources */,
+				B657CDCE2E80C342009AC2D1 /* PumpConfigRootView.swift in Sources */,
+				B657CDD02E80C342009AC2D1 /* PumpSetupView.swift in Sources */,
+				B657CDD12E80C342009AC2D1 /* PumpSettingsView.swift in Sources */,
 				AD3D2CD42CD01B9EB8F26522 /* PumpConfigDataFlow.swift in Sources */,
 				53F2382465BF74DB1A967C8B /* PumpConfigProvider.swift in Sources */,
 				5D16287A969E64D18CE40E44 /* PumpConfigStateModel.swift in Sources */,
-				E974172296125A5AE99E634C /* PumpConfigRootView.swift in Sources */,
 				448B6FCB252BD4796E2960C0 /* PumpSettingsEditorDataFlow.swift in Sources */,
 				38E44536274E411700EC9A94 /* Disk.swift in Sources */,
 				2BE9A6FA20875F6F4F9CD461 /* PumpSettingsEditorProvider.swift in Sources */,
@@ -2412,6 +2533,7 @@
 				A0B8EC8CC5CD1DD237D1BCD2 /* PumpSettingsEditorRootView.swift in Sources */,
 				E06B911A275B5EEA003C04B6 /* Array+Extension.swift in Sources */,
 				38EA0600262091870064E39B /* BolusProgressViewStyle.swift in Sources */,
+				B6A8B9BA2E80D79D007B05F7 /* IOBPredictorService.swift in Sources */,
 				389ECDFE2601061500D86C4F /* View+Snapshot.swift in Sources */,
 				38FEF3FE2738083E00574A46 /* CGMProvider.swift in Sources */,
 				38E98A3725F5509500C0CED0 /* String+Extensions.swift in Sources */,
@@ -2456,6 +2578,7 @@
 				38E8755427561E9800975559 /* DataFlow.swift in Sources */,
 				38E44522274E3DDC00EC9A94 /* NetworkReachabilityManager.swift in Sources */,
 				D2165E9D78EFF692C1DED1C6 /* AddTempTargetDataFlow.swift in Sources */,
+				B657CDC42E8088F1009AC2D1 /* LoopEngineAdapter.swift in Sources */,
 				38E4451E274DB04600EC9A94 /* AppDelegate.swift in Sources */,
 				5BFA1C2208114643B77F8CEB /* AddTempTargetProvider.swift in Sources */,
 				E0D4F80527513ECF00BDF1FE /* HealthKitSample.swift in Sources */,
@@ -2512,7 +2635,8 @@
 				62B27F96C8B81F8BF6EFBF5A /* LoopActionButtonsView.swift in Sources */,
 				3A9E4D246658C6FB2A34B87E /* ChartData.swift in Sources */,
 				475C523F6756FD31130D4EF6 /* LoopStatusRootView.swift in Sources */,
-				86CFFE8D3052B4EED33E7741 /* LoopEngineAdapter.swift in Sources */,
+				C1C9D57492DFF022DD9A09F0 /* InteractiveInsulinCurveEditor.swift in Sources */,
+				34380C57497BAFB5C6BD2B15 /* IOBForecastView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

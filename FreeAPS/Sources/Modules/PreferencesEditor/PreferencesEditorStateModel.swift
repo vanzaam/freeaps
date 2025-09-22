@@ -223,6 +223,15 @@ extension PreferencesEditor { // swift-format-ignore: Cannot find type 'Preferen
                         comment: "Carb SMB Safety Multiplier"
                     ),
                     settable: self
+                ),
+                Field(
+                    displayName: "🧪 TEST SETTING (Удалить позже)",
+                    type: .boolean(keypath: \.testSettingStub),
+                    infoText: NSLocalizedString(
+                        "Тестовая настройка для проверки сохранения. Будет удалена после тестирования.",
+                        comment: "Test Setting Stub"
+                    ),
+                    settable: self
                 )
             ]
 

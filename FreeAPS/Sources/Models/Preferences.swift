@@ -48,6 +48,10 @@ struct Preferences: JSON {
     var carbSMBMaxDose: Decimal = 1.0
     var carbSMBSafetyMultiplier: Decimal = 0.8
 
+    // MARK: - Test Setting (будет удалена после тестирования)
+
+    var testSettingStub: Bool = false
+
     var timestamp: Date?
 }
 
@@ -92,6 +96,73 @@ extension Preferences {
         case carbsReqThreshold
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
+
+        // MARK: - Loop CarbStore SMB Settings
+
+        case enableLoopCarbSMB = "enable_loop_carb_smb"
+        case carbSMBMinDelta = "carb_smb_min_delta"
+        case carbSMBMaxDose = "carb_smb_max_dose"
+        case carbSMBSafetyMultiplier = "carb_smb_safety_multiplier"
+        case testSettingStub = "test_setting_stub"
+        case timestamp
+    }
+}
+
+extension Preferences {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        // Декодируем стандартные поля
+        maxIOB = try container.decode(Decimal.self, forKey: .maxIOB)
+        maxDailySafetyMultiplier = try container.decode(Decimal.self, forKey: .maxDailySafetyMultiplier)
+        currentBasalSafetyMultiplier = try container.decode(Decimal.self, forKey: .currentBasalSafetyMultiplier)
+        autosensMax = try container.decode(Decimal.self, forKey: .autosensMax)
+        autosensMin = try container.decode(Decimal.self, forKey: .autosensMin)
+        rewindResetsAutosens = try container.decode(Bool.self, forKey: .rewindResetsAutosens)
+        highTemptargetRaisesSensitivity = try container.decode(Bool.self, forKey: .highTemptargetRaisesSensitivity)
+        lowTemptargetLowersSensitivity = try container.decode(Bool.self, forKey: .lowTemptargetLowersSensitivity)
+        sensitivityRaisesTarget = try container.decode(Bool.self, forKey: .sensitivityRaisesTarget)
+        resistanceLowersTarget = try container.decode(Bool.self, forKey: .resistanceLowersTarget)
+        advTargetAdjustments = try container.decode(Bool.self, forKey: .advTargetAdjustments)
+        exerciseMode = try container.decode(Bool.self, forKey: .exerciseMode)
+        halfBasalExerciseTarget = try container.decode(Decimal.self, forKey: .halfBasalExerciseTarget)
+        maxCOB = try container.decode(Decimal.self, forKey: .maxCOB)
+        wideBGTargetRange = try container.decode(Bool.self, forKey: .wideBGTargetRange)
+        skipNeutralTemps = try container.decode(Bool.self, forKey: .skipNeutralTemps)
+        unsuspendIfNoTemp = try container.decode(Bool.self, forKey: .unsuspendIfNoTemp)
+        bolusSnoozeDIADivisor = try container.decode(Decimal.self, forKey: .bolusSnoozeDIADivisor)
+        min5mCarbimpact = try container.decode(Decimal.self, forKey: .min5mCarbimpact)
+        autotuneISFAdjustmentFraction = try container.decode(Decimal.self, forKey: .autotuneISFAdjustmentFraction)
+        remainingCarbsFraction = try container.decode(Decimal.self, forKey: .remainingCarbsFraction)
+        remainingCarbsCap = try container.decode(Decimal.self, forKey: .remainingCarbsCap)
+        enableUAM = try container.decode(Bool.self, forKey: .enableUAM)
+        a52RiskEnable = try container.decode(Bool.self, forKey: .a52RiskEnable)
+        enableSMBWithCOB = try container.decode(Bool.self, forKey: .enableSMBWithCOB)
+        enableSMBWithTemptarget = try container.decode(Bool.self, forKey: .enableSMBWithTemptarget)
+        enableSMBAlways = try container.decode(Bool.self, forKey: .enableSMBAlways)
+        enableSMBAfterCarbs = try container.decode(Bool.self, forKey: .enableSMBAfterCarbs)
+        allowSMBWithHighTemptarget = try container.decode(Bool.self, forKey: .allowSMBWithHighTemptarget)
+        maxSMBBasalMinutes = try container.decode(Decimal.self, forKey: .maxSMBBasalMinutes)
+        maxUAMSMBBasalMinutes = try container.decode(Decimal.self, forKey: .maxUAMSMBBasalMinutes)
+        smbInterval = try container.decode(Decimal.self, forKey: .smbInterval)
+        bolusIncrement = try container.decode(Decimal.self, forKey: .bolusIncrement)
+        curve = try container.decode(InsulinCurve.self, forKey: .curve)
+        useCustomPeakTime = try container.decode(Bool.self, forKey: .useCustomPeakTime)
+        insulinPeakTime = try container.decode(Decimal.self, forKey: .insulinPeakTime)
+        carbsReqThreshold = try container.decode(Decimal.self, forKey: .carbsReqThreshold)
+        noisyCGMTargetMultiplier = try container.decode(Decimal.self, forKey: .noisyCGMTargetMultiplier)
+        suspendZerosIOB = try container.decode(Bool.self, forKey: .suspendZerosIOB)
+
+        // Безопасно декодируем новые Loop CarbStore SMB поля (с fallback на default значения)
+        enableLoopCarbSMB = try container.decodeIfPresent(Bool.self, forKey: .enableLoopCarbSMB) ?? false
+        carbSMBMinDelta = try container.decodeIfPresent(Decimal.self, forKey: .carbSMBMinDelta) ?? 5.0
+        carbSMBMaxDose = try container.decodeIfPresent(Decimal.self, forKey: .carbSMBMaxDose) ?? 1.0
+        carbSMBSafetyMultiplier = try container.decodeIfPresent(Decimal.self, forKey: .carbSMBSafetyMultiplier) ?? 0.8
+
+        // Тестовая заглушка (будет удалена)
+        testSettingStub = try container.decodeIfPresent(Bool.self, forKey: .testSettingStub) ?? false
+
+        timestamp = try container.decodeIfPresent(Date.self, forKey: .timestamp)
     }
 }
 

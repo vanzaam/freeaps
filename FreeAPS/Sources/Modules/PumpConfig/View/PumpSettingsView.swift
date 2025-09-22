@@ -7,7 +7,7 @@ import UIKit
 extension PumpConfig {
     struct PumpSettingsView: UIViewControllerRepresentable {
         let pumpManager: PumpManagerUI
-        weak var completionDelegate: CompletionDelegate?
+        var completionDelegate: CompletionDelegate?
 
         func makeUIViewController(context _: UIViewControllerRepresentableContext<PumpSettingsView>) -> UIViewController {
             // Set high priority refresh when user opens pump settings
@@ -47,5 +47,12 @@ extension PumpConfig {
         }
 
         func updateUIViewController(_: UIViewController, context _: UIViewControllerRepresentableContext<PumpSettingsView>) {}
+    }
+
+    // Простая обёртка для закрытия fullScreenCover по завершению настроек
+    final class PumpSettingsCompletion: NSObject, CompletionDelegate {
+        private let onComplete: () -> Void
+        init(_ onComplete: @escaping () -> Void) { self.onComplete = onComplete }
+        func completionNotifyingDidComplete(_: CompletionNotifying) { onComplete() }
     }
 }

@@ -33,10 +33,24 @@ extension PumpConfig {
                         Button("Add Simulator") { state.addPump(.simulator) }
                     }
                 }
+                if let provider = state.provider, let pumpManager = provider.apsManager.pumpManager {
+                    Section(header: Text("Insulin")) {
+                        HStack {
+                            Text("Insulin type")
+                            Spacer()
+                            Text(state.insulinTypeDisplay(for: pumpManager))
+                                .foregroundColor(.secondary)
+                        }
+                        Button("Interactive insulin curve editor") { state.showInteractiveInsulinCurve = true }
+                    }
+                }
             }
             .onAppear(perform: configureView)
             .navigationTitle("Pump config")
             .navigationBarTitleDisplayMode(.automatic)
+            .sheet(isPresented: $state.showInteractiveInsulinCurve) {
+                InteractiveInsulinCurveEditor(resolver: resolver)
+            }
             .fullScreenCover(isPresented: $state.setupPump, onDismiss: {}) {
                 if let pumpManager = state.provider.apsManager.pumpManager {
                     NavigationView {

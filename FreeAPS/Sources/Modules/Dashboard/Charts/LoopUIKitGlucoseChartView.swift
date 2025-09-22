@@ -29,7 +29,8 @@ struct LoopUIKitGlucoseChartView: UIViewRepresentable {
 
     private func configure(view: ChartContainerView) {
         let now = Date()
-        let startDate = now.addingTimeInterval(-Double(timeRangeHours * 3600))
+        let startDate = now.addingTimeInterval(-6 * 3600) // 6 часов назад
+        let endDate = now.addingTimeInterval(6 * 3600) // 6 часов вперед
 
         // Colors to match Loop style
         let colors = ChartColorPalette(
@@ -70,7 +71,12 @@ struct LoopUIKitGlucoseChartView: UIViewRepresentable {
                 quantity: HKQuantity(unit: unit, doubleValue: item.value.doubleValue)
             )
         }
-        let predictedValues: [GlucoseValue] = predicted.map { item in
+
+        // Фильтруем прогноз максимум на 6 часов вперед от текущего времени
+        let maxForecastTime = endDate // 6 часов вперед от now
+        let filteredPredicted = predicted.filter { $0.date <= maxForecastTime }
+
+        let predictedValues: [GlucoseValue] = filteredPredicted.map { item in
             PredictedGlucoseValue(
                 startDate: item.date,
                 quantity: HKQuantity(unit: unit, doubleValue: item.value.doubleValue)
@@ -96,8 +102,8 @@ struct LoopUIKitGlucoseChartView: UIViewRepresentable {
             traitCollection: UITraitCollection.current
         )
         manager.startDate = startDate
-        manager.maxEndDate = now
-        manager.updateEndDate(now)
+        manager.maxEndDate = endDate
+        manager.updateEndDate(endDate)
         // Prepare X axis and caches before asking for chart
         manager.prerender()
 

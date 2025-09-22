@@ -253,33 +253,50 @@ final class BaseAPSManager: APSManager, Injectable {
         let now = Date()
         let temp = currentTemp(date: now)
 
-        let mainPublisher = makeProfiles()
-            .flatMap { _ in self.autosens() }
-            .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ -> AnyPublisher<Suggestion?, Never> in
-                if Bundle.main.object(forInfoDictionaryKey: "USE_LOOP_ENGINE") as? String == "YES" {
-                    debug(.apsManager, "Using LoopEngineAdapter (stub) instead of JS")
-                    return self.loopEngine.determine(now: now)
+        let baseSuggestionPublisher: AnyPublisher<Suggestion?, Never>
+        if AppRuntimeConfig.useLoopEngine {
+            // Short-circuit all JS paths to avoid Script bundle loading
+            debug(
+                .apsManager,
+                "🔄 Using LoopEngineAdapter (JS disabled) - AppRuntimeConfig.useLoopEngine=\(AppRuntimeConfig.useLoopEngine)"
+            )
+            baseSuggestionPublisher = loopEngine
+                .determineBasal(currentTemp: temp, clock: now)
+                .eraseToAnyPublisher()
+        } else {
+            debug(.apsManager, "🔄 Using JavaScript OpenAPS - AppRuntimeConfig.useLoopEngine=\(AppRuntimeConfig.useLoopEngine)")
+            baseSuggestionPublisher = makeProfiles()
+                .flatMap { _ in self.autosens() }
+                .flatMap { _ in self.dailyAutotune() }
+                .flatMap { _ -> AnyPublisher<Suggestion?, Never> in
+                    self.openAPS.determineBasal(currentTemp: temp, clock: now).eraseToAnyPublisher()
                 }
-                return self.openAPS.determineBasal(currentTemp: temp, clock: now)
-            }
+                .eraseToAnyPublisher()
+        }
+
+        let mainPublisher: AnyPublisher<Bool, Never> = baseSuggestionPublisher
             .flatMap { suggestion -> AnyPublisher<Suggestion?, Never> in
                 guard let suggestion = suggestion else {
                     return Just(nil).eraseToAnyPublisher()
                 }
-
                 // Интеграция SMB адаптера
                 return self.enhanceSuggestionWithSMB(suggestion: suggestion, at: now)
             }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
+                    // Build and persist OpenAPS-style suggested.json based on Loop output
+                    let toSave = self.augmentSuggestionForStorage(suggestion)
+                    self.storage.save(toSave, as: OpenAPS.Enact.suggested)
+
+                    // mark loop finished successfully before notifying observers
+                    self.isLooping.send(false)
+                    self.lastLoopDate = Date()
                     DispatchQueue.main.async {
                         self.broadcaster.notify(SuggestionObserver.self, on: .main) {
-                            $0.suggestionDidUpdate(suggestion)
+                            $0.suggestionDidUpdate(toSave)
                         }
                     }
                 }
-
                 return suggestion != nil
             }
             .eraseToAnyPublisher()
@@ -610,9 +627,49 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             guard let rate = suggested.rate, let duration = suggested.duration else {
-                // It is OK, no temp required
-                debug(.apsManager, "No temp required")
-                return Just(()).setFailureType(to: Error.self)
+                // No temp recommended by algorithm → enforce neutral temp basal to refresh VBS
+                let now = Date()
+                let neutralRate = self.currentProfileBasalRate(at: now)
+                let appMaxBasal = Double(self.settingsManager.pumpSettings.maxBasal)
+                let clampedRate = min(neutralRate, appMaxBasal)
+                let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: clampedRate)
+                let neutralDuration: TimeInterval = 30 * 60
+                debug(.apsManager, "Enact neutral temp basal \(roundedRate) U/h for 30 min")
+                return pump.enactTempBasal(unitsPerHour: roundedRate, for: neutralDuration)
+                    .map { _ in
+                        let temp = TempBasal(
+                            duration: Int(neutralDuration / 60),
+                            rate: Decimal(roundedRate),
+                            temp: .absolute,
+                            timestamp: Date()
+                        )
+                        self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
+
+                        // Ensure suggested contains neutral temp for Nightscout openaps.js (rate/duration expected)
+                        if var suggestedStored = self.storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self) {
+                            let updated = Suggestion(
+                                reason: suggestedStored.reason,
+                                units: suggestedStored.units,
+                                insulinReq: suggestedStored.insulinReq,
+                                eventualBG: suggestedStored.eventualBG,
+                                sensitivityRatio: suggestedStored.sensitivityRatio,
+                                rate: Decimal(roundedRate),
+                                duration: Int(neutralDuration / 60),
+                                iob: suggestedStored.iob,
+                                cob: suggestedStored.cob,
+                                predictions: suggestedStored.predictions,
+                                deliverAt: suggestedStored.deliverAt ?? Date(),
+                                carbsReq: suggestedStored.carbsReq,
+                                temp: .absolute,
+                                bg: suggestedStored.bg,
+                                reservoir: suggestedStored.reservoir,
+                                timestamp: suggestedStored.timestamp ?? Date(),
+                                recieved: suggestedStored.recieved
+                            )
+                            self.storage.save(updated, as: OpenAPS.Enact.suggested)
+                        }
+                        return ()
+                    }
                     .eraseToAnyPublisher()
             }
             // Clamp by app-level maxBasal and round to pump-supported rate
@@ -632,7 +689,8 @@ final class BaseAPSManager: APSManager, Injectable {
             if let error = self.verifyStatus() {
                 return Fail(error: error).eraseToAnyPublisher()
             }
-            guard let units = suggested.units, units > 0 else {
+            // SAFETY: For Loop engine path, never enact auto-bolus here. SMBAdapter will decide boluses separately.
+            guard let units = suggested.units, units > 0, !AppRuntimeConfig.useLoopEngine else {
                 // It is OK, no bolus required
                 debug(.apsManager, "No bolus required")
                 return Just(()).setFailureType(to: Error.self)
@@ -683,7 +741,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private func reportEnacted(received: Bool) {
         if let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self), suggestion.deliverAt != nil {
-            var enacted = suggestion
+            var enacted = augmentSuggestionForStorage(suggestion)
             enacted.timestamp = Date()
             enacted.recieved = received
             storage.save(enacted, as: OpenAPS.Enact.enacted)
@@ -713,6 +771,62 @@ final class BaseAPSManager: APSManager, Injectable {
         processQueue.asyncAfter(deadline: .now() + 1) {
             self.bolusProgress.send(nil)
         }
+    }
+}
+
+// MARK: - Suggestion augmentation
+
+private extension BaseAPSManager {
+    func currentProfileBasalRate(at date: Date) -> Double {
+        // Load basal profile and compute active rate at time-of-day
+        let profile: [BasalProfileEntry] = storage
+            .retrieve(OpenAPS.Settings.basalProfile, as: [BasalProfileEntry].self)
+            ?? [BasalProfileEntry(start: "00:00", minutes: 0, rate: 1)]
+
+        let seconds = Calendar.current.dateComponents([.hour, .minute], from: date)
+        let minutesSinceMidnight = (seconds.hour ?? 0) * 60 + (seconds.minute ?? 0)
+
+        // Find last entry whose start <= now, fallback to first
+        let active = profile
+            .sorted { $0.minutes < $1.minutes }
+            .last { $0.minutes <= minutesSinceMidnight } ?? profile.sorted { $0.minutes < $1.minutes }.first!
+
+        return Double(truncating: active.rate as NSNumber)
+    }
+
+    func augmentSuggestionForStorage(_ s: Suggestion) -> Suggestion {
+        // Fill in BG and reservoir if missing to match OpenAPS schema
+        var bg = s.bg
+        if bg == nil, let last = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self)?.last?.glucose {
+            bg = Decimal(last)
+        }
+
+        var reservoir = s.reservoir
+        if reservoir == nil, let raw = storage.retrieveRaw(OpenAPS.Monitor.reservoir) {
+            reservoir = Decimal(from: raw)
+        }
+
+        var stamped = s
+        stamped.timestamp = s.timestamp ?? Date()
+        return Suggestion(
+            reason: stamped.reason,
+            units: stamped.units,
+            insulinReq: stamped.insulinReq,
+            eventualBG: stamped.eventualBG,
+            sensitivityRatio: stamped.sensitivityRatio,
+            rate: stamped.rate,
+            duration: stamped.duration,
+            iob: stamped.iob,
+            cob: stamped.cob,
+            predictions: stamped.predictions,
+            deliverAt: stamped.deliverAt ?? Date(),
+            carbsReq: stamped.carbsReq,
+            temp: stamped.temp,
+            bg: bg,
+            reservoir: reservoir,
+            timestamp: stamped.timestamp,
+            recieved: stamped.recieved
+        )
     }
 }
 
@@ -806,6 +920,9 @@ extension BaseAPSManager: PumpManagerStatusObserver {
         )
         storage.save(battery, as: OpenAPS.Monitor.battery)
         storage.save(status.pumpStatus, as: OpenAPS.Monitor.status)
+        if let insulinType = status.insulinType {
+            storage.save(insulinType.rawValue, as: OpenAPS.Settings.insulinType)
+        }
     }
 }
 

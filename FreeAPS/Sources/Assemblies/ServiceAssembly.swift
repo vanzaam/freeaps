@@ -21,6 +21,11 @@ final class ServiceAssembly: Assembly {
         container.register(UserNotificationsManager.self) { r in BaseUserNotificationsManager(resolver: r) }
         container.register(WatchManager.self) { r in BaseWatchManager(resolver: r) }
 
+        // MARK: - IOB Prediction Service
+
+        container.register(IOBPredictorService.self) { r in BaseIOBPredictorService(resolver: r) }
+            .inObjectScope(.container)
+
         // MARK: - Carb Management Services
 
         // CarbStore (LoopKit)

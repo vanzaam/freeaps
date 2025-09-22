@@ -15,7 +15,7 @@ final class OpenAPS {
     func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
         Future { promise in
             // Gate: if Loop engine is enabled, skip JS path
-            if Bundle.main.object(forInfoDictionaryKey: "USE_LOOP_ENGINE") as? String == "YES" {
+            if Foundation.Bundle.main.object(forInfoDictionaryKey: "USE_LOOP_ENGINE") as? String == "YES" {
                 warning(.openAPS, "JS determineBasal skipped: USE_LOOP_ENGINE is ON")
                 promise(.success(nil))
                 return

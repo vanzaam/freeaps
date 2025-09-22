@@ -3,76 +3,81 @@
 require 'xcodeproj'
 require 'fileutils'
 
-PROJECT_PATH = 'FreeAPS.xcodeproj'
-TARGET_NAME  = 'FreeAPS'
-SRC_DIR      = 'FreeAPS/Resources/javascript'
-DST_DIR      = '_backup/javascript'
+puts "🗂️  Moving JavaScript resources to backup..."
 
-def remove_build_phase_refs(target, file_ref)
-  # Remove from resources build phase
-  target.resources_build_phase.files.each do |bf|
-    if bf.file_ref && bf.file_ref == file_ref
-      bf.remove_from_project
+# Paths
+project_path = 'FreeAPS.xcodeproj'
+js_source_dir = 'FreeAPS/Resources/javascript'
+backup_dir = 'FreeAPS/Resources/_backup'
+backup_js_dir = File.join(backup_dir, 'javascript')
+
+# Create backup directory
+FileUtils.mkdir_p(backup_dir) unless Dir.exist?(backup_dir)
+
+# Move JavaScript files to backup
+if Dir.exist?(js_source_dir)
+    if Dir.exist?(backup_js_dir)
+        puts "📁 Removing existing backup JavaScript directory..."
+        FileUtils.rm_rf(backup_js_dir)
     end
-  end
-  # Also remove from sources if ever added mistakenly
-  target.sources_build_phase.files.each do |bf|
-    if bf.file_ref && bf.file_ref == file_ref
-      bf.remove_from_project
+    
+    puts "📦 Moving #{js_source_dir} to #{backup_js_dir}..."
+    FileUtils.mv(js_source_dir, backup_js_dir)
+    puts "✅ JavaScript files moved to backup"
+else
+    puts "⚠️  JavaScript directory not found: #{js_source_dir}"
+end
+
+# Open Xcode project
+begin
+    project = Xcodeproj::Project.open(project_path)
+    
+    # Find the main target
+    target = project.targets.find { |t| t.name == 'FreeAPS' }
+    raise "Target 'FreeAPS' not found!" unless target
+    
+    # Find Resources build phase
+    resources_phase = target.build_phases.find { |phase| phase.class == Xcodeproj::Project::Object::PBXResourcesBuildPhase }
+    raise "Resources build phase not found!" unless resources_phase
+    
+    # Remove JavaScript files from Resources build phase
+    js_files_removed = 0
+    resources_phase.files.to_a.each do |build_file|
+        file_ref = build_file.file_ref
+        next unless file_ref
+        
+        file_path = file_ref.real_path.to_s
+        if file_path.include?('javascript') && (file_path.end_with?('.js') || file_path.end_with?('.json'))
+            puts "🗑️  Removing from build phase: #{file_path}"
+            resources_phase.remove_file_reference(file_ref)
+            js_files_removed += 1
+        end
     end
-  end
-end
-
-puts "🔧 Moving JS resources to #{DST_DIR} and cleaning Xcode project..."
-
-project = Xcodeproj::Project.open(PROJECT_PATH)
-target  = project.targets.find { |t| t.name == TARGET_NAME }
-abort("❌ Target '#{TARGET_NAME}' not found") unless target
-
-# Ensure destination exists
-FileUtils.mkdir_p(DST_DIR)
-
-# Enumerate files on disk
-paths = Dir.glob(File.join(SRC_DIR, '**', '*')).select { |p| File.file?(p) }
-
-# Map and remove from project
-paths.each do |abs_path|
-  rel_path = abs_path
-  file_ref = project.files.find { |f| f.path == rel_path || f.real_path.to_s.end_with?(rel_path) rescue false }
-  if file_ref
-    puts " - Removing project ref: #{file_ref.path}"
-    remove_build_phase_refs(target, file_ref)
-    file_ref.remove_from_project
-  end
-end
-
-# Remove the group if exists
-group = project.main_group.find_subpath(SRC_DIR, false)
-if group
-  puts " - Removing group #{SRC_DIR}"
-  group.remove_from_project
-end
-
-project.save
-
-# Move files physically
-Dir.glob(File.join(SRC_DIR, '*')).each do |entry|
-  basename = File.basename(entry)
-  dest = File.join(DST_DIR, basename)
-  if File.exist?(dest)
-    # If folder exists, merge
-    if File.directory?(entry)
-      FileUtils.mkdir_p(dest)
-      FileUtils.cp_r(Dir[File.join(entry, '.{*,.*}')].reject { |f| File.basename(f) == '.' || File.basename(f) == '..' }, dest)
-      FileUtils.rm_rf(entry)
-    else
-      FileUtils.mv(entry, dest, force: true)
+    
+    # Remove JavaScript file references from project
+    js_refs_removed = 0
+    project.files.to_a.each do |file_ref|
+        file_path = file_ref.real_path.to_s
+        if file_path.include?('javascript') && (file_path.end_with?('.js') || file_path.end_with?('.json'))
+            puts "🗑️  Removing file reference: #{file_path}"
+            file_ref.remove_from_project
+            js_refs_removed += 1
+        end
     end
-  else
-    FileUtils.mv(entry, dest)
-  end
+    
+    # Save project
+    project.save
+    
+    puts "✅ Removed #{js_files_removed} JavaScript files from Resources build phase"
+    puts "✅ Removed #{js_refs_removed} JavaScript file references from project"
+    puts "✅ Project saved successfully"
+    
+rescue => e
+    puts "❌ Error processing Xcode project: #{e.message}"
+    puts e.backtrace.first(5)
+    exit 1
 end
 
-puts "✅ JS resources moved. Please clean build folder in Xcode if needed."
-
-
+puts "🎉 JavaScript resources successfully moved to backup and removed from build!"
+puts "📁 JavaScript files are now in: #{backup_js_dir}"
+puts "🚀 The app will no longer use JavaScript engine when USE_LOOP_ENGINE=YES"

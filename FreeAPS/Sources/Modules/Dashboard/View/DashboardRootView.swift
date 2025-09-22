@@ -18,6 +18,7 @@ struct DashboardRootView: View {
     @State private var showingPumpSettings = false
     @State private var showingLoopStatus = false
     @State private var showingGlucoseHistory = false
+    @State private var showingCarbEntry = false
     @State private var hoverX: CGFloat? = nil
     @State private var hoverDate: Date? = nil
 
@@ -58,7 +59,9 @@ struct DashboardRootView: View {
                     showingLoopStatus = true
                 },
                 onPumpTapped: {
-                    // Открыть настройки помпы
+                    // Открыть настройки помпы (как раньше в Home):
+                    // если есть pumpManager → сразу нативные настройки;
+                    // иначе → экран настройки помпы
                     showingPumpSettings = true
                 }
             )
@@ -107,12 +110,20 @@ struct DashboardRootView: View {
             // Вторичные графики + общая линия наведения
             ZStack {
                 VStack(spacing: 8) {
-                    LoopUIKitIOBChartView(iob: viewModel.iobData, timeRangeHours: selectedTimeRange.hours)
-                        .frame(height: 110)
+                    LoopUIKitIOBChartView(
+                        iob: viewModel.iobData,
+                        iobForecast: viewModel.iobForecastData,
+                        timeRangeHours: selectedTimeRange.hours
+                    )
+                    .frame(height: 110)
                     LoopUIKitDoseChartView(delivery: viewModel.delivery, timeRangeHours: selectedTimeRange.hours)
                         .frame(height: 130)
-                    LoopUIKitCOBChartView(cob: viewModel.cobData, timeRangeHours: selectedTimeRange.hours)
-                        .frame(height: 110)
+                    LoopUIKitCOBChartView(
+                        cob: viewModel.cobData,
+                        timeRangeHours: selectedTimeRange.hours,
+                        onTap: { showingCarbEntry = true }
+                    )
+                    .frame(height: 110)
                 }
                 GeometryReader { geo in
                     if let x = hoverX {
@@ -154,11 +165,20 @@ struct DashboardRootView: View {
             }
             .navigationViewStyle(StackNavigationViewStyle())
         }
-        .sheet(isPresented: $showingPumpSettings) {
-            NavigationView {
-                PumpConfig.RootView(resolver: resolver)
+        .fullScreenCover(isPresented: $showingPumpSettings, onDismiss: { viewModel.refreshData() }) {
+            if let aps = resolver.resolve(APSManager.self), let pumpManager = aps.pumpManager {
+                // Открываем сразу нативные настройки помпы
+                PumpConfig.PumpSettingsView(
+                    pumpManager: pumpManager,
+                    completionDelegate: PumpConfig.PumpSettingsCompletion { showingPumpSettings = false }
+                )
+            } else {
+                // Нет настроенной помпы – показать мастер настройки
+                NavigationView {
+                    PumpConfig.RootView(resolver: resolver)
+                }
+                .navigationViewStyle(StackNavigationViewStyle())
             }
-            .navigationViewStyle(StackNavigationViewStyle())
         }
         .sheet(isPresented: $showingLoopStatus) {
             LoopStatus.RootView(resolver: resolver)
@@ -169,13 +189,17 @@ struct DashboardRootView: View {
             }
             .navigationViewStyle(StackNavigationViewStyle())
         }
+        .sheet(isPresented: $showingCarbEntry) {
+            AddCarbsLoopView(resolver: resolver)
+        }
         .onAppear { viewModel.loadData() }
         .gesture(
             DragGesture(minimumDistance: 0)
                 .onChanged { value in
                     hoverX = value.location.x
-                    let endDate = Date()
-                    let startDate = endDate.addingTimeInterval(-Double(selectedTimeRange.hours) * 3600)
+                    let now = Date()
+                    let startDate = now.addingTimeInterval(-6 * 3600) // 6 часов назад
+                    let endDate = now.addingTimeInterval(6 * 3600) // 6 часов вперед
                     // Приблизительная ширина области графиков с учётом паддингов
                     let width = UIScreen.main.bounds.width - 16
                     let ratio = max(0, min(1, (hoverX ?? 0) / max(1, width)))

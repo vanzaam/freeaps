@@ -1,5 +1,12 @@
 import Foundation
 
+enum APSAlgorithm: String, JSON, CaseIterable, Identifiable {
+    case loopKit = "LoopKit"
+    case javascript = "JavaScript OpenAPS"
+
+    var id: APSAlgorithm { self }
+}
+
 struct FreeAPSSettings: JSON, Equatable {
     var units: GlucoseUnits = .mmolL
     var closedLoop: Bool = false
@@ -23,6 +30,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var highGlucose: Decimal = 270
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
+    var apsAlgorithm: APSAlgorithm = .loopKit
 }
 
 extension FreeAPSSettings: Decodable {

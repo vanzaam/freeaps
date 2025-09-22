@@ -30,6 +30,7 @@ import Swinject
 
     private func loadServices() {
         resolver.resolve(AppearanceManager.self)!.setupGlobalAppearance()
+
         _ = resolver.resolve(DeviceDataManager.self)!
         _ = resolver.resolve(APSManager.self)!
         _ = resolver.resolve(FetchGlucoseManager.self)!
