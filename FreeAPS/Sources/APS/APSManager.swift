@@ -748,6 +748,10 @@ final class BaseAPSManager: APSManager, Injectable {
             return pump.enactBolus(units: rounded, activationType: .automatic)
                 .map { _ in
                     self.bolusProgress.send(0)
+                    // Trigger immediate IOB refresh after a successful bolus
+                    let now = Date()
+                    let temp = self.currentTemp(date: now)
+                    _ = self.openAPS.determineBasal(currentTemp: temp, clock: now)
                     return ()
                 }
                 .eraseToAnyPublisher()
