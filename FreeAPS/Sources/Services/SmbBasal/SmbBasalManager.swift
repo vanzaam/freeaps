@@ -216,7 +216,12 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
         if settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal,
            let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self),
            let rate = suggestion.rate {
-            return Decimal(rate)
+            if let ts = suggestion.timestamp, Date().timeIntervalSince(ts) <= 20 * 60 {
+                return Decimal(rate)
+            } else {
+                print("SMB-Basal: suggestion is stale (>20 min), fallback to 0 U/h")
+                return 0
+            }
         }
         return currentScheduledBasalRate()
     }
