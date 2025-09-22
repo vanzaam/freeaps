@@ -76,9 +76,7 @@ extension SmbBasalMonitor {
         }
 
         func toggleApplyOpenAPSTempBasal(_ value: Bool) {
-            settingsManager.updateSettings { s in
-                s.useOpenAPSForTempBasalWhenSmbBasal = value
-            }
+            settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal = value
             applyOpenAPSTempBasal = value
         }
     }

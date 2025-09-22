@@ -704,7 +704,7 @@ final class BaseAPSManager: APSManager, Injectable {
             }
 
             // If SMB-basal is active, apply OpenAPS temp basal only when the option is enabled
-            if self.settings.smbBasalEnabled && !self.settings.useOpenAPSForTempBasalWhenSmbBasal {
+            if self.settings.smbBasalEnabled, !self.settings.useOpenAPSForTempBasalWhenSmbBasal {
                 debug(.apsManager, "SMB-basal active: skipping OpenAPS temp basal per settings")
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
