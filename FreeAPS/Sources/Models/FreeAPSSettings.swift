@@ -24,6 +24,7 @@ struct FreeAPSSettings: JSON, Equatable {
     var carbsRequiredThreshold: Decimal = 10
     var animatedBackground: Bool = false
     var smbBasalEnabled: Bool = false
+    var useOpenAPSForTempBasalWhenSmbBasal: Bool = true
 }
 
 extension FreeAPSSettings: Decodable {
@@ -125,6 +126,13 @@ extension FreeAPSSettings: Decodable {
 
         if let smbBasalEnabled = try? container.decode(Bool.self, forKey: .smbBasalEnabled) {
             settings.smbBasalEnabled = smbBasalEnabled
+        }
+
+        if let useOpenAPSForTempBasalWhenSmbBasal = try? container.decode(
+            Bool.self,
+            forKey: .useOpenAPSForTempBasalWhenSmbBasal
+        ) {
+            settings.useOpenAPSForTempBasalWhenSmbBasal = useOpenAPSForTempBasalWhenSmbBasal
         }
 
         self = settings

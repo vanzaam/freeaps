@@ -14,6 +14,7 @@ extension SmbBasalMonitor {
         @Published var pumpStep: Decimal = 0.05
         @Published var smbInterval: Decimal = 3
         @Published var currentBasalRate: Decimal = 0
+        @Published var applyOpenAPSTempBasal: Bool = true
 
         private var timer: Timer?
 
@@ -57,6 +58,7 @@ extension SmbBasalMonitor {
             // Получаем текущие настройки
             let preferences = settingsManager.preferences
             smbInterval = preferences.smbInterval
+            applyOpenAPSTempBasal = settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal
 
             // Получаем текущую базальную скорость
             let currentProfile = provider.basalProfile
@@ -71,6 +73,13 @@ extension SmbBasalMonitor {
             }) {
                 currentBasalRate = currentEntry.rate
             }
+        }
+
+        func toggleApplyOpenAPSTempBasal(_ value: Bool) {
+            settingsManager.updateSettings { s in
+                s.useOpenAPSForTempBasalWhenSmbBasal = value
+            }
+            applyOpenAPSTempBasal = value
         }
     }
 }

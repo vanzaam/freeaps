@@ -80,6 +80,10 @@ extension SmbBasalMonitor {
                             Spacer()
                             Text("\(Double(truncating: state.currentBasalRate as NSDecimalNumber), specifier: "%.3f") U/h")
                         }
+
+                        Toggle(isOn: Binding(get: { state.applyOpenAPSTempBasal }, set: { state.toggleApplyOpenAPSTempBasal($0) })) {
+                            Text("Apply OpenAPS temp basal suggestions")
+                        }
                     }
                 }
             }

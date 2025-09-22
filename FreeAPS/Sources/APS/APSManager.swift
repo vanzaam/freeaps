@@ -345,28 +345,38 @@ final class BaseAPSManager: APSManager, Injectable {
 
         // Use retry mechanism for bolus delivery
         enactBolusWithRetry(
-            pump: pump, 
-            units: roundedAmout, 
+            pump: pump,
+            units: roundedAmout,
             activationType: isSMB ? .automatic : .manualNoRecommendation,
             isSMB: isSMB,
             attempt: 1,
             maxAttempts: 3
         )
     }
-    
-    private func enactBolusWithRetry(pump: PumpManagerUI, units: Double, activationType: BolusActivationType, isSMB: Bool, attempt: Int, maxAttempts: Int) {
+
+    private func enactBolusWithRetry(
+        pump: PumpManagerUI,
+        units: Double,
+        activationType: BolusActivationType,
+        isSMB: Bool,
+        attempt: Int,
+        maxAttempts: Int
+    ) {
         debug(.apsManager, "Bolus attempt \(attempt)/\(maxAttempts): \(units)U")
-        
+
         pump.enactBolus(units: units, activationType: activationType).sink { completion in
             if case let .failure(error) = completion {
                 let isConnectionError = self.isConnectionError(error)
-                warning(.apsManager, "Bolus attempt \(attempt)/\(maxAttempts) failed: \(error.localizedDescription) (connection error: \(isConnectionError))")
-                
+                warning(
+                    .apsManager,
+                    "Bolus attempt \(attempt)/\(maxAttempts) failed: \(error.localizedDescription) (connection error: \(isConnectionError))"
+                )
+
                 // Retry only for connection/communication errors and if we have attempts left
-                if isConnectionError && attempt < maxAttempts {
+                if isConnectionError, attempt < maxAttempts {
                     let retryDelay = Double(attempt * 2) // 2, 4, 6 seconds delay
                     debug(.apsManager, "Retrying bolus in \(retryDelay) seconds...")
-                    
+
                     DispatchQueue.global().asyncAfter(deadline: .now() + retryDelay) {
                         self.enactBolusWithRetry(
                             pump: pump,
@@ -397,46 +407,49 @@ final class BaseAPSManager: APSManager, Injectable {
                 self.bolusProgress.send(0)
             }
         } receiveValue: { _ in }
-            .store(in: &self.lifetime)
+            .store(in: &lifetime)
     }
-    
+
     private func isConnectionError(_ error: Error) -> Bool {
         let errorDescription = error.localizedDescription.lowercased()
-        
+
         // Check for common connection/communication error patterns
         return errorDescription.contains("не подключен") ||
-               errorDescription.contains("not connected") ||
-               errorDescription.contains("connection") ||
-               errorDescription.contains("communication") ||
-               errorDescription.contains("bluetooth") ||
-               errorDescription.contains("disconnected") ||
-               errorDescription.contains("timeout") ||
-               errorDescription.contains("unable to connect") ||
-               errorDescription.contains("connection lost") ||
-               errorDescription.contains("device not found")
+            errorDescription.contains("not connected") ||
+            errorDescription.contains("connection") ||
+            errorDescription.contains("communication") ||
+            errorDescription.contains("bluetooth") ||
+            errorDescription.contains("disconnected") ||
+            errorDescription.contains("timeout") ||
+            errorDescription.contains("unable to connect") ||
+            errorDescription.contains("connection lost") ||
+            errorDescription.contains("device not found")
     }
 
     func cancelBolus() {
         guard let pump = pumpManager, pump.status.pumpStatus.bolusing else { return }
         debug(.apsManager, "Cancel bolus")
-        
+
         // Use retry mechanism for bolus cancellation
         cancelBolusWithRetry(pump: pump, attempt: 1, maxAttempts: 3)
     }
-    
+
     private func cancelBolusWithRetry(pump: PumpManagerUI, attempt: Int, maxAttempts: Int) {
         debug(.apsManager, "Cancel bolus attempt \(attempt)/\(maxAttempts)")
-        
+
         pump.cancelBolus().sink { completion in
             if case let .failure(error) = completion {
                 let isConnectionError = self.isConnectionError(error)
-                debug(.apsManager, "Cancel bolus attempt \(attempt)/\(maxAttempts) failed: \(error.localizedDescription) (connection error: \(isConnectionError))")
-                
+                debug(
+                    .apsManager,
+                    "Cancel bolus attempt \(attempt)/\(maxAttempts) failed: \(error.localizedDescription) (connection error: \(isConnectionError))"
+                )
+
                 // Retry only for connection/communication errors and if we have attempts left
-                if isConnectionError && attempt < maxAttempts {
+                if isConnectionError, attempt < maxAttempts {
                     let retryDelay = Double(attempt * 2) // 2, 4, 6 seconds delay
                     debug(.apsManager, "Retrying cancel bolus in \(retryDelay) seconds...")
-                    
+
                     DispatchQueue.global().asyncAfter(deadline: .now() + retryDelay) {
                         self.cancelBolusWithRetry(pump: pump, attempt: attempt + 1, maxAttempts: maxAttempts)
                     }
@@ -444,20 +457,20 @@ final class BaseAPSManager: APSManager, Injectable {
                     // Final failure after all retries or non-connection error
                     debug(.apsManager, "Cancel bolus failed after \(attempt) attempts: \(error.localizedDescription)")
                     self.processError(APSError.pumpError(error))
-                    
+
                     self.bolusReporter?.removeObserver(self)
                     self.bolusReporter = nil
                     self.bolusProgress.send(nil)
                 }
             } else {
                 debug(.apsManager, "Cancel bolus succeeded on attempt \(attempt)/\(maxAttempts)")
-                
+
                 self.bolusReporter?.removeObserver(self)
                 self.bolusReporter = nil
                 self.bolusProgress.send(nil)
             }
         } receiveValue: { _ in }
-            .store(in: &self.lifetime)
+            .store(in: &lifetime)
     }
 
     func enactTempBasal(rate: Double, duration: TimeInterval) {
@@ -473,7 +486,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let appMaxBasal = Double(settingsManager.pumpSettings.maxBasal)
         let clampedRate = min(rate, appMaxBasal)
         let roundedRate = pump.roundToSupportedBasalRate(unitsPerHour: clampedRate)
-        
+
         // Use retry mechanism for temp basal
         enactTempBasalWithRetry(
             pump: pump,
@@ -484,20 +497,30 @@ final class BaseAPSManager: APSManager, Injectable {
             maxAttempts: 3
         )
     }
-    
-    private func enactTempBasalWithRetry(pump: PumpManagerUI, rate: Double, originalRate: Double, duration: TimeInterval, attempt: Int, maxAttempts: Int) {
+
+    private func enactTempBasalWithRetry(
+        pump: PumpManagerUI,
+        rate: Double,
+        originalRate: Double,
+        duration: TimeInterval,
+        attempt: Int,
+        maxAttempts: Int
+    ) {
         debug(.apsManager, "Temp basal attempt \(attempt)/\(maxAttempts): \(rate)U/h for \(Int(duration / 60)) min")
-        
+
         pump.enactTempBasal(unitsPerHour: rate, for: duration) { error in
             if let error = error {
                 let isConnectionError = self.isConnectionError(error)
-                debug(.apsManager, "Temp basal attempt \(attempt)/\(maxAttempts) failed: \(error.localizedDescription) (connection error: \(isConnectionError))")
-                
+                debug(
+                    .apsManager,
+                    "Temp basal attempt \(attempt)/\(maxAttempts) failed: \(error.localizedDescription) (connection error: \(isConnectionError))"
+                )
+
                 // Retry only for connection/communication errors and if we have attempts left
-                if isConnectionError && attempt < maxAttempts {
+                if isConnectionError, attempt < maxAttempts {
                     let retryDelay = Double(attempt * 2) // 2, 4, 6 seconds delay
                     debug(.apsManager, "Retrying temp basal in \(retryDelay) seconds...")
-                    
+
                     DispatchQueue.global().asyncAfter(deadline: .now() + retryDelay) {
                         self.enactTempBasalWithRetry(
                             pump: pump,
@@ -515,7 +538,12 @@ final class BaseAPSManager: APSManager, Injectable {
                 }
             } else {
                 debug(.apsManager, "Temp basal succeeded on attempt \(attempt)/\(maxAttempts)")
-                let temp = TempBasal(duration: Int(duration / 60), rate: Decimal(originalRate), temp: .absolute, timestamp: Date())
+                let temp = TempBasal(
+                    duration: Int(duration / 60),
+                    rate: Decimal(originalRate),
+                    temp: .absolute,
+                    timestamp: Date()
+                )
                 self.storage.save(temp, as: OpenAPS.Monitor.tempBasal)
                 if originalRate == 0, duration == 0 {
                     self.pumpHistoryStorage.saveCancelTempEvents()
@@ -675,11 +703,10 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Fail(error: error).eraseToAnyPublisher()
             }
 
-            // Skip basal control if SMB-basal is active
-            if self.settings.smbBasalEnabled {
-                debug(.apsManager, "SMB-basal is active, skipping temp basal from OpenAPS")
-                return Just(()).setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
+            // If SMB-basal is active, apply OpenAPS temp basal only when the option is enabled
+            if self.settings.smbBasalEnabled && !self.settings.useOpenAPSForTempBasalWhenSmbBasal {
+                debug(.apsManager, "SMB-basal active: skipping OpenAPS temp basal per settings")
+                return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
 
             guard let rate = suggested.rate, let duration = suggested.duration else {
