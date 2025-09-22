@@ -562,6 +562,13 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Fail(error: error).eraseToAnyPublisher()
             }
 
+            // Skip basal control if SMB-basal is active
+            if self.settings.smbBasalEnabled {
+                debug(.apsManager, "SMB-basal is active, skipping temp basal from OpenAPS")
+                return Just(()).setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            }
+
             guard let rate = suggested.rate, let duration = suggested.duration else {
                 // It is OK, no temp required
                 debug(.apsManager, "No temp required")
