@@ -49,7 +49,17 @@ extension DataTable {
                         treatmentView(treatment)
                     }
                 }
-                .onDelete(perform: deleteHistoryItem)
+                .onDelete { offsets in
+                    // Only delete if the item is glucose
+                    let validGlucoseOffsets = offsets.filter { index in
+                        guard index < state.history.count else { return false }
+                        return state.history[index].isGlucose
+                    }
+                    
+                    if !validGlucoseOffsets.isEmpty {
+                        deleteHistoryItem(at: IndexSet(validGlucoseOffsets))
+                    }
+                }
             }
         }
 
@@ -137,18 +147,26 @@ extension DataTable {
             }
         }
 
-        private func deleteHistoryItem(at offsets: IndexSet) {
-            for index in offsets {
-                let item = state.history[index]
+        private func deleteGlucoseFromHistory(at offsets: IndexSet) {
+            // Map history indices to glucose array indices
+            let glucoseIndicesToDelete = offsets.compactMap { historyIndex -> Int? in
+                guard historyIndex < state.history.count else { return nil }
+                let item = state.history[historyIndex]
+                
                 if item.isGlucose, let glucose = item.glucose {
-                    // Find the glucose index in the original glucose array
-                    if let glucoseIndex = state.glucose.firstIndex(where: { $0.id == glucose.id }) {
-                        state.deleteGlucose(at: glucoseIndex)
-                    }
+                    return state.glucose.firstIndex(where: { $0.id == glucose.id })
                 }
-                // Note: Treatments (carbs, boluses, etc.) can only be deleted through their specific methods
-                // like deleteCarbs which is handled in the treatmentView tap gesture
+                return nil
             }
+            
+            // Delete from glucose array in reverse order to maintain indices
+            for glucoseIndex in glucoseIndicesToDelete.sorted(by: >) {
+                state.deleteGlucose(at: glucoseIndex)
+            }
+        }
+        
+        private func deleteHistoryItem(at offsets: IndexSet) {
+            deleteGlucoseFromHistory(at: offsets)
         }
 
         private func deleteGlucose(at offsets: IndexSet) {
