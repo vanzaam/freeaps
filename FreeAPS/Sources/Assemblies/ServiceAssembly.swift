@@ -19,5 +19,8 @@ final class ServiceAssembly: Assembly {
         container.register(HealthKitManager.self) { r in BaseHealthKitManager(resolver: r) }
         container.register(UserNotificationsManager.self) { r in BaseUserNotificationsManager(resolver: r) }
         container.register(WatchManager.self) { r in BaseWatchManager(resolver: r) }
+        container.register(SmbBasalManager.self) { r in BaseSmbBasalManager(resolver: r) }
+        container.register(SmbBasalIobCalculator.self) { r in BaseSmbBasalIobCalculator(resolver: r) }
+        container.register(SmbBasalMiddleware.self) { r in BaseSmbBasalMiddleware(resolver: r) }
     }
 }

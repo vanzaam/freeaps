@@ -9,12 +9,14 @@ extension Settings {
         @Published var closedLoop = false
         @Published var debugOptions = false
         @Published var animatedBackground = false
+        @Published var smbBasalEnabled = false
 
         private(set) var buildNumber = ""
 
         override func subscribe() {
             subscribeSetting(\.debugOptions, on: $debugOptions) { debugOptions = $0 }
             subscribeSetting(\.closedLoop, on: $closedLoop) { closedLoop = $0 }
+            subscribeSetting(\.smbBasalEnabled, on: $smbBasalEnabled, initial: { smbBasalEnabled = $0 })
 
             broadcaster.register(SettingsObserver.self, observer: self)
 
@@ -50,8 +52,7 @@ extension Settings {
 }
 
 extension Settings.StateModel: SettingsObserver {
-    @MainActor func settingsDidChange(_ settings: FreeAPSSettings) {
-        closedLoop = settings.closedLoop
-        debugOptions = settings.debugOptions
+    @MainActor func settingsDidChange(_: FreeAPSSettings) {
+        // subscribeSetting уже обрабатывает синхронизацию, не нужно дублировать
     }
 }

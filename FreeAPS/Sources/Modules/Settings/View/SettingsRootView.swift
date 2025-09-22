@@ -39,72 +39,73 @@ extension Settings {
 
                 Section(header: Text("Developer")) {
                     Toggle("Debug options", isOn: $state.debugOptions)
-                    if state.debugOptions {
-                        Group {
-                            Text("NS Upload Profile").onTapGesture {
-                                state.uploadProfile()
-                            }
-                            Text("NS Uploaded Profile")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedProfile), from: self)
-                        }
-                        Group {
-                            Text("Preferences")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.preferences), from: self)
-                            Text("Pump Settings")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.settings), from: self)
-                            Text("Autosense")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.autosense), from: self)
-                            Text("Pump History")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
-                            Text("Basal profile")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.basalProfile), from: self)
-                            Text("Targets ranges")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.bgTargets), from: self)
-                            Text("Carb ratios")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.carbRatios), from: self)
-                            Text("Insulin sensitivities")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.insulinSensitivities), from: self)
-                            Text("Temp targets")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.tempTargets), from: self)
-                            Text("Meal")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.meal), from: self)
-                        }
+                }
 
-                        Group {
-                            Text("IOB")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.iob), from: self)
-                            Text("Pump profile")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
-                            Text("Profile")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
-                            Text("Glucose")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
-                            Text("Carbs")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
-                            Text("Suggested")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Enact.suggested), from: self)
-                            Text("Enacted")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Enact.enacted), from: self)
-                            Text("Announcements")
-                                .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
-                            Text("Enacted announcements")
-                                .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
-                            Text("Autotune")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
+                if state.debugOptions {
+                    Section(header: Text("Debug Options")) {
+                        Text("NS Upload Profile").onTapGesture {
+                            state.uploadProfile()
                         }
+                        Text("NS Uploaded Profile")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Nightscout.uploadedProfile), from: self)
+                        Toggle("Enable SMB-Basal (experimental)", isOn: $state.smbBasalEnabled)
+                        if state.smbBasalEnabled {
+                            Text("SMB-Basal Monitor")
+                                .navigationLink(to: .smbBasalMonitor, from: self)
+                        }
+                    }
+                }
 
-                        Group {
-                            Text("Target presets")
-                                .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
-                            Text("Calibrations")
-                                .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
-                            Text("Current Temp")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
-                            Text("Middleware")
-                                .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
-                            Text("Edit settings json")
-                                .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
-                        }
+                if state.debugOptions {
+                    Section(header: Text("Configuration Files")) {
+                        Text("Preferences")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.preferences), from: self)
+                        Text("Pump Settings")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.settings), from: self)
+                        Text("Autosense")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.autosense), from: self)
+                        Text("Pump History")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Monitor.pumpHistory), from: self)
+                    }
+                }
+
+                if state.debugOptions {
+                    Section(header: Text("Monitoring")) {
+                        Text("IOB")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Monitor.iob), from: self)
+                        Text("Pump profile")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.pumpProfile), from: self)
+                        Text("Profile")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.profile), from: self)
+                        Text("Glucose")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Monitor.glucose), from: self)
+                        Text("Carbs")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Monitor.carbHistory), from: self)
+                        Text("Suggested")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Enact.suggested), from: self)
+                        Text("Enacted")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Enact.enacted), from: self)
+                        Text("Announcements")
+                            .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcements), from: self)
+                        Text("Enacted announcements")
+                            .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.announcementsEnacted), from: self)
+                        Text("Autotune")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Settings.autotune), from: self)
+                    }
+                }
+
+                if state.debugOptions {
+                    Section(header: Text("Advanced")) {
+                        Text("Target presets")
+                            .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.tempTargetsPresets), from: self)
+                        Text("Calibrations")
+                            .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.calibrations), from: self)
+                        Text("Current Temp")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Monitor.tempBasal), from: self)
+                        Text("Middleware")
+                            .navigationLink(to: .configEditor(file: OpenAPS.Middleware.determineBasal), from: self)
+                        Text("Edit settings json")
+                            .navigationLink(to: .configEditor(file: OpenAPS.FreeAPS.settings), from: self)
                     }
                 }
 

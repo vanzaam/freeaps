@@ -40,6 +40,7 @@ struct Preferences: JSON {
     var carbsReqThreshold: Decimal = 1.0
     var noisyCGMTargetMultiplier: Decimal = 1.3
     var suspendZerosIOB: Bool = true
+    var smbBasalEnabled: Bool = false
     var timestamp: Date?
 }
 
@@ -84,6 +85,7 @@ extension Preferences {
         case carbsReqThreshold
         case noisyCGMTargetMultiplier
         case suspendZerosIOB = "suspend_zeros_iob"
+        case smbBasalEnabled = "smb_basal_enabled"
     }
 }
 

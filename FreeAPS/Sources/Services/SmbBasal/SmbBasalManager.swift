@@ -18,6 +18,7 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
     @Injected() private var storage: FileStorage!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var basalIobCalculator: SmbBasalIobCalculator!
+    @Injected() private var middleware: SmbBasalMiddleware!
 
     private let workQueue = DispatchQueue(label: "SmbBasalManager.queue", qos: .utility)
     private var timer: DispatchSourceTimer?
@@ -45,10 +46,16 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
 
     // MARK: - SettingsObserver
 
-    @MainActor func settingsDidChange(_ settings: FreeAPSSettings) {
+    @MainActor     func settingsDidChange(_ settings: FreeAPSSettings) {
         print("SMB-Basal: Settings changed - smbBasalEnabled=\(settings.smbBasalEnabled), current isEnabled=\(isEnabled)")
         workQueue.async { [weak self] in
             guard let self = self else { return }
+            
+            // Sync smbBasalEnabled with OpenAPS preferences
+            self.settingsManager.updatePreferences { prefs in
+                prefs.smbBasalEnabled = settings.smbBasalEnabled
+            }
+            
             if settings.smbBasalEnabled, !self.isEnabled {
                 print("SMB-Basal: Enabling and starting SMB-basal system")
                 self.isEnabled = true
@@ -66,6 +73,7 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
     func start() {
         workQueue.async {
             guard self.timer == nil else { return }
+            self.middleware.setupMiddleware()  // Install OpenAPS middleware
             self.setupTimer()
         }
     }
@@ -76,6 +84,7 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
             self.timer = nil
             self.accumulatorUnits = 0
             self.lastPulseAt = nil
+            self.middleware.removeMiddleware()  // Remove OpenAPS middleware
         }
     }
 

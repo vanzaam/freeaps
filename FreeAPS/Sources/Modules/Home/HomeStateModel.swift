@@ -8,6 +8,7 @@ extension Home {
         @Injected() var broadcaster: Broadcaster!
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
+        @Injected() var smbBasalManager: SmbBasalManager!
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
 
@@ -47,6 +48,7 @@ extension Home {
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
+        @Published var basalIob: SmbBasalIob?
 
         override func subscribe() {
             setupGlucose()
@@ -90,6 +92,7 @@ extension Home {
                 DispatchQueue.main.async { [weak self] in
                     self?.timerDate = Date()
                     self?.setupCurrentTempTarget()
+                    self?.updateBasalIob()
                 }
             }
             timer.resume()
@@ -387,6 +390,15 @@ extension Home.StateModel:
 
     @MainActor func pumpReservoirDidChange(_: Decimal) {
         setupReservoir()
+    }
+
+    private func updateBasalIob() {
+        guard smbBasalManager.isEnabled else {
+            basalIob = nil
+            return
+        }
+
+        basalIob = smbBasalManager.currentBasalIob()
     }
 }
 

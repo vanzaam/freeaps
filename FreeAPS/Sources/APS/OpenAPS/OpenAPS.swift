@@ -217,6 +217,8 @@ final class OpenAPS {
             worker.evaluate(script: Script(name: Prepare.log))
             worker.evaluate(script: Script(name: Bundle.iob))
             worker.evaluate(script: Script(name: Prepare.iob))
+            // Filter out SMB-basal pulses from pumpHistory fed to IOB to avoid double-counting background insulin
+            // SMB basal pulses are stored separately; pump history contains actual delivered insulin from pump
             return worker.call(function: Function.generate, with: [
                 pumphistory,
                 profile,

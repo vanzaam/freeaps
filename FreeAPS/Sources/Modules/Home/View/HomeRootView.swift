@@ -65,6 +65,17 @@ extension Home {
                     )
                     .font(.system(size: 12, weight: .bold))
                 }
+                if let basalIob = state.basalIob {
+                    HStack {
+                        Text("Basal IOB").font(.caption2).foregroundColor(.secondary)
+                        Text(
+                            (numberFormatter.string(from: basalIob.iob as NSNumber) ?? "0") +
+                                NSLocalizedString(" U", comment: "Insulin unit")
+                        )
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.green)
+                    }
+                }
                 HStack {
                     Text("COB").font(.caption2).foregroundColor(.secondary)
                     Text(
