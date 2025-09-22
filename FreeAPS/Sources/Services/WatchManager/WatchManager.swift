@@ -301,7 +301,7 @@ extension BaseWatchManager: WCSessionDelegate {
         }
 
         if let bolus = message["bolus"] as? Double, bolus > 0 {
-            apsManager.enactBolus(amount: bolus, isSMB: false)
+            apsManager.enactBolus(amount: bolus, isSMB: false, false)
             replyHandler(["confirmation": true])
             return
         }

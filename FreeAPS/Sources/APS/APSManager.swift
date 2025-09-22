@@ -8,7 +8,7 @@ import Swinject
 protocol APSManager {
     func heartbeat(date: Date)
     func autotune() -> AnyPublisher<Autotune?, Never>
-    func enactBolus(amount: Double, isSMB: Bool)
+    func enactBolus(amount: Double, isSMB: Bool, isBasalReplacement: Bool)
     var pumpManager: PumpManagerUI? { get set }
     var pumpDisplayState: CurrentValueSubject<PumpDisplayState?, Never> { get }
     var pumpName: CurrentValueSubject<String, Never> { get }
@@ -319,7 +319,7 @@ final class BaseAPSManager: APSManager, Injectable {
 
     private var bolusReporter: DoseProgressReporter?
 
-    func enactBolus(amount: Double, isSMB: Bool, isBasalReplacement: Bool = false) {
+    func enactBolus(amount: Double, isSMB: Bool, isBasalReplacement _: Bool = false) {
         if let error = verifyStatus() {
             processError(error)
             processQueue.async {

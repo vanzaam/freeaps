@@ -46,16 +46,16 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
 
     // MARK: - SettingsObserver
 
-    @MainActor     func settingsDidChange(_ settings: FreeAPSSettings) {
+    @MainActor func settingsDidChange(_ settings: FreeAPSSettings) {
         print("SMB-Basal: Settings changed - smbBasalEnabled=\(settings.smbBasalEnabled), current isEnabled=\(isEnabled)")
         workQueue.async { [weak self] in
             guard let self = self else { return }
-            
+
             // Sync smbBasalEnabled with OpenAPS preferences
             self.settingsManager.updatePreferences { prefs in
                 prefs.smbBasalEnabled = settings.smbBasalEnabled
             }
-            
+
             if settings.smbBasalEnabled, !self.isEnabled {
                 print("SMB-Basal: Enabling and starting SMB-basal system")
                 self.isEnabled = true
@@ -73,7 +73,7 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
     func start() {
         workQueue.async {
             guard self.timer == nil else { return }
-            self.middleware.setupMiddleware()  // Install OpenAPS middleware
+            self.middleware.setupMiddleware() // Install OpenAPS middleware
             self.setupTimer()
         }
     }
@@ -84,7 +84,7 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
             self.timer = nil
             self.accumulatorUnits = 0
             self.lastPulseAt = nil
-            self.middleware.removeMiddleware()  // Remove OpenAPS middleware
+            self.middleware.removeMiddleware() // Remove OpenAPS middleware
         }
     }
 
@@ -205,7 +205,7 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
 
     private func deliverPulse(units: Decimal, completion: @escaping (Bool) -> Void) {
         let amount = Double(truncating: units as NSNumber)
-        apsManager.enactBolus(amount: amount, isSMB: true, isBasalReplacement: true)
+        apsManager.enactBolus(amount: amount, isSMB: true, true)
         // We don't get immediate completion callback from APSManager here; assume success optimistically and persist.
         persistPulse(units: units)
         completion(true)
