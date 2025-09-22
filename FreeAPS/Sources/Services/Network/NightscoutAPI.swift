@@ -30,12 +30,14 @@ class NightscoutAPI {
         let created_at: String?
         let eventType: String?
         let enteredBy: String?
+        let insulin: Decimal?
 
         private enum CodingKeys: String, CodingKey {
             case id = "_id"
             case created_at
             case eventType
             case enteredBy
+            case insulin
         }
     }
 
@@ -175,7 +177,7 @@ extension NightscoutAPI {
     // This prevents Nightscout server crashes from unsupported bulk DELETE operations
     private func deleteTreatmentsSafely(queryItems: [URLQueryItem], logName: String) -> AnyPublisher<Void, Swift.Error> {
         // Step 1: Try primary fetch, then fallback with widened time window and without strict filters
-        return performFetch(queryItems: queryItems, logName: logName)
+        performFetch(queryItems: queryItems, logName: logName)
             .flatMap { [weak self] treatments -> AnyPublisher<Void, Swift.Error> in
                 guard let self = self else { return Fail(error: Error.missingURL).eraseToAnyPublisher() }
                 if !treatments.isEmpty {
@@ -204,7 +206,8 @@ extension NightscoutAPI {
 
         for (idx, item) in original.enumerated() {
             switch item.name {
-            case "find[enteredBy]", "find[insulin]":
+            case "find[enteredBy]",
+                 "find[insulin]":
                 // drop strict filters in fallback
                 continue
             case "find[created_at][$gte]":
@@ -253,7 +256,58 @@ extension NightscoutAPI {
 
         return service.run(fetchRequest)
             .decode(type: [NightscoutTreatment].self, decoder: JSONCoding.decoder)
+            .catch { error -> AnyPublisher<[NightscoutTreatment], Swift.Error> in
+                // If server returned non-JSON (e.g., 502 Bad Gateway), treat as no matches
+                warning(.nightscout, "Fetch decode failed for \(logName): \(error.localizedDescription)")
+                return Just([]).setFailureType(to: Swift.Error.self).eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
+    }
+
+    // Delete the single treatment closest to the targetDate (and optionally closest by amount)
+    private func deleteSingleTreatmentSafely(queryItems: [URLQueryItem], targetDate: Date, preferredAmount: Decimal?, logName: String) -> AnyPublisher<Void, Swift.Error> {
+        return performFetch(queryItems: queryItems, logName: logName)
+            .flatMap { [weak self] treatments -> AnyPublisher<Void, Swift.Error> in
+                guard let self = self else { return Fail(error: Error.missingURL).eraseToAnyPublisher() }
+                if let best = self.selectNearestTreatment(from: treatments, targetDate: targetDate, preferredAmount: preferredAmount) {
+                    return self.deleteTreatmentsByIds([best], logName: logName)
+                }
+                // fallback: widen and drop strict filters
+                let fallbackItems = self.fallbackQueryItems(from: queryItems)
+                return self.performFetch(queryItems: fallbackItems, logName: logName + " (fallback)")
+                    .flatMap { [weak self] fallbackTreatments -> AnyPublisher<Void, Swift.Error> in
+                        guard let self = self else { return Fail(error: Error.missingURL).eraseToAnyPublisher() }
+                        if let best = self.selectNearestTreatment(from: fallbackTreatments, targetDate: targetDate, preferredAmount: preferredAmount) {
+                            return self.deleteTreatmentsByIds([best], logName: logName)
+                        }
+                        return Fail(error: Error.notFound).eraseToAnyPublisher()
+                    }
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+
+    private func selectNearestTreatment(from treatments: [NightscoutTreatment], targetDate: Date, preferredAmount: Decimal?) -> NightscoutTreatment? {
+        guard !treatments.isEmpty else { return nil }
+        func date(of t: NightscoutTreatment) -> Date? {
+            guard let s = t.created_at else { return nil }
+            return Formatter.iso8601withFractionalSeconds.date(from: s)
+        }
+        let withDates = treatments.compactMap { t -> (NightscoutTreatment, Date) in
+            (t, date(of: t) ?? Date.distantPast)
+        }
+        let sortedByTime = withDates.sorted { abs($0.1.timeIntervalSince(targetDate)) < abs($1.1.timeIntervalSince(targetDate)) }
+        if let preferredAmount = preferredAmount {
+            // Choose among top 3 closest by time the one closest by insulin amount
+            let top = Array(sortedByTime.prefix(3)).map { $0.0 }
+            let best = top.min { a, b in
+                let da = (a.insulin ?? -999) - preferredAmount
+                let db = (b.insulin ?? -999) - preferredAmount
+                return abs((da as NSDecimalNumber).doubleValue) < abs((db as NSDecimalNumber).doubleValue)
+            }
+            return best ?? sortedByTime.first?.0
+        }
+        return sortedByTime.first?.0
     }
 
     // Helper method to delete treatments by their _id - prevents server crashes
@@ -313,21 +367,21 @@ extension NightscoutAPI {
     }
 
     func deleteBolus(at date: Date, amount: Decimal) -> AnyPublisher<Void, Swift.Error> {
+        // Do not filter by exact insulin amount in query (server-side rounding varies)
         let queryItems = [
             URLQueryItem(name: "find[insulin][$exists]", value: "true"),
-            URLQueryItem(name: "find[insulin]", value: amount.description),
             URLQueryItem(
                 name: "find[created_at][$gte]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-300))
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(-600))
             ),
             URLQueryItem(
                 name: "find[created_at][$lte]",
-                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(300))
+                value: Formatter.iso8601withFractionalSeconds.string(from: date.addingTimeInterval(600))
             ),
             URLQueryItem(name: "find[enteredBy]", value: "freeaps-x")
         ]
 
-        return deleteTreatmentsSafely(queryItems: queryItems, logName: "Bolus")
+        return deleteSingleTreatmentSafely(queryItems: queryItems, targetDate: date, preferredAmount: amount, logName: "Bolus")
     }
 
     func deleteTempBasal(at date: Date) -> AnyPublisher<Void, Swift.Error> {
