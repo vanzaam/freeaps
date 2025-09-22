@@ -107,24 +107,19 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
         }
 
         print("SMB-Basal: tick() - processing basal replacement")
-        let applyOpenAPSTempBasal = settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal
-
-        // 1) Maintain zero temp basal ourselves ONLY when we are not applying OpenAPS temp basal suggestions
-        if !applyOpenAPSTempBasal {
-            maintainZeroTempBasalIfNeeded()
-        }
+        // Always keep 0 U/h temp basal while SMB-basal is active. All basal will be replaced by pulses.
+        maintainZeroTempBasalIfNeeded()
 
         // 2) Accumulate basal dose and fire step boluses when enough units are accumulated
         guard let step = optionalBolusStep(), step > 0 else { return }
 
-        // If OpenAPS temp basal suggestions are applied and current temp basal is 0 U/h,
-        // pause SMB-basal pulses to respect hypo protection
-        if applyOpenAPSTempBasal && isCurrentTempBasalZero() {
-            print("SMB-Basal: OpenAPS temp basal is 0 U/h - pausing SMB-basal pulses")
-            return
+        // Use OpenAPS suggested temp basal as effective basal when option is enabled; otherwise use scheduled basal
+        let effectiveRate = effectiveBasalRate()
+        if effectiveRate <= 0 {
+            return // pause pulses (e.g., hypo protection or zero suggestion)
         }
 
-        let unitsPerMinute = currentScheduledBasalRate() / 60
+        let unitsPerMinute = effectiveRate / 60
         accumulatorUnits += unitsPerMinute
 
         let minIntervalMinutes = max(1, Int(truncating: settingsManager.preferences.smbInterval as NSNumber))
@@ -215,6 +210,15 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
     private func optionalBolusStep() -> Decimal? {
         let step = settingsManager.preferences.bolusIncrement
         return step > 0 ? step : nil
+    }
+
+    private func effectiveBasalRate() -> Decimal {
+        if settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal,
+           let suggestion = storage.retrieve(OpenAPS.Enact.suggested, as: Suggestion.self),
+           let rate = suggestion.rate {
+            return Decimal(rate)
+        }
+        return currentScheduledBasalRate()
     }
 
     private func deliverPulse(units: Decimal, completion: @escaping (Bool) -> Void) {
