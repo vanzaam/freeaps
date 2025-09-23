@@ -62,6 +62,9 @@ final class BaseAPSManager: APSManager, Injectable {
     @Injected() private var nightscout: NightscoutManager!
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var broadcaster: Broadcaster!
+    @Injected() private var customPredictionService: CustomPredictionService!
+    @Injected() private var swiftOref0Engine: SwiftOref0Engine!
+    @Injected() private var customIOBCalculator: CustomIOBCalculator!
     @Persisted(key: "lastAutotuneDate") private var lastAutotuneDate = Date()
     @Persisted(key: "lastLoopDate") var lastLoopDate: Date = .distantPast {
         didSet {
@@ -104,6 +107,12 @@ final class BaseAPSManager: APSManager, Injectable {
     init(resolver: Resolver) {
         injectServices(resolver)
         openAPS = OpenAPS(storage: storage)
+
+        // 🚀 КРИТИЧНО: Связываем OpenAPS с middleware через resolver (избегаем циклическую зависимость)
+        if let middleware = resolver.resolve(SmbBasalMiddleware.self) {
+            openAPS.setSmbBasalMiddleware(middleware)
+        }
+
         subscribe()
         lastLoopDateSubject.send(lastLoopDate)
 
@@ -154,6 +163,10 @@ final class BaseAPSManager: APSManager, Injectable {
 
         debug(.apsManager, "Starting loop")
         isLooping.send(true)
+
+        // 🚀 КРИТИЧНО: Запускаем Custom Prediction Service параллельно с основной системой!
+        runCustomPredictionService()
+
         determineBasal()
             .replaceEmpty(with: false)
             .flatMap { [weak self] success -> AnyPublisher<Void, Error> in
@@ -179,6 +192,45 @@ final class BaseAPSManager: APSManager, Injectable {
                     self.loopCompleted()
                 }
             } receiveValue: {}
+            .store(in: &lifetime)
+    }
+
+    // 🚀 Custom Prediction Service - работает независимо от основной системы
+    private func runCustomPredictionService() {
+        debug(.apsManager, "🚀 Starting Custom Prediction Service...")
+
+        customPredictionService.generatePredictionsWithCustomIOB()
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { [weak self] completion in
+                    guard let self = self else { return }
+
+                    switch completion {
+                    case .finished:
+                        debug(.apsManager, "✅ Custom Prediction Service completed successfully!")
+                    case let .failure(error):
+                        debug(.apsManager, "❌ Custom Prediction Service failed with error: \(error)")
+                    }
+                },
+                receiveValue: { [weak self] predictionResult in
+                    guard let self = self else { return }
+
+                    if let result = predictionResult {
+                        debug(.apsManager, "✅ Custom Prediction Service returned results!")
+                        debug(.apsManager, "  Custom IOB PredBG: \(result.iobPredBG)")
+                        debug(.apsManager, "  Custom COB PredBG: \(result.cobPredBG)")
+                        debug(.apsManager, "  Custom UAM PredBG: \(result.uamPredBG)")
+                        debug(.apsManager, "  Custom Eventual BG: \(result.eventualBG)")
+
+                        // Отправляем результаты в UI (HomeStateModel)
+                        self.broadcaster.notify(CustomPredictionObserver.self, on: .main) {
+                            $0.customPredictionDidUpdate(result)
+                        }
+                    } else {
+                        debug(.apsManager, "❌ Custom Prediction Service returned nil")
+                    }
+                }
+            )
             .store(in: &lifetime)
     }
 
@@ -261,7 +313,7 @@ final class BaseAPSManager: APSManager, Injectable {
         let mainPublisher = makeProfiles()
             .flatMap { _ in self.autosens() }
             .flatMap { _ in self.dailyAutotune() }
-            .flatMap { _ in self.openAPS.determineBasal(currentTemp: temp, clock: now) }
+            .flatMap { _ in self.swiftDetermineBasal(currentTemp: temp, clock: now) }
             .map { suggestion -> Bool in
                 if let suggestion = suggestion {
                     DispatchQueue.main.async {
@@ -552,6 +604,105 @@ final class BaseAPSManager: APSManager, Injectable {
         }
     }
 
+    // MARK: - Swift Suggestion (no JS)
+
+    private func swiftDetermineBasal(currentTemp: TempBasal, clock: Date) -> AnyPublisher<Suggestion?, Never> {
+        // Load glucose array
+        let glucoseArray = storage.retrieve(OpenAPS.Monitor.glucose, as: [BloodGlucose].self) ?? []
+
+        // Parse JSON blobs into dictionaries
+        func parseDict(_ raw: String) -> [String: Any]? {
+            guard !raw.isEmpty, let data = raw.data(using: .utf8),
+                  let dict = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
+            return dict
+        }
+
+        let profileRaw = storage.retrieve(OpenAPS.Settings.profile, as: RawJSON.self) ?? ""
+        let autosensRaw = storage.retrieve(OpenAPS.Settings.autosense, as: RawJSON.self) ?? ""
+        let mealRaw = storage.retrieve(OpenAPS.Monitor.meal, as: RawJSON.self) ?? ""
+        let reservoirRaw = storage.retrieve(OpenAPS.Monitor.reservoir, as: RawJSON.self) ?? ""
+        let tempBasalRaw = currentTemp.rawJSON
+
+        var profile = parseDict(profileRaw) ?? [:]
+        if profile["isf"] == nil { profile["isf"] = 50.0 }
+        if profile["cr"] == nil { profile["cr"] = 15.0 }
+        if profile["target"] == nil { profile["target"] = 100.0 }
+
+        let autosens = parseDict(autosensRaw)
+        let meal = parseDict(mealRaw)
+        let reservoirDict = parseDict(reservoirRaw)
+        let currentTempDict = parseDict(tempBasalRaw) ?? [
+            "duration": currentTemp.duration,
+            "rate": NSDecimalNumber(decimal: currentTemp.rate).doubleValue,
+            "temp": currentTemp.temp.rawValue,
+            "timestamp": ISO8601DateFormatter().string(from: currentTemp.timestamp)
+        ]
+
+        // IOB from our calculator
+        let iobData = customIOBCalculator.calculateIOB()
+        let totalIOB = Double(truncating: iobData.totalIOB as NSDecimalNumber)
+
+        debug(.openAPS, "🚀 Swift DetermineBasal: Using native SwiftOref0Engine with IOB: \(totalIOB)")
+
+        return swiftOref0Engine
+            .generatePredictions(
+                iob: totalIOB,
+                glucose: glucoseArray,
+                profile: profile,
+                autosens: autosens,
+                meal: meal,
+                reservoir: reservoirDict,
+                currentTemp: currentTempDict
+            )
+            .map { [weak self] result -> Suggestion? in
+                guard let self = self, let r = result else { return nil }
+
+                // Build Predictions arrays (Int mg/dL)
+                let preds = Predictions(
+                    iob: r.predBGs.iob.map { Int($0.rounded()) },
+                    zt: r.predBGs.zt.map { Int($0.rounded()) },
+                    cob: r.predBGs.cob.map { Int($0.rounded()) },
+                    uam: r.predBGs.uam.map { Int($0.rounded()) }
+                )
+
+                // Choose basal suggestion: keep 0 U/h while SMB-basal active; otherwise minimal safe default
+                let suggestedRate: Decimal = self.settings.smbBasalEnabled ? 0 : Decimal(r.rate)
+                let suggestedDuration = r.duration
+                let suggestedUnits = Decimal(r.units)
+
+                let eventualBGInt = Int(r.eventualBG.rounded())
+                let reservoir: Decimal? = self.storage.retrieve(OpenAPS.Monitor.reservoir, as: Decimal.self)
+                let bgDec = Decimal(r.bg)
+
+                let reason = r.reason
+
+                var suggestion = Suggestion(
+                    reason: reason,
+                    units: suggestedUnits,
+                    insulinReq: Decimal(r.insulinReq),
+                    eventualBG: eventualBGInt,
+                    sensitivityRatio: Decimal(r.sensitivityRatio),
+                    rate: suggestedRate,
+                    duration: suggestedDuration,
+                    iob: Decimal(totalIOB),
+                    cob: Decimal(r.COB),
+                    predictions: preds,
+                    deliverAt: clock,
+                    carbsReq: nil,
+                    temp: .absolute,
+                    bg: bgDec,
+                    reservoir: reservoir,
+                    timestamp: clock,
+                    recieved: nil
+                )
+
+                // Save and return
+                self.storage.save(suggestion, as: OpenAPS.Enact.suggested)
+                return suggestion
+            }
+            .eraseToAnyPublisher()
+    }
+
     func dailyAutotune() -> AnyPublisher<Bool, Never> {
         guard settings.useAutotune else {
             return Just(false).eraseToAnyPublisher()
@@ -745,7 +896,11 @@ final class BaseAPSManager: APSManager, Injectable {
                 return Just(()).setFailureType(to: Error.self).eraseToAnyPublisher()
             }
             self.adjustBolusIncrementIfNeeded(pump: pump, roundedUnits: rounded)
-            return pump.enactBolus(units: rounded, activationType: .automatic)
+            // Use our enactBolus method to ensure proper SMB marking
+            self.enactBolus(amount: rounded, isSMB: true, isBasalReplacement: false)
+
+            return Just(())
+                .setFailureType(to: Error.self)
                 .map { _ in
                     self.bolusProgress.send(0)
                     // Trigger immediate IOB refresh after a successful bolus

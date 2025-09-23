@@ -1,0 +1,134 @@
+Skipping updateConnections until state is poweredOn
+OmniBLE centralManager(_:willRestoreState:): {
+    kCBRestoredPeripherals =     (
+        "<CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 247, state = connected>"
+    );
+}
+Created device
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: Pod peripheral was restored EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7)
+centralManagerDidUpdateState(_:): 5
+Re-connecting to known peripheral EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7
+Applying configuration
+Discovered service: <CBService: 0x14059d200, isPrimary = YES, UUID = 1A7E4024-E3ED-4464-8B7E-751E03D0DC5F>
+centralManager(_:didConnect:): <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 247, state = connected>
+PeripheralManager - didConnect: <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 247, state = connected>
+PeripheralManager - didConnect - running assertConfiguration
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: Pod connected EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7
+PodComms completeConfiguration: isPaired=true needsSessionEstablishment=true
+didReadRSSI: -78
+NightscoutManager.swift - subscribe() - 68 DEV: Network status: reachable by WiFi
+HealthKitManager.swift - init(resolver:) - 95 DEV: HealthKitManager did create
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-21T16:28:32.495Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-21T16:28:32.919Z
+centralManager(_:didDisconnectPeripheral:error:): error=The specified device has disconnected from us. <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = disconnected>
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: Pod disconnected EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7 Optional(Error Domain=CBErrorDomain Code=7 "The specified device has disconnected from us." UserInfo={NSLocalizedDescription=The specified device has disconnected from us.})
+omnipodPeripheralDidDisconnect... will auto-reconnect
+Reconnecting disconnected autoconnect peripheral
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/entries/sgv.json?count=1600&find%5BdateString%5D%5B$gte%5D=2025-09-22T16:23:07.982Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+UserNotificationsManager.swift - requestNotificationPermissionsIfNeeded() - 288 DEV: UNUserNotificationCenter.authorizationStatus: UNAuthorizationStatus(rawValue: 2)
+UserNotificationsManager.swift - ensureCanSendNotification(_:) - 313 DEV: Sending notification was allowed
+Application context data is nil
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 220 DEV: WCSession is activated: true
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 229 DEV: WCSession activated successfully
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 231 DEV: Watch is paired
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 233 DEV: Watch app is installed
+Application context data is nil
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-22 16:23:07 +0000
+FetchGlucoseManager.swift - subscribe() - 84 DEV: New glucose found
+DeviceDataManager.swift - updatePumpData() - 215 DEV: Start updating the pump data
+DeviceDataManager.swift - updatePumpData() - 218 DEV: Waiting for pump update and loop recommendation
+Skipping status update because pumpData is fresh
+DeviceDataManager.swift - updatePumpData() - 221 DEV: Pump data updated.
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/entries.json
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/entries.json
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/entries.json
+UserNotificationsManager.swift - ensureCanSendNotification(_:) - 313 DEV: Sending notification was allowed
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+WatchManager.swift - sendState() - 128 DEV: Updated application context for watch
+WatchManager.swift - sendState() - 128 DEV: Updated application context for watch
+WatchManager.swift - sendState() - 128 DEV: Updated application context for watch
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+UserNotificationsManager.swift - addRequest(identifier:content:deleteOld:trigger:) - 341 DEV: Sending glucocoseNotification notification
+UserNotificationsManager.swift - addRequest(identifier:content:deleteOld:trigger:) - 341 DEV: Sending glucocoseNotification notification
+NightscoutManager.swift - uploadGlucose(_:fileToSave:) - 432 DEV: Internal Server Error
+centralManager(_:didConnect:): <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connected>
+PeripheralManager - didConnect: <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connected>
+PeripheralManager - didConnect - running assertConfiguration
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: Pod connected EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7
+didReadRSSI: -65
+Error reading message: Пустое значение
+Disconnecting due to error while reading pod response
+centralManager(_:didDisconnectPeripheral:error:): error=None <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = disconnected>
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: Pod disconnected EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7 nil
+omnipodPeripheralDidDisconnect... will auto-reconnect
+Reconnecting disconnected autoconnect peripheral
+Pod session sync error: incorrectResponse
+Delegate configuration notified
+Peripheral configuration completed
+Configured peripheral has no services. Reconfiguring <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connecting>
+Applying configuration
+runCommand guard failed - bluetooth not running or peripheral not connected: peripheral <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connecting>
+Error applying peripheral configuration: notReady
+Configured peripheral has no services. Reconfiguring <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connecting>
+Applying configuration
+runCommand guard failed - bluetooth not running or peripheral not connected: peripheral <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connecting>
+Error applying peripheral configuration: notReady
+APSManager.swift - enactTempBasal(rate:duration:) - 393 DEV: Enact temp basal 0.0 - 1800.0
+Enact temp basal 0.000U/hr for 1800s
+APSManager.swift - enactTempBasal(rate:duration:) - 401 DEV: Temp Basal failed with error: Под не подключен
+APSManager.swift - processError(_:) - 654 WARN: error("Pump error: Под не подключен")
+HomeStateModel.swift - subscribe() - 125 INFO: Pump error: Под не подключен
+centralManager(_:didConnect:): <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connected>
+PeripheralManager - didConnect: <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connected>
+PeripheralManager - didConnect - running assertConfiguration
+Configured peripheral has no services. Reconfiguring <CBPeripheral: 0x1405f49a0, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 23, state = connected>
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: Pod connected EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7
+Applying configuration
+didReadRSSI: -65
+didDiscoverServices
+Discovered service: <CBService: 0x141455140, isPrimary = YES, UUID = 1A7E4024-E3ED-4464-8B7E-751E03D0DC5F>
+PodComms completeConfiguration: isPaired=true needsSessionEstablishment=true
+Session Established
+msgSequenceNumber: 3
+Setting podState transport state to ## MessageTransportState
+eapSeq: 1224
+msgSeq: 3
+nonceSeq: 0
+messageNumber: 10
+Scheduling session Post-connect status fetch
+Delegate configuration notified
+Peripheral configuration completed
+======================== Post-connect status fetch ===========================
+Send(Hex): 17a8db2d24030e0107004d
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d24030e0107004d
+Recv(Hex): 17a8db2d280a1d2803133000003c03ff80b0
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d280a1d2803133000003c03ff80b0
+POD Response: StatusResponse(deliveryStatus:Подается временный базал, progressStatus:Норма, timeActive:64h, reservoirLevel:50+, insulinDelivered:78.70, bolusNotDelivered:0.00, lastProgrammingMessageSeqNum:6, alerts:Активных оповещений нет)
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 465 DEV: New pump events:
+ВБС
+DU: Stored pod events: [Врем базал: 0.45 ед/ч 22/09/2025, 19:24:53 30 минут 0 секунд 0.225 ед Определенно]
+Stored doses: [Врем базал: 0.45 ед/ч 22/09/2025, 19:24:53 30 минут 0 секунд 0.225 ед Определенно]
+------------------------ Post-connect status fetch ---------------------------
+Start of idle at Optional(2025-09-22 16:28:40 +0000)
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+Scheduling session Get pod status
+======================== Get pod status ===========================
+Send(Hex): 17a8db2d28030e01078248
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d28030e01078248
+Recv(Hex): 17a8db2d2c0a1d2803133000003c03ff83b4
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d2c0a1d2803133000003c03ff83b4
+POD Response: StatusResponse(deliveryStatus:Подается временный базал, progressStatus:Норма, timeActive:64h, reservoirLevel:50+, insulinDelivered:78.70, bolusNotDelivered:0.00, lastProgrammingMessageSeqNum:6, alerts:Активных оповещений нет)
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 465 DEV: New pump events:
+ВБС
+DU: Stored pod events: [Врем базал: 0.45 ед/ч 22/09/2025, 19:24:53 30 минут 0 секунд 0.225 ед Определенно]
+Stored doses: [Врем базал: 0.45 ед/ч 22/09/2025, 19:24:53 30 минут 0 секунд 0.225 ед Определенно]
+------------------------ Get pod status ---------------------------
+Start of idle at Optional(2025-09-22 16:28:46 +0000)
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json

@@ -53,7 +53,8 @@ final class DeletedTreatmentsStore {
 
     private func load() -> Set<Entry> {
         guard let data = UserDefaults.standard.data(forKey: userDefaultsKey),
-              let decoded = try? JSONDecoder().decode(Set<Entry>.self, from: data) else {
+              let decoded = try? JSONDecoder().decode(Set<Entry>.self, from: data)
+        else {
             return []
         }
         return decoded
@@ -65,4 +66,3 @@ final class DeletedTreatmentsStore {
         }
     }
 }
-

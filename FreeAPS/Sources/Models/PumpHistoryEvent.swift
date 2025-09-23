@@ -5,6 +5,7 @@ struct PumpHistoryEvent: JSON, Equatable {
     let type: EventType
     let timestamp: Date
     let amount: Decimal?
+    let deliveredUnits: Decimal? // Actual delivered amount for interrupted boluses
     let duration: Int?
     let durationMin: Int?
     let rate: Decimal?
@@ -46,11 +47,18 @@ extension PumpHistoryEvent {
         case type = "_type"
         case timestamp
         case amount
+        case deliveredUnits = "delivered_units"
         case duration
         case durationMin = "duration (min)"
         case rate
         case temp
         case carbInput = "carb_input"
         case automatic
+    }
+
+    /// Returns the actual delivered amount for IOB calculation
+    /// Uses deliveredUnits if available (for interrupted boluses), otherwise falls back to amount
+    var effectiveInsulinAmount: Decimal? {
+        deliveredUnits ?? amount
     }
 }

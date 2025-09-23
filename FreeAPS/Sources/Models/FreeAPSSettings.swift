@@ -25,6 +25,8 @@ struct FreeAPSSettings: JSON, Equatable {
     var animatedBackground: Bool = false
     var smbBasalEnabled: Bool = false
     var useOpenAPSForTempBasalWhenSmbBasal: Bool = true
+    var smbBasalGlucoseThreshold: Decimal = 4.5 // mmol/L threshold for suspending basal
+    var smbBasalErrorCompensationMaxMinutes: Int = 20 // Max minutes to accumulate failed pulses
 }
 
 extension FreeAPSSettings: Decodable {
@@ -133,6 +135,17 @@ extension FreeAPSSettings: Decodable {
             forKey: .useOpenAPSForTempBasalWhenSmbBasal
         ) {
             settings.useOpenAPSForTempBasalWhenSmbBasal = useOpenAPSForTempBasalWhenSmbBasal
+        }
+
+        if let smbBasalGlucoseThreshold = try? container.decode(Decimal.self, forKey: .smbBasalGlucoseThreshold) {
+            settings.smbBasalGlucoseThreshold = smbBasalGlucoseThreshold
+        }
+
+        if let smbBasalErrorCompensationMaxMinutes = try? container.decode(
+            Int.self,
+            forKey: .smbBasalErrorCompensationMaxMinutes
+        ) {
+            settings.smbBasalErrorCompensationMaxMinutes = smbBasalErrorCompensationMaxMinutes
         }
 
         self = settings

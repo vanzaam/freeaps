@@ -1,0 +1,2766 @@
+Skipping updateConnections until state is poweredOn
+OmniBLE centralManager(_:willRestoreState:): {
+    kCBRestoredPeripherals =     (
+        "<CBPeripheral: 0x109640a80, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 247, state = connected>"
+    );
+}
+Created device
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: Pod peripheral was restored EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7)
+centralManagerDidUpdateState(_:): 5
+Re-connecting to known peripheral EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7
+Applying configuration
+Discovered service: <CBService: 0x1096001c0, isPrimary = YES, UUID = 1A7E4024-E3ED-4464-8B7E-751E03D0DC5F>
+centralManager(_:didConnect:): <CBPeripheral: 0x109640a80, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 247, state = connected>
+PodComms completeConfiguration: isPaired=true needsSessionEstablishment=false
+Session already established.
+Delegate configuration notified
+Peripheral configuration completed
+PeripheralManager - didConnect: <CBPeripheral: 0x109640a80, identifier = EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7, name = TWI BOARD, mtu = 247, state = connected>
+PeripheralManager - didConnect - running assertConfiguration
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: Pod connected EBF46251-2FE0-6FE3-B72C-F3D50DA1D7F7
+didReadRSSI: -78
+NightscoutManager.swift - subscribe() - 74 DEV: Network status: reachable by WiFi
+NightscoutAPI.swift - performFetch(queryItems:logName:) - 255 DEV: Fetching Bolus to delete: https://vanzaam.aw2.ru/api/v1/treatments.json?find%5BeventType%5D=Bolus&find%5Binsulin%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T19:57:57.808Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T20:17:57.808Z&find%5BenteredBy%5D=freeaps-x&count=100
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Bolus&find%5Binsulin%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T19:57:57.808Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T20:17:57.808Z&find%5BenteredBy%5D=freeaps-x&count=100
+NightscoutAPI.swift - performFetch(queryItems:logName:) - 255 DEV: Fetching Temp Target to delete: https://vanzaam.aw2.ru/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T21:32:29.426Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T21:52:29.426Z&find%5BenteredBy%5D=freeaps-x&count=100
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T21:32:29.426Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T21:52:29.426Z&find%5BenteredBy%5D=freeaps-x&count=100
+NightscoutAPI.swift - performFetch(queryItems:logName:) - 255 DEV: Fetching Temp Target to delete: https://vanzaam.aw2.ru/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T20:46:23.088Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T21:06:23.088Z&find%5BenteredBy%5D=freeaps-x&count=100
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T20:46:23.088Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T21:06:23.088Z&find%5BenteredBy%5D=freeaps-x&count=100
+NightscoutAPI.swift - performFetch(queryItems:logName:) - 255 DEV: Fetching Temp Target to delete: https://vanzaam.aw2.ru/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T19:46:19.074Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T20:06:19.074Z&find%5BenteredBy%5D=freeaps-x&count=100
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T19:46:19.074Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T20:06:19.074Z&find%5BenteredBy%5D=freeaps-x&count=100
+NightscoutAPI.swift - performFetch(queryItems:logName:) - 255 DEV: Fetching Bolus to delete: https://vanzaam.aw2.ru/api/v1/treatments.json?find%5BeventType%5D=Bolus&find%5Binsulin%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T20:56:37.407Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T21:16:37.407Z&find%5BenteredBy%5D=freeaps-x&count=100
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Bolus&find%5Binsulin%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T20:56:37.407Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T21:16:37.407Z&find%5BenteredBy%5D=freeaps-x&count=100
+HealthKitManager.swift - init(resolver:) - 95 DEV: HealthKitManager did create
+NightscoutAPI.swift - deleteTreatmentsByIds(_:logName:) - 352 DEV: DELETE Bolus by _id: 68d2048abc5d6c9f3d95cc23
+NetworkService.swift - run(_:) - 17 DEV: DELETE  ***/api/v1/treatments/68d2048abc5d6c9f3d95cc23
+NightscoutAPI.swift - deleteTreatmentsByIds(_:logName:) - 352 DEV: DELETE Bolus by _id: 68d20c0abc5d6c9f3d9c22bb
+NetworkService.swift - run(_:) - 17 DEV: DELETE  ***/api/v1/treatments/68d20c0abc5d6c9f3d9c22bb
+Restoring peripheral from state: B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+Connecting to peripheral: B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+API MISUSE: <CBCentralManager: 0x1096c8540> can only accept this command while in the powered on state
+assertConfiguration
+Discovering servicesToDiscover [F8083532-849E-531C-C594-30F1F86A4EA5]
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+Unable to run command: central state = Optional("unknown"), peripheral state = CBPeripheralState(rawValue: 1)
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+Error applying peripheral configuration: notReady
+Restoring peripheral from state: E926E760-258A-38B6-1809-3D3BC7BC94A7
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+Connecting to peripheral: E926E760-258A-38B6-1809-3D3BC7BC94A7
+API MISUSE: <CBCentralManager: 0x1096c8540> can only accept this command while in the powered on state
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+Restoring peripheral from state: AF975C27-1624-F114-76E3-514F1731EFCE
+Connecting to peripheral: AF975C27-1624-F114-76E3-514F1731EFCE
+API MISUSE: <CBCentralManager: 0x1096c8540> can only accept this command while in the powered on state
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-22T03:41:25.111Z
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+Restoring peripheral from state: 5DFBA815-D9D7-679E-B6BE-2887E06E54BB
+Connecting to peripheral: 5DFBA815-D9D7-679E-B6BE-2887E06E54BB
+API MISUSE: <CBCentralManager: 0x1096c8540> can only accept this command while in the powered on state
+assertConfiguration
+Discovering servicesToDiscover []
+all uuids: [F8083535-849E-531C-C594-30F1F86A4EA5, F8083534-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5]
+knownCharacteristicUUIDs: [F8083534-849E-531C-C594-30F1F86A4EA5, F8083535-849E-531C-C594-30F1F86A4EA5, F8083536-849E-531C-C594-30F1F86A4EA5, F8083538-849E-531C-C594-30F1F86A4EA5]
+characteristicsToDiscover: []
+Peripheral configuration completed
+Delegate configuration completed
+centralManagerDidUpdateState(_:): 5
+Scanning for peripherals and listening for connection events
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-22T03:41:25.231Z
+centralManager(_:didDiscover:advertisementData:rssi:): <CBPeripheral: 0x109642140, identifier = B9AB9AF1-6354-C8ED-24A7-00FD69122AAA, name = DXCMzM, mtu = 23, state = connecting>, data = ["kCBAdvDataRxPrimaryPHY": 1, "kCBAdvDataLocalName": DXCMzM, "kCBAdvDataServiceUUIDs": <__NSArrayM 0x118018840>(
+FEBC,
+FEBC
+)
+, "kCBAdvDataManufacturerData": <d000cc50 0004cc50 0004>, "kCBAdvDataIsConnectable": 1, "kCBAdvDataTimestamp": 780291682.171888, "kCBAdvDataRxSecondaryPHY": 0]
+Connecting to peripheral: B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+assertConfiguration
+Discovering servicesToDiscover [F8083532-849E-531C-C594-30F1F86A4EA5]
+Unable to run command: central state = Optional("poweredOff"), peripheral state = CBPeripheralState(rawValue: 1)
+Error applying peripheral configuration: notReady
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+Scanning for peripherals and listening for connection events
+NightscoutManager.swift - processPendingDeletions() - 415 DEV: Pending deletion processed: bolus(2025-09-22 21:06:37 +0000, 0.2)
+NightscoutManager.swift - processPendingDeletions() - 415 DEV: Pending deletion processed: bolus(2025-09-22 20:07:57 +0000, 0.5)
+NightscoutAPI.swift - performFetch(queryItems:logName:) - 255 DEV: Fetching Temp Target (fallback) to delete: https://vanzaam.aw2.ru/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T20:36:23.088Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T21:16:23.088Z&count=100
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T20:36:23.088Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T21:16:23.088Z&count=100
+UserNotificationsManager.swift - requestNotificationPermissionsIfNeeded() - 288 DEV: UNUserNotificationCenter.authorizationStatus: UNAuthorizationStatus(rawValue: 2)
+NightscoutAPI.swift - performFetch(queryItems:logName:) - 255 DEV: Fetching Temp Target (fallback) to delete: https://vanzaam.aw2.ru/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T21:22:29.426Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T22:02:29.426Z&count=100
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T21:22:29.426Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T22:02:29.426Z&count=100
+NightscoutAPI.swift - performFetch(queryItems:logName:) - 255 DEV: Fetching Temp Target (fallback) to delete: https://vanzaam.aw2.ru/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T19:36:19.074Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T20:16:19.074Z&count=100
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary%20Target&find%5Bcreated_at%5D%5B$gte%5D=2025-09-22T19:36:19.074Z&find%5Bcreated_at%5D%5B$lte%5D=2025-09-22T20:16:19.074Z&count=100
+UserNotificationsManager.swift - ensureCanSendNotification(_:) - 313 DEV: Sending notification was allowed
+NightscoutManager.swift - processPendingDeletions() - 417 DEV: Pending deletion failed: Не удалось завершить операцию. (FreeAPS.NightscoutAPI.Error, ошибка 2)
+NightscoutManager.swift - processPendingDeletions() - 417 DEV: Pending deletion failed: Не удалось завершить операцию. (FreeAPS.NightscoutAPI.Error, ошибка 2)
+Application context data is nil
+NightscoutManager.swift - processPendingDeletions() - 417 DEV: Pending deletion failed: Не удалось завершить операцию. (FreeAPS.NightscoutAPI.Error, ошибка 2)
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 228 DEV: WCSession is activated: true
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 237 DEV: WCSession activated successfully
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 239 DEV: Watch is paired
+WatchManager.swift - session(_:activationDidCompleteWith:error:) - 241 DEV: Watch app is installed
+Application context data is nil
+SMB-Basal Manager initialized: isEnabled=true
+SMB-Basal Manager starting...
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+FreeAPSApp.swift - body - 53 DEV: APPLICATION PHASE: active
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09996519592742414336
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09935082109446662144
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09561920064384223232
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 32min, IOB: 0.09291166549996601344
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 35min, IOB: 0.04560902845514327552
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13525180441094643712
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.1683089701874384896
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 55min, IOB: 0.15449788189804488704
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 63min, IOB: 0.28643589936585344
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17232012286980173824
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.06157197252216448
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 80min, IOB: 0.05903469846441056256
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 81min, IOB: 0.0583111644652900864
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 95min, IOB: 0.04832674806951612416
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.0474126313313642496
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.0443350412819048448
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 127min, IOB: 0.03003810746029700096
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 135min, IOB: 0.013037276071212136448
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03220473984172406784
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 174min, IOB: 0.02489325028414523392
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02212310587942039552
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 183min, IOB: 0.02043922408848238592
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 189min, IOB: 0.017810919767861510144
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.015570292952675096576
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 203min, IOB: 0.01270334075138854912
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011554852421607436288
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 212min, IOB: 0.0198282425330849536
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.011142152858794498048
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.0018150807490560753664
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 244min, IOB: 0.0018011912745689028608
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 244min, IOB: 0.0017882446657786150912
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 269min, IOB: 0.002303306377911784192
+  SMB-Basal IOB: 1.3188013909763223552U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3188013909763223552U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:41:26 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.908316174465585664 U
+  Наш Basal IOB: 1.3188013909763223552 U
+  Наш Total IOB: 3.2271175654419080192 U
+  РАЗНИЦА: 4.0511175654419080192 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 100.0%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.4%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.6%, IOB: 0.096U
+  SMB: 0.1U, возраст: 32мин, остаток: 92.9%, IOB: 0.093U
+  SMB: 0.05U, возраст: 35мин, остаток: 91.2%, IOB: 0.046U
+  SMB: 0.15U, возраст: 37мин, остаток: 90.2%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 84.2%, IOB: 0.168U
+  SMB: 0.2U, возраст: 55мин, остаток: 77.2%, IOB: 0.154U
+  SMB: 0.4U, возраст: 63мин, остаток: 71.6%, IOB: 0.286U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.9%, IOB: 0.172U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.908316174465585664
+  Custom Basal IOB: 1.3188013909763223552
+  Custom Total IOB: 3.2271175654419080192
+  Difference: 4.0511175654419080192
+SMB-Basal: 🔄 Attempting to save Custom IOB data...
+SMB-Basal: ✅ Data saved in transaction
+SMB-Basal: Custom IOB saved for middleware - Total: 3.2271175654419080192U
+SMB-Basal: Saved to middleware/custom-iob.json: totalIOB=3.2271175654419073, calculationTime=1758598886.018215
+SMB-Basal: Middleware installed successfully
+UserNotificationsManager.swift - addRequest(identifier:content:deleteOld:trigger:) - 341 DEV: Sending glucocoseNotification notification
+SMB-Basal: ✅ Verification SUCCESS - data saved as CustomIOBData struct!
+SMB-Basal: ✅ Verified IOB: 3.2271175654419073U
+centralManager(_:didDiscover:advertisementData:rssi:): <CBPeripheral: 0x109642140, identifier = B9AB9AF1-6354-C8ED-24A7-00FD69122AAA, name = DXCMzM, mtu = 23, state = connecting>, data = ["kCBAdvDataIsConnectable": 1, "kCBAdvDataRxSecondaryPHY": 0, "kCBAdvDataTimestamp": 780291686.569518, "kCBAdvDataLocalName": DXCMzM, "kCBAdvDataRxPrimaryPHY": 161, "kCBAdvDataManufacturerData": <d000cc50 0004cc50 0004>, "kCBAdvDataServiceUUIDs": <__NSArrayM 0x118188a20>(
+FEBC,
+FEBC
+)
+]
+Connecting to peripheral: B9AB9AF1-6354-C8ED-24A7-00FD69122AAA
+assertConfiguration
+Discovering servicesToDiscover [F8083532-849E-531C-C594-30F1F86A4EA5]
+Unable to run command: central state = Optional("poweredOff"), peripheral state = CBPeripheralState(rawValue: 1)
+Error applying peripheral configuration: notReady
+SMB-Basal: Settings changed - smbBasalEnabled=false, current isEnabled=true
+SMB-Basal: Disabling and stopping SMB-basal system
+SMB-Basal: Middleware removed
+SMB-Basal: Settings changed - smbBasalEnabled=true, current isEnabled=false
+SMB-Basal: Enabling and starting SMB-basal system
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09996209525826045952
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09933837241501233152
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.0955908831391371264
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 32min, IOB: 0.0928778923815318528
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 35min, IOB: 0.04559089660218907648
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.1351954575229382656
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.16822371615688650752
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.1544072204403500032
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 63min, IOB: 0.2862517881659419136
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.1722051059173963776
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.06152694637608620032
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 80min, IOB: 0.0589902789144192512
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 81min, IOB: 0.05826694031869657088
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.0482861261417280512
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.04737241650427802624
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.0442962842573423104
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 127min, IOB: 0.03000776757629523968
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 135min, IOB: 0.013023504165414889472
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03216562661476444672
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 174min, IOB: 0.02486079461720843264
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02209331428227706368
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 183min, IOB: 0.02041109579281749504
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 189min, IOB: 0.017785461730647801856
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.015547191800294709248
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 203min, IOB: 0.012683383688124358656
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011536202639853379584
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 212min, IOB: 0.01979479178517906176
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.011119780482494687232
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.001810895799831691264
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 244min, IOB: 0.0017970277328851595264
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 244min, IOB: 0.001784101118018921472
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 269min, IOB: 0.002295301388659520256
+  SMB-Basal IOB: 1.3180704937005846528U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3180704937005846528U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:41:29 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.907098661726960896 U
+  Наш Basal IOB: 1.3180704937005846528 U
+  Наш Total IOB: 3.2251691554275455488 U
+  РАЗНИЦА: 4.0491691554275455488 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 100.0%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.3%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.6%, IOB: 0.096U
+  SMB: 0.1U, возраст: 32мин, остаток: 92.9%, IOB: 0.093U
+  SMB: 0.05U, возраст: 35мин, остаток: 91.2%, IOB: 0.046U
+  SMB: 0.15U, возраст: 37мин, остаток: 90.1%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 84.1%, IOB: 0.168U
+  SMB: 0.2U, возраст: 56мин, остаток: 77.2%, IOB: 0.154U
+  SMB: 0.4U, возраст: 63мин, остаток: 71.6%, IOB: 0.286U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.9%, IOB: 0.172U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.907098661726960896
+  Custom Basal IOB: 1.3180704937005846528
+  Custom Total IOB: 3.2251691554275455488
+  Difference: 4.0491691554275455488
+SMB-Basal: 🔄 Attempting to save Custom IOB data...
+SMB-Basal: ✅ Data saved in transaction
+SMB-Basal: Custom IOB saved for middleware - Total: 3.2251691554275455488U
+SMB-Basal: Saved to middleware/custom-iob.json: totalIOB=3.2251691554275466, calculationTime=1758598889.709034
+SMB-Basal: Middleware installed successfully
+SMB-Basal: ✅ Verification SUCCESS - data saved as CustomIOBData struct!
+SMB-Basal: ✅ Verified IOB: 3.2251691554275466U
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09996092922130993152
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09933379398764146688
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09558051282795522048
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 32min, IOB: 0.09286553131105959936
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 35min, IOB: 0.045584261731824256
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13517484106591387648
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.16819253524848603136
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.154374069973473792
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 63min, IOB: 0.286184476691983616
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17216305762081189888
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.0615104874642706432
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 80min, IOB: 0.05897404228389023744
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 81min, IOB: 0.05825077526129112064
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04827127942972775424
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.04735771871430252544
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.04428211968511249408
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 127min, IOB: 0.02999668062624026112
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.013018471743508482048
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03215133559157925888
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 174min, IOB: 0.02484893666669040128
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.0220824299031625984
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 183min, IOB: 0.0204008192479009024
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 189min, IOB: 0.017776160982610612224
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.01553875231395117056
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 203min, IOB: 0.012676093099033858048
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011529389741472731136
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 212min, IOB: 0.01978257235406011136
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.011111608959749566464
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.0018093674137358286848
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 244min, IOB: 0.0017955071683188774912
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 244min, IOB: 0.0017825878584941221888
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 269min, IOB: 0.002292379102623299072
+  SMB-Basal IOB: 1.3177992802823827456U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3177992802823827456U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:41:31 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.906653525292186112 U
+  Наш Basal IOB: 1.3177992802823827456 U
+  Наш Total IOB: 3.2244528055745688576 U
+  РАЗНИЦА: 4.0484528055745688576 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 100.0%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.3%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.6%, IOB: 0.096U
+  SMB: 0.1U, возраст: 32мин, остаток: 92.9%, IOB: 0.093U
+  SMB: 0.05U, возраст: 35мин, остаток: 91.2%, IOB: 0.046U
+  SMB: 0.15U, возраст: 37мин, остаток: 90.1%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 84.1%, IOB: 0.168U
+  SMB: 0.2U, возраст: 56мин, остаток: 77.2%, IOB: 0.154U
+  SMB: 0.4U, возраст: 63мин, остаток: 71.5%, IOB: 0.286U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.9%, IOB: 0.172U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.906653525292186112
+  Custom Basal IOB: 1.3177992802823827456
+  Custom Total IOB: 3.2244528055745688576
+  Difference: 4.0484528055745688576
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2244528055745688576
+  Difference: 4.0484528055745688576
+  Show Custom: true
+App is being debugged, do not track this hang
+Hang detected: 0.35s (debugger attached, not reporting)
+SMB-Basal: tick() - processing basal replacement
+SMB-Basal: Updated compensation units: 0 U from 0 failed pulses
+SMB-Basal: Current temp basal rate: 0 U/h, remaining: 18 min, isZero: true
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09995644602685816832
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09931665944653703168
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09554190906163423232
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 32min, IOB: 0.09281955039009468416
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 35min, IOB: 0.04555958798855359488
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13509818286908936192
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.16807665240558911488
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.1542509055002182656
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 63min, IOB: 0.28593443537467008
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17200687132002054144
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.0614493605622995968
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 80min, IOB: 0.05891374346717421568
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 81min, IOB: 0.05819074293991128064
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04821615074651629568
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.04730314362854852608
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.04422952647018415104
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 127min, IOB: 0.02995552121406012928
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.012999790104495071232
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03209829033036863488
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 174min, IOB: 0.0248049250897425664
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02204203288437248
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 183min, IOB: 0.0203626788696287232
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 189min, IOB: 0.01774164325576259584
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.015507431939114962944
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 203min, IOB: 0.012649037766674120704
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011504107692033630208
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01973722886507629824
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.011081291110700511232
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.0018036976125014757376
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 244min, IOB: 0.001789866397707396096
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 244min, IOB: 0.0017769742014717820928
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 269min, IOB: 0.002281544106508404224
+  SMB-Basal IOB: 1.316797954459010048U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.316797954459010048U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:41:36 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.904999929638118912 U
+  Наш Basal IOB: 1.316797954459010048 U
+  Наш Total IOB: 3.22179788409712896 U
+  РАЗНИЦА: 4.04579788409712896 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 100.0%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.3%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.5%, IOB: 0.096U
+  SMB: 0.1U, возраст: 32мин, остаток: 92.8%, IOB: 0.093U
+  SMB: 0.05U, возраст: 35мин, остаток: 91.1%, IOB: 0.046U
+  SMB: 0.15U, возраст: 37мин, остаток: 90.1%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 84.0%, IOB: 0.168U
+  SMB: 0.2U, возраст: 56мин, остаток: 77.1%, IOB: 0.154U
+  SMB: 0.4U, возраст: 63мин, остаток: 71.5%, IOB: 0.286U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.8%, IOB: 0.172U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.904999929638118912
+  Custom Basal IOB: 1.316797954459010048
+  Custom Total IOB: 3.22179788409712896
+  Difference: 4.04579788409712896
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.22179788409712896
+  Difference: 4.04579788409712896
+  Show Custom: true
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09995175104149078016
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09929942144806211584
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09550339197488390144
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 32min, IOB: 0.09277372483805417472
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 35min, IOB: 0.04553500814442740736
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13502183236029239296
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.1679613237366784
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15412838951076909056
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 63min, IOB: 0.2856857762133478912
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17185156415520436224
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.06138859161583648768
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 80min, IOB: 0.05885380173811316736
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 81min, IOB: 0.05813106720500819968
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04816136151210070016
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.04724890555238330368
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.04417726107453944832
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 127min, IOB: 0.02991462858353386496
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.01298123083861081088
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03204560296081709056
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 174min, IOB: 0.02476121456413824512
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02200191388283652608
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 183min, IOB: 0.02032480204562039552
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 189min, IOB: 0.017707365733482213376
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.015476331024817156096
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 203min, IOB: 0.012622174022221922304
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011479005572183160832
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01969221075812237312
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.011051198296344242176
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.001798071132271639552
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 244min, IOB: 0.001784268750294105088
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017714034828705599488
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 269min, IOB: 0.002270800815499596544
+  SMB-Basal IOB: 1.3158036517255856128U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3158036517255856128U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:41:41 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.90335539458485504 U
+  Наш Basal IOB: 1.3158036517255856128 U
+  Наш Total IOB: 3.2191590463104406528 U
+  РАЗНИЦА: 4.0431590463104406528 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 100.0%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.3%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.5%, IOB: 0.096U
+  SMB: 0.1U, возраст: 32мин, остаток: 92.8%, IOB: 0.093U
+  SMB: 0.05U, возраст: 35мин, остаток: 91.1%, IOB: 0.046U
+  SMB: 0.15U, возраст: 37мин, остаток: 90.0%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 84.0%, IOB: 0.168U
+  SMB: 0.2U, возраст: 56мин, остаток: 77.1%, IOB: 0.154U
+  SMB: 0.4U, возраст: 63мин, остаток: 71.4%, IOB: 0.286U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.7%, IOB: 0.172U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.90335539458485504
+  Custom Basal IOB: 1.3158036517255856128
+  Custom Total IOB: 3.2191590463104406528
+  Difference: 4.0431590463104406528
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2191590463104406528
+  Difference: 4.0431590463104406528
+  Show Custom: true
+[u 23EFC09E-EB1D-4372-8AEB-E82F84085C0E:m (null)] [com.swiftkey.SwiftKeyApp.Keyboard(4.2.5)] RB query for the extension process state failed with error: Error Domain=RBSServiceErrorDomain Code=1 "Client not entitled" UserInfo={RBSEntitlement=com.apple.runningboard.process-state, NSLocalizedFailureReason=Client not entitled, RBSPermanent=false}
+App is being debugged, do not track this hang
+Hang detected: 0.99s (debugger attached, not reporting)
+App is being debugged, do not track this hang
+Hang detected: 0.58s (debugger attached, not reporting)
+AddGlucoseStateModel.swift - add() - 19 DEV: AddGlucose: start units=mmol/L input=8
+AddGlucoseStateModel.swift - add() - 30 DEV: AddGlucose: converted to mg/dL=144 at 2025-09-23 03:41:41 +0000
+AddGlucoseStateModel.swift - add() - 55 DEV: AddGlucose: stored locally id=FE55133E-8B6F-43E0-B37A-DBA216D4B5A0
+DeviceDataManager.swift - updatePumpData() - 215 DEV: Start updating the pump data
+DeviceDataManager.swift - updatePumpData() - 218 DEV: Waiting for pump update and loop recommendation
+Skipping status update because pumpData is fresh
+DeviceDataManager.swift - updatePumpData() - 221 DEV: Pump data updated.
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/entries.json
+AddGlucoseStateModel.swift - add() - 58 DEV: AddGlucose: requested NS upload
+AddGlucoseStateModel.swift - add() - 60 DEV: AddGlucose: requested HealthKit save
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Bolus: noBolus
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 387 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-23 03:29:45 +0000, endDate: 2025-09-23 03:59:45 +0000, value: 0.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.fiasp), automatic: Optional(true), manuallyEntered: false, syncIdentifier: nil, isMutable: true, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+UserNotificationsManager.swift - ensureCanSendNotification(_:) - 313 DEV: Sending notification was allowed
+UserNotificationsManager.swift - addRequest(identifier:content:deleteOld:trigger:) - 341 DEV: Sending glucocoseNotification notification
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09994680263357773824
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.0992819231565983744
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09546460925266655232
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 32min, IOB: 0.09272763518122164224
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 35min, IOB: 0.04551029714043196928
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13494509036131084288
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.16784549259510829056
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15400539915647823872
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 63min, IOB: 0.285436219880906496
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.1716957124147805184
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.0613276234702193664
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 80min, IOB: 0.05879366750302040064
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 81min, IOB: 0.05807120089544855552
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.0481064092994600448
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.04719450710739631104
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.04412484419221113856
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 127min, IOB: 0.02987362766570249728
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.012962623712289923072
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03199279015470852608
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 174min, IOB: 0.02471740408895225856
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.0219617048374195968
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 183min, IOB: 0.02028684127941840384
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.017673013931929800704
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.015445164223672303616
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 203min, IOB: 0.012595255383548596224
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.01145385305860542464
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01964710495813922048
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.011021054355076339712
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.001792436332758817792
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 244min, IOB: 0.0017786628503033253888
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017658245739594072064
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 269min, IOB: 0.002260050583231843584
+  SMB-Basal IOB: 1.3148043635525070848U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3148043635525070848U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:41:46 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.901704846230553088 U
+  Наш Basal IOB: 1.3148043635525070848 U
+  Наш Total IOB: 3.2165092097830601728 U
+  РАЗНИЦА: 4.0405092097830601728 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.3%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.5%, IOB: 0.095U
+  SMB: 0.1U, возраст: 32мин, остаток: 92.7%, IOB: 0.093U
+  SMB: 0.05U, возраст: 35мин, остаток: 91.0%, IOB: 0.046U
+  SMB: 0.15U, возраст: 37мин, остаток: 90.0%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 83.9%, IOB: 0.168U
+  SMB: 0.2U, возраст: 56мин, остаток: 77.0%, IOB: 0.154U
+  SMB: 0.4U, возраст: 63мин, остаток: 71.4%, IOB: 0.285U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.7%, IOB: 0.172U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.901704846230553088
+  Custom Basal IOB: 1.3148043635525070848
+  Custom Total IOB: 3.2165092097830601728
+  Difference: 4.0405092097830601728
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2165092097830601728
+  Difference: 4.0405092097830601728
+  Show Custom: true
+DeviceDataManager.swift - heartbeat(date:) - 191 WARN: error("Pump updating already in progress. Skip updating.")
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09994159485277939712
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09926414924035584
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09542552970947035136
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 32min, IOB: 0.09268124482194149376
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 35min, IOB: 0.04548543544854038016
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13486789636866838528
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.16772906845485060096
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15388183884903739392
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 63min, IOB: 0.2851855730113452544
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.1715391954807625728
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.06126640906573131776
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 80min, IOB: 0.05873329438185201664
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 81min, IOB: 0.05801109784758011904
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04805125184310264832
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.0471399064628539392
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.04407223554405569536
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 127min, IOB: 0.0298324870480933632
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.012943954481832562688
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03193981158243167232
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02467346024847945728
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02192137509568222464
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.02024876764285781504
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.01763856168954574848
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.015413907814459387904
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 203min, IOB: 0.012568261382484611072
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011428631034898044928
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01960187721028554752
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.010990836468920006656
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.0017867889609840422912
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.001773044466809414656
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017602332644094160896
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 269min, IOB: 0.002249285385536792064
+  SMB-Basal IOB: 1.3137997282761115648U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3137997282761115648U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:41:51 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.900047005160637184 U
+  Наш Basal IOB: 1.3137997282761115648 U
+  Наш Total IOB: 3.2138467334367487488 U
+  РАЗНИЦА: 4.0378467334367487488 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.3%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.4%, IOB: 0.095U
+  SMB: 0.1U, возраст: 32мин, остаток: 92.7%, IOB: 0.093U
+  SMB: 0.05U, возраст: 35мин, остаток: 91.0%, IOB: 0.045U
+  SMB: 0.15U, возраст: 37мин, остаток: 89.9%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 83.9%, IOB: 0.168U
+  SMB: 0.2U, возраст: 56мин, остаток: 76.9%, IOB: 0.154U
+  SMB: 0.4U, возраст: 63мин, остаток: 71.3%, IOB: 0.285U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.6%, IOB: 0.172U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.900047005160637184
+  Custom Basal IOB: 1.3137997282761115648
+  Custom Total IOB: 3.2138467334367487488
+  Difference: 4.0378467334367487488
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2138467334367487488
+  Difference: 4.0378467334367487488
+  Show Custom: true
+DeviceDataManager.swift - heartbeat(date:) - 191 WARN: error("Pump updating already in progress. Skip updating.")
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09993616379793338368
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09924622270934401024
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09538642370984077312
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09263487468715767808
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 35min, IOB: 0.0454605950578638848
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13479078439287816192
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.167612856684856832
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15375856330490597376
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2849355694120605696
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17138309602846087168
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.0612053718376316928
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05867309998959894528
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.0579511738079975424
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04799627067752124416
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.0470854813015226368
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.044019799033389056
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.02979149130692285952
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.012925352285333860352
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.0318870337070303232
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02462968701202526208
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02188120362803185664
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.02021084450075983104
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.017604247321799282688
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.015382778006920122368
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012541378745487665152
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011403513970660530176
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01955684037233256448
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.010960753671439826944
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.0017811680837602422784
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017674524661104416768
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017546682332454711296
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002238579699543842048
+  SMB-Basal IOB: 1.312799117110704128U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.312799117110704128U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:41:56 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.89839333944436736 U
+  Наш Basal IOB: 1.312799117110704128 U
+  Наш Total IOB: 3.211192456555071488 U
+  РАЗНИЦА: 4.035192456555071488 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.2%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.4%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.6%, IOB: 0.093U
+  SMB: 0.05U, возраст: 35мин, остаток: 90.9%, IOB: 0.045U
+  SMB: 0.15U, возраст: 37мин, остаток: 89.9%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 83.8%, IOB: 0.168U
+  SMB: 0.2U, возраст: 56мин, остаток: 76.9%, IOB: 0.154U
+  SMB: 0.4U, возраст: 64мин, остаток: 71.2%, IOB: 0.285U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.6%, IOB: 0.171U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.89839333944436736
+  Custom Basal IOB: 1.312799117110704128
+  Custom Total IOB: 3.211192456555071488
+  Difference: 4.035192456555071488
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.211192456555071488
+  Difference: 4.035192456555071488
+  Show Custom: true
+DeviceDataManager.swift - heartbeat(date:) - 191 WARN: error("Pump updating already in progress. Skip updating.")
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 11min, IOB: 0.09993050160287397888
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09922811293424672768
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.0953472219909778432
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09258844223654121472
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.0454357316682363392
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13471361678631897088
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 46min, IOB: 0.167496649135690752
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15363535124931837952
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2846857598141468672
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17122713341387440128
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.06114440193965000704
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05861297596524695552
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05789132089383868416
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04794136672396374016
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 97min, IOB: 0.04703113353896609792
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.04396744013574779904
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.029750566461733248
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.012906783543597422592
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03183436117919091712
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02458600526763024384
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02184111781956396544
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.02017300329450410496
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.01757000878180931584
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 195min, IOB: 0.01535171850149996544
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012514558839622623232
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011378456420548337664
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01951191293803429888
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.010930751466489362432
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 244min, IOB: 0.0017755635099059863552
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.001761876709211406336
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.001749119390212816896
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002227914052172642816
+  SMB-Basal IOB: 1.3117985935362748416U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3117985935362748416U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:01 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.89674087820536576 U
+  Наш Basal IOB: 1.3117985935362748416 U
+  Наш Total IOB: 3.2085394717416406016 U
+  РАЗНИЦА: 4.0325394717416406016 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 11мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.2%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.3%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.6%, IOB: 0.093U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.9%, IOB: 0.045U
+  SMB: 0.15U, возраст: 37мин, остаток: 89.8%, IOB: 0.135U
+  SMB: 0.2U, возраст: 46мин, остаток: 83.7%, IOB: 0.167U
+  SMB: 0.2U, возраст: 56мин, остаток: 76.8%, IOB: 0.154U
+  SMB: 0.4U, возраст: 64мин, остаток: 71.2%, IOB: 0.285U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.5%, IOB: 0.171U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.89674087820536576
+  Custom Basal IOB: 1.3117985935362748416
+  Custom Total IOB: 3.2085394717416406016
+  Difference: 4.0325394717416406016
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2085394717416406016
+  Difference: 4.0325394717416406016
+  Show Custom: true
+DeviceDataManager.swift - heartbeat(date:) - 191 WARN: error("Pump updating already in progress. Skip updating.")
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09992460382227310592
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.09920980353621372928
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09530788792882444288
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09254190389259077632
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04541082190480620544
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13463632094025623552
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16738033612441440256
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.1535120861603766272
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2844359077212255744
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17107115992595228672
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.0610834415748542976
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05855286529864343552
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05783148234794903552
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04788648787325161472
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04697681159027324928
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.04391510914266412032
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.02970967362209045504
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.01288823060640474112
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.0317817438962526976
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02454237345127718912
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.0218010795224222464
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.02013520800891804416
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.01753581347791013888
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.015320699727959658496
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012487776124774670336
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.01135343451997022208
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01946705211081286144
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.010900801252716351488
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017699698929440903168
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.001756311877055693824
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017435814418646941696
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002217278243486652928
+  SMB-Basal IOB: 1.3107979237826797568U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3107979237826797568U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:06 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.895088057561428736 U
+  Наш Basal IOB: 1.3107979237826797568 U
+  Наш Total IOB: 3.2058859813441084928 U
+  РАЗНИЦА: 4.0298859813441084928 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.2%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.3%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.5%, IOB: 0.093U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.8%, IOB: 0.045U
+  SMB: 0.15U, возраст: 37мин, остаток: 89.8%, IOB: 0.135U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.7%, IOB: 0.167U
+  SMB: 0.2U, возраст: 56мин, остаток: 76.8%, IOB: 0.154U
+  SMB: 0.4U, возраст: 64мин, остаток: 71.1%, IOB: 0.284U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.4%, IOB: 0.171U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.895088057561428736
+  Custom Basal IOB: 1.3107979237826797568
+  Custom Total IOB: 3.2058859813441084928
+  Difference: 4.0298859813441084928
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2058859813441084928
+  Difference: 4.0298859813441084928
+  Show Custom: true
+DeviceDataManager.swift - heartbeat(date:) - 191 WARN: error("Pump updating already in progress. Skip updating.")
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.0999184740119842816
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 16min, IOB: 0.099191303865379328
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09526844066896607232
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09249528214681831424
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04538587777356691968
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 37min, IOB: 0.13455893406012452864
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.1672639733603330048
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15338882689224871936
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2841861322240617472
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17091524985982949376
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.06102251973781962752
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.0584927965680158208
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05777168661588707328
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.0478316601768698368
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04692254123964923904
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.04386283088420658176
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.029668832161021824
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.012869702259609841664
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.0317292067473110528
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02449881219121944064
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02176110766169196544
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.020097476506237824
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.017501677566868963328
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.015289736338591322112
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012461043247512803328
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 207min, IOB: 0.011328460081964935168
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01942227906366702336
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.010870917149011689472
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017643898670733901824
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017507605902345457664
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.00173805699608341504
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002206677263173117952
+  SMB-Basal IOB: 1.3097974557651877888U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3097974557651877888U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:11 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.893435665777033984 U
+  Наш Basal IOB: 1.3097974557651877888 U
+  Наш Total IOB: 3.2032331215422217728 U
+  РАЗНИЦА: 4.0272331215422217728 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 16мин, остаток: 99.2%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.3%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.5%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.8%, IOB: 0.045U
+  SMB: 0.15U, возраст: 37мин, остаток: 89.7%, IOB: 0.135U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.6%, IOB: 0.167U
+  SMB: 0.2U, возраст: 56мин, остаток: 76.7%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 71.0%, IOB: 0.284U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.4%, IOB: 0.171U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.893435665777033984
+  Custom Basal IOB: 1.3097974557651877888
+  Custom Total IOB: 3.2032331215422217728
+  Difference: 4.0272331215422217728
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2032331215422217728
+  Difference: 4.0272331215422217728
+  Show Custom: true
+DeviceDataManager.swift - heartbeat(date:) - 191 WARN: error("Pump updating already in progress. Skip updating.")
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09991211089199187968
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09917260833667002368
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 27min, IOB: 0.09522886731492839424
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.0924485615873601536
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04536089099413887488
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13448143040433352704
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.1671475218442717184
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15326553193841360896
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2839363489968538112
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 67min, IOB: 0.17075935052742639616
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.06096161579526232064
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05843274941604806656
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05771191342935468032
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04777686501180908544
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04686830405029505024
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 102min, IOB: 0.0438105875906258688
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.0296280281643935488
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.012851192186984423424
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03167673179251789312
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02445530660126664192
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02172118857322935808
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.0200597958853264512
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.017467589372516722688
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.01525881773847283712
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.01243435105534944256
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011303524553809719296
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01937757845696901888
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 232min, IOB: 0.01084108889858978816
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017588215141747912704
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017452209404508540928
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017325441537454184448
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.00219610744633240704
+  SMB-Basal IOB: 1.3087967835118616576U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3087967835118616576U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:16 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.89178314546391296 U
+  Наш Basal IOB: 1.3087967835118616576 U
+  Наш Total IOB: 3.2005799289757746176 U
+  РАЗНИЦА: 4.0245799289757746176 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.2%, IOB: 0.099U
+  SMB: 0.1U, возраст: 27мин, остаток: 95.2%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.4%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.7%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.7%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.6%, IOB: 0.167U
+  SMB: 0.2U, возраст: 56мин, остаток: 76.6%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 71.0%, IOB: 0.284U
+  SMB: 0.25U, возраст: 67мин, остаток: 68.3%, IOB: 0.171U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.89178314546391296
+  Custom Basal IOB: 1.3087967835118616576
+  Custom Total IOB: 3.2005799289757746176
+  Difference: 4.0245799289757746176
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2005799289757746176
+  Difference: 4.0245799289757746176
+  Show Custom: true
+DeviceDataManager.swift - heartbeat(date:) - 191 WARN: error("Pump updating already in progress. Skip updating.")
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.0999055132572592128
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09915371221138894848
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09518915713066207232
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09240172941696641024
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04533585469751335936
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13440378862889603072
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16703094929544779776
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15314216698007656448
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.283686488357962496
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.17060341840053981184
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 77min, IOB: 0.06090071270983016448
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05837270703579998208
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05765214605559257088
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04772208701131718656
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04681408480973891584
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.04375836460182867968
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.0295872501598077952
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.012832695181588103168
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 162min, IOB: 0.03162430425005536256
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02441184441870939648
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 180min, IOB: 0.02168131100225643264
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.02002215552067085056
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.017433539279504371712
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.015227935203808231424
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012407692013724956672
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011278620895382007808
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01933293766607922688
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.01081130806593133568
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017532632577130780672
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017396913592617080832
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017270413539655970816
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002185565787938692608
+  SMB-Basal IOB: 1.3077957461136482304U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3077957461136482304U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:21 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.890130036017217024 U
+  Наш Basal IOB: 1.3077957461136482304 U
+  Наш Total IOB: 3.1979257821308652544 U
+  РАЗНИЦА: 4.0219257821308652544 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.2%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 95.2%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.4%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.7%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.6%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.5%, IOB: 0.167U
+  SMB: 0.2U, возраст: 56мин, остаток: 76.6%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 70.9%, IOB: 0.284U
+  SMB: 0.25U, возраст: 68мин, остаток: 68.2%, IOB: 0.171U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.890130036017217024
+  Custom Basal IOB: 1.3077957461136482304
+  Custom Total IOB: 3.1979257821308652544
+  Difference: 4.0219257821308652544
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.1979257821308652544
+  Difference: 4.0219257821308652544
+  Show Custom: true
+FetchGlucoseManager.swift - subscribe() - 63 DEV: FetchGlucoseManager heartbeat
+FetchTreatmentsManager.swift - subscribe() - 26 DEV: FetchTreatmentsManager heartbeat
+FetchGlucoseManager.swift - subscribe() - 64 DEV: Start fetching glucose
+FetchTreatmentsManager.swift - subscribe() - 27 DEV: Start fetching carbs and temptargets
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5Bcarbs%5D%5B$exists%5D=true&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bcreated_at%5D%5B$gt%5D=2025-09-22T03:42:25.126Z
+NetworkService.swift - run(_:) - 17 DEV: GET  ***/api/v1/treatments.json?find%5BeventType%5D=Temporary+Target&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5BenteredBy%5D%5B$ne%5D=freeaps-x&find%5Bduration%5D%5B$exists%5D=true&find%5Bcreated_at%5D%5B$gt%5D=2025-09-22T03:42:25.130Z
+HealthKitManager.swift - fetch() - 298 DEV: Start fetching HealthKitManager
+Scanning for peripherals and listening for connection events
+HealthKitManager.swift - fetch() - 300 DEV: HealthKitManager cant return any data, because useAppleHealth option is disable
+FetchGlucoseManager.swift - subscribe() - 75 DEV: SyncDate is 2025-09-23 03:36:00 +0000
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09989868414607826944
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09913462297794625536
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09514932512002891776
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09235480320253294592
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04531077824882811904
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13432603773707008
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16691429903874277376
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 56min, IOB: 0.15301877771857762304
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2834366427068360192
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.17044751110437890048
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.0608398329542376448
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05831269157264154624
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05759240653590887424
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 96min, IOB: 0.04766734634770668544
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04675990348220978176
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.0437061811397533696
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.02954651313302855168
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 136min, IOB: 0.01281421803816815616
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.03157194335706201088
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.024368441583026688
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.02164148957042573312
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.01998456921163775488
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.017399539767891191808
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.015197100050986309632
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.01238107588788182016
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011253758227382882304
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01928837303568672
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.010781585542737518592
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017477171285525508096
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017341738670165970944
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.001721550607273181184
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002175056126060148224
+  SMB-Basal IOB: 1.3067946950574465024U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3067946950574465024U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:26 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.888476949168296448 U
+  Наш Basal IOB: 1.3067946950574465024 U
+  Наш Total IOB: 3.1952716442257429504 U
+  РАЗНИЦА: 4.0192716442257429504 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.1%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 95.1%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.4%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.6%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.6%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.5%, IOB: 0.167U
+  SMB: 0.2U, возраст: 56мин, остаток: 76.5%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 70.9%, IOB: 0.283U
+  SMB: 0.25U, возраст: 68мин, остаток: 68.2%, IOB: 0.170U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.888476949168296448
+  Custom Basal IOB: 1.3067946950574465024
+  Custom Total IOB: 3.1952716442257429504
+  Difference: 4.0192716442257429504
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.1952716442257429504
+  Difference: 4.0192716442257429504
+  Show Custom: true
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09989164941886359552
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09911540913237413888
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09510951186108721152
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09230794814656831488
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.0452857498447775232
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13424845105924483072
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16679798043697393664
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 57min, IOB: 0.15289579668418189312
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2831876873222025728
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.17029217469711423488
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.06077918964416811008
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.058252913084351488
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05753290395351015424
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 97min, IOB: 0.04761283451145097216
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.046705949593700864
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.04365421971724225536
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.0295059594807324928
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 137min, IOB: 0.01279582533356167168
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.03151983203103195136
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02432524968593856
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.0216018633478461184
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.01994716821436726528
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.01736570955545950208
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.015166419937229295616
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012354595589641463808
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011229023333890842624
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 213min, IOB: 0.01924404010024525056
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.010752025007575392256
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017422024636276404224
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017286877006277404672
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017160910571645702144
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002164615037542105856
+  SMB-Basal IOB: 1.3057977462082883584U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3057977462082883584U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:31 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.886829676984293888 U
+  Наш Basal IOB: 1.3057977462082883584 U
+  Наш Total IOB: 3.1926274231925822464 U
+  РАЗНИЦА: 4.0166274231925822464 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.1%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 95.1%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.3%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.6%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.5%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.4%, IOB: 0.167U
+  SMB: 0.2U, возраст: 57мин, остаток: 76.4%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 70.8%, IOB: 0.283U
+  SMB: 0.25U, возраст: 68мин, остаток: 68.1%, IOB: 0.170U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.886829676984293888
+  Custom Basal IOB: 1.3057977462082883584
+  Custom Total IOB: 3.1926274231925822464
+  Difference: 4.0166274231925822464
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.1926274231925822464
+  Difference: 4.0166274231925822464
+  Show Custom: true
+DeviceDataManager.swift - heartbeat(date:) - 191 WARN: error("Pump updating already in progress. Skip updating.")
+SMB-Basal: tick() - processing basal replacement
+SMB-Basal: Updated compensation units: 0 U from 0 failed pulses
+SMB-Basal: Current temp basal rate: 0 U/h, remaining: 17 min, isZero: true
+APSManager.swift - enactBolus(amount:isSMB:isBasalReplacement:) - 391 DEV: Enact bolus 0.05, manual false
+APSManager.swift - enactBolusWithRetry(pump:units:activationType:isSMB:attempt:maxAttempts:) - 415 DEV: Bolus attempt 1/3: 0.05U
+Scheduling session Bolus
+======================== Bolus ===========================
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Bolus: initiating
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 387 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-23 03:29:45 +0000, endDate: 2025-09-23 03:59:45 +0000, value: 0.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.fiasp), automatic: Optional(true), manuallyEntered: false, syncIdentifier: nil, isMutable: true, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+Send(Hex): 17a8db2d24030e0100805c
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d24030e0100805c
+Recv(Hex): 17a8db2d280a1d280432b80040468fff00cf
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d280a1d280432b80040468fff00cf
+POD Response: StatusResponse(deliveryStatus:Подается временный базал, progressStatus:Норма, timeActive:75h15m, reservoirLevel:50+, insulinDelivered:107.45, bolusNotDelivered:0.00, lastProgrammingMessageSeqNum:7, alerts:slot7Expired)
+### tryToValidateComms getStatus resolved all pending comms issues
+Send(Hex): 17a8db2d2c1f1a0e494e532e02001301001000010001170d3f000a00030d400000000000000141
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d2c1f1a0e494e532e02001301001000010001170d3f000a00030d400000000000000141
+Recv(Hex): 17a8db2d300a1d680432d80140468fff826a
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d300a1d680432d80140468fff826a
+POD Response: StatusResponse(deliveryStatus:Подача болюса при подаче ВБС, progressStatus:Норма, timeActive:75h15m, reservoirLevel:50+, insulinDelivered:107.45, bolusNotDelivered:0.05, lastProgrammingMessageSeqNum:11, alerts:slot7Expired)
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 465 DEV: New pump events:
+Болюс
+ВБС
+Болюс
+PumpHistoryStorage: Automatic bolus 0.05U -> SMB-Basal (isSmbBasal: true)
+DU: Stored pod events: [Болюс: 0.05ед 23/09/2025, 06:39:49 2 секунды Определенно, Врем базал: 0 ед/ч 23/09/2025, 06:29:45 30 минут 0 секунд 0 ед Определенно, Болюс: 0.05ед 23/09/2025, 06:42:35 2 секунды Определенно]
+Stored doses: [Болюс: 0.05ед 23/09/2025, 06:39:49 2 секунды Определенно, Врем базал: 0 ед/ч 23/09/2025, 06:29:45 30 минут 0 секунд 0 ед Определенно, Болюс: 0.05ед 23/09/2025, 06:42:35 2 секунды Определенно]
+APSManager.swift - enactBolus(units:activationType:) - 902 DEV: Bolus succeeded: 0.05
+APSManager.swift - enactBolusWithRetry(pump:units:activationType:isSMB:attempt:maxAttempts:) - 453 DEV: Bolus succeeded on attempt 1/3
+------------------------ Bolus ---------------------------
+Start of idle at Optional(2025-09-23 03:42:35 +0000)
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Bolus: inProgress(LoopKit.DoseEntry(type: LoopKit.DoseType.bolus, startDate: 2025-09-23 03:42:35 +0000, endDate: 2025-09-23 03:42:37 +0000, value: 0.05, unit: LoopKit.DoseUnit.units, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.fiasp), automatic: Optional(true), manuallyEntered: false, syncIdentifier: nil, isMutable: true, wasProgrammedByPumpUI: false, scheduledBasalRate: nil))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 387 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-23 03:29:45 +0000, endDate: 2025-09-23 03:59:45 +0000, value: 0.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.fiasp), automatic: Optional(true), manuallyEntered: false, syncIdentifier: nil, isMutable: true, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PumpHistoryStorage: Automatic bolus 0.05U -> SMB-Basal (isSmbBasal: true)
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.0998843508168139776
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09909591103339538432
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09506938622999816192
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09226077450102923264
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04526056128314126336
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.1341703831619622912
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16668102575054647296
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 57min, IOB: 0.15277220064077877248
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2829375507534347264
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.17013611667388174336
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.0607182781707618304
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05819287415391567872
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.057473143186045952
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 97min, IOB: 0.04755809789581968384
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04665177417932486656
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.0436020479462136064
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.0294652517331905024
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 137min, IOB: 0.012777364010682478592
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.0314675366140201984
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.024281909292532224
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.02156210257163873536
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.01990964128343801344
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.017331767111583236096
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.015135639546022412288
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012328030752173441024
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011204210372898361344
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 214min, IOB: 0.019199569923453952
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.010722380457499891712
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017366733696457578496
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017231872039648817152
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 245min, IOB: 0.0017106172690077855744
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002154155630049726464
+  SMB-Basal IOB: 1.3547950442572050432U (from 66 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3547950442572050432U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:36 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.885174513518865664 U
+  Наш Basal IOB: 1.3547950442572050432 U
+  Наш Total IOB: 3.2399695577760707072 U
+  РАЗНИЦА: 4.0639695577760707072 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.1%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 95.1%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.3%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.5%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.4%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.3%, IOB: 0.167U
+  SMB: 0.2U, возраст: 57мин, остаток: 76.4%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 70.7%, IOB: 0.283U
+  SMB: 0.25U, возраст: 68мин, остаток: 68.1%, IOB: 0.170U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.885174513518865664
+  Custom Basal IOB: 1.3547950442572050432
+  Custom Total IOB: 3.2399695577760707072
+  Difference: 4.0639695577760707072
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2399695577760707072
+  Difference: 4.0639695577760707072
+  Show Custom: true
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09987680969711673344
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.0990761884997562368
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09502907312034035712
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09221342941674723328
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04523529120118867456
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13409207786856656896
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16656380081351421952
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 57min, IOB: 0.15264837657392746496
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2826870166108124672
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.16997982602376679424
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.06065728948243631104
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05813276302031024128
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05741331160738000896
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 97min, IOB: 0.04750330820031803392
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04659754718458148864
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.0435498295069731328
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.02942451767268295168
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 137min, IOB: 0.012758892028693260288
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.03141522135957692928
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02423855655902176256
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.02152233216464263936
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.01987210633099390464
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 190min, IOB: 0.017297819097969498112
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.01510485561358820352
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012301464877966311424
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011179397346813943808
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 214min, IOB: 0.01915510232241279744
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.010692745153167224832
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.00173114725035121664
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017176896909412814848
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 246min, IOB: 0.0017051464728180977664
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002143710894920802816
+  SMB-Basal IOB: 1.3537905514926813184U (from 66 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3537905514926813184U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:41 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.883516643664297216 U
+  Наш Basal IOB: 1.3537905514926813184 U
+  Наш Total IOB: 3.2373071951569785344 U
+  РАЗНИЦА: 4.0613071951569785344 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.1%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 95.0%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.2%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.5%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.4%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.3%, IOB: 0.167U
+  SMB: 0.2U, возраст: 57мин, остаток: 76.3%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 70.7%, IOB: 0.283U
+  SMB: 0.25U, возраст: 68мин, остаток: 68.0%, IOB: 0.170U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.883516643664297216
+  Custom Basal IOB: 1.3537905514926813184
+  Custom Total IOB: 3.2373071951569785344
+  Difference: 4.0613071951569785344
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.2373071951569785344
+  Difference: 4.0613071951569785344
+  Show Custom: true
+DeviceDataManager.swift - updateUpdateFinished(_:) - 235 WARN: error("Loop recommendation time out or got error. Trying to loop right now.")
+APSManager.swift - loop() - 162 DEV: Starting loop
+APSManager.swift - runCustomPredictionService() - 198 DEV: 🚀 Starting Custom Prediction Service...
+CustomPredictionService.swift - generatePredictionsWithCustomIOB() - 49 DEV: 🔧 CustomPredictionService: Starting generatePredictionsWithCustomIOB
+CustomPredictionService.swift - generatePredictionsWithCustomIOB() - 53 DEV: 🔧 CustomPredictionService: Loading data from storage...
+APSManager.swift - determineBasal() - 288 DEV: Start determine basal
+CustomPredictionService.swift - generatePredictionsWithCustomIOB() - 64 DEV: 🔧 CustomPredictionService: Data loaded, generating custom IOB...
+OpenAPS.swift - makeProfiles(useAutotune:) - 228 DEV: Start makeProfiles
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09986958649786263552
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09905766529261852672
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09499145493778079744
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.0921692930973106176
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04521174273474789376
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.1340191210616911872
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16645465911093948416
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 57min, IOB: 0.15253314234364575744
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2824539196051664384
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.16983442699438542848
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.06060056316274915328
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05807685642649368576
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05735766596283139072
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 97min, IOB: 0.04745236225971183616
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04654712532539062272
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.04350127795663224832
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.0293866531040873216
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 137min, IOB: 0.01274172244010962944
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.03136660396172292608
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02419827185571062272
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.02148537778774913792
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.0198372300816820352
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 191min, IOB: 0.017266277228575412224
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.01507625491964540928
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012276784905761120256
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011156346600095639552
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 214min, IOB: 0.01911379533358640384
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.010665222994133880832
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017260162946449610752
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017125853177981212672
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 246min, IOB: 0.001700066926436916224
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002134021177091583488
+  SMB-Basal IOB: 1.3528529384510889984U (from 66 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3528529384510889984U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:45 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.881974093698788864 U
+  Наш Basal IOB: 1.3528529384510889984 U
+  Наш Total IOB: 3.2348270321498778624 U
+  РАЗНИЦА: 4.0588270321498778624 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.1%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 95.0%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.2%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.4%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.3%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.2%, IOB: 0.166U
+  SMB: 0.2U, возраст: 57мин, остаток: 76.3%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 70.6%, IOB: 0.282U
+  SMB: 0.25U, возраст: 68мин, остаток: 67.9%, IOB: 0.170U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.881974093698788864
+  Custom Basal IOB: 1.3528529384510889984
+  Custom Total IOB: 3.2348270321498778624
+  Difference: 4.0588270321498778624
+CustomPredictionService.swift - generateCustomIOBData() - 129 DEV: 🎯 Custom IOB Data Generated:
+CustomPredictionService.swift - generateCustomIOBData() - 130 DEV:   Total IOB: 3.2348270321498778624U
+CustomPredictionService.swift - generateCustomIOBData() - 131 DEV:   Basal IOB: 1.3528529384510889984U
+CustomPredictionService.swift - generateCustomIOBData() - 132 DEV:   Bolus IOB: 1.881974093698788864U
+CustomPredictionService.swift - generateCustomIOBData() - 133 DEV:   Activity: 0.008087067580374694656
+CustomPredictionService.swift - generatePredictionsWithCustomIOB() - 69 DEV: 🔧 CustomPredictionService: Custom IOB generated, calling oref0...
+CustomPredictionService.swift - generatePredictionsWithCustomIOB() - 72 DEV: 🚀 Calling oref0 with custom IOB data...
+CustomPredictionService.swift - callOref0WithCustomIOB(iob:currentTemp:glucose:profile:autosens:meal:reservoir:clock:) - 148 DEV: 🔧 callOref0WithCustomIOB started
+CustomPredictionService.swift - callOref0WithCustomIOB(iob:currentTemp:glucose:profile:autosens:meal:reservoir:clock:) - 151 DEV: 🔧 JavaScript context acquired, loading scripts...
+CustomPredictionService.swift - callOref0WithCustomIOB(iob:currentTemp:glucose:profile:autosens:meal:reservoir:clock:) - 160 DEV: 🔧 Scripts loaded, calling oref0...
+JavaScriptWorker.swift - createContext() - 19 WARN: error("JavaScript Error: SyntaxError: Unexpected token \',\'")
+CustomPredictionService.swift - callOref0WithCustomIOB(iob:currentTemp:glucose:profile:autosens:meal:reservoir:clock:) - 179 DEV: 🔧 oref0 call completed, result: undefined...
+CustomPredictionService.swift - parseOref0Result(_:) - 189 DEV: 🔧 parseOref0Result: parsing JSON length 9
+CustomPredictionService.swift - parseOref0Result(_:) - 197 DEV: ❌ parseOref0Result: Failed to parse JSON
+CustomPredictionService.swift - parseOref0Result(_:) - 198 DEV: Raw JSON: undefined
+CustomPredictionService.swift - callOref0WithCustomIOB(iob:currentTemp:glucose:profile:autosens:meal:reservoir:clock:) - 183 DEV: 🔧 Parsing result: FAILED
+CustomPredictionService.swift - generatePredictionsWithCustomIOB() - 91 DEV: ❌ Custom Prediction Service: oref0 возвратил nil!
+APSManager.swift - runCustomPredictionService() - 228 DEV: ❌ Custom Prediction Service returned nil
+APSManager.swift - runCustomPredictionService() - 208 DEV: ✅ Custom Prediction Service completed successfully!
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 72 DEV: Start determineBasal
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 03:30:02 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 03:25:13 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 03:14:16 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 03:08:55 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.05), final insulin: Optional(0.05)
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.15), final insulin: Optional(0.15)
+OpenAPS: SMB bolus Optional(0.15)U at 2025-09-23 03:04:12 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 02:55:02 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 02:45:26 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-23 02:37:51 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.25), final insulin: Optional(0.25)
+OpenAPS: SMB bolus Optional(0.25)U at 2025-09-23 02:34:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:24:22 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:20:53 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:19:53 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:05:28 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:04:05 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 01:59:18 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 01:33:55 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.05)U at 2025-09-23 01:25:30 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0)U at 2025-09-23 01:09:48 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:59:23 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:46:49 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:41:21 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:37:47 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:31:45 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:26:05 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:17:54 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0)U at 2025-09-23 00:17:32 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0)U at 2025-09-23 00:17:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:14:15 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-23 00:08:33 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 23:49:16 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.050000000000000044)U at 2025-09-22 23:38:25 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 23:37:02 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 23:36:50 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 23:36:38 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 23:11:51 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 23:04:38 +0000 - shouldFilter: true
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 22:51:49 +0000 - shouldFilter: true
+OpenAPS: Regular bolus Optional(1)U at 2025-09-22 22:38:03 +0000 - shouldFilter: true
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.8), final insulin: Optional(0.8)
+OpenAPS: SMB bolus Optional(0.8)U at 2025-09-22 22:35:29 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.95), final insulin: Optional(0.95)
+OpenAPS: SMB bolus Optional(0.95)U at 2025-09-22 22:29:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.85), final insulin: Optional(0.85)
+OpenAPS: SMB bolus Optional(0.85)U at 2025-09-22 22:24:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 22:14:16 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.2)U at 2025-09-22 21:06:37 +0000 - shouldFilter: true
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-22 20:54:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-22 20:49:16 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.3), final insulin: Optional(0.3)
+OpenAPS: SMB bolus Optional(0.3)U at 2025-09-22 20:44:15 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 20:34:16 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.55), final insulin: Optional(0.55)
+OpenAPS: SMB bolus Optional(0.55)U at 2025-09-22 20:29:15 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.65), final insulin: Optional(0.65)
+OpenAPS: SMB bolus Optional(0.65)U at 2025-09-22 20:24:21 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.55), final insulin: Optional(0.55)
+OpenAPS: SMB bolus Optional(0.55)U at 2025-09-22 20:19:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.55), final insulin: Optional(0.55)
+OpenAPS: SMB bolus Optional(0.55)U at 2025-09-22 20:14:15 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.5)U at 2025-09-22 20:07:57 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 20:07:35 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.6), final insulin: Optional(0.6)
+OpenAPS: SMB bolus Optional(0.6)U at 2025-09-22 20:04:14 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.65), final insulin: Optional(0.65)
+OpenAPS: SMB bolus Optional(0.65)U at 2025-09-22 19:56:59 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 19:36:41 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.25), final insulin: Optional(0.25)
+OpenAPS: SMB bolus Optional(0.25)U at 2025-09-22 19:29:15 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.3), final insulin: Optional(0.3)
+OpenAPS: SMB bolus Optional(0.3)U at 2025-09-22 19:24:14 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-22 19:19:18 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.4)U at 2025-09-22 18:59:20 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.4)U at 2025-09-22 18:49:31 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.4)U at 2025-09-22 18:46:26 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.3)U at 2025-09-22 18:39:19 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.3)U at 2025-09-22 18:31:25 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.45)U at 2025-09-22 17:56:44 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(3)U at 2025-09-22 17:20:13 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.6)U at 2025-09-22 16:57:57 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.2)U at 2025-09-22 16:08:40 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.05)U at 2025-09-22 15:59:27 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.2)U at 2025-09-22 15:49:50 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(1)U at 2025-09-22 15:15:31 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(1)U at 2025-09-22 14:31:47 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 14:31:36 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.5)U at 2025-09-22 14:10:20 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 14:06:12 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.2)U at 2025-09-22 13:59:47 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.05)U at 2025-09-22 13:50:00 +0000 - shouldFilter: false
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.824
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 11
+  Timestamp: 2025-09-23 03:37:08 +0000
+  Reason: COB: 11, Dev: -2.9, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 10.7, minGuardBG 7.4, IOBpredBG 12.0, COBpredBG 14.2, UAMpredBG 12.0; Eventual BG 14.2 >= 6.3,  insulinReq 0.63; maxBolus 0.1. Microbolusing 0.1U. temp 0<1.85U/hr. 
+OpenAPS: Regular bolus Optional(0.5)U at 2025-09-22 13:20:06 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.25)U at 2025-09-22 13:08:44 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.35)U at 2025-09-22 12:29:39 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(1)U at 2025-09-22 12:11:11 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.5)U at 2025-09-22 12:09:50 +0000 - shouldFilter: false
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.099869108711167488
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09905645198952896512
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09498899893680410624
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09216641299989679104
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04521020638798488576
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13401436167619991552
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16644754172895973376
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 57min, IOB: 0.15252562937496252416
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2824387242057175552
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.16982494901439852544
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.06059686580802635776
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.0580732126175429632
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05735403919338379264
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 97min, IOB: 0.0474490421518468096
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04654383940014764032
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.0434981140069957632
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.02938418589384687616
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 137min, IOB: 0.012740603728376143872
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.03136343652905810944
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 175min, IOB: 0.02419564742283174912
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.02148297036686413056
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 184min, IOB: 0.01983495807409149952
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 191min, IOB: 0.017264222489278386176
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.015074391823397138432
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012275177272486797312
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.01115484512040187904
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 214min, IOB: 0.0191111047596382208
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.01066343053595373568
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017256821643203964928
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 245min, IOB: 0.0017122529192757696512
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 246min, IOB: 0.0016997361453287780352
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.002133390450337336064
+  SMB-Basal IOB: 1.352797302777787392U (from 66 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.352797302777787392U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:46 +0000
+  Системный IOB: -0.824 U
+  Наш Bolus IOB: 1.88187353389905024 U
+  Наш Basal IOB: 1.352797302777787392 U
+  Наш Total IOB: 3.234670836676837632 U
+  РАЗНИЦА: 4.058670836676837632 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.1%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 95.0%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.2%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.4%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.3%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.2%, IOB: 0.166U
+  SMB: 0.2U, возраст: 57мин, остаток: 76.3%, IOB: 0.153U
+  SMB: 0.4U, возраст: 64мин, остаток: 70.6%, IOB: 0.282U
+  SMB: 0.25U, возраст: 68мин, остаток: 67.9%, IOB: 0.170U
+  ... и еще 30 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.824
+  Custom Bolus IOB: 1.88187353389905024
+  Custom Basal IOB: 1.352797302777787392
+  Custom Total IOB: 3.234670836676837632
+  Difference: 4.058670836676837632
+🧮 Custom IOB Update:
+  System IOB: -0.824
+  Custom IOB: 3.234670836676837632
+  Difference: 4.058670836676837632
+  Show Custom: true
+App is being debugged, do not track this hang
+Hang detected: 0.71s (debugger attached, not reporting)
+OpenAPS: PumpHistory before IOB calculation (first 500 chars): [{"automatic":true,"id":"c7595920e2017d582efab5b702c97dab","duration":0,"_type":"SMB-Basal","amount":0.050000000000000003,"timestamp":"2025-09-23T03:42:35.860Z"},{"_type":"SMB-Basal","duration":0,"delivered_units":0.050000000000000003,"automatic":true,"id":"ac79cee5aaf8f15ba0afc38708ed91dc","amount":0.050000000000000003,"timestamp":"2025-09-23T03:39:49.615Z"},{"delivered_units":0.050000000000000003,"_type":"SMB-Basal","duration":0,"id":"b04e48138b71523a61c0a3a6a1e05925","amount":0.05000000000000
+OpenAPS: IOB calculation result: [
+    {
+        "iob": -0.825,
+        "activity": -0.0084,
+        "basaliob": -0.828,
+        "bolusiob": 0.003,
+        "netbasalinsulin": -2.45,
+        "bolusinsulin": 0.3,
+        "time": "2025-
+App is being debugged, do not track this hang
+
+Hang detected: 0.25s (debugger attached, not reporting)
+OpenAPS.swift - determineBasal(glucose:currentTemp:iob:profile:autosens:meal:microBolusAllowed:reservoir:pumpHistory:) - 453 DEV: ⚠️ MIDDLEWARE ОТКЛЮЧЕН из-за критических ошибок в прогнозах!
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Invalid middleware: ReferenceError: Can't find variable: middleware
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Autosens ratio: 0.72;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Adjusting basal from 0.8 to 0.6;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: target_bg from 99 to 114;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ISF from 90 to 125
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ; CR:,17
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: currenttemp:,[object Object],lastTempAge:,13,m,tempModulus:,0,m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: SMB enabled due to enableSMB_always
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: profile.sens:,90,sens:,125,CSF:,7.352941176470588
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Last carbs,161,minutes ago; remainingCATime:,8.2,hours;,93% carbs absorbed
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Carb Impact:,2.4,mg/dL per 5m; CI Duration:,4.1,hours; remaining CI (~2h peak):,0,mg/dL per 5m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: predCIs (mg/dL/5m):,2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: remainingCIs:      ,0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: UAM Impact:,2.4,mg/dL per 5m; UAM Duration:,0.2,hours
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: minPredBG: 255 minIOBPredBG: 234 minZTGuardBG: 149
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log:  minCOBPredBG: 255
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log:  avgPredBG:,285,COB:,8,/,119
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: BG projected to remain above,6.3,for,240,minutes
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: naive_eventualBG:,218,bgUndershoot:,-141,zeroTempDuration:,240,zeroTempEffect:,400,carbsReq:,-74
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: profile.maxSMBBasalMinutes:,10,profile.current_basal:,0.8
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: naive_eventualBG,218,,0m 0U/h temp needed; last bolus,137.3m ago; maxBolus: 0.1
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 138 DEV: SUGGESTED: {
+    "temp": "absolute",
+    "bg": 144,
+    "tick": "+10",
+    "eventualBG": 307,
+    "insulinReq": 1.13,
+    "reservoir": 23,
+    "deliverAt": "2025-09-23T03:42:47.201Z",
+    "sensitivityRatio": 0.72,
+    "predBGs": {
+        "IOB": [
+            144,
+            151,
+            159,
+            166,
+            173,
+            179,
+            185,
+            191,
+            196,
+            201,
+            206,
+            211,
+            214,
+            218,
+            222,
+            225,
+            228,
+            231,
+            234,
+            236,
+            239,
+            241,
+            243,
+            245,
+            247,
+            248,
+            250,
+            251,
+            252,
+            254,
+            255,
+            256,
+            257,
+            257,
+            258,
+            259,
+            259,
+            260,
+            260,
+            261,
+            261,
+            261,
+            261,
+            262
+        ],
+        "ZT": [
+            144,
+            149,
+            155,
+            160,
+            165,
+            171,
+            176,
+            182,
+            188,
+            193,
+            199,
+            205,
+            211,
+            217,
+            223,
+            229,
+            235,
+            241,
+            247,
+            254,
+            260,
+            267,
+            273,
+            280,
+            287,
+            293,
+            300,
+            307,
+            314,
+            321,
+            327,
+            334,
+            341,
+            348,
+            355,
+            362,
+            370,
+            377,
+            384,
+            391,
+            398,
+            401,
+            401,
+            401,
+            401,
+            401,
+            401,
+            401
+        ],
+        "COB": [
+            144,
+            152,
+            159,
+            167,
+            174,
+            181,
+            188,
+            195,
+            202,
+            208,
+            214,
+            220,
+            226,
+            232,
+            237,
+            242,
+            247,
+            251,
+            255,
+            259,
+            263,
+            267,
+            270,
+            273,
+            276,
+            279,
+            282,
+            284,
+            287,
+            289,
+            291,
+            293,
+            294,
+            296,
+            297,
+            299,
+            300,
+            301,
+            302,
+            303,
+            304,
+            304,
+            305,
+            305,
+            306,
+            306,
+            307
+        ]
+    },
+    "COB": 8,
+    "IOB": -0.825,
+    "reason": "COB: 8, Dev: 0.8, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 14.2, minGuardBG 8.4, IOBpredBG 14.6, COBpredBG 17.1; Eventual BG 17.1 >= 6.3,  insulinReq 1.13; maxBolus 0.1. Microbolusing 0.1U. temp 0<2.85U/hr. ",
+    "units": 0.1,
+    "duration": 30,
+    "rate": 2.85
+}
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/devicestatus.json
+APSManager.swift - enactSuggested() - 759 DEV: SMB-basal active: skipping OpenAPS temp basal (pump held at 0 U/h)
+APSManager.swift - enactBolus(amount:isSMB:isBasalReplacement:) - 391 DEV: Enact bolus 0.1, manual false
+APSManager.swift - enactBolusWithRetry(pump:units:activationType:isSMB:attempt:maxAttempts:) - 415 DEV: Bolus attempt 1/3: 0.1U
+Scheduling session Bolus
+======================== Bolus ===========================
+Send(Hex): 17a8db2d34030e01000374
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d34030e01000374
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Bolus: initiating
+APSManager.swift - loopCompleted(error:) - 243 DEV: Loop succeeded
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 387 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-23 03:29:45 +0000, endDate: 2025-09-23 03:59:45 +0000, value: 0.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.fiasp), automatic: Optional(true), manuallyEntered: false, syncIdentifier: nil, isMutable: true, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+UserNotificationsManager.swift - ensureCanSendNotification(_:) - 313 DEV: Sending notification was allowed
+APSManager.swift - reportEnacted(received:) - 849 DEV: Suggestion enacted. Received: true
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 72 DEV: Start determineBasal
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/devicestatus.json
+NightscoutManager.swift - uploadStatus() - 483 DEV: Status uploaded
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 03:30:02 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 03:25:13 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 03:14:16 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 03:08:55 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.05), final insulin: Optional(0.05)
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.15), final insulin: Optional(0.15)
+OpenAPS: SMB bolus Optional(0.15)U at 2025-09-23 03:04:12 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 02:55:02 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 02:45:26 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-23 02:37:51 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.25), final insulin: Optional(0.25)
+OpenAPS: SMB bolus Optional(0.25)U at 2025-09-23 02:34:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:24:22 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:20:53 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:19:53 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:05:28 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 02:04:05 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 01:59:18 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.1), final insulin: Optional(0.1)
+OpenAPS: SMB bolus Optional(0.1)U at 2025-09-23 01:33:55 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.05)U at 2025-09-23 01:25:30 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0)U at 2025-09-23 01:09:48 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:59:23 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+NightscoutManager.swift - uploadStatus() - 483 DEV: Status uploaded
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:46:49 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:41:21 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:37:47 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:31:45 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:26:05 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:17:54 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0)U at 2025-09-23 00:17:32 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0)U at 2025-09-23 00:17:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-23 00:14:15 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-23 00:08:33 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 23:49:16 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.050000000000000044)U at 2025-09-22 23:38:25 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 23:37:02 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 23:36:50 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 23:36:38 +0000 - shouldFilter: false
+UserNotificationsManager.swift - addRequest(identifier:content:deleteOld:trigger:) - 341 DEV: Sending noLoopFirstNotification notification
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 23:11:51 +0000 - shouldFilter: false
+UserNotificationsManager.swift - addRequest(identifier:content:deleteOld:trigger:) - 341 DEV: Sending noLoopSecondNotification notification
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 23:04:38 +0000 - shouldFilter: true
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 22:51:49 +0000 - shouldFilter: true
+OpenAPS: Regular bolus Optional(1)U at 2025-09-22 22:38:03 +0000 - shouldFilter: true
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.8), final insulin: Optional(0.8)
+OpenAPS: SMB bolus Optional(0.8)U at 2025-09-22 22:35:29 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.95), final insulin: Optional(0.95)
+OpenAPS: SMB bolus Optional(0.95)U at 2025-09-22 22:29:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.85), final insulin: Optional(0.85)
+OpenAPS: SMB bolus Optional(0.85)U at 2025-09-22 22:24:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 22:14:16 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.2)U at 2025-09-22 21:06:37 +0000 - shouldFilter: true
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-22 20:54:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-22 20:49:16 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.3), final insulin: Optional(0.3)
+OpenAPS: SMB bolus Optional(0.3)U at 2025-09-22 20:44:15 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 20:34:16 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.55), final insulin: Optional(0.55)
+OpenAPS: SMB bolus Optional(0.55)U at 2025-09-22 20:29:15 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.65), final insulin: Optional(0.65)
+OpenAPS: SMB bolus Optional(0.65)U at 2025-09-22 20:24:21 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.55), final insulin: Optional(0.55)
+OpenAPS: SMB bolus Optional(0.55)U at 2025-09-22 20:19:17 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.55), final insulin: Optional(0.55)
+OpenAPS: SMB bolus Optional(0.55)U at 2025-09-22 20:14:15 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.5)U at 2025-09-22 20:07:57 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 20:07:35 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.6), final insulin: Optional(0.6)
+OpenAPS: SMB bolus Optional(0.6)U at 2025-09-22 20:04:14 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.65), final insulin: Optional(0.65)
+OpenAPS: SMB bolus Optional(0.65)U at 2025-09-22 19:56:59 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.4), final insulin: Optional(0.4)
+OpenAPS: SMB bolus Optional(0.4)U at 2025-09-22 19:36:41 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.25), final insulin: Optional(0.25)
+OpenAPS: SMB bolus Optional(0.25)U at 2025-09-22 19:29:15 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.3), final insulin: Optional(0.3)
+OpenAPS: SMB bolus Optional(0.3)U at 2025-09-22 19:24:14 +0000 - shouldFilter: false
+OpenAPS: SMB bolus debug - insulin field: nil, amount field: Optional(0.2), final insulin: Optional(0.2)
+OpenAPS: SMB bolus Optional(0.2)U at 2025-09-22 19:19:18 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.4)U at 2025-09-22 18:59:20 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.4)U at 2025-09-22 18:49:31 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.4)U at 2025-09-22 18:46:26 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.3)U at 2025-09-22 18:39:19 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.3)U at 2025-09-22 18:31:25 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.45)U at 2025-09-22 17:56:44 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(3)U at 2025-09-22 17:20:13 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.6)U at 2025-09-22 16:57:57 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.2)U at 2025-09-22 16:08:40 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.05)U at 2025-09-22 15:59:27 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.2)U at 2025-09-22 15:49:50 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(1)U at 2025-09-22 15:15:31 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(1)U at 2025-09-22 14:31:47 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 14:31:36 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.5)U at 2025-09-22 14:10:20 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.1)U at 2025-09-22 14:06:12 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.2)U at 2025-09-22 13:59:47 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.05)U at 2025-09-22 13:50:00 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.5)U at 2025-09-22 13:20:06 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.25)U at 2025-09-22 13:08:44 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.35)U at 2025-09-22 12:29:39 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(1)U at 2025-09-22 12:11:11 +0000 - shouldFilter: false
+OpenAPS: Regular bolus Optional(0.5)U at 2025-09-22 12:09:50 +0000 - shouldFilter: false
+Recv(Hex): 17a8db2d380a1d280433580040468fff0079
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d380a1d280433580040468fff0079
+POD Response: StatusResponse(deliveryStatus:Подается временный базал, progressStatus:Норма, timeActive:75h15m, reservoirLevel:50+, insulinDelivered:107.50, bolusNotDelivered:0.00, lastProgrammingMessageSeqNum:11, alerts:slot7Expired)
+Send(Hex): 17a8db2d3c1f1a0e494e532e02002501002000020002170d3f001400030d4000000000000002cd
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d3c1f1a0e494e532e02002501002000020002170d3f001400030d4000000000000002cd
+Recv(Hex): 17a8db2d000a1d680433780240468fff0034
+DeviceDataManager.swift - deviceManager(_:logEventForDeviceIdentifier:type:message:completion:) - 573 DEV: Device message: 17a8db2d000a1d680433780240468fff0034
+POD Response: StatusResponse(deliveryStatus:Подача болюса при подаче ВБС, progressStatus:Норма, timeActive:75h15m, reservoirLevel:50+, insulinDelivered:107.50, bolusNotDelivered:0.10, lastProgrammingMessageSeqNum:15, alerts:slot7Expired)
+DeviceDataManager.swift - pumpManager(_:hasNewPumpEvents:lastReconciliation:replacePendingEvents:completion:) - 465 DEV: New pump events:
+Болюс
+ВБС
+Болюс
+DU: Stored pod events: [Болюс: 0.05ед 23/09/2025, 06:42:35 2 секунды Определенно, Врем базал: 0 ед/ч 23/09/2025, 06:29:45 30 минут 0 секунд 0 ед Определенно, Болюс: 0.1ед 23/09/2025, 06:42:48 4 секунды Определенно]
+Stored doses: [Болюс: 0.05ед 23/09/2025, 06:42:35 2 секунды Определенно, Врем базал: 0 ед/ч 23/09/2025, 06:29:45 30 минут 0 секунд 0 ед Определенно, Болюс: 0.1ед 23/09/2025, 06:42:48 4 секунды Определенно]
+APSManager.swift - enactBolus(units:activationType:) - 902 DEV: Bolus succeeded: 0.1
+APSManager.swift - enactBolusWithRetry(pump:units:activationType:isSMB:attempt:maxAttempts:) - 453 DEV: Bolus succeeded on attempt 1/3
+------------------------ Bolus ---------------------------
+Start of idle at Optional(2025-09-23 03:42:48 +0000)
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 386 DEV: New pump status Bolus: inProgress(LoopKit.DoseEntry(type: LoopKit.DoseType.bolus, startDate: 2025-09-23 03:42:48 +0000, endDate: 2025-09-23 03:42:52 +0000, value: 0.1, unit: LoopKit.DoseUnit.units, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.fiasp), automatic: Optional(true), manuallyEntered: false, syncIdentifier: nil, isMutable: true, wasProgrammedByPumpUI: false, scheduledBasalRate: nil))
+DeviceDataManager.swift - pumpManager(_:didUpdate:oldStatus:) - 387 DEV: New pump status Basal: Optional(LoopKit.PumpManagerStatus.BasalDeliveryState.tempBasal(LoopKit.DoseEntry(type: LoopKit.DoseType.tempBasal, startDate: 2025-09-23 03:29:45 +0000, endDate: 2025-09-23 03:59:45 +0000, value: 0.0, unit: LoopKit.DoseUnit.unitsPerHour, deliveredUnits: nil, description: nil, insulinType: Optional(LoopKit.InsulinType.fiasp), automatic: Optional(true), manuallyEntered: false, syncIdentifier: nil, isMutable: true, wasProgrammedByPumpUI: false, scheduledBasalRate: nil)))
+PumpHistoryStorage: Automatic bolus 0.05U -> SMB-Basal (isSmbBasal: true)
+App is being debugged, do not track this hang
+Hang detected: 0.65s (debugger attached, not reporting)
+PumpHistoryStorage: Automatic bolus 0.1U -> SMB (isSmbBasal: false)
+OpenAPS: PumpHistory before IOB calculation (first 500 chars): [{"timestamp":"2025-09-23T03:42:35.860Z","id":"c7595920e2017d582efab5b702c97dab","automatic":true,"duration":0,"amount":0.050000000000000003,"_type":"SMB-Basal"},{"delivered_units":0.050000000000000003,"id":"ac79cee5aaf8f15ba0afc38708ed91dc","duration":0,"automatic":true,"_type":"SMB-Basal","timestamp":"2025-09-23T03:39:49.615Z","amount":0.050000000000000003},{"automatic":true,"delivered_units":0.050000000000000003,"duration":0,"id":"b04e48138b71523a61c0a3a6a1e05925","amount":0.05000000000000000
+OpenAPS: IOB calculation result: [
+    {
+        "iob": -0.825,
+        "activity": -0.0084,
+        "basaliob": -0.828,
+        "bolusiob": 0.003,
+        "netbasalinsulin": -2.45,
+        "bolusinsulin": 0.3,
+        "time": "2025-
+NetworkService.swift - run(_:) - 17 DEV: POST  ***/api/v1/treatments.json
+OpenAPS.swift - determineBasal(glucose:currentTemp:iob:profile:autosens:meal:microBolusAllowed:reservoir:pumpHistory:) - 453 DEV: ⚠️ MIDDLEWARE ОТКЛЮЧЕН из-за критических ошибок в прогнозах!
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Invalid middleware: ReferenceError: Can't find variable: middleware
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Autosens ratio: 0.72;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Adjusting basal from 0.8 to 0.6;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: target_bg from 99 to 114;
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ISF from 90 to 125
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: ; CR:,17
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: currenttemp:,[object Object],lastTempAge:,13,m,tempModulus:,29,m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: SMB enabled due to enableSMB_always
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: profile.sens:,90,sens:,125,CSF:,7.352941176470588
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Last carbs,161,minutes ago; remainingCATime:,8.2,hours;,93% carbs absorbed
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: Carb Impact:,2.4,mg/dL per 5m; CI Duration:,4.1,hours; remaining CI (~2h peak):,0,mg/dL per 5m
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: predCIs (mg/dL/5m):,2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 0 0 0 0 0 0 0 0 0 0
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: remainingCIs:      ,0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: UAM Impact:,2.4,mg/dL per 5m; UAM Duration:,0.2,hours
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: minPredBG: 255 minIOBPredBG: 234 minZTGuardBG: 149
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log:  minCOBPredBG: 255
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log:  avgPredBG:,285,COB:,8,/,119
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: BG projected to remain above,6.3,for,240,minutes
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: naive_eventualBG:,218,bgUndershoot:,-141,zeroTempDuration:,240,zeroTempEffect:,400,carbsReq:,-74
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: profile.maxSMBBasalMinutes:,10,profile.current_basal:,0.8
+JavaScriptWorker.swift - createContext() - 23 DEV: JavaScript log: naive_eventualBG,218,,0m 0U/h temp needed; last bolus,137.3m ago; maxBolus: 0.1
+OpenAPS.swift - determineBasal(currentTemp:clock:) - 138 DEV: SUGGESTED: {
+    "temp": "absolute",
+    "bg": 144,
+    "tick": "+10",
+    "eventualBG": 307,
+    "insulinReq": 1.13,
+    "reservoir": 23,
+    "deliverAt": "2025-09-23T03:42:48.519Z",
+    "sensitivityRatio": 0.72,
+    "predBGs": {
+        "IOB": [
+            144,
+            151,
+            159,
+            166,
+            173,
+            179,
+            185,
+            191,
+            196,
+            201,
+            206,
+            211,
+            214,
+            218,
+            222,
+            225,
+            228,
+            231,
+            234,
+            236,
+            239,
+            241,
+            243,
+            245,
+            247,
+            248,
+            250,
+            251,
+            252,
+            254,
+            255,
+            256,
+            256,
+            257,
+            258,
+            259,
+            259,
+            260,
+            260,
+            260,
+            261,
+            261,
+            261,
+            262
+        ],
+        "ZT": [
+            144,
+            149,
+            155,
+            160,
+            165,
+            171,
+            176,
+            182,
+            188,
+            193,
+            199,
+            205,
+            211,
+            217,
+            223,
+            229,
+            235,
+            241,
+            247,
+            254,
+            260,
+            267,
+            273,
+            280,
+            287,
+            293,
+            300,
+            307,
+            314,
+            321,
+            327,
+            334,
+            341,
+            348,
+            355,
+            362,
+            370,
+            377,
+            384,
+            391,
+            398,
+            401,
+            401,
+            401,
+            401,
+            401,
+            401,
+            401
+        ],
+        "COB": [
+            144,
+            152,
+            159,
+            167,
+            174,
+            181,
+            188,
+            195,
+            202,
+            208,
+            214,
+            220,
+            226,
+            232,
+            237,
+            242,
+            247,
+            251,
+            255,
+            259,
+            263,
+            267,
+            270,
+            273,
+            276,
+            279,
+            282,
+            284,
+            287,
+            289,
+            291,
+            293,
+            294,
+            296,
+            297,
+            299,
+            300,
+            301,
+            302,
+            303,
+            304,
+            304,
+            305,
+            305,
+            306,
+            306,
+            306,
+            307
+        ]
+    },
+    "COB": 8,
+    "IOB": -0.825,
+    "reason": "COB: 8, Dev: 0.8, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 14.2, minGuardBG 8.4, IOBpredBG 14.6, COBpredBG 17.1; Eventual BG 17.1 >= 6.3,  insulinReq 1.13; maxBolus 0.1. Microbolusing 0.1U. temp 0<2.85U/hr. ",
+    "units": 0.1,
+    "duration": 30,
+    "rate": 2.85
+}
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.825
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 8
+  Timestamp: 2025-09-23 03:42:48 +0000
+  Reason: COB: 8, Dev: 0.8, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 14.2, minGuardBG 8.4, IOBpredBG 14.6, COBpredBG 17.1; Eventual BG 17.1 >= 6.3,  insulinReq 1.13; maxBolus 0.1. Microbolusing 0.1U. temp 0<2.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:42:48 +0000, age: 0min, IOB: 0.1
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09986108702409433088
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09903628979367399424
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09494832805054076928
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 33min, IOB: 0.09211874492168001536
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.0451847838179974656
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13393561419879714816
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16632982459536723968
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 57min, IOB: 0.152401399942779904
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 64min, IOB: 0.2821874970825273856
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.16966825675496384512
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.0605357474465667072
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 81min, IOB: 0.05801298145559386112
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 82min, IOB: 0.05729409025087094784
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 97min, IOB: 0.04739416844433584128
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.04648953115963280384
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.04344582331800583168
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 128min, IOB: 0.02934341560313295872
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 137min, IOB: 0.01272211785693663232
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.03131110259143194624
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 176min, IOB: 0.02415228738744315392
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.02144319663388964864
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 185min, IOB: 0.01979742211434421504
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 191min, IOB: 0.017230276928680800256
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.015043613128585203712
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 204min, IOB: 0.012248619949607063552
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011130041884792365056
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 214min, IOB: 0.0190666600799162624
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.010633825541784287232
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017201641944790011904
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 246min, IOB: 0.00170676356214843904
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 246min, IOB: 0.0016942735109874429952
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 270min, IOB: 0.00212297919241537536
+  SMB-Basal IOB: 1.351788309873901568U (from 66 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.351788309873901568U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:51 +0000
+  Системный IOB: -0.825 U
+  Наш Bolus IOB: 1.980210928418002944 U
+  Наш Basal IOB: 1.351788309873901568 U
+  Наш Total IOB: 3.331999238291904512 U
+  РАЗНИЦА: 4.156999238291904512 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 0мин, остаток: 100.0%, IOB: 0.100U
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.0%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 94.9%, IOB: 0.095U
+  SMB: 0.1U, возраст: 33мин, остаток: 92.1%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.4%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.3%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.2%, IOB: 0.166U
+  SMB: 0.2U, возраст: 57мин, остаток: 76.2%, IOB: 0.152U
+  SMB: 0.4U, возраст: 64мин, остаток: 70.5%, IOB: 0.282U
+  ... и еще 31 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.825
+  Custom Bolus IOB: 1.980210928418002944
+  Custom Basal IOB: 1.351788309873901568
+  Custom Total IOB: 3.331999238291904512
+  Difference: 4.156999238291904512
+🧮 Custom IOB Update:
+  System IOB: -0.825
+  Custom IOB: 3.331999238291904512
+  Difference: 4.156999238291904512
+  Show Custom: true
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.825
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 8
+  Timestamp: 2025-09-23 03:42:48 +0000
+  Reason: COB: 8, Dev: 0.8, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 14.2, minGuardBG 8.4, IOBpredBG 14.6, COBpredBG 17.1; Eventual BG 17.1 >= 6.3,  insulinReq 1.13; maxBolus 0.1. Microbolusing 0.1U. temp 0<2.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:42:48 +0000, age: 0min, IOB: 0.1
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09985290380785231872
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.09901610286755500032
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.09490786987134898176
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 34min, IOB: 0.09207137395719804928
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 36min, IOB: 0.04515952951936492544
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13385740291457458176
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16621299278212739072
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 57min, IOB: 0.15227816141840781312
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 65min, IOB: 0.2819383367818950656
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.16951286878029000704
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.06047515121547365376
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 82min, IOB: 0.05795326869773553664
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 83min, IOB: 0.0572346583268306432
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 97min, IOB: 0.04733977960834441216
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.0464357037375375872
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.04339399855254452736
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 129min, IOB: 0.02930301856650854912
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 137min, IOB: 0.01270380248481430528
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.03125926159146061824
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 176min, IOB: 0.02410933982612612608
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.0214038029345420288
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 185min, IOB: 0.01976024586557338112
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 191min, IOB: 0.01719665834331078656
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.01501313240201480192
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 205min, IOB: 0.01222232173151438848
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011105481536796798976
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 214min, IOB: 0.0190226533007757056
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.010604519713101631488
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.001714703227686897664
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 246min, IOB: 0.0017013309366961661952
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 246min, IOB: 0.0016888673548391847936
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 271min, IOB: 0.002112684485135929856
+  SMB-Basal IOB: 1.3507885225734803456U (from 66 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3507885225734803456U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:42:56 +0000
+  Системный IOB: -0.825 U
+  Наш Bolus IOB: 1.978561927139977984 U
+  Наш Basal IOB: 1.3507885225734803456 U
+  Наш Total IOB: 3.3293504497134583296 U
+  РАЗНИЦА: 4.1543504497134583296 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 0мин, остаток: 100.0%, IOB: 0.100U
+  SMB: 0.1U, возраст: 12мин, остаток: 99.9%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.0%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 94.9%, IOB: 0.095U
+  SMB: 0.1U, возраст: 34мин, остаток: 92.1%, IOB: 0.092U
+  SMB: 0.05U, возраст: 36мин, остаток: 90.3%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.2%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.1%, IOB: 0.166U
+  SMB: 0.2U, возраст: 57мин, остаток: 76.1%, IOB: 0.152U
+  SMB: 0.4U, возраст: 65мин, остаток: 70.5%, IOB: 0.282U
+  ... и еще 31 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.825
+  Custom Bolus IOB: 1.978561927139977984
+  Custom Basal IOB: 1.3507885225734803456
+  Custom Total IOB: 3.3293504497134583296
+  Difference: 4.1543504497134583296
+🧮 Custom IOB Update:
+  System IOB: -0.825
+  Custom IOB: 3.3293504497134583296
+  Difference: 4.1543504497134583296
+  Show Custom: true
+🔍 СИСТЕМНЫЙ IOB ДИАГНОСТИКА:
+  Suggestion IOB: -0.825
+  Raw IOB Result: nil
+  IOBEntry: не удалось распарсить
+  COB: 8
+  Timestamp: 2025-09-23 03:42:48 +0000
+  Reason: COB: 8, Dev: 0.8, BGI: 0.3, ISF: 6.9, CR: 17, Target: 6.3, minPredBG 14.2, minGuardBG 8.4, IOBpredBG 14.6, COBpredBG 17.1; Eventual BG 17.1 >= 6.3,  insulinReq 1.13; maxBolus 0.1. Microbolusing 0.1U. temp 0<2.85U/hr. 
+  Bolus: 0.1U at 2025-09-23 03:42:48 +0000, age: 0min, IOB: 0.1
+  Bolus: 0.1U at 2025-09-23 03:30:02 +0000, age: 12min, IOB: 0.09984444936895164416
+  Bolus: 0.1U at 2025-09-23 03:25:13 +0000, age: 17min, IOB: 0.0989956178734601216
+  Bolus: 0.1U at 2025-09-23 03:14:16 +0000, age: 28min, IOB: 0.0948670746609053696
+  Bolus: 0.1U at 2025-09-23 03:08:55 +0000, age: 34min, IOB: 0.0920236560866274304
+  Bolus: 0.05U at 2025-09-23 03:05:57 +0000, age: 37min, IOB: 0.04513410008147663872
+  Bolus: 0.15U at 2025-09-23 03:04:12 +0000, age: 38min, IOB: 0.13377866418805096448
+  Bolus: 0.2U at 2025-09-23 02:55:02 +0000, age: 47min, IOB: 0.16609545681666650112
+  Bolus: 0.2U at 2025-09-23 02:45:26 +0000, age: 57min, IOB: 0.15215423675105226752
+  Bolus: 0.4U at 2025-09-23 02:37:51 +0000, age: 65min, IOB: 0.2816878522261740544
+  Bolus: 0.25U at 2025-09-23 02:34:17 +0000, age: 68min, IOB: 0.16935667014497349632
+  Bolus: 0.1U at 2025-09-23 02:24:22 +0000, age: 78min, IOB: 0.06041425225724430336
+  Bolus: 0.1U at 2025-09-23 02:20:53 +0000, age: 82min, IOB: 0.05789326148451147776
+  Bolus: 0.1U at 2025-09-23 02:19:53 +0000, age: 83min, IOB: 0.05717493437714471936
+  Bolus: 0.1U at 2025-09-23 02:05:28 +0000, age: 97min, IOB: 0.0472851351666960896
+  Bolus: 0.1U at 2025-09-23 02:04:05 +0000, age: 98min, IOB: 0.0463816242932399616
+  Bolus: 0.1U at 2025-09-23 01:59:18 +0000, age: 103min, IOB: 0.0433419341140192768
+  Bolus: 0.1U at 2025-09-23 01:33:55 +0000, age: 129min, IOB: 0.02926244470521543168
+  Bolus: 0.05U at 2025-09-23 01:25:30 +0000, age: 137min, IOB: 0.01268540820621370368
+  Bolus: 0.2U at 2025-09-23 00:59:23 +0000, age: 163min, IOB: 0.0312072075242260736
+  Bolus: 0.2U at 2025-09-23 00:46:49 +0000, age: 176min, IOB: 0.02406621982318881792
+  Bolus: 0.2U at 2025-09-23 00:41:21 +0000, age: 181min, IOB: 0.02136425274301283584
+  Bolus: 0.2U at 2025-09-23 00:37:47 +0000, age: 185min, IOB: 0.01972292299566207744
+  Bolus: 0.2U at 2025-09-23 00:31:45 +0000, age: 191min, IOB: 0.017162908844530061312
+  Bolus: 0.2U at 2025-09-23 00:26:05 +0000, age: 196min, IOB: 0.014982534483130138624
+  Bolus: 0.2U at 2025-09-23 00:17:54 +0000, age: 205min, IOB: 0.012195924412073269248
+  Bolus: 0.2U at 2025-09-23 00:14:15 +0000, age: 208min, IOB: 0.011080829535835467776
+  Bolus: 0.4U at 2025-09-23 00:08:33 +0000, age: 214min, IOB: 0.01897848498120118272
+  Bolus: 0.4U at 2025-09-22 23:49:16 +0000, age: 233min, IOB: 0.010575113810656237568
+  Bolus: 0.1U at 2025-09-22 23:37:02 +0000, age: 245min, IOB: 0.0017092248601578983424
+  Bolus: 0.1U at 2025-09-22 23:36:50 +0000, age: 246min, IOB: 0.0016958810251196952576
+  Bolus: 0.1U at 2025-09-22 23:36:38 +0000, age: 246min, IOB: 0.001683444019576240128
+  Bolus: 0.4U at 2025-09-22 23:11:51 +0000, age: 271min, IOB: 0.002102366009715294976
+  SMB-Basal IOB: 1.3487875196309669888U (from 65 pulses)
+  Regular Basal IOB: 0U (SMB-basal замещает обычный базал)
+  Total Basal IOB: 1.3487875196309669888U
+🚨 КРИТИЧНАЯ ДИАГНОСТИКА IOB:
+  Время расчета: 2025-09-23 03:43:01 +0000
+  Системный IOB: -0.825 U
+  Наш Bolus IOB: 1.97690408787070976 U
+  Наш Basal IOB: 1.3487875196309669888 U
+  Наш Total IOB: 3.3256916075016767488 U
+  РАЗНИЦА: 4.1506916075016767488 U
+🚨 КРИТИЧНО: Разница больше 1U! Требуется анализ!
+🔍 АНАЛИЗ РАЗЛИЧИЙ IOB:
+📊 Модель инсулина:
+  Длительность действия: 5.166666666666667 часов
+  Пик активности: 55.0 минут
+📋 Активные болюсы (последние 5 часов):
+  SMB: 0.1U, возраст: 0мин, остаток: 100.0%, IOB: 0.100U
+  SMB: 0.1U, возраст: 12мин, остаток: 99.8%, IOB: 0.100U
+  SMB: 0.1U, возраст: 17мин, остаток: 99.0%, IOB: 0.099U
+  SMB: 0.1U, возраст: 28мин, остаток: 94.9%, IOB: 0.095U
+  SMB: 0.1U, возраст: 34мин, остаток: 92.0%, IOB: 0.092U
+  SMB: 0.05U, возраст: 37мин, остаток: 90.3%, IOB: 0.045U
+  SMB: 0.15U, возраст: 38мин, остаток: 89.2%, IOB: 0.134U
+  SMB: 0.2U, возраст: 47мин, остаток: 83.0%, IOB: 0.166U
+  SMB: 0.2U, возраст: 57мин, остаток: 76.1%, IOB: 0.152U
+  SMB: 0.4U, возраст: 65мин, остаток: 70.4%, IOB: 0.282U
+  ... и еще 31 болюсов
+🎯 Возможные причины различий:
+  1. Разные модели инсулина (OpenAPS vs наша)
+  2. Разные временные зоны или расчеты возраста
+  3. Разные наборы данных (мы учитываем больше болюсов)
+  4. Middleware корректирует системный IOB
+  5. SMB-basal IOB не учитывается в системном расчете
+🧮 Custom IOB Calculator:
+  System IOB: -0.825
+  Custom Bolus IOB: 1.97690408787070976
+  Custom Basal IOB: 1.3487875196309669888
+  Custom Total IOB: 3.3256916075016767488
+  Difference: 4.1506916075016767488
+🧮 Custom IOB Update:
+  System IOB: -0.825
+  Custom IOB: 3.3256916075016767488
+  Difference: 4.1506916075016767488
+  Show Custom: true

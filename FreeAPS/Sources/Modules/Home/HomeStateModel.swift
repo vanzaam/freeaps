@@ -9,13 +9,16 @@ extension Home {
         @Injected() var apsManager: APSManager!
         @Injected() var nightscoutManager: NightscoutManager!
         @Injected() var smbBasalManager: SmbBasalManager!
+        @Injected() var storage: FileStorage!
+        @Injected() var customIOBCalculator: CustomIOBCalculator!
+        @Injected() var swiftOref0Engine: SwiftOref0Engine! // Native Swift oref0
         private let timer = DispatchTimer(timeInterval: 5)
         private(set) var filteredHours = 24
 
         @Published var glucose: [BloodGlucose] = []
         @Published var suggestion: Suggestion?
         @Published var enactedSuggestion: Suggestion?
-    @Published var smbHourlyRates: [Decimal] = []
+        @Published var smbHourlyRates: [Decimal] = []
         @Published var recentGlucose: BloodGlucose?
         @Published var glucoseDelta: Int?
         @Published var tempBasals: [PumpHistoryEvent] = []
@@ -46,10 +49,29 @@ extension Home {
         @Published var carbsRequired: Decimal?
         @Published var allowManualTemp = false
         @Published var units: GlucoseUnits = .mmolL
+        @Published var customIOB: Decimal = 0
+        @Published var customIOBDifference: Decimal = 0
+        @Published var showCustomIOB = false
         @Published var pumpDisplayState: PumpDisplayState?
         @Published var alarm: GlucoseAlarm?
         @Published var animatedBackground = false
         @Published var basalIob: SmbBasalIob?
+
+        // 🎯 Custom Prediction Service результаты
+        @Published var customPredBGs: PredictionBGs?
+        @Published var customIOBPredBG: Double?
+        @Published var customCOBPredBG: Double?
+        @Published var customUAMPredBG: Double?
+        @Published var customMinPredBG: Double?
+
+        // 🚀 Swift Oref0 Engine результаты
+        @Published var swiftPredBGs: SwiftPredictionBGs?
+        @Published var swiftIOBPredBG: Double?
+        @Published var swiftCOBPredBG: Double?
+        @Published var swiftUAMPredBG: Double?
+        @Published var swiftMinPredBG: Double?
+        @Published var swiftEventualBG: Double?
+        @Published var swiftInsulinReq: Double?
 
         override func subscribe() {
             setupGlucose()
@@ -82,6 +104,7 @@ extension Home {
             broadcaster.register(PumpSettingsObserver.self, observer: self)
             broadcaster.register(BasalProfileObserver.self, observer: self)
             broadcaster.register(TempTargetsObserver.self, observer: self)
+            broadcaster.register(CustomPredictionObserver.self, observer: self)
             broadcaster.register(CarbsObserver.self, observer: self)
             broadcaster.register(EnactedSuggestionObserver.self, observer: self)
             broadcaster.register(PumpBatteryObserver.self, observer: self)
@@ -94,6 +117,8 @@ extension Home {
                     self?.timerDate = Date()
                     self?.setupCurrentTempTarget()
                     self?.updateBasalIob()
+                    self?.updateCustomIOB()
+                    self?.generateSwiftOref0Predictions()
                 }
             }
             timer.resume()
@@ -225,7 +250,10 @@ extension Home {
                 self.boluses = events.filter { event in
                     guard event.type == .bolus || event.type == .smb else { return false }
                     // Always hide locally deleted boluses on the main screen
-                    return !DeletedTreatmentsStore.shared.containsBolus(date: event.timestamp, amount: event.amount)
+                    return !DeletedTreatmentsStore.shared.containsBolus(
+                        date: event.timestamp,
+                        amount: event.effectiveInsulinAmount
+                    )
                 }
             }
         }
@@ -342,7 +370,8 @@ extension Home.StateModel:
     CarbsObserver,
     EnactedSuggestionObserver,
     PumpBatteryObserver,
-    PumpReservoirObserver
+    PumpReservoirObserver,
+    CustomPredictionObserver
 {
     @MainActor func glucoseDidUpdate(_: [BloodGlucose]) {
         setupGlucose()
@@ -352,6 +381,9 @@ extension Home.StateModel:
         self.suggestion = suggestion
         carbsRequired = suggestion.carbsReq
         setStatusTitle()
+
+        // 🚀 Генерируем нативные Swift Oref0 прогнозы
+        generateSwiftOref0Predictions()
     }
 
     @MainActor func settingsDidChange(_ settings: FreeAPSSettings) {
@@ -398,7 +430,7 @@ extension Home.StateModel:
         setupReservoir()
     }
 
-    private func updateBasalIob() {
+    @MainActor private func updateBasalIob() {
         guard smbBasalManager.isEnabled else {
             basalIob = nil
             return
@@ -406,6 +438,20 @@ extension Home.StateModel:
 
         basalIob = smbBasalManager.currentBasalIob()
         computeSmbHourlyRates()
+    }
+
+    @MainActor private func updateCustomIOB() {
+        let result = customIOBCalculator.calculateIOB()
+
+        customIOB = result.totalIOB
+        customIOBDifference = result.totalIOB - result.systemIOB
+        showCustomIOB = abs(customIOBDifference) > 0.05 // Показываем если разница больше 0.05U
+
+        print("🧮 Custom IOB Update:")
+        print("  System IOB: \(result.systemIOB)")
+        print("  Custom IOB: \(result.totalIOB)")
+        print("  Difference: \(customIOBDifference)")
+        print("  Show Custom: \(showCustomIOB)")
     }
 
     private func computeSmbHourlyRates() {
@@ -418,7 +464,109 @@ extension Home.StateModel:
             let idx = min(23, max(0, Int(p.timestamp.timeIntervalSince(start) / 3600)))
             bins[idx] += p.units
         }
-        smbHourlyRates = bins
+
+        DispatchQueue.main.async { [weak self] in
+            self?.smbHourlyRates = bins
+        }
+    }
+
+    // 🚀 Custom Prediction Service результаты из APSManager
+    @MainActor func customPredictionDidUpdate(_ prediction: CustomPredictionResult) {
+        debug(.openAPS, "🎯 HomeStateModel: Received custom predictions from APSManager!")
+
+        // Обновляем UI с правильными прогнозами
+        customPredBGs = prediction.predBGs
+        customIOBPredBG = prediction.iobPredBG
+        customCOBPredBG = prediction.cobPredBG
+        customUAMPredBG = prediction.uamPredBG
+        customMinPredBG = prediction.minPredBG
+
+        debug(.openAPS, "✅ Custom Predictions UI Updated:")
+        debug(.openAPS, "  IOB PredBG: \(prediction.iobPredBG)")
+        debug(.openAPS, "  COB PredBG: \(prediction.cobPredBG)")
+        debug(.openAPS, "  UAM PredBG: \(prediction.uamPredBG)")
+        debug(.openAPS, "  Min PredBG: \(prediction.minPredBG)")
+        debug(.openAPS, "  Eventual BG: \(prediction.eventualBG)")
+    }
+
+    // 🚀 Swift Oref0 Engine - нативный алгоритм прогнозов
+    @MainActor func generateSwiftOref0Predictions() {
+        // Получаем данные для Swift Oref0
+        let iobData = customIOBCalculator.calculateIOB()
+        let totalIOB = Double(truncating: iobData.totalIOB as NSDecimalNumber)
+
+        // Загружаем профиль (с безопасным фолбэком)
+        let profileData = storage.retrieve(OpenAPS.Settings.profile, as: RawJSON.self) ?? ""
+        let profile: [String: Any]
+        if let data = profileData.data(using: .utf8),
+           let parsed = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
+        {
+            profile = parsed
+        } else {
+            debug(.openAPS, "⚠️ SwiftOref0: Failed to load profile, using default fallback")
+            profile = [
+                "isf": 50.0, // mg/dL per U
+                "cr": 15.0, // g/U
+                "target": 100.0 // mg/dL
+            ]
+        }
+
+        // Загружаем autosens
+        let autosensData = storage.retrieve(OpenAPS.Settings.autosense, as: RawJSON.self) ?? ""
+        let autosens = autosensData
+            .isEmpty ? nil :
+            (try? JSONSerialization.jsonObject(with: autosensData.data(using: .utf8) ?? Data()) as? [String: Any])
+
+        // Загружаем meal
+        let mealData = storage.retrieve(OpenAPS.Monitor.meal, as: RawJSON.self) ?? ""
+        let meal = mealData
+            .isEmpty ? nil : (try? JSONSerialization.jsonObject(with: mealData.data(using: .utf8) ?? Data()) as? [String: Any])
+
+        // Загружаем reservoir
+        let reservoirData = storage.retrieve(OpenAPS.Monitor.reservoir, as: RawJSON.self) ?? ""
+        let reservoir = reservoirData
+            .isEmpty ? nil :
+            (try? JSONSerialization.jsonObject(with: reservoirData.data(using: .utf8) ?? Data()) as? [String: Any])
+
+        // Загружаем current temp
+        let tempData = storage.retrieve(OpenAPS.Monitor.tempBasal, as: RawJSON.self) ?? ""
+        let currentTemp = tempData
+            .isEmpty ? nil : (try? JSONSerialization.jsonObject(with: tempData.data(using: .utf8) ?? Data()) as? [String: Any])
+
+        debug(.openAPS, "🚀 SwiftOref0: Starting native oref0 with IOB: \(totalIOB)")
+
+        swiftOref0Engine.generatePredictions(
+            iob: totalIOB,
+            glucose: glucose,
+            profile: profile,
+            autosens: autosens,
+            meal: meal,
+            reservoir: reservoir,
+            currentTemp: currentTemp
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] result in
+            guard let self = self, let result = result else { return }
+
+            // Обновляем UI с нативными Swift прогнозами
+            self.swiftPredBGs = result.predBGs
+            self.swiftIOBPredBG = result.iobPredBG
+            self.swiftCOBPredBG = result.cobPredBG
+            self.swiftUAMPredBG = result.uamPredBG
+            self.swiftMinPredBG = result.minPredBG
+            self.swiftEventualBG = result.eventualBG
+            self.swiftInsulinReq = result.insulinReq
+
+            debug(.openAPS, "🚀 Swift Oref0 Predictions Updated:")
+            debug(.openAPS, "  IOB PredBG: \(result.iobPredBG)")
+            debug(.openAPS, "  COB PredBG: \(result.cobPredBG)")
+            debug(.openAPS, "  UAM PredBG: \(result.uamPredBG)")
+            debug(.openAPS, "  Min PredBG: \(result.minPredBG)")
+            debug(.openAPS, "  Eventual BG: \(result.eventualBG)")
+            debug(.openAPS, "  Insulin Req: \(result.insulinReq)")
+            debug(.openAPS, "  Reason: \(result.reason)")
+        }
+        .store(in: &lifetime)
     }
 }
 

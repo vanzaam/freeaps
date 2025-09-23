@@ -42,7 +42,7 @@ extension Bolus {
             unlockmanager.unlock()
                 .sink { _ in } receiveValue: { [weak self] _ in
                     guard let self = self else { return }
-                    self.apsManager.enactBolus(amount: maxAmount, isSMB: false, false)
+                    self.apsManager.enactBolus(amount: maxAmount, isSMB: false, isBasalReplacement: false)
                     self.showModal(for: nil)
                 }
                 .store(in: &lifetime)
@@ -61,6 +61,7 @@ extension Bolus {
                         type: .bolus,
                         timestamp: Date(),
                         amount: amount,
+                        deliveredUnits: nil, // Manual entry - assume full delivery
                         duration: nil,
                         durationMin: nil,
                         rate: nil,

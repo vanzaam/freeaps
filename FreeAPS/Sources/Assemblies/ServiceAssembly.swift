@@ -22,5 +22,8 @@ final class ServiceAssembly: Assembly {
         container.register(SmbBasalManager.self) { r in BaseSmbBasalManager(resolver: r) }
         container.register(SmbBasalIobCalculator.self) { r in BaseSmbBasalIobCalculator(resolver: r) }
         container.register(SmbBasalMiddleware.self) { r in BaseSmbBasalMiddleware(resolver: r) }
+        container.register(CustomIOBCalculator.self) { r in BaseCustomIOBCalculator(resolver: r) }
+        container.register(CustomPredictionService.self) { r in BaseCustomPredictionService(resolver: r) }
+        container.register(SwiftOref0Engine.self) { r in BaseSwiftOref0Engine(resolver: r) }
     }
 }

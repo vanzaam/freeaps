@@ -34,6 +34,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 case .bolus:
                     guard let dose = event.dose else { return [] }
                     let amount = Decimal(string: dose.unitsInDeliverableIncrements.description)
+                    let deliveredUnits = dose.deliveredUnits.map { Decimal($0) }
                     let minutes = Int((dose.endDate - dose.startDate).timeInterval / 60)
 
                     // Create temporary event to check if it's SMB-Basal
@@ -42,6 +43,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         type: .bolus,
                         timestamp: event.date,
                         amount: amount,
+                        deliveredUnits: deliveredUnits,
                         duration: minutes,
                         durationMin: nil,
                         rate: nil,
@@ -53,8 +55,14 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     // Determine correct event type
                     let eventType: EventType = {
                         if dose.automatic == true {
-                            return self.isSmbBasalPulse(event: tempEvent) ? .smbBasal : .smb
+                            let isSmbBasal = self.isSmbBasalPulse(event: tempEvent)
+                            let finalType: EventType = isSmbBasal ? .smbBasal : .smb
+                            print(
+                                "PumpHistoryStorage: Automatic bolus \(amount ?? 0)U -> \(finalType.rawValue) (isSmbBasal: \(isSmbBasal))"
+                            )
+                            return finalType
                         } else {
+                            print("PumpHistoryStorage: Manual bolus \(amount ?? 0)U -> Bolus")
                             return .bolus
                         }
                     }()
@@ -64,6 +72,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                         type: eventType,
                         timestamp: event.date,
                         amount: amount,
+                        deliveredUnits: deliveredUnits,
                         duration: minutes,
                         durationMin: nil,
                         rate: nil,
@@ -89,6 +98,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             type: .tempBasalDuration,
                             timestamp: date,
                             amount: nil,
+                            deliveredUnits: nil,
                             duration: nil,
                             durationMin: Int(round(minutes)),
                             rate: nil,
@@ -101,6 +111,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             type: .tempBasal,
                             timestamp: date,
                             amount: nil,
+                            deliveredUnits: nil,
                             duration: nil,
                             durationMin: nil,
                             rate: rate,
@@ -116,6 +127,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             type: .pumpSuspend,
                             timestamp: event.date,
                             amount: nil,
+                            deliveredUnits: nil,
                             duration: nil,
                             durationMin: nil,
                             rate: nil,
@@ -131,6 +143,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             type: .pumpResume,
                             timestamp: event.date,
                             amount: nil,
+                            deliveredUnits: nil,
                             duration: nil,
                             durationMin: nil,
                             rate: nil,
@@ -146,6 +159,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             type: .rewind,
                             timestamp: event.date,
                             amount: nil,
+                            deliveredUnits: nil,
                             duration: nil,
                             durationMin: nil,
                             rate: nil,
@@ -161,6 +175,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                             type: .prime,
                             timestamp: event.date,
                             amount: nil,
+                            deliveredUnits: nil,
                             duration: nil,
                             durationMin: nil,
                             rate: nil,
@@ -186,6 +201,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     type: .journalCarbs,
                     timestamp: Date(),
                     amount: nil,
+                    deliveredUnits: nil,
                     duration: nil,
                     durationMin: nil,
                     rate: nil,
@@ -271,11 +287,14 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
 
         let bolusesAndCarbs = uniqueEvents.compactMap { event -> NigtscoutTreatment? in
             switch event.type {
-            case .bolus, .smb, .smbBasal:
+            case .bolus,
+                 .smb,
+                 .smbBasal:
                 // Determine if this is a regular SMB or SMB-Basal
                 let eventType: EventType = {
                     switch event.type {
-                    case .smb, .smbBasal:
+                    case .smb,
+                         .smbBasal:
                         return event.type
                     default:
                         if event.automatic == true {
@@ -295,7 +314,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                     createdAt: event.timestamp,
                     enteredBy: NigtscoutTreatment.local,
                     bolus: event,
-                    insulin: event.amount,
+                    insulin: event.effectiveInsulinAmount,
                     notes: nil,
                     carbs: nil,
                     targetTop: nil,
@@ -339,6 +358,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 type: .tempBasalDuration,
                 timestamp: date,
                 amount: nil,
+                deliveredUnits: nil,
                 duration: nil,
                 durationMin: 0,
                 rate: nil,
@@ -351,6 +371,7 @@ final class BasePumpHistoryStorage: PumpHistoryStorage, Injectable {
                 type: .tempBasal,
                 timestamp: date,
                 amount: nil,
+                deliveredUnits: nil,
                 duration: nil,
                 durationMin: nil,
                 rate: 0,

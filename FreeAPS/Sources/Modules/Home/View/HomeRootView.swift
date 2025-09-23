@@ -64,6 +64,26 @@ extension Home {
                             NSLocalizedString(" U", comment: "Insulin unit")
                     )
                     .font(.system(size: 12, weight: .bold))
+
+                    // 💚 Наш расчетный IOB (зеленым)
+                    if state.showCustomIOB {
+                        Text("→")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                        Text(
+                            (numberFormatter.string(from: state.customIOB as NSNumber) ?? "0") +
+                                NSLocalizedString(" U", comment: "Insulin unit")
+                        )
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.green)
+
+                        // Показываем разницу
+                        Text(
+                            "(\(state.customIOBDifference >= 0 ? "+" : "")\(numberFormatter.string(from: state.customIOBDifference as NSNumber) ?? "0"))"
+                        )
+                        .font(.caption2)
+                        .foregroundColor(state.customIOBDifference >= 0 ? .green : .red)
+                    }
                 }
                 if let basalIob = state.basalIob {
                     HStack {
@@ -256,6 +276,22 @@ extension Home {
                         )!
                     )
                     .font(.system(size: 12, weight: .bold)).foregroundColor(.secondary)
+                }
+
+                // 🎯 Debug: Custom Predictions
+                if let customIOBPred = state.customIOBPredBG {
+                    Text("Custom: \(String(format: "%.1f", customIOBPred))")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.green)
+                        .padding(.leading, 8)
+                }
+
+                // 🚀 Debug: Swift Oref0 Predictions
+                if let swiftIOBPred = state.swiftIOBPredBG {
+                    Text("Swift: \(String(format: "%.1f", swiftIOBPred))")
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(.blue)
+                        .padding(.leading, 8)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: 30)

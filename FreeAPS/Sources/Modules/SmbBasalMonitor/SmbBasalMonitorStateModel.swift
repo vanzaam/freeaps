@@ -15,9 +15,13 @@ extension SmbBasalMonitor {
         @Published var smbInterval: Decimal = 3
         @Published var currentBasalRate: Decimal = 0
         @Published var applyOpenAPSTempBasal: Bool = true
+        @Published var glucoseThreshold: Decimal = 4.5
         @Published var hourlyRates: [Decimal] = Array(repeating: 0, count: 24)
         @Published var totalUnits24h: Decimal = 0
         @Published var totalFromRates24h: Decimal = 0
+        @Published var failedPulsesCount: Int = 0
+        @Published var compensationUnits: Decimal = 0
+        @Published var maxCompensationMinutes: Int = 20
 
         private var timer: Timer?
 
@@ -63,6 +67,8 @@ extension SmbBasalMonitor {
             let preferences = settingsManager.preferences
             smbInterval = preferences.smbInterval
             applyOpenAPSTempBasal = settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal
+            glucoseThreshold = settingsManager.settings.smbBasalGlucoseThreshold
+            maxCompensationMinutes = settingsManager.settings.smbBasalErrorCompensationMaxMinutes
 
             // Получаем текущую базальную скорость
             let currentProfile = provider.basalProfile
@@ -98,6 +104,20 @@ extension SmbBasalMonitor {
         func toggleApplyOpenAPSTempBasal(_ value: Bool) {
             settingsManager.settings.useOpenAPSForTempBasalWhenSmbBasal = value
             applyOpenAPSTempBasal = value
+        }
+
+        func setGlucoseThreshold(_ value: Decimal) {
+            var settings = settingsManager.settings
+            glucoseThreshold = value
+            settings.smbBasalGlucoseThreshold = value
+            settingsManager.settings = settings
+        }
+
+        func setMaxCompensationMinutes(_ value: Int) {
+            var settings = settingsManager.settings
+            maxCompensationMinutes = value
+            settings.smbBasalErrorCompensationMaxMinutes = value
+            settingsManager.settings = settings
         }
 
         private func computeHourly(from pulses: [SmbBasalPulse]) {

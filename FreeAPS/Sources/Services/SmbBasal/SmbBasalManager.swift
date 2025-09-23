@@ -2,6 +2,24 @@ import Combine
 import Foundation
 import Swinject
 
+// MARK: - Failed Pulse Tracking
+
+struct FailedPulse {
+    let id: String
+    let timestamp: Date
+    let units: Decimal
+    let reason: FailureReason
+
+    enum FailureReason: String, CaseIterable {
+        case pumpError = "Pump Error"
+        case communicationError = "Communication Error"
+        case bolusInProgress = "Bolus In Progress"
+        case pumpSuspended = "Pump Suspended"
+        case lowBattery = "Low Battery"
+        case other = "Other Error"
+    }
+}
+
 // MARK: - Public API
 
 protocol SmbBasalManager: AnyObject {
@@ -19,6 +37,7 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
     @Injected() private var settingsManager: SettingsManager!
     @Injected() private var basalIobCalculator: SmbBasalIobCalculator!
     @Injected() private var middleware: SmbBasalMiddleware!
+    @Injected() private var glucoseStorage: GlucoseStorage!
 
     private let workQueue = DispatchQueue(label: "SmbBasalManager.queue", qos: .utility)
     private var timer: DispatchSourceTimer?
@@ -27,6 +46,9 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
     private var accumulatorUnits: Decimal = 0
     private var lastPulseAt: Date?
     private var lastZeroBasalSetAt: Date?
+    private var missedUnitsFromLowGlucose: Decimal = 0 // Track units not delivered due to low glucose
+    private var failedPulses: [FailedPulse] = [] // Track failed pulses for compensation
+    private var compensationUnits: Decimal = 0 // Accumulated units to compensate
 
     private(set) var isEnabled: Bool = false
 
@@ -106,12 +128,29 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
             return
         }
 
+        // Wait for main loop to complete before delivering pulses
+        if apsManager.isLooping.value {
+            print("SMB-Basal: Main loop is running, waiting for completion")
+            return
+        }
+
         print("SMB-Basal: tick() - processing basal replacement")
+        // Clean up old failed pulses and update compensation units
+        updateCompensationUnits()
+
         // Always keep 0 U/h temp basal while SMB-basal is active. All basal will be replaced by pulses.
         maintainZeroTempBasalIfNeeded()
 
         // 2) Accumulate basal dose and fire step boluses when enough units are accumulated
         guard let step = optionalBolusStep(), step > 0 else { return }
+
+        // Check glucose threshold before delivering basal
+        if isGlucoseBelowThreshold() {
+            let unitsPerMinute = effectiveBasalRate() / 60
+            missedUnitsFromLowGlucose += unitsPerMinute
+            print("SMB-Basal: Glucose below threshold, skipping pulse. Missed units: \(missedUnitsFromLowGlucose)")
+            return
+        }
 
         // Use OpenAPS suggested temp basal as effective basal when option is enabled; otherwise use scheduled basal
         let effectiveRate = effectiveBasalRate()
@@ -122,19 +161,40 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
         let unitsPerMinute = effectiveRate / 60
         accumulatorUnits += unitsPerMinute
 
+        // Reset missed units counter when glucose is above threshold
+        if missedUnitsFromLowGlucose > 0 {
+            print("SMB-Basal: Glucose above threshold, resetting missed units counter (was \(missedUnitsFromLowGlucose))")
+            missedUnitsFromLowGlucose = 0
+        }
+
         let minIntervalMinutes = max(1, Int(truncating: settingsManager.preferences.smbInterval as NSNumber))
         let now = Date()
         if let last = lastPulseAt, now.timeIntervalSince(last) < Double(minIntervalMinutes * 60) {
             return
         }
 
-        if accumulatorUnits >= step {
+        // Add compensation units to current accumulator
+        let totalUnitsToDeliver = accumulatorUnits + compensationUnits
+
+        if totalUnitsToDeliver >= step {
             // Deliver one step and keep remainder to avoid jitter
             deliverPulse(units: step) { [weak self] success in
                 guard let self = self else { return }
                 if success {
-                    self.accumulatorUnits -= step
+                    // Successful delivery - deduct from both accumulator and compensation
+                    if self.compensationUnits > 0 {
+                        let compensationUsed = min(step, self.compensationUnits)
+                        self.compensationUnits -= compensationUsed
+                        let accumulatorUsed = step - compensationUsed
+                        self.accumulatorUnits -= accumulatorUsed
+                        print("SMB-Basal: Delivered \(step) U (compensation: \(compensationUsed) U, new: \(accumulatorUsed) U)")
+                    } else {
+                        self.accumulatorUnits -= step
+                    }
                     self.lastPulseAt = Date()
+                } else {
+                    // Failed delivery already recorded in deliverPulse method
+                    print("SMB-Basal: Pulse delivery failed, added to compensation queue")
                 }
             }
         }
@@ -212,8 +272,53 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
 
     private func deliverPulse(units: Decimal, completion: @escaping (Bool) -> Void) {
         let amount = Double(truncating: units as NSNumber)
+
+        // Check for obvious failure conditions before attempting delivery
+        guard let pumpManager = apsManager.pumpManager else {
+            print("SMB-Basal: No pump manager available")
+            // Record failure after method is defined
+            workQueue.async { [weak self] in
+                self?.recordFailedPulse(units: units, reason: .pumpError)
+            }
+            completion(false)
+            return
+        }
+
+        // Check if pump is suspended
+        if case .suspended = pumpManager.status.basalDeliveryState {
+            print("SMB-Basal: Pump is suspended, cannot deliver pulse")
+            workQueue.async { [weak self] in
+                self?.recordFailedPulse(units: units, reason: .pumpSuspended)
+            }
+            completion(false)
+            return
+        }
+
+        // Check if bolus is already in progress
+        if case .inProgress = pumpManager.status.bolusState {
+            print("SMB-Basal: Bolus already in progress, cannot deliver pulse")
+            workQueue.async { [weak self] in
+                self?.recordFailedPulse(units: units, reason: .bolusInProgress)
+            }
+            completion(false)
+            return
+        }
+
+        // Check battery level
+        if let batteryLevel = pumpManager.status.pumpBatteryChargeRemaining, batteryLevel < 0.1 {
+            print("SMB-Basal: Low battery (\(Int(batteryLevel * 100))%), cannot deliver pulse")
+            workQueue.async { [weak self] in
+                self?.recordFailedPulse(units: units, reason: .lowBattery)
+            }
+            completion(false)
+            return
+        }
+
+        // Attempt delivery
         apsManager.enactBolus(amount: amount, isSMB: true, isBasalReplacement: true)
-        // We don't get immediate completion callback from APSManager here; assume success optimistically and persist.
+
+        // For now, we assume success optimistically since we don't get immediate feedback
+        // In a real implementation, we would wait for confirmation from the pump
         persistPulse(units: units)
         completion(true)
     }
@@ -222,6 +327,83 @@ final class BaseSmbBasalManager: SmbBasalManager, Injectable, SettingsObserver {
         var pulses = storage.retrieve(OpenAPS.Monitor.smbBasalPulses, as: [SmbBasalPulse].self) ?? []
         pulses.append(SmbBasalPulse(id: UUID().uuidString, timestamp: Date(), units: units))
         storage.save(pulses.suffix(2000), as: OpenAPS.Monitor.smbBasalPulses) // keep recent history bounded
+    }
+
+    private func isGlucoseBelowThreshold() -> Bool {
+        let recentGlucose = glucoseStorage.recent()
+        guard !recentGlucose.isEmpty, let latestGlucose = recentGlucose.first else {
+            print("SMB-Basal: No recent glucose data available")
+            return true // Be conservative - suspend if no data
+        }
+
+        let thresholdMmol = settingsManager.settings.smbBasalGlucoseThreshold
+        let currentGlucoseMmol: Decimal
+
+        // Extract glucose value safely
+        let glucoseValue: Double
+        if let glucose = latestGlucose.glucose as? Double {
+            glucoseValue = glucose
+        } else if let glucose = latestGlucose.glucose as? Int {
+            glucoseValue = Double(glucose)
+        } else {
+            print("SMB-Basal: Invalid glucose data type")
+            return true // Be conservative - suspend if invalid data
+        }
+
+        // BloodGlucose.glucose is stored in mg/dL regardless of display units.
+        // Always convert mg/dL -> mmol/L for threshold comparison.
+        currentGlucoseMmol = Decimal(glucoseValue) / 18.0
+
+        let isBelowThreshold = currentGlucoseMmol < thresholdMmol
+        if isBelowThreshold {
+            print("SMB-Basal: Current glucose \(currentGlucoseMmol) mmol/L is below threshold \(thresholdMmol) mmol/L")
+        }
+
+        return isBelowThreshold
+    }
+
+    // MARK: - Failed Pulse Management
+
+    private func recordFailedPulse(units: Decimal, reason: FailedPulse.FailureReason) {
+        let failedPulse = FailedPulse(
+            id: UUID().uuidString,
+            timestamp: Date(),
+            units: units,
+            reason: reason
+        )
+
+        failedPulses.append(failedPulse)
+        print("SMB-Basal: Recorded failed pulse: \(units) U, reason: \(reason.rawValue)")
+
+        // Clean up old failed pulses and update compensation units
+        updateCompensationUnits()
+    }
+
+    private func updateCompensationUnits() {
+        let maxMinutes = settingsManager.settings.smbBasalErrorCompensationMaxMinutes
+        let cutoffTime = Date().addingTimeInterval(-Double(maxMinutes * 60))
+
+        // Remove old failed pulses
+        let validFailedPulses = failedPulses.filter { $0.timestamp > cutoffTime }
+        failedPulses = validFailedPulses
+
+        // Calculate total compensation units from valid failed pulses
+        let totalCompensation = validFailedPulses.reduce(Decimal(0)) { $0 + $1.units }
+        compensationUnits = totalCompensation
+
+        print("SMB-Basal: Updated compensation units: \(compensationUnits) U from \(validFailedPulses.count) failed pulses")
+    }
+
+    private func getFailedPulsesInfo() -> (count: Int, totalUnits: Decimal, oldestAge: TimeInterval) {
+        guard !failedPulses.isEmpty else {
+            return (0, 0, 0)
+        }
+
+        let count = failedPulses.count
+        let totalUnits = failedPulses.reduce(Decimal(0)) { $0 + $1.units }
+        let oldestAge = Date().timeIntervalSince(failedPulses.first?.timestamp ?? Date())
+
+        return (count, totalUnits, oldestAge)
     }
 
     // MARK: - Public API Implementation

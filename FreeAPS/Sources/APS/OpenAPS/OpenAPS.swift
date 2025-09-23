@@ -8,24 +8,79 @@ final class OpenAPS {
     private let processQueue = DispatchQueue(label: "OpenAPS.processQueue", qos: .utility)
 
     private let storage: FileStorage
+    private var smbBasalMiddleware: SmbBasalMiddleware?
 
     init(storage: FileStorage) {
         self.storage = storage
+    }
+
+    func setSmbBasalMiddleware(_ middleware: SmbBasalMiddleware) {
+        smbBasalMiddleware = middleware
+    }
+
+    // 🎯 Структура для чтения Custom IOB данных из FileStorage
+    private struct CustomIOBData: JSON {
+        let totalIOB: Double
+        let bolusIOB: Double
+        let basalIOB: Double
+        let calculationTime: Double
+        let debugInfo: String
+    }
+
+    private func getCustomIOBData() -> String? {
+        debug(.openAPS, "🔍 Attempting to load Custom IOB data from middleware/custom-iob.json")
+
+        if let customIOBData = storage.retrieve("middleware/custom-iob.json", as: CustomIOBData.self) {
+            debug(.openAPS, "✅ Custom IOB data loaded successfully from main location!")
+            debug(
+                .openAPS,
+                "📊 Total IOB: \(customIOBData.totalIOB)U, Bolus: \(customIOBData.bolusIOB)U, Basal: \(customIOBData.basalIOB)U"
+            )
+            return convertToJsonString(customIOBData)
+        }
+
+        // 🆘 FALLBACK: Попробуем читать из backup файла
+        if let customIOBData = storage.retrieve("custom-iob-backup.json", as: CustomIOBData.self) {
+            debug(.openAPS, "✅ Custom IOB data loaded from BACKUP location!")
+            debug(
+                .openAPS,
+                "📊 Total IOB: \(customIOBData.totalIOB)U, Bolus: \(customIOBData.bolusIOB)U, Basal: \(customIOBData.basalIOB)U"
+            )
+            return convertToJsonString(customIOBData)
+        }
+
+        debug(.openAPS, "❌ Custom IOB data not found in main or backup locations")
+        return nil
+    }
+
+    private func convertToJsonString(_ customIOBData: CustomIOBData) -> String? {
+        // Преобразуем в JSON строку для JavaScript
+        do {
+            let jsonData = try JSONEncoder().encode(customIOBData)
+            let jsonString = String(data: jsonData, encoding: .utf8) ?? "{}"
+            debug(.openAPS, "🔄 Converted to JSON string for JavaScript: \(String(jsonString.prefix(150)))...")
+            return jsonString
+        } catch {
+            debug(.openAPS, "❌ Failed to convert CustomIOBData to JSON: \(error)")
+            return nil
+        }
     }
 
     func determineBasal(currentTemp: TempBasal, clock: Date = Date()) -> Future<Suggestion?, Never> {
         Future { promise in
             self.processQueue.async {
                 debug(.openAPS, "Start determineBasal")
+
+                // 🚨 ОТКЛЮЧЕНО: Custom IOB расчеты отключены вместе с middleware
+                // if let middleware = self.smbBasalMiddleware as? BaseSmbBasalMiddleware {
+                //     middleware.updateCustomIOBForMiddleware()
+                // }
+
                 // clock
                 self.storage.save(clock, as: Monitor.clock)
 
-                // temp_basal
-                var tempBasal = currentTemp.rawJSON
-                // If SMB-basal is enabled, override with a virtual temp basal equal to current basal
-                if let virtual = self.virtualTempBasal(from: self.loadFileFromStorage(name: Settings.profile)) {
-                    tempBasal = virtual
-                }
+                // temp_basal - оставляем реальные данные помпы без изменений
+                let tempBasal = currentTemp.rawJSON
                 self.storage.save(tempBasal, as: Monitor.tempBasal)
 
                 // meal
@@ -50,6 +105,10 @@ final class OpenAPS {
 
                 // iob
                 let autosens = self.loadFileFromStorage(name: Settings.autosense)
+
+                // Debug: Log pumpHistory before IOB calculation
+                print("OpenAPS: PumpHistory before IOB calculation (first 500 chars): \(pumpHistory.prefix(500))")
+
                 let iob = self.iob(
                     pumphistory: pumpHistory,
                     profile: profile,
@@ -57,12 +116,43 @@ final class OpenAPS {
                     autosens: autosens.isEmpty ? .null : autosens
                 )
 
-                self.storage.save(iob, as: Monitor.iob)
+                // Debug: Log IOB result
+                print("OpenAPS: IOB calculation result: \(iob.prefix(200))")
+
+                // Override saved Monitor.iob with synthesized JSON based on Custom IOB (to avoid negative/system IOB drift)
+                var iobToSave = iob
+                if let customIOBData = self.storage.retrieve("middleware/custom-iob.json", as: CustomIOBData.self) {
+                    let activity = max(customIOBData.totalIOB * 0.0025, 0.001)
+                    let timeString = ISO8601DateFormatter().string(from: Date())
+                    let entry: [String: Any?] = [
+                        "iob": customIOBData.totalIOB,
+                        "activity": activity,
+                        "basaliob": customIOBData.basalIOB,
+                        "bolusiob": customIOBData.bolusIOB,
+                        "netbasalinsulin": customIOBData.basalIOB,
+                        "bolusinsulin": customIOBData.bolusIOB,
+                        "time": timeString,
+                        "lastBolusTime": nil,
+                        "lastTemp": nil,
+                        "iobWithZeroTemp": nil
+                    ]
+                    if let data = try? JSONSerialization.data(withJSONObject: [entry], options: []),
+                       let json = String(data: data, encoding: .utf8)
+                    {
+                        debug(
+                            .openAPS,
+                            "🔧 Overriding Monitor.iob with CustomIOB (was JS IOB). TotalIOB=\(customIOBData.totalIOB)"
+                        )
+                        iobToSave = json
+                    }
+                }
+
+                self.storage.save(iobToSave, as: Monitor.iob)
 
                 // determine-basal
                 let reservoir = self.loadFileFromStorage(name: Monitor.reservoir)
 
-                let suggested = self.determineBasal(
+                var suggested = self.determineBasal(
                     glucose: glucose,
                     currentTemp: tempBasal,
                     iob: iob,
@@ -73,6 +163,24 @@ final class OpenAPS {
                     reservoir: reservoir,
                     pumpHistory: pumpHistory
                 )
+                // Override IOB in suggestion with Custom IOB (to avoid negative IOB from 0 U/h SMB-basal)
+                if let customIOBData = self.storage.retrieve("middleware/custom-iob.json", as: CustomIOBData.self) {
+                    if let suggestedData = suggested.data(using: .utf8),
+                       var suggestedDict = try? JSONSerialization.jsonObject(with: suggestedData) as? [String: Any]
+                    {
+                        let oldIOB = suggestedDict["IOB"]
+                        suggestedDict["IOB"] = customIOBData.totalIOB
+                        if let newData = try? JSONSerialization.data(withJSONObject: suggestedDict, options: []),
+                           let newSuggested = String(data: newData, encoding: .utf8)
+                        {
+                            debug(
+                                .openAPS,
+                                "🔧 Overriding Suggestion IOB: old=\(String(describing: oldIOB)) → new=\(customIOBData.totalIOB)"
+                            )
+                            suggested = newSuggested
+                        }
+                    }
+                }
                 debug(.openAPS, "SUGGESTED: \(suggested)")
 
                 if var suggestion = Suggestion(from: suggested) {
@@ -236,6 +344,7 @@ final class OpenAPS {
     }
 
     // Remove locally deleted boluses for last 24h from pumpHistory RawJSON
+    // Ensures SMB boluses are included in IOB calculation unless manually deleted
     private func filterDeletedBoluses(in pumpHistory: RawJSON) -> RawJSON {
         guard let data = pumpHistory.data(using: .utf8),
               var array = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
@@ -243,33 +352,58 @@ final class OpenAPS {
 
         let dayAgo = Date().addingTimeInterval(-24 * 60 * 60)
         let recentCutoff = Date().addingTimeInterval(-120) // don't filter very recent boluses (<2 min)
-        
+
         // Get SMB-basal pulses to avoid filtering them
         let smbBasalPulses = storage.retrieve(OpenAPS.Monitor.smbBasalPulses, as: [SmbBasalPulse].self) ?? []
-        
+
         array.removeAll { dict in
-            guard let type = dict["_type"] as? String, type.lowercased().contains("bolus") else { return false }
+            guard let type = dict["_type"] as? String,
+                  type.lowercased().contains("bolus") || type.lowercased() == "smb" else { return false }
             // created_at or timestamp
             let dateString = (dict["created_at"] as? String) ?? (dict["timestamp"] as? String) ?? ""
             guard let date = Formatter.iso8601withFractionalSeconds.date(from: dateString) else { return false }
             guard date > dayAgo else { return false }
             // Keep very recent boluses to ensure IOB reflects them immediately
             guard date < recentCutoff else { return false }
-            let insulin = (dict["insulin"] as? NSNumber)?.decimalValue
-            
+            // Try both "insulin" and "amount" fields for bolus amount
+            let insulinField = dict["insulin"] as? NSNumber
+            let amountField = dict["amount"] as? NSNumber
+            let insulin = insulinField?.decimalValue ?? amountField?.decimalValue
+
+            // Debug logging for SMB boluses
+            if type.lowercased() == "smb" {
+                print(
+                    "OpenAPS: SMB bolus debug - insulin field: \(insulinField), amount field: \(amountField), final insulin: \(insulin)"
+                )
+            }
+
             // Don't filter SMB-Basal pulses - they should always contribute to IOB calculation
             let isSmbBasal = smbBasalPulses.contains { pulse in
                 let timeDiff = abs(date.timeIntervalSince(pulse.timestamp))
                 let amountMatch = abs((insulin ?? 0) - pulse.units) < 0.001
                 return timeDiff < 30 && amountMatch
             }
-            
+
             if isSmbBasal {
                 return false // Never filter SMB-Basal pulses
             }
-            
+
+            // Check if it's a regular SMB bolus (not SMB-Basal)
+            let isSmbBolus = type.lowercased() == "smb"
+
             // Only filter manually deleted boluses
-            return DeletedTreatmentsStore.shared.containsBolus(date: date, amount: insulin)
+            // SMB boluses should always be included in IOB unless manually deleted
+            if isSmbBolus {
+                // SMB boluses are only filtered if manually deleted
+                let shouldFilter = DeletedTreatmentsStore.shared.containsBolus(date: date, amount: insulin)
+                print("OpenAPS: SMB bolus \(insulin)U at \(date) - shouldFilter: \(shouldFilter)")
+                return shouldFilter
+            }
+
+            // Regular boluses - filter if manually deleted
+            let shouldFilter = DeletedTreatmentsStore.shared.containsBolus(date: date, amount: insulin)
+            print("OpenAPS: Regular bolus \(insulin)U at \(date) - shouldFilter: \(shouldFilter)")
+            return shouldFilter
         }
 
         if let filteredData = try? JSONSerialization.data(withJSONObject: array),
@@ -360,10 +494,16 @@ final class OpenAPS {
             worker.evaluate(script: Script(name: Bundle.getLastGlucose))
             worker.evaluate(script: Script(name: Bundle.determineBasal))
 
-            if let middleware = self.middlewareScript(name: OpenAPS.Middleware.determineBasal) {
-                worker.evaluate(script: middleware)
-            }
+            // 🚨 СРОЧНО ОТКЛЮЧЕНО: Middleware вызывает критически низкие прогнозы (8.5 mg/dL)!
+            // Это опасно для жизни! Нужно исследовать проблему.
+            debug(.openAPS, "⚠️ MIDDLEWARE ОТКЛЮЧЕН из-за критических ошибок в прогнозах!")
 
+            // if let middleware = self.middlewareScript(name: OpenAPS.Middleware.determineBasal) {
+            //     // Middleware temporarily disabled due to dangerous prediction errors
+            // }
+
+            // Pass current clock as Date (JSON encodes to quoted ISO8601 string)
+            let clockNow = Date()
             return worker.call(
                 function: Function.generate,
                 with: [
@@ -375,7 +515,7 @@ final class OpenAPS {
                     meal,
                     microBolusAllowed,
                     reservoir,
-                    false, // clock
+                    clockNow, // clock as JSON string
                     pumpHistory
                 ]
             )
@@ -458,29 +598,6 @@ final class OpenAPS {
 
     private func loadFileFromStorage(name: String) -> RawJSON {
         storage.retrieveRaw(name) ?? OpenAPS.defaults(for: name)
-    }
-
-    // Build a virtual temp basal JSON equal to current basal if SMB-basal is enabled
-    // Expects profile JSON to contain current_basal and preferences.smb_basal_enabled
-    private func virtualTempBasal(from profile: RawJSON) -> RawJSON? {
-        guard let data = profile.data(using: .utf8),
-              let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { return nil }
-        let prefs = (json["preferences"] as? [String: Any]) ?? [:]
-        guard (prefs["smb_basal_enabled"] as? Bool) == true else { return nil }
-        guard let currentBasal = (json["current_basal"] as? NSNumber)?.doubleValue, currentBasal >= 0 else { return nil }
-
-        // Construct OpenAPS temp basal json (absolute) for 30 minutes
-        let temp: [String: Any] = [
-            "temp": "absolute",
-            "duration": 30,
-            "rate": currentBasal
-        ]
-        if let tempData = try? JSONSerialization.data(withJSONObject: temp),
-           let tempString = String(data: tempData, encoding: .utf8)
-        {
-            return tempString
-        }
-        return nil
     }
 
     private func middlewareScript(name: String) -> Script? {

@@ -172,51 +172,54 @@ struct MainChartView: View {
 
     private func smbHourlyOverlay(fullSize: CGSize) -> some View {
         let rates = smbHourlyRates.map { Double(truncating: $0 as NSDecimalNumber) }
-        
+
         // Prevent NaN errors by ensuring valid values
         guard !rates.isEmpty, rates.allSatisfy({ $0.isFinite }) else {
             return AnyView(EmptyView())
         }
-        
+
         let maxRate = max(rates.max() ?? 0.0, 0.01)
         guard maxRate.isFinite && maxRate > 0 else {
             return AnyView(EmptyView())
         }
-        
-        return AnyView(GeometryReader { _ in
-            let w = fullGlucoseWidth(viewWidth: fullSize.width) + additionalWidth(viewWidth: fullSize.width)
-            let count = rates.count
-            let stepX = w / CGFloat(count)
-            let rateCost = Config.basalHeight / CGFloat(maxRate)
-            
-            // Ensure no NaN values in calculations
-            guard stepX.isFinite && rateCost.isFinite else {
-                return AnyView(EmptyView())
-            }
-            
-            return AnyView(ZStack {
-                ForEach(0 ..< count, id: \.self) { i in
-                    let value = rates[i]
-                    let barH = CGFloat(value) * rateCost
-                    
-                    // Only draw if values are valid
-                    if barH.isFinite && barH >= 0 {
-                        Path { p in
-                            let x = CGFloat(i) * stepX + 1
-                            let y = Config.basalHeight - barH
-                            let width = max(stepX - 2, 1)
-                            let height = barH
-                            
-                            if x.isFinite && y.isFinite && width.isFinite && height.isFinite {
-                                p.addRect(CGRect(x: x, y: y, width: width, height: height))
-                            }
-                        }
-                        .fill(Color.accentColor.opacity(0.25))
-                    }
+
+        return AnyView(
+            GeometryReader { _ in
+                let count = rates.count
+                let rateCost = Config.basalHeight / CGFloat(maxRate)
+
+                guard rateCost.isFinite else {
+                    return AnyView(EmptyView())
                 }
-            })
-        }
-        .frame(maxHeight: Config.basalHeight))
+
+                // Align strictly to last 24h window using chart's time mapping
+                let start = Date().addingTimeInterval(-24 * 3600).timeIntervalSince1970
+
+                return AnyView(ZStack {
+                    ForEach(0 ..< count, id: \.self) { i in
+                        let value = rates[i]
+                        let barH = CGFloat(value) * rateCost
+                        guard barH.isFinite, barH >= 0 else { return AnyView(EmptyView()) }
+
+                        let x0 = timeToXCoordinate(start + Double(i) * 3600.0, fullSize: fullSize)
+                        let x1 = timeToXCoordinate(start + Double(i + 1) * 3600.0, fullSize: fullSize)
+                        let width = max(x1 - x0 - 2, 1)
+                        let x = x0 + 1
+                        let y = Config.basalHeight - barH
+
+                        if x.isFinite, y.isFinite, width.isFinite {
+                            Path { p in
+                                p.addRect(CGRect(x: x, y: y, width: width, height: barH))
+                            }
+                            .fill(Color.accentColor.opacity(0.25))
+                        }
+
+                        return AnyView(EmptyView())
+                    }
+                })
+            }
+            .frame(maxHeight: Config.basalHeight)
+        )
     }
 
     private func mainView(fullSize: CGSize) -> some View {
@@ -405,9 +408,10 @@ extension MainChartView {
         calculationQueue.async { [boluses] in
             let dots = boluses.map { value -> DotInfo in
                 let center = self.timeToInterpolatedPoint(value.timestamp.timeIntervalSince1970, fullSize: fullSize)
-                let size = Config.bolusSize + CGFloat(value.amount ?? 0) * Config.bolusScale
+                let effectiveAmount = value.effectiveInsulinAmount ?? 0
+                let size = Config.bolusSize + CGFloat(effectiveAmount) * Config.bolusScale
                 let rect = CGRect(x: center.x - size / 2, y: center.y - size / 2, width: size, height: size)
-                return DotInfo(rect: rect, value: value.amount ?? 0)
+                return DotInfo(rect: rect, value: effectiveAmount)
             }
 
             let path = Path { path in
@@ -865,6 +869,12 @@ extension MainChartView {
         let x = timeToXCoordinate(glucoseEntry.dateString.timeIntervalSince1970, fullSize: fullSize)
         let y = glucoseToYCoordinate(glucoseEntry.glucose ?? 0, fullSize: fullSize)
 
+        // 🚨 КРИТИЧНО: Финальная проверка координат на NaN/Infinity
+        guard !x.isNaN, !x.isInfinite, !y.isNaN, !y.isInfinite else {
+            print("⚠️ MainChart: Final coordinate check failed - returning safe fallback point")
+            return CGPoint(x: 0, y: fullSize.height / 2)
+        }
+
         return CGPoint(x: x, y: y)
     }
 
@@ -877,13 +887,36 @@ extension MainChartView {
         let x = timeToXCoordinate(predTime, fullSize: fullSize)
         let y = glucoseToYCoordinate(pred, fullSize: fullSize)
 
+        // 🚨 КРИТИЧНО: Проверка координат предсказаний на NaN/Infinity
+        guard !x.isNaN, !x.isInfinite, !y.isNaN, !y.isInfinite else {
+            print("⚠️ MainChart: Prediction coordinate check failed - returning safe fallback point")
+            return CGPoint(x: 0, y: fullSize.height / 2)
+        }
+
         return CGPoint(x: x, y: y)
     }
 
     private func timeToXCoordinate(_ time: TimeInterval, fullSize: CGSize) -> CGFloat {
         let xOffset = -Date().addingTimeInterval(-1.days.timeInterval).timeIntervalSince1970
+
+        // 🚨 КРИТИЧНО: Защита от NaN значений
+        guard fullSize.width > 0, hours > 0,
+              !fullSize.width.isNaN, !fullSize.width.isInfinite,
+              !time.isNaN, !time.isInfinite
+        else {
+            print("⚠️ MainChart: Invalid values for X coordinate calculation - returning safe fallback")
+            return 0 // Безопасное значение
+        }
+
         let stepXFraction = fullGlucoseWidth(viewWidth: fullSize.width) / CGFloat(hours.hours.timeInterval)
         let x = CGFloat(time + xOffset) * stepXFraction
+
+        // 🚨 КРИТИЧНО: Проверка результата на NaN/Infinity
+        guard !x.isNaN, !x.isInfinite else {
+            print("⚠️ MainChart: X coordinate calculation resulted in NaN/Infinity - returning safe fallback")
+            return 0
+        }
+
         return x
     }
 
@@ -891,9 +924,26 @@ extension MainChartView {
         let topYPaddint = Config.topYPadding + Config.basalHeight
         let bottomYPadding = Config.bottomYPadding
         let (minValue, maxValue) = minMaxYValues()
+
+        // 🚨 КРИТИЧНО: Защита от NaN значений
+        guard maxValue > minValue, fullSize.height > 0,
+              !CGFloat(maxValue).isInfinite, !CGFloat(minValue).isInfinite,
+              !fullSize.height.isInfinite, !fullSize.height.isNaN
+        else {
+            print("⚠️ MainChart: Invalid values for Y coordinate calculation - returning safe fallback")
+            return fullSize.height / 2 // Безопасное значение по центру
+        }
+
         let stepYFraction = (fullSize.height - topYPaddint - bottomYPadding) / CGFloat(maxValue - minValue)
         let yOffset = CGFloat(minValue) * stepYFraction
         let y = fullSize.height - CGFloat(glucoseValue) * stepYFraction + yOffset - bottomYPadding
+
+        // 🚨 КРИТИЧНО: Проверка результата на NaN/Infinity
+        guard !y.isNaN, !y.isInfinite else {
+            print("⚠️ MainChart: Y coordinate calculation resulted in NaN/Infinity - returning safe fallback")
+            return fullSize.height / 2
+        }
+
         return y
     }
 

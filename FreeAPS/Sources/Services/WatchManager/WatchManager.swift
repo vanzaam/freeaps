@@ -116,9 +116,17 @@ final class BaseWatchManager: NSObject, WatchManager, Injectable {
         }
 
         if session.isReachable {
-            // Use message data for immediate delivery
-            session.sendMessageData(data, replyHandler: nil) { error in
+            // Use message data for immediate delivery; if it fails (race), fallback to application context
+            session.sendMessageData(data, replyHandler: nil) { [weak self] error in
                 warning(.service, "Cannot send message to watch", error: error)
+                guard let self = self else { return }
+                do {
+                    let context = try JSONSerialization.jsonObject(with: data) as? [String: Any] ?? [:]
+                    try self.session.updateApplicationContext(context)
+                    debug(.service, "Updated application context after sendMessageData failure")
+                } catch {
+                    warning(.service, "Cannot update application context after sendMessageData failure", error: error)
+                }
             }
         } else {
             // Use application context for background delivery
@@ -301,7 +309,7 @@ extension BaseWatchManager: WCSessionDelegate {
         }
 
         if let bolus = message["bolus"] as? Double, bolus > 0 {
-            apsManager.enactBolus(amount: bolus, isSMB: false, false)
+            apsManager.enactBolus(amount: bolus, isSMB: false, isBasalReplacement: false)
             replyHandler(["confirmation": true])
             return
         }

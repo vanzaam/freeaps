@@ -56,7 +56,7 @@ final class BaseSmbBasalIobCalculator: SmbBasalIobCalculator, Injectable {
 
     // MARK: - Private
 
-    private func currentInsulinModel() -> InsulinModel {
+    private func currentInsulinModel() -> ExponentialInsulinModel {
         let preferences = settingsManager.preferences
 
         switch preferences.curve {
