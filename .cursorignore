@@ -29,6 +29,10 @@ Package.resolved
 # CocoaPods
 Pods/
 
+#Dependencies
+_backup/
+
+
 # Carthage
 Carthage/Build/
 

@@ -7,6 +7,7 @@
 
 ## Build generated
 build/
+_backup/
 DerivedData/
 *.build/
 R.generated.swift
@@ -87,3 +88,4 @@ package-lock.json
 node_modules
 oref0
 log/*
+.cursorignore
